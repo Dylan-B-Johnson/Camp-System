@@ -1,6 +1,5 @@
 // Copyright 2022 Row 3
 
-package campSystem;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
