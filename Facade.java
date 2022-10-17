@@ -33,11 +33,11 @@ public class Facade{
 
     }
 
-    public Camper getCampter(UUID id){
+    public ArrayList<Camper> getCampter(String firstName){
         
     }
 
-    public User getUser(UUID id){
+    public ArrayList<User> getUser(String firstName){
 
     }
 
@@ -57,7 +57,7 @@ public class Facade{
 
     }
 
-    public User getCounselor(UUID id){
+    public ArrayList<User> getCounselor(String firstName){
 
     }
 
