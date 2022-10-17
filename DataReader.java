@@ -7,18 +7,18 @@ public class DataReader {
     }
 
     public static ArrayList<User> getAllUsers(){
-
+        return null;
     }
 
     public static ArrayList<Activity> getAllActivites(){
-
+        return null;
     }
 
     public static ArrayList<Week> getAllWeeks(){
-
+        return null;
     }
 
     public static CampLocation getCampLocation(){
-
+        return null;
     }
 }

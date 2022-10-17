@@ -26,10 +26,10 @@ public class Camper {
     }
 
     public int getAge() {
-
+        return -1;
     }
 
     public String toString() {
-
+        return null;
     }
 }

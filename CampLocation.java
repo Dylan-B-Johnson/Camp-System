@@ -10,11 +10,11 @@ public class CampLocation {
     private String name;
     private static CampLocation campLocation;
 
-    public CampLocation() {
+    private CampLocation() {
         this.id = UUID.randomUUID();
     }
 
     public CampLocation getInstance() {
-
+        return null;
     }
 }
