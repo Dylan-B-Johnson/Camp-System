@@ -4,9 +4,10 @@ package campSystem;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class Camper {
-    private String id;
+    private UUID id;
     private String firstName;
     private String lastName;
     private ArrayList<String> allergies;
@@ -19,6 +20,7 @@ public class Camper {
     private String relationshipToCustomer;
 
     public Camper(String firstName, String lastName) {
+        this.id = UUID.randomUUID();
         this.firstName = firstName;
         this.lastName = lastName;
     }
