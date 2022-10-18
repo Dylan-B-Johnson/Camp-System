@@ -12,13 +12,13 @@ public class Counselor extends User {
     private Contact secondaryEmergencyContact;
     private Contact primaryCarePhysician;
 
-    public Counselor() {
-        super();
-        typeOfUser = TypeOfUser.COUNSELOR;
+    public Counselor(String email, String firstName, String lastName, String password,
+            CampLocation campLocation) {
+        super(email, firstName, lastName, password, campLocation, TypeOfUser.COUNSELOR);
     }
 
-    public Counselor(UUID id) {
-        super();
-        super.setId(UUID.randomUUID());
+    public Counselor(UUID id, String email, String firstName, String lastName, String password,
+            CampLocation campLocation) {
+        super(id, email, firstName, lastName, password, campLocation, TypeOfUser.COUNSELOR);
     }
 }

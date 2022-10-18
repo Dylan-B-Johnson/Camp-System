@@ -27,7 +27,8 @@ public class DataReader {
                 String firstName = (String) user.get("firstName");
                 String lastName = (String) user.get("lastName");
                 ArrayList<Camper> campers = new ArrayList<Camper>();
-                customerList.add(new Customer(email, firstName, lastName, lastName, null, campers));
+                customerList
+                        .add(new Customer(UUID.fromString(id), email, firstName, lastName, lastName, null, campers));
             }
         } catch (Exception exception) {
 

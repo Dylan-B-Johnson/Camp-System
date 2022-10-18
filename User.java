@@ -22,6 +22,17 @@ public abstract class User {
         this.typeOfUser = typeOfUser;
     }
 
+    public User(UUID id, String email, String firstName, String lastName, String password, CampLocation campLocation,
+            TypeOfUser typeOfUser) {
+        this.id = id;
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.password = password;
+        this.campLocation = campLocation;
+        this.typeOfUser = typeOfUser;
+    }
+
     public String toString() {
         return "Name: " + firstName + " " + lastName + "\n" +
                 "Email: " + email + "\n" +

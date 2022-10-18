@@ -6,9 +6,10 @@ import java.util.UUID;
 public class Customer extends User {
     private ArrayList<Camper> campers;
 
-    public Customer(String email, String firstName, String lastName, String password, CampLocation campLocation,
+    public Customer(UUID id, String email, String firstName, String lastName, String password,
+            CampLocation campLocation,
             ArrayList<Camper> campers) {
-        super(email, firstName, lastName, password, campLocation, TypeOfUser.CUSTOMER);
+        super(id, email, firstName, lastName, password, campLocation, TypeOfUser.CUSTOMER);
         this.campers = campers;
     }
 

@@ -3,14 +3,14 @@
 import java.util.UUID;
 
 public class Director extends User {
-    public Director() {
-        super();
-        typeOfUser = TypeOfUser.DIRECTOR;
+    public Director(UUID id, String email, String firstName, String lastName, String password,
+            CampLocation campLocation) {
+        super(id, email, firstName, lastName, password, campLocation, TypeOfUser.DIRECTOR);
     }
 
-    public Director(UUID id) {
-        super();
-        super.setId(UUID.randomUUID());
+    public Director(String email, String firstName, String lastName, String password,
+            CampLocation campLocation) {
+        super(email, firstName, lastName, password, campLocation, TypeOfUser.DIRECTOR);
     }
 
     public void removeCamper(String id) {
