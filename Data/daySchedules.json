@@ -1,0 +1,66 @@
+[{
+    "id": "ade9400d-a391-4b85-a451-0b73ad19960b",
+    "currentActivities": [
+    "6f145e7d-e657-4112-ba7c-756b2264da3b",
+    "5eb92dfe-48b3-4dfb-baf6-cca89cfb0ab5",
+    "031cfc41-7ee8-4de1-8993-b70289e2bb5e",
+    "fb610fc1-b92a-409c-9d1a-0712d7b96733",
+    "e3c449cc-8f8d-46c5-9cb2-7376b9f92769",
+    "49fa2e16-dcbb-4094-881e-be536104122b"
+    ],
+    "day": "2022-06-24",
+    "MAX_ACTIVITIES": 6
+},
+{
+    "id": "742964d6-6116-4715-8726-022cf3722ab0",
+    "currentActivities": [
+    "5eb92dfe-48b3-4dfb-baf6-cca89cfb0ab5",
+    "031cfc41-7ee8-4de1-8993-b70289e2bb5e",
+    "fb610fc1-b92a-409c-9d1a-0712d7b96733",
+    "e3c449cc-8f8d-46c5-9cb2-7376b9f92769",
+    "49fa2e16-dcbb-4094-881e-be536104122b",
+    "6f145e7d-e657-4112-ba7c-756b2264da3b"
+    ],
+    "day": "2022-06-25",
+    "MAX_ACTIVITIES": 6
+},
+{
+    "id": "0336c268-4d66-4920-9257-2ef3e958d68e",
+    "currentActivities": [
+    "031cfc41-7ee8-4de1-8993-b70289e2bb5e",
+    "fb610fc1-b92a-409c-9d1a-0712d7b96733",
+    "e3c449cc-8f8d-46c5-9cb2-7376b9f92769",
+    "49fa2e16-dcbb-4094-881e-be536104122b",
+    "6f145e7d-e657-4112-ba7c-756b2264da3b",
+    "5eb92dfe-48b3-4dfb-baf6-cca89cfb0ab5"
+    ],
+    "day": "2022-06-26",
+    "MAX_ACTIVITIES": 6
+},
+{
+    "id": "df0d05f3-5a02-44de-862e-f7f26ef4a408",
+    "currentActivities": [
+    "fb610fc1-b92a-409c-9d1a-0712d7b96733",
+    "e3c449cc-8f8d-46c5-9cb2-7376b9f92769",
+    "49fa2e16-dcbb-4094-881e-be536104122b",
+    "6f145e7d-e657-4112-ba7c-756b2264da3b",
+    "5eb92dfe-48b3-4dfb-baf6-cca89cfb0ab5",
+    "031cfc41-7ee8-4de1-8993-b70289e2bb5e"
+    ],
+    "day": "2022-06-27",
+    "MAX_ACTIVITIES": 6
+},
+{
+    "id": "6374882e-ea15-4ecd-80d1-f8af09a7f057",
+    "currentActivities": [
+    "e3c449cc-8f8d-46c5-9cb2-7376b9f92769",
+    "49fa2e16-dcbb-4094-881e-be536104122b",
+    "6f145e7d-e657-4112-ba7c-756b2264da3b",
+    "5eb92dfe-48b3-4dfb-baf6-cca89cfb0ab5",
+    "031cfc41-7ee8-4de1-8993-b70289e2bb5e",
+    "fb610fc1-b92a-409c-9d1a-0712d7b96733"
+    ],
+    "day": "2022-06-28",
+    "MAX_ACTIVITIES": 6
+}
+]
