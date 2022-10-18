@@ -15,7 +15,7 @@ public class DataReader {
         getCamper(UUID.fromString("35f810c6-ed26-42ec-a423-1db01478251f")).getFirstName();
     }
 
-    public static ArrayList<Customer> getAllCustomers() {
+    public static ArrayList<Customer> getCustomers() {
         JSONParser parser = new JSONParser();
         ArrayList<Customer> customerList = new ArrayList<Customer>();
         try {
@@ -36,7 +36,7 @@ public class DataReader {
         return customerList;
     }
 
-    public static ArrayList<Activity> getAllActivites() {
+    public static ArrayList<Activity> getActivities() {
         JSONParser parser = new JSONParser();
         ArrayList<Activity> activities = new ArrayList<Activity>();
 
@@ -57,11 +57,7 @@ public class DataReader {
         return activities;
     }
 
-    public static ArrayList<Week> getAllWeeks() {
-        return null;
-    }
-
-    public static CampLocation getCampLocation() {
+    public static ArrayList<Week> getWeeks() {
         return null;
     }
 
@@ -108,5 +104,9 @@ public class DataReader {
             System.out.println(e);
         }
         return camperList;
+    }
+
+    public static ArrayList<Group> getGroups() {
+        return null;
     }
 }
