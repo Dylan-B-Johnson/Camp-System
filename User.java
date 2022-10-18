@@ -12,13 +12,13 @@ public abstract class User {
     protected TypeOfUser typeOfUser;
 
     public User(String email, String password) {
-        this.id = UUID.randomUUID();
-        this.email = email;
-        this.password = password;
+        setId(UUID.randomUUID());
+        changeEmail(email);
+        setPassword(password);
     }
 
     public User(UUID id) {
-        this.id = id;
+        setId(id);
     }
 
     public boolean changeEmail(String email) {
@@ -33,6 +33,15 @@ public abstract class User {
         return "Name: " + firstName + " " + lastName + "\n" +
                 "Email: " + email + "\n" +
                 "Type of User: " + typeOfUser;
+    }
+
+    public UUID getId(){
+        return this.id;
+    }
+
+    public void setId(UUID id){
+        if (id!=null)
+            this.id=id;
     }
 
     public String getEmail() {

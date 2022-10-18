@@ -11,17 +11,17 @@ public class Contact {
 
     public Contact(String firstName, String lastName, String email, String phoneNum, String relationship,
             String address) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.phoneNum = phoneNum;
-        this.relationship = relationship;
-        this.address = address;
+        setFirstName(firstName);
+        setLastName(lastName);
+        setEmail(email);
+        setPhoneNum(phoneNum);
+        setRelationship(relationship);
+        setAddress(address);
         this.id = UUID.randomUUID();
     }
 
     public Contact(UUID id) {
-        this.id = id;
+        setId(id);
     }
 
     public String toString() {
@@ -34,6 +34,11 @@ public class Contact {
 
     public UUID getId() {
         return id;
+    }
+
+    public void setId(UUID id) {
+        if (id != null)
+            this.id = id;
     }
 
     public String getFirstName() {
