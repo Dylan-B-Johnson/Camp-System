@@ -4,6 +4,7 @@ import java.util.UUID;
 public class Director extends User {
     public Director() {
         super();
+        typeOfUser=TypeOfUser.DIRECTOR;
     }
 
     public Director(UUID id){
@@ -22,4 +23,5 @@ public class Director extends User {
     public void removeUser(String id) {
 
     }
+
 }

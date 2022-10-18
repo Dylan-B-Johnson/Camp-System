@@ -14,6 +14,7 @@ public class Counselor extends User {
 
     public Counselor() {
         super();
+        typeOfUser=TypeOfUser.COUNSELOR;
     }
 
     public Counselor(UUID id){

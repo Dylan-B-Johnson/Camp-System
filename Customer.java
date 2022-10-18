@@ -8,9 +8,10 @@ public class Customer extends User {
 
     public Customer() {
         super();
+        typeOfUser = TypeOfUser.CUSTOMER;
     }
 
-    public Customer(UUID id){
+    public Customer(UUID id) {
         super();
         super.setId(UUID.randomUUID());
     }
@@ -29,5 +30,15 @@ public class Customer extends User {
 
     public double getDiscount() {
         return 404;
+    }
+
+    public String toString() {
+        String rtn = super.toString() + "Camper(s): ";
+        for (int i = 0; i < campers.size(); i++) {
+            rtn += campers.get(i).getFirstName() + " " + campers.get(i).getLastName();
+            if (i < campers.size() - 1)
+                rtn += ", ";
+        }
+        return rtn;
     }
 }
