@@ -15,7 +15,7 @@ public class DataReader {
         getCamper(UUID.fromString("35f810c6-ed26-42ec-a423-1db01478251f")).getFirstName();
     }
 
-    public static ArrayList<Customer> getAllCustomers() {
+    public static ArrayList<Customer> getCustomers() {
         JSONParser parser = new JSONParser();
         ArrayList<Customer> customerList = new ArrayList<Customer>();
         try {
@@ -36,7 +36,7 @@ public class DataReader {
         return customerList;
     }
 
-    public static ArrayList<Activity> getAllActivites() {
+    public static ArrayList<Activity> getActivities() {
         JSONParser parser = new JSONParser();
         ArrayList<Activity> activities = new ArrayList<Activity>();
 
@@ -57,11 +57,7 @@ public class DataReader {
         return activities;
     }
 
-    public static ArrayList<Week> getAllWeeks() {
-        return null;
-    }
-
-    public static CampLocation getCampLocation() {
+    public static ArrayList<Week> getWeeks() {
         return null;
     }
 
@@ -108,5 +104,35 @@ public class DataReader {
             System.out.println(e);
         }
         return camperList;
+    }
+
+    public static Group getGroup(UUID id) {
+        ArrayList<Group> groups = getGroups();
+        for (Group group : groups) {
+            if (group.getId().compareTo(id) == 0) {
+                return group;
+            }
+        }
+        return null;
+    }
+
+    public static ArrayList<Group> getGroups() {
+        JSONParser parser = new JSONParser();
+        ArrayList<Group> groupList = new ArrayList<>();
+        try {
+            JSONArray groups = (JSONArray) parser.parse(new FileReader("Data/groups.json"));
+            for (Object object : groups) {
+                JSONObject group = (JSONObject) object;
+                UUID id = UUID.fromString((String) group.get("id"));
+                int groupSize = ((Long) group.get("groupSize")).intValue();
+                ArrayList<Camper> campers = new ArrayList<>();
+                Counselor counselor = null;
+                ArrayList<DaySchedule> schedule = new ArrayList<>();
+                groupList.add(new Group(id, campers, counselor, groupSize, schedule));
+            }
+        } catch (Exception exception) {
+
+        }
+        return groupList;
     }
 }
