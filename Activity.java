@@ -16,6 +16,11 @@ public class Activity {
         this.description = description;
     }
 
+    public Activity(UUID id)
+    {
+        this.id = id;
+    }
+
     public String getName() {
         return this.name;
     }

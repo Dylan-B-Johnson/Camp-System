@@ -19,6 +19,47 @@ public class Week {
         this.campLocation = campLocation;
     }
 
+    public Week(UUID id){
+        this.id = id;
+    }
+
+    public void setMaxCampers(int maxCampers){
+        if(maxCampers>0){
+            this.maxCampers = maxCampers;
+        }else{
+            this.maxCampers = 0;
+        }
+    }
+
+    public int getMaxCampers(){
+        return this.maxCampers;
+    }
+
+    public void setCurrentCampers(int currentCampers){
+        if(currentCampers>0){
+            this.currentCampers = currentCampers;
+        }else{
+            this.currentCampers = 0;
+        }
+    }
+
+    public int getCurrentCampers(){
+        return this.currentCampers;
+    }
+
+    public void setStartOfWeek(LocalDate startOfWeek){
+        if(startOfWeek != null){
+            this.startOfWeek = startOfWeek;
+        }
+        else{
+            this.startOfWeek = null;
+        }
+    }
+
+    public LocalDate getStartOfWeek(){
+        return this.startOfWeek;
+    }
+
     public boolean canRegisterCamper(){
         return false;
     }

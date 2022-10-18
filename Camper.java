@@ -37,6 +37,10 @@ public class Camper {
         return this.firstName;
     }
 
+    public Camper(UUID id) {
+        this.id = id;
+    }
+
     public int getAge() {
         return -1;
     }
@@ -44,4 +48,14 @@ public class Camper {
     public String toString() {
         return null;
     }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    
 }
