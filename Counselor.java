@@ -2,6 +2,7 @@
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class Counselor extends User {
     private Group group;
@@ -11,10 +12,12 @@ public class Counselor extends User {
     private Contact secondaryEmergencyContact;
     private Contact primaryCarePhysician;
 
-    public Counselor(String email, String firstName, String lastName, String password, CampLocation campLocation,
-            Group group) {
-        super(email, password);
-        
-        this.group = group;
+    public Counselor() {
+        super();
+    }
+
+    public Counselor(UUID id){
+        super();
+        super.setId(UUID.randomUUID());
     }
 }

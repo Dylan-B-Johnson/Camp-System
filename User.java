@@ -11,22 +11,8 @@ public abstract class User {
     protected CampLocation campLocation;
     protected TypeOfUser typeOfUser;
 
-    public User(String email, String password) {
+    public User() {
         setId(UUID.randomUUID());
-        changeEmail(email);
-        setPassword(password);
-    }
-
-    public User(UUID id) {
-        setId(id);
-    }
-
-    public boolean changeEmail(String email) {
-        if (email == null || !email.contains("@") || !email.contains(".")
-                || !UserList.getInstance().emailAvailable(email))
-            return false;
-        this.email = email;
-        return true;
     }
 
     public String toString() {
@@ -35,22 +21,25 @@ public abstract class User {
                 "Type of User: " + typeOfUser;
     }
 
-    public UUID getId(){
+    public UUID getId() {
         return this.id;
     }
 
-    public void setId(UUID id){
-        if (id!=null)
-            this.id=id;
+    public void setId(UUID id) {
+        if (id != null)
+            this.id = id;
     }
 
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
-        if (email != null)
-            this.email = email;
+    public boolean setEmail(String email) {
+        if (email == null || !email.contains("@") || !email.contains(".") || email.length() < 3
+                || !UserList.getInstance().emailAvailable(email))
+            return false;
+        this.email = email;
+        return true;
     }
 
     public String getFirstName() {
