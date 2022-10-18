@@ -9,7 +9,7 @@ public class ActivitiesList {
 
     }
 
-    public static ActivitesList getInstance(){
+    public static ActivitiesList getInstance(){
         return null;
     }
 
