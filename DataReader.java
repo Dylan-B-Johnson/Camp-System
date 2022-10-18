@@ -39,7 +39,24 @@ public class DataReader {
     }
 
     public static ArrayList<Activity> getAllActivites() {
-        return null;
+        JSONParser parser = new JSONParser();
+        ArrayList<Activity> activities = new ArrayList<Activity>();
+
+        try {
+            JSONArray jActivities = (JSONArray) parser.parse(new FileReader("Data/activities.json"));
+            for (Object object : jActivities) {
+                JSONObject activity = (JSONObject) object;
+                String id = (String) activity.get("id");
+                String name = (String) activity.get("name");
+                String location = (String) activity.get("location");
+                String description = (String) activity.get("description");
+                activities.add(new Activity(UUID.fromString(id), name, location, description));
+            }
+        } catch (Exception exception) {
+
+        }
+
+        return activities;
     }
 
     public static ArrayList<Week> getAllWeeks() {

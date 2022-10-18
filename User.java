@@ -11,8 +11,15 @@ public abstract class User {
     protected CampLocation campLocation;
     protected TypeOfUser typeOfUser;
 
-    public User() {
+    public User(String email, String firstName, String lastName, String password, CampLocation campLocation,
+            TypeOfUser typeOfUser) {
         setId(UUID.randomUUID());
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.password = password;
+        this.campLocation = campLocation;
+        this.typeOfUser = typeOfUser;
     }
 
     public String toString() {
