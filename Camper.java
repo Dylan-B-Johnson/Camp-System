@@ -24,6 +24,10 @@ public class Camper {
         this.lastName = lastName;
     }
 
+    public Camper(UUID id) {
+        this.id = id;
+    }
+
     public int getAge() {
         return -1;
     }
