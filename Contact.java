@@ -11,10 +11,24 @@ public class Contact {
 
     public Contact(String firstName, String lastName, String email, String phoneNum, String relationship,
             String address) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.phoneNum = phoneNum;
+        this.relationship = relationship;
+        this.address = address;
+        this.id = UUID.randomUUID();
+    }
 
+    public Contact(UUID id) {
+        this.id = id;
     }
 
     public String toString() {
-        return null;
+        return "Name: " + firstName + " " + lastName + "\n" +
+                "Email: " + email+"\n"+
+                "Phone #: "+phoneNum+"\n"+
+                "Relationship: "+relationship+"\n"+
+                "Address: "+address;
     }
 }
