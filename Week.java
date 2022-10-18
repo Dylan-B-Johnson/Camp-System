@@ -2,6 +2,7 @@
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.UUID;
+import java.time.LocalDate;
 
 public class Week {
     
@@ -19,7 +20,7 @@ public class Week {
     }
 
     public boolean canRegisterCamper(){
-
+        return false;
     }
 
     public void registerCamper(){
@@ -27,18 +28,18 @@ public class Week {
     }
 
     public boolean currentWeek(){
-
+        return false;
     }
 
     public boolean futureWeek(){
-
+        return false;
     }
 
     public boolean pastWeek(){
-
+        return false;
     }
 
     public String toString(){
-
+        return null;
     }
 }

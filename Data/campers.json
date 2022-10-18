@@ -1,0 +1,43 @@
+[{
+  "id": "35f810c6-ed26-42ec-a423-1db01478251f",
+  "firstName": "Tim",
+  "lastName": "Chapman",
+  "allergies": [
+	"peanuts"
+  ],
+  "birthday": "2010-07-01",  
+  "primaryEmergencyContact": "2b5d1233-6658-49dd-bcbe-d56cc0edbd85",
+  "secondaryEmergencyContact": "c1130a18-8408-48ad-b819-406dc8c08ee2",
+  "primaryCarePhysician": "584b1c84-75aa-4842-bbcd-522a043b1842",
+  "pastEnrollment": 2,
+  "swimTestResult": "PFD needed",
+  "relationToCustomer": "child"
+},
+{
+  "id": "ec38d029-570d-43d8-9227-a55408674b96",
+  "firstName": "Josh",
+  "lastName": "Chapman",
+  "allergies": [],
+  "birthday": "2012-06-21",  
+  "primaryEmergencyContact": "2b5d1233-6658-49dd-bcbe-d56cc0edbd85",
+  "secondaryEmergencyContact": "c1130a18-8408-48ad-b819-406dc8c08ee2",
+  "primaryCarePhysician": "584b1c84-75aa-4842-bbcd-522a043b1842",
+  "pastEnrollment": 0,
+  "swimTestResult": "proficient, no PDF needed",
+  "relationToCustomer": "child"
+},
+{
+  "id": "7e7b8f07-e89f-4e26-a0fb-3ba36f8ba1b0",
+  "firstName": "Niels",
+  "lastName": "Mandrus",
+  "allergies": [
+  "shellfish",
+  "treenuts"],
+  "birthday": "2013-12-12",  
+  "primaryEmergencyContact": "37da6439-4fbb-4a5e-8ca7-f29d33435241",
+  "secondaryEmergencyContact": "67a1eade-7c40-4785-8412-0a794b254120",
+  "primaryCarePhysician": "584b1c84-75aa-4842-bbcd-522a043b1842",
+  "pastEnrollment": 0,
+  "swimTestResult": "proficient, no PDF needed",
+  "relationToCustomer": "child"
+}]

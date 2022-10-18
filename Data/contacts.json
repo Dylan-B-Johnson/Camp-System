@@ -1,0 +1,45 @@
+[{
+  "id": "2b5d1233-6658-49dd-bcbe-d56cc0edbd85",
+  "email": "bob@hotmail.com",
+  "firstName": "Bob",
+  "lastName": "Damien",
+  "phoneNum": "654-234-1262",
+  "relationship": "father",
+  "address": "62 Hoback St, Helena, MT 27909"
+},
+{
+  "id": "584b1c84-75aa-4842-bbcd-522a043b1842",
+  "email": "ron@columbiaPediatrics.com",
+  "firstName": "Ron",
+  "lastName": "Rhymer",
+  "phoneNum": "865-399-5462",
+  "relationship": "primary-care physician",
+  "address": "823 Lyons View Rd, Columbia, SC 37909"
+},
+{
+  "id": "c1130a18-8408-48ad-b819-406dc8c08ee2",
+  "email": "virla2@utk.edu",
+  "firstName": "Virla",
+  "lastName": "Chapman",
+  "phoneNum": "123-456-5262",
+  "relationship": "mother",
+  "address": "62 Hoback St, Helena, MT 27909"
+},
+{
+  "id": "37da6439-4fbb-4a5e-8ca7-f29d33435241",
+  "email": "SallyKaufman@hotmail.com",
+  "firstName": "Sally",
+  "lastName": "Kaufman",
+  "phoneNum": "654-299-4462",
+  "relationship": "mother",
+  "address": "212 Fake Ave, Knoxville, TN 29291"
+},
+{
+  "id": "67a1eade-7c40-4785-8412-0a794b254120",
+  "email": "todds@art.columbia.org",
+  "firstName": "Todd",
+  "lastName": "Smith",
+  "phoneNum": "254-222-1112",
+  "relationship": "father",
+  "address": "212 Fake Ave, Knoxville, TN 29291"
+}]

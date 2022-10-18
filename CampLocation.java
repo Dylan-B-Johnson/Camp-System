@@ -1,18 +1,19 @@
 // Copyright 2022 Row 3
 
-package campSystem;
+
+import java.util.UUID;
 
 public class CampLocation {
     private double pricePerCamper;
-    private String id;
+    private UUID id;
     private String name;
     private static CampLocation campLocation;
 
-    public CampLocation() {
-
+    private CampLocation() {
+        this.id = UUID.randomUUID();
     }
 
     public CampLocation getInstance() {
-
+        return null;
     }
 }

@@ -7,15 +7,15 @@ public class ActivitiesList {
     private ArrayList<Activity> activities;
     private static ActivitiesList activitiesList;
 
-    public ActivitiesList(){
+    private ActivitiesList(){
 
     }
 
-    public static ActivitesList getInstance(){
-
+    public static ActivitiesList getInstance(){
+        return null;
     }
 
     public boolean addActivity(Activity activity){
-        
+        return false; 
     }
 }

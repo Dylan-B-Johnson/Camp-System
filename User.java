@@ -1,9 +1,10 @@
 // Copyright 2022 Row 3
 
-package campSystem;
+
+import java.util.UUID;
 
 public class User {
-    protected String id;
+    protected UUID id;
     protected String email;
     protected String firstName;
     protected String lastName;
@@ -13,7 +14,7 @@ public class User {
 
     public User(String email, String firstName, String lastName, String password, CampLocation campLocation,
             TypeOfUser typeOfUser) {
-        this.id = getId();
+        this.id = UUID.randomUUID();
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;

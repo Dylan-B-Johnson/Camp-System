@@ -1,15 +1,16 @@
 // Copyright 2022 Row 3
 
-package campSystem;
+
+import java.util.UUID;
 
 public class Activity {
-    private String id;
+    private UUID id;
     private String name;
     private String location;
     private String description;
 
     public Activity(String name, String location, String description) {
-        this.id = getId();
+        this.id = UUID.randomUUID();
         this.name = name;
         this.location = location;
         this.description = description;

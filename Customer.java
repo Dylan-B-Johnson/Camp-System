@@ -1,7 +1,5 @@
 // Copyright 2022 Row 3
 
-package campSystem;
-
 import java.util.ArrayList;
 
 public class Customer extends User {
@@ -24,6 +22,6 @@ public class Customer extends User {
     }
 
     public double getDiscount() {
-
+        return 404;
     }
 }
