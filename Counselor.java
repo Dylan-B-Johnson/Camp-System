@@ -13,7 +13,8 @@ public class Counselor extends User {
 
     public Counselor(String email, String firstName, String lastName, String password, CampLocation campLocation,
             Group group) {
-        super(email, firstName, lastName, password, campLocation, TypeOfUser.COUNSELOR);
+        super(email, password);
+        
         this.group = group;
     }
 }
