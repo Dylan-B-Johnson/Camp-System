@@ -13,7 +13,7 @@ public abstract class User {
 
     public User(String email, String firstName, String lastName, String password, CampLocation campLocation,
             TypeOfUser typeOfUser) {
-        setId(UUID.randomUUID());
+        this.id = UUID.randomUUID();
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -41,11 +41,6 @@ public abstract class User {
 
     public UUID getId() {
         return this.id;
-    }
-
-    public void setId(UUID id) {
-        if (id != null)
-            this.id = id;
     }
 
     public String getEmail() {
