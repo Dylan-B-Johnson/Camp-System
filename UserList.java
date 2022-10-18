@@ -15,6 +15,10 @@ public class UserList {
         return null;
     }
 
+    public boolean emailAvailable(String email){
+        return false;
+    }
+
     public boolean addUser(String email, String password){
         return false;
     }
