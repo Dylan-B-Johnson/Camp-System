@@ -1,9 +1,14 @@
 // Copyright 2022 Row 3
-
+import java.util.UUID;
 
 public class Director extends User {
-    public Director(String email, String firstName, String lastName, String password, CampLocation campLocation) {
-        super(email, password);
+    public Director() {
+        super();
+    }
+
+    public Director(UUID id){
+        super();
+        super.setId(UUID.randomUUID());
     }
 
     public void removeCamper(String id) {
