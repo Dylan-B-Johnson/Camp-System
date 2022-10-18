@@ -5,8 +5,14 @@ import java.util.ArrayList;
 public class Customer extends User {
     private ArrayList<Camper> campers;
 
-    public Customer(String email, String firstName, String lastName, String password, CampLocation campLocation) {
+    public Customer(String email, String firstName, String lastName, String password, CampLocation campLocation,
+            ArrayList<Camper> campers) {
         super(email, firstName, lastName, password, campLocation, TypeOfUser.CUSTOMER);
+        this.campers = campers;
+    }
+
+    public String getName() {
+        return this.firstName;
     }
 
     public void addCamper() {

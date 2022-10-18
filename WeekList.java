@@ -1,9 +1,7 @@
 import java.util.ArrayList;
 
-<<<<<<< HEAD
 //Copyright Row 3
-=======
->>>>>>> 1e9a304449eb31162d995602d9e235d9716178f3
+
 public class WeekList {
 
     private ArrayList<Week> weeks;

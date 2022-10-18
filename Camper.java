@@ -1,6 +1,5 @@
 // Copyright 2022 Row 3
 
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.UUID;
@@ -18,10 +17,24 @@ public class Camper {
     private String swimTestResult;
     private String relationshipToCustomer;
 
-    public Camper(String firstName, String lastName) {
-        this.id = UUID.randomUUID();
+    public Camper(UUID id, String firstName, String lastName, ArrayList<String> allergies, LocalDate birthday,
+            Contact primaryEmergencyContact, Contact secondaryEmergencyContact, Contact primaryCarePhysician,
+            int pastEnrollment, String swimTestResult, String relationshipToCustomer) {
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.allergies = allergies;
+        this.birthday = birthday;
+        this.primaryEmergencyContact = primaryEmergencyContact;
+        this.secondaryEmergencyContact = secondaryEmergencyContact;
+        this.primaryCarePhysician = primaryCarePhysician;
+        this.pastEnrollment = pastEnrollment;
+        this.swimTestResult = swimTestResult;
+        this.relationshipToCustomer = relationshipToCustomer;
+    }
+
+    public String getFirstName() {
+        return this.firstName;
     }
 
     public int getAge() {
