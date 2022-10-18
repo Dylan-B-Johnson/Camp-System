@@ -106,7 +106,33 @@ public class DataReader {
         return camperList;
     }
 
-    public static ArrayList<Group> getGroups() {
+    public static Group getGroup(UUID id) {
+        ArrayList<Group> groups = getGroups();
+        for (Group group : groups) {
+            if (group.getId().compareTo(id) == 0) {
+                return group;
+            }
+        }
         return null;
+    }
+
+    public static ArrayList<Group> getGroups() {
+        JSONParser parser = new JSONParser();
+        ArrayList<Group> groupList = new ArrayList<>();
+        try {
+            JSONArray groups = (JSONArray) parser.parse(new FileReader("Data/groups.json"));
+            for (Object object : groups) {
+                JSONObject group = (JSONObject) object;
+                UUID id = UUID.fromString((String) group.get("id"));
+                int groupSize = ((Long) group.get("groupSize")).intValue();
+                ArrayList<Camper> campers = new ArrayList<>();
+                Counselor counselor = null;
+                ArrayList<DaySchedule> schedule = new ArrayList<>();
+                groupList.add(new Group(id, campers, counselor, groupSize, schedule));
+            }
+        } catch (Exception exception) {
+
+        }
+        return groupList;
     }
 }
