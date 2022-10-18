@@ -63,8 +63,7 @@ public class Week {
     public boolean canRegisterCamper(){
         if(currentCampers < maxCampers){
             return true;
-        }
-        else{
+        }else{
             return false;
         }
     }

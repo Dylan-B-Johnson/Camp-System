@@ -15,13 +15,6 @@ public class Activity {
         this.description = description;
     }
 
-    public Activity(UUID id, String name, String location, String description) {
-        this.id = id;
-        this.name = name;
-        this.location = location;
-        this.description = description;
-    }
-
     public String getName() {
         return this.name;
     }
