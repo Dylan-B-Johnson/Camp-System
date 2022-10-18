@@ -34,13 +34,8 @@ public class Facade{
 
     }
 
-<<<<<<< HEAD
-    public Camper getCamper(UUID id){
-        
-=======
     public ArrayList<Camper> getCampter(String firstName){
         return null; 
->>>>>>> 1e9a304449eb31162d995602d9e235d9716178f3
     }
 
     public ArrayList<User> getUser(String firstName){
