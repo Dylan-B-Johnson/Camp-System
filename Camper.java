@@ -33,10 +33,6 @@ public class Camper {
         this.relationshipToCustomer = relationshipToCustomer;
     }
 
-    public String getFirstName() {
-        return this.firstName;
-    }
-
     public Camper(UUID id) {
         this.id = id;
     }
@@ -57,5 +53,4 @@ public class Camper {
         return lastName;
     }
 
-    
 }
