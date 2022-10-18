@@ -34,12 +34,15 @@ public abstract class User {
         return email;
     }
 
-    public boolean setEmail(String email) {
-        if (email == null || !email.contains("@") || !email.contains(".") || email.length() < 3
-                || !UserList.getInstance().emailAvailable(email))
-            return false;
-        this.email = email;
-        return true;
+    public static boolean emailIsValid(String email) {
+        return email != null && email.contains("@") && email.contains(".") && email.length() >= 3
+                && UserList.getInstance().emailAvailable(email);
+    }
+
+    public void setEmail(String email) {
+        if (email != null && email.contains("@") && email.contains(".") && email.length() >= 3
+                && UserList.getInstance().emailAvailable(email))
+            this.email = email;
     }
 
     public String getFirstName() {
