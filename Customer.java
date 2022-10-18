@@ -6,7 +6,7 @@ public class Customer extends User {
     private ArrayList<Camper> campers;
 
     public Customer(String email, String firstName, String lastName, String password, CampLocation campLocation) {
-        super(email, firstName, lastName, password, campLocation, TypeOfUser.CUSTOMER);
+        super(email, password);
     }
 
     public void addCamper() {

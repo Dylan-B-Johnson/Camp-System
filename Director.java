@@ -3,7 +3,7 @@
 
 public class Director extends User {
     public Director(String email, String firstName, String lastName, String password, CampLocation campLocation) {
-        super(email, firstName, lastName, password, campLocation, TypeOfUser.DIRECTOR);
+        super(email, password);
     }
 
     public void removeCamper(String id) {
