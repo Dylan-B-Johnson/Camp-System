@@ -16,4 +16,9 @@ public class Counselor extends User {
             CampLocation campLocation) {
         super(email, firstName, lastName, password, campLocation, TypeOfUser.COUNSELOR);
     }
+
+    public Counselor(UUID id, String email, String firstName, String lastName, String password,
+            CampLocation campLocation) {
+        super(id, email, firstName, lastName, password, campLocation, TypeOfUser.COUNSELOR);
+    }
 }
