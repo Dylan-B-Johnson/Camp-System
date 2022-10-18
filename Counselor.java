@@ -14,10 +14,10 @@ public class Counselor extends User {
 
     public Counselor() {
         super();
-        typeOfUser=TypeOfUser.COUNSELOR;
+        typeOfUser = TypeOfUser.COUNSELOR;
     }
 
-    public Counselor(UUID id){
+    public Counselor(UUID id) {
         super();
         super.setId(UUID.randomUUID());
     }

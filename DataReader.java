@@ -12,10 +12,7 @@ import org.json.simple.parser.JSONParser;
 public class DataReader {
 
     public static void main(String[] args) {
-        ArrayList<Customer> customers = getAllCustomers();
-        for (Customer cus : customers) {
-            System.out.println(cus.getName());
-        }
+        getCamper(UUID.fromString("35f810c6-ed26-42ec-a423-1db01478251f")).getFirstName();
     }
 
     public static ArrayList<Customer> getAllCustomers() {
@@ -68,37 +65,47 @@ public class DataReader {
     }
 
     public static Camper getCamper(UUID id) {
+        ArrayList<Camper> allCampers = getCampers();
+        for (Camper camper : allCampers) {
+            if (camper.getId().compareTo(id) == 0) {
+                return camper;
+            }
+        }
+        return null;
+    }
+
+    public static ArrayList<Camper> getCampers() {
         JSONParser parser = new JSONParser();
+        ArrayList<Camper> camperList = new ArrayList<>();
         try {
             JSONArray campers = (JSONArray) parser.parse(new FileReader("Data/campers.json"));
             for (Object object : campers) {
                 JSONObject camper = (JSONObject) object;
-                if (UUID.fromString((String) camper.get("id")).compareTo(id) == 0) {
-                    String firstName = (String) camper.get("firstName");
-                    String lastName = (String) camper.get("lastName");
-                    ArrayList<String> allergies = new ArrayList<String>();
-                    JSONArray jsonAllergies = (JSONArray) camper.get("allergies");
-                    for (Object o : jsonAllergies) {
-                        allergies.add((String) o);
-                    }
-                    LocalDate birthday = LocalDate.now();
-                    JSONObject pec = (JSONObject) camper.get("primaryEmergencyContact");
-                    Contact primaryEmergencyContact = new Contact((String) pec.get("firstName"),
-                            (String) pec.get("lastName"), (String) pec.get("email"), (String) pec.get("phoneNumber"),
-                            (String) pec.get("relationship"), (String) pec.get("address"));
-                    Contact secondaryEmergencyContact = null;
-                    Contact primaryCarePhysician = null;
-                    int pastEnrollment = ((Long) camper.get("pastEnrollment")).intValue();
-                    String swimTestResult = (String) camper.get("swimTestResult");
-                    String relationToCustomer = (String) camper.get("relationToCustomer");
-                    return new Camper(id, firstName, lastName, allergies, birthday, primaryEmergencyContact,
-                            secondaryEmergencyContact, primaryCarePhysician, pastEnrollment, swimTestResult,
-                            relationToCustomer);
+                UUID id = UUID.fromString((String) camper.get("id"));
+                String firstName = (String) camper.get("firstName");
+                String lastName = (String) camper.get("lastName");
+                ArrayList<String> allergies = new ArrayList<String>();
+                JSONArray jsonAllergies = (JSONArray) camper.get("allergies");
+                for (Object o : jsonAllergies) {
+                    allergies.add((String) o);
                 }
+                LocalDate birthday = LocalDate.now();
+                JSONObject pec = (JSONObject) camper.get("primaryEmergencyContact");
+                Contact primaryEmergencyContact = new Contact((String) pec.get("firstName"),
+                        (String) pec.get("lastName"), (String) pec.get("email"), (String) pec.get("phoneNumber"),
+                        (String) pec.get("relationship"), (String) pec.get("address"));
+                Contact secondaryEmergencyContact = null;
+                Contact primaryCarePhysician = null;
+                int pastEnrollment = ((Long) camper.get("pastEnrollment")).intValue();
+                String swimTestResult = (String) camper.get("swimTestResult");
+                String relationToCustomer = (String) camper.get("relationToCustomer");
+                camperList.add(new Camper(id, firstName, lastName, allergies, birthday, primaryEmergencyContact,
+                        secondaryEmergencyContact, primaryCarePhysician, pastEnrollment, swimTestResult,
+                        relationToCustomer));
             }
         } catch (Exception e) {
             System.out.println(e);
         }
-        return null;
+        return camperList;
     }
 }

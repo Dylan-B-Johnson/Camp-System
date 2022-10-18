@@ -37,6 +37,10 @@ public class Camper {
         this.id = id;
     }
 
+    public UUID getId() {
+        return this.id;
+    }
+
     public int getAge() {
         return -1;
     }
