@@ -1,3 +1,5 @@
+//Copyright Row 3
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -11,7 +13,9 @@ public class Week {
     private CampLocation campLocation;
 
     public Week(LocalDate startOfWeek, int maxCampers, CampLocation campLocation){
-
+        this.startOfWeek = startOfWeek;
+        this.maxCampers = maxCampers;
+        this.campLocation = campLocation;
     }
 
     public boolean canRegisterCamper(){

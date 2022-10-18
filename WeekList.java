@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+
+//Copyright Row 3
 public class WeekList {
     
     private ArrayList<Week> weeks;

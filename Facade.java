@@ -33,7 +33,7 @@ public class Facade{
 
     }
 
-    public Camper getCampter(UUID id){
+    public Camper getCamper(UUID id){
         
     }
 
