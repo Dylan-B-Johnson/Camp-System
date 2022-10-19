@@ -1,0 +1,36 @@
+[{
+    "id": "6f145e7d-e657-4112-ba7c-756b2264da3b",
+    "name": "swimming",
+    "location": "Crystal Lake",
+    "desciption": "The campers will go swimming at Crystal Lake"
+},
+{
+    "id": "5eb92dfe-48b3-4dfb-baf6-cca89cfb0ab5",
+    "name": "archery",
+    "location": "Archery Range",
+    "desciption": "The campers will go practice archery at the range"
+},
+{
+    "id": "fb610fc1-b92a-409c-9d1a-0712d7b96733",
+    "name": "canoeing",
+    "location": "Crystal Lake",
+    "desciption": "The campers will go canoeing at Crystal Lake"
+},
+{
+    "id": "e3c449cc-8f8d-46c5-9cb2-7376b9f92769",
+    "name": "hiking the blueberry trail",
+    "location": "Blueberry trail",
+    "desciption": "The campers will hike the Blueberry trail"
+},
+{
+    "id": "49fa2e16-dcbb-4094-881e-be536104122b",
+    "name": "hiking the crescent falls trail",
+    "location": "Crescent Falls",
+    "desciption": "The campers will hike the Crescent Falls trail"
+},
+{
+    "id": "031cfc41-7ee8-4de1-8993-b70289e2bb5e",
+    "name": "soccer",
+    "location": "Actvities Field",
+    "desciption": "The campers will go play soccer"
+}]
