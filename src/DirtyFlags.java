@@ -1,5 +1,11 @@
 // Copyright 2022 Row 3
 
 public class DirtyFlags {
-    public boolean customerDirty;
+    public boolean customersDirty;
+    public boolean activitiesDirty;
+    public boolean campersDirty;
+    public boolean groupsDirty;
+    public boolean counselorDirty;
+    public boolean directorDirty;
+    public boolean campLocationDirty;
 }

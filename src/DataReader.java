@@ -22,6 +22,8 @@ public class DataReader {
     private static final String DESCRIPTION = "description";
     private static final String ALLERGIES = "allergies";
     private static final String PRIMARYEMERGENCYCONTACT = "primaryEmergencyContact";
+    private static final String SECONDARYEMERGENCYCONTACT = "secondaryEmergencyContact";
+    private static final String PRIMARYCAREPHYSICIAN = "primaryCarePhysician";
     private static final String PASTENROLLMENT = "pastEnrollment";
     private static final String SWIMTESTRESULT = "swimTestResult";
     private static final String ADDRESS = "address";
@@ -34,20 +36,55 @@ public class DataReader {
 
     private static DirtyFlags dirtyFlags = new DirtyFlags();
 
+    public static final int CUSTOMERSDIRTY = 0;
+    public static final int ACTIVITIESDIRTY = 1;
+    public static final int CAMPERSDIRTY = 2;
+    public static final int GROUPSDIRTY = 3;
+    public static final int COUNSELORDIRTY = 4;
+    public static final int DIRECTORDIRTY = 5;
+    public static final int CAMPLOCATIONDIRTY = 6;
+
     private static ArrayList<Customer> customerCache = null;
+    private static ArrayList<Activity> activityCache = null;
+    private static ArrayList<Camper> camperCache = null;
+    private static ArrayList<Group> groupCache = null;
+    private static ArrayList<Counselor> counselorCache = null;
+    private static Director directorCache = null;
     private static CampLocation campLocationCache = null;
 
     public static void main(String[] args) {
         // temp for tests
         System.out.println(getCustomer(UUID.fromString("de162b09-ab98-4ec5-9bf2-1a5fdc86c7e7")));
         System.out.println(getCustomer(UUID.fromString("de162b09-ab98-4ec5-9bf2-1a5fdc86c7e7")));
-        setDirtyFlag();
+        setDirtyFlag(CUSTOMERSDIRTY);
         System.out.println(getCustomer(UUID.fromString("de162b09-ab98-4ec5-9bf2-1a5fdc86c7e7")));
 
     }
 
-    public static void setDirtyFlag() {
-        dirtyFlags.customerDirty = true;
+    public static void setDirtyFlag(int flagToSet) {
+        switch (flagToSet) {
+            case 0:
+                dirtyFlags.customersDirty = true;
+                return;
+            case 1:
+                dirtyFlags.activitiesDirty = true;
+                return;
+            case 2:
+                dirtyFlags.campersDirty = true;
+                return;
+            case 3:
+                dirtyFlags.groupsDirty = true;
+                return;
+            case 4:
+                dirtyFlags.counselorDirty = true;
+                return;
+            case 5:
+                dirtyFlags.directorDirty = true;
+                return;
+            case 6:
+                dirtyFlags.campLocationDirty = true;
+                return;
+        }
     }
 
     public static Customer getCustomer(UUID id) {
@@ -59,7 +96,7 @@ public class DataReader {
     }
 
     public static ArrayList<Customer> getCustomers() {
-        if (customerCache != null && !dirtyFlags.customerDirty) {
+        if (customerCache != null && !dirtyFlags.customersDirty) {
             return customerCache;
         }
         JSONParser parser = new JSONParser();
@@ -92,6 +129,9 @@ public class DataReader {
     }
 
     public static ArrayList<Activity> getActivities() {
+        if (activityCache != null && !dirtyFlags.activitiesDirty) {
+            return activityCache;
+        }
         JSONParser parser = new JSONParser();
         ArrayList<Activity> activities = new ArrayList<Activity>();
 
@@ -108,7 +148,7 @@ public class DataReader {
         } catch (Exception exception) {
 
         }
-
+        activityCache = activities;
         return activities;
     }
 
@@ -127,6 +167,9 @@ public class DataReader {
     }
 
     public static ArrayList<Camper> getCampers() {
+        if (camperCache != null && !dirtyFlags.campersDirty) {
+            return camperCache;
+        }
         JSONParser parser = new JSONParser();
         ArrayList<Camper> camperList = new ArrayList<>();
         try {
@@ -146,8 +189,14 @@ public class DataReader {
                 Contact primaryEmergencyContact = new Contact((String) pec.get(FIRSTNAME),
                         (String) pec.get(LASTNAME), (String) pec.get(EMAIL), (String) pec.get(PHONENUMBER),
                         (String) pec.get(RELATIONSHIP), (String) pec.get(ADDRESS));
-                Contact secondaryEmergencyContact = null;
-                Contact primaryCarePhysician = null;
+                JSONObject sec = (JSONObject) camper.get(SECONDARYEMERGENCYCONTACT);
+                Contact secondaryEmergencyContact = new Contact((String) sec.get(FIRSTNAME),
+                        (String) sec.get(LASTNAME), (String) sec.get(EMAIL), (String) sec.get(PHONENUMBER),
+                        (String) sec.get(RELATIONSHIP), (String) sec.get(ADDRESS));
+                JSONObject pcp = (JSONObject) camper.get(PRIMARYCAREPHYSICIAN);
+                Contact primaryCarePhysician = new Contact((String) pcp.get(FIRSTNAME),
+                        (String) pcp.get(LASTNAME), (String) pcp.get(EMAIL), (String) pcp.get(PHONENUMBER),
+                        (String) pcp.get(RELATIONSHIP), (String) pcp.get(ADDRESS));
                 int pastEnrollment = ((Long) camper.get(PASTENROLLMENT)).intValue();
                 String swimTestResult = (String) camper.get(SWIMTESTRESULT);
                 String relationToCustomer = (String) camper.get(RELATIONTOCUSTOMER);
@@ -158,6 +207,7 @@ public class DataReader {
         } catch (Exception e) {
             System.out.println(e);
         }
+        camperCache = camperList;
         return camperList;
     }
 
@@ -172,6 +222,9 @@ public class DataReader {
     }
 
     public static ArrayList<Group> getGroups() {
+        if (groupCache != null && !dirtyFlags.groupsDirty) {
+            return groupCache;
+        }
         JSONParser parser = new JSONParser();
         ArrayList<Group> groupList = new ArrayList<>();
         try {
@@ -193,6 +246,7 @@ public class DataReader {
         } catch (Exception exception) {
 
         }
+        groupCache = groupList;
         return groupList;
     }
 
@@ -205,6 +259,9 @@ public class DataReader {
     }
 
     public static ArrayList<Counselor> getCounselors() {
+        if (counselorCache != null && !dirtyFlags.counselorDirty) {
+            return counselorCache;
+        }
         JSONParser parser = new JSONParser();
         ArrayList<Counselor> counselorList = new ArrayList<>();
 
@@ -217,17 +274,20 @@ public class DataReader {
                 String firstName = (String) counselor.get(FIRSTNAME);
                 String lastName = (String) counselor.get(LASTNAME);
                 String password = (String) counselor.get(PASSWORD);
-
-                counselorList.add(new Counselor(id, email, firstName, lastName, password, null));
+                CampLocation campLocation = getCampLocation();
+                counselorList.add(new Counselor(id, email, firstName, lastName, password, campLocation));
             }
         } catch (Exception exception) {
 
         }
-
+        counselorCache = counselorList;
         return counselorList;
     }
 
     public static Director getDirector() {
+        if (directorCache != null && !dirtyFlags.directorDirty) {
+            return directorCache;
+        }
         JSONParser parser = new JSONParser();
         try {
             JSONObject director = (JSONObject) parser.parse(new FileReader("data/director.json"));
@@ -236,7 +296,10 @@ public class DataReader {
             String firstName = (String) director.get(FIRSTNAME);
             String lastName = (String) director.get(LASTNAME);
             String password = (String) director.get(PASSWORD);
-            return new Director(id, email, firstName, lastName, password, null);
+            CampLocation campLocation = getCampLocation();
+            Director directorObject = new Director(id, email, firstName, lastName, password, campLocation);
+            directorCache = directorObject;
+            return directorObject;
         } catch (Exception exception) {
 
         }
@@ -244,6 +307,9 @@ public class DataReader {
     }
 
     public static CampLocation getCampLocation() {
+        if (campLocationCache != null && !dirtyFlags.campLocationDirty) {
+            return campLocationCache;
+        }
         JSONParser parser = new JSONParser();
         try {
             JSONObject campLocation = (JSONObject) parser.parse(new FileReader("data/campLocation.json"));
@@ -251,8 +317,9 @@ public class DataReader {
             String name = (String) campLocation.get(NAME);
             String location = (String) campLocation.get(LOCATION);
             double pricePerCamper = (double) campLocation.get(PRICEPERCAMPER);
-
-            return new CampLocation(id, name, location, pricePerCamper);
+            CampLocation campLocationObject = new CampLocation(id, name, location, pricePerCamper);
+            campLocationCache = campLocationObject;
+            return campLocationObject;
         } catch (Exception exception) {
 
         }
