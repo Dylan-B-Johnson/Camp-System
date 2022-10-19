@@ -9,4 +9,5 @@ public class DirtyFlags {
     public boolean directorDirty;
     public boolean campLocationDirty;
     public boolean weeksDirty;
+    public boolean daySchedulesDirty;
 }

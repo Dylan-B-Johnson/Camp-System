@@ -37,8 +37,8 @@ public class DataReader {
     private static final String CURRENTCAMPERS = "currentCampers";
     private static final String STARTOFWEEK = "startOfWeek";
     private static final String GROUPS = "groups";
-
-    private static DirtyFlags dirtyFlags = new DirtyFlags();
+    private static final String CURRENTACTIVITIES = "currentActivities";
+    private static final String DAY = "day";
 
     public static final int CUSTOMERSDIRTY = 0;
     public static final int ACTIVITIESDIRTY = 1;
@@ -48,6 +48,9 @@ public class DataReader {
     public static final int DIRECTORDIRTY = 5;
     public static final int CAMPLOCATIONDIRTY = 6;
     public static final int WEEKSDIRTY = 7;
+    public static final int DAYSCHEDULESDIRTY = 8;
+
+    private static DirtyFlags dirtyFlags = new DirtyFlags();
 
     private static ArrayList<Customer> customerCache = null;
     private static ArrayList<Activity> activityCache = null;
@@ -57,6 +60,7 @@ public class DataReader {
     private static Director directorCache = null;
     private static CampLocation campLocationCache = null;
     private static ArrayList<Week> weeksCache = null;
+    private static ArrayList<DaySchedule> daySchedulesCache = null;
 
     public static void main(String[] args) {
         // temp for tests
@@ -93,6 +97,9 @@ public class DataReader {
                 return;
             case 7:
                 dirtyFlags.weeksDirty = true;
+                return;
+            case 8:
+                dirtyFlags.daySchedulesDirty = true;
                 return;
         }
     }
@@ -368,5 +375,42 @@ public class DataReader {
         }
         weeksCache = weeksList;
         return weeksList;
+    }
+
+    public static DaySchedule getDaySchedule(UUID id) {
+        for (DaySchedule daySchedule : getDaySchedules()) {
+            if (daySchedule.getId().compareTo(id) == 0) {
+                return daySchedule;
+            }
+        }
+        return null;
+    }
+
+    public static ArrayList<DaySchedule> getDaySchedules() {
+        if (daySchedulesCache != null && !dirtyFlags.daySchedulesDirty) {
+            return daySchedulesCache;
+        }
+        JSONParser parser = new JSONParser();
+        ArrayList<DaySchedule> dayScheduleList = new ArrayList<>();
+        try {
+            JSONArray dayScheduleArray = (JSONArray) parser.parse(new FileReader("data/daySchedule.json"));
+            for (Object dayScheduleObject : dayScheduleArray) {
+                JSONObject dayScheduleJsonObject = (JSONObject) dayScheduleObject;
+                UUID id = UUID.fromString((String) dayScheduleJsonObject.get(ID));
+                ArrayList<Activity> currentActivities = new ArrayList<>();
+                JSONArray activities = (JSONArray) dayScheduleJsonObject.get(CURRENTACTIVITIES);
+                for (Object aObject : activities) {
+                    JSONObject aJsonObject = (JSONObject) aObject;
+                    currentActivities.add(getActivity(UUID.fromString((String) aJsonObject.get(ID))));
+                }
+                Week week = null;
+                LocalDate day = LocalDate.parse((String) dayScheduleJsonObject.get(DAY));
+                dayScheduleList.add(new DaySchedule(id, currentActivities, week, day));
+            }
+        } catch (Exception exception) {
+
+        }
+        daySchedulesCache = dayScheduleList;
+        return dayScheduleList;
     }
 }
