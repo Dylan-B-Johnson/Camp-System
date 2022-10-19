@@ -12,14 +12,14 @@ import org.json.simple.parser.JSONParser;
 public class DataReader {
 
     public static void main(String[] args) {
-        getCamper(UUID.fromString("35f810c6-ed26-42ec-a423-1db01478251f")).getFirstName();
+        System.out.println(getCamper(UUID.fromString("35f810c6-ed26-42ec-a423-1db01478251f")).getFirstName());
     }
 
     public static ArrayList<Customer> getCustomers() {
         JSONParser parser = new JSONParser();
         ArrayList<Customer> customerList = new ArrayList<Customer>();
         try {
-            JSONArray customers = (JSONArray) parser.parse(new FileReader("Data/customers.json"));
+            JSONArray customers = (JSONArray) parser.parse(new FileReader("data/customers.json"));
             for (Object object : customers) {
                 JSONObject user = (JSONObject) object;
                 String id = (String) user.get("id");
@@ -41,7 +41,7 @@ public class DataReader {
         ArrayList<Activity> activities = new ArrayList<Activity>();
 
         try {
-            JSONArray jActivities = (JSONArray) parser.parse(new FileReader("Data/activities.json"));
+            JSONArray jActivities = (JSONArray) parser.parse(new FileReader("data/activities.json"));
             for (Object object : jActivities) {
                 JSONObject activity = (JSONObject) object;
                 String id = (String) activity.get("id");
@@ -75,7 +75,7 @@ public class DataReader {
         JSONParser parser = new JSONParser();
         ArrayList<Camper> camperList = new ArrayList<>();
         try {
-            JSONArray campers = (JSONArray) parser.parse(new FileReader("Data/campers.json"));
+            JSONArray campers = (JSONArray) parser.parse(new FileReader("data/campers.json"));
             for (Object object : campers) {
                 JSONObject camper = (JSONObject) object;
                 UUID id = UUID.fromString((String) camper.get("id"));
@@ -120,7 +120,7 @@ public class DataReader {
         JSONParser parser = new JSONParser();
         ArrayList<Group> groupList = new ArrayList<>();
         try {
-            JSONArray groups = (JSONArray) parser.parse(new FileReader("Data/groups.json"));
+            JSONArray groups = (JSONArray) parser.parse(new FileReader("data/groups.json"));
             for (Object object : groups) {
                 JSONObject group = (JSONObject) object;
                 UUID id = UUID.fromString((String) group.get("id"));
