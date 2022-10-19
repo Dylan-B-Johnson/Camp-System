@@ -15,6 +15,14 @@ public class DataReader {
         System.out.println(getCamper(UUID.fromString("35f810c6-ed26-42ec-a423-1db01478251f")).getFirstName());
     }
 
+    public static Customer getCustomer(UUID id) {
+        for (Customer customer : getCustomers()) {
+            if (customer.getId().compareTo(id) == 0)
+                return customer;
+        }
+        return null;
+    }
+
     public static ArrayList<Customer> getCustomers() {
         JSONParser parser = new JSONParser();
         ArrayList<Customer> customerList = new ArrayList<Customer>();
@@ -34,6 +42,14 @@ public class DataReader {
 
         }
         return customerList;
+    }
+
+    public static Activity getActivity(UUID id) {
+        for (Activity activity : getActivities()) {
+            if (activity.getId().compareTo(id) == 0)
+                return activity;
+        }
+        return null;
     }
 
     public static ArrayList<Activity> getActivities() {
@@ -126,7 +142,12 @@ public class DataReader {
                 UUID id = UUID.fromString((String) group.get("id"));
                 int groupSize = ((Long) group.get("groupSize")).intValue();
                 ArrayList<Camper> campers = new ArrayList<>();
-                Counselor counselor = null;
+                JSONArray jCampers = (JSONArray) group.get("campers");
+                for (Object camper : jCampers) {
+                    JSONObject cam = (JSONObject) camper;
+                    campers.add(getCamper(UUID.fromString((String) cam.get("id"))));
+                }
+                Counselor counselor = getCounselor(UUID.fromString((String) group.get("counselor")));
                 ArrayList<DaySchedule> schedule = new ArrayList<>();
                 groupList.add(new Group(id, campers, counselor, groupSize, schedule));
             }
@@ -134,5 +155,52 @@ public class DataReader {
 
         }
         return groupList;
+    }
+
+    public static Counselor getCounselor(UUID id) {
+        for (Counselor counselor : getCounselors()) {
+            if (counselor.getId().compareTo(id) == 0)
+                return counselor;
+        }
+        return null;
+    }
+
+    public static ArrayList<Counselor> getCounselors() {
+        JSONParser parser = new JSONParser();
+        ArrayList<Counselor> counselorList = new ArrayList<>();
+
+        try {
+            JSONArray counselors = (JSONArray) parser.parse(new FileReader("data/counselors.json"));
+            for (Object object : counselors) {
+                JSONObject counselor = (JSONObject) object;
+                UUID id = UUID.fromString((String) counselor.get("id"));
+                String email = (String) counselor.get("email");
+                String firstName = (String) counselor.get("firstName");
+                String lastName = (String) counselor.get("lastName");
+                String password = (String) counselor.get("password");
+
+                counselorList.add(new Counselor(id, email, firstName, lastName, password, null));
+            }
+        } catch (Exception exception) {
+
+        }
+
+        return counselorList;
+    }
+
+    public static Director getDirector() {
+        JSONParser parser = new JSONParser();
+        try {
+            JSONObject director = (JSONObject) parser.parse(new FileReader("data/director.json"));
+            UUID id = UUID.fromString((String) director.get("id"));
+            String email = (String) director.get("email");
+            String firstName = (String) director.get("firstName");
+            String lastName = (String) director.get("lastName");
+            String password = (String) director.get("password");
+            return new Director(id, email, firstName, lastName, password, null);
+        } catch (Exception exception) {
+
+        }
+        return null;
     }
 }
