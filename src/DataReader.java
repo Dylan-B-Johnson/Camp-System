@@ -33,6 +33,10 @@ public class DataReader {
     private static final String GROUPSIZE = "groupSize";
     private static final String COUNSELOR = "counselor";
     private static final String PRICEPERCAMPER = "pricePerCamper";
+    private static final String MAXCAMPERS = "maxCampers";
+    private static final String CURRENTCAMPERS = "currentCampers";
+    private static final String STARTOFWEEK = "startOfWeek";
+    private static final String GROUPS = "groups";
 
     private static DirtyFlags dirtyFlags = new DirtyFlags();
 
@@ -43,6 +47,7 @@ public class DataReader {
     public static final int COUNSELORDIRTY = 4;
     public static final int DIRECTORDIRTY = 5;
     public static final int CAMPLOCATIONDIRTY = 6;
+    public static final int WEEKSDIRTY = 7;
 
     private static ArrayList<Customer> customerCache = null;
     private static ArrayList<Activity> activityCache = null;
@@ -51,9 +56,11 @@ public class DataReader {
     private static ArrayList<Counselor> counselorCache = null;
     private static Director directorCache = null;
     private static CampLocation campLocationCache = null;
+    private static ArrayList<Week> weeksCache = null;
 
     public static void main(String[] args) {
         // temp for tests
+        getWeeks();
         System.out.println(getCustomer(UUID.fromString("de162b09-ab98-4ec5-9bf2-1a5fdc86c7e7")));
         System.out.println(getCustomer(UUID.fromString("de162b09-ab98-4ec5-9bf2-1a5fdc86c7e7")));
         setDirtyFlag(CUSTOMERSDIRTY);
@@ -83,6 +90,9 @@ public class DataReader {
                 return;
             case 6:
                 dirtyFlags.campLocationDirty = true;
+                return;
+            case 7:
+                dirtyFlags.weeksDirty = true;
                 return;
         }
     }
@@ -150,10 +160,6 @@ public class DataReader {
         }
         activityCache = activities;
         return activities;
-    }
-
-    public static ArrayList<Week> getWeeks() {
-        return null;
     }
 
     public static Camper getCamper(UUID id) {
@@ -324,5 +330,43 @@ public class DataReader {
 
         }
         return null;
+    }
+
+    public static Week getWeek(UUID id) {
+        for (Week week : getWeeks()) {
+            if (week.getId().compareTo(id) == 0) {
+                return week;
+            }
+        }
+        return null;
+    }
+
+    public static ArrayList<Week> getWeeks() {
+        if (weeksCache != null && !dirtyFlags.weeksDirty) {
+            return weeksCache;
+        }
+        JSONParser parser = new JSONParser();
+        ArrayList<Week> weeksList = new ArrayList<>();
+        try {
+            JSONArray weeksArray = (JSONArray) parser.parse(new FileReader("data/weeks.json"));
+            for (Object weekObject : weeksArray) {
+                JSONObject weekJsonObject = (JSONObject) weekObject;
+                UUID id = UUID.fromString((String) weekJsonObject.get(ID));
+                int maxCampers = ((Long) weekJsonObject.get(MAXCAMPERS)).intValue();
+                int currentCampers = ((Long) weekJsonObject.get(CURRENTCAMPERS)).intValue();
+                LocalDate startOfWeek = LocalDate.parse((String) weekJsonObject.get(STARTOFWEEK));
+                ArrayList<Group> groups = new ArrayList<>();
+                JSONArray groupArray = (JSONArray) weekJsonObject.get(GROUPS);
+                for (Object groupObject : groupArray) {
+                    groups.add(getGroup(UUID.fromString((String) groupObject)));
+                }
+                CampLocation campLocation = getCampLocation();
+                weeksList.add(new Week(id, maxCampers, currentCampers, startOfWeek, groups, campLocation));
+            }
+        } catch (Exception exception) {
+
+        }
+        weeksCache = weeksList;
+        return weeksList;
     }
 }
