@@ -7,6 +7,7 @@ public class Group {
     private Counselor counselor;
     private int groupSize;
     private ArrayList<DaySchedule> schedule;
+    private static final int MAX_CAMPERS = 6;
 
     public Group(UUID id, ArrayList<Camper> campers, Counselor counselor, int groupSize,
             ArrayList<DaySchedule> schedule) {
@@ -22,7 +23,9 @@ public class Group {
     }
 
     public void addCamper(Camper camper) {
-
+        if (groupSize < MAX_CAMPERS){
+            campers.add(camper);
+        }
     }
 
     // probably will need a equals method in Camper

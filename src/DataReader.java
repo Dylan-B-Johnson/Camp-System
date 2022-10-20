@@ -391,4 +391,16 @@ public class DataReader {
         daySchedulesCache = dayScheduleList;
         return dayScheduleList;
     }
+
+    public static ArrayList<User> getUsers() {
+        ArrayList<User> users = new ArrayList<>();
+        for (Customer customer : getCustomers().values()) {
+            users.add(customer);
+        }
+        for (Counselor counselor : getCounselors()) {
+            users.add(counselor);
+        }
+        users.add(getDirector());
+        return users;
+    }
 }

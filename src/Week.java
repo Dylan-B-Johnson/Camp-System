@@ -63,6 +63,22 @@ public class Week {
         return this.startOfWeek;
     }
 
+    public void setGroups(ArrayList<Group> groups){
+        this.groups = groups;
+    }
+
+    public ArrayList<Group> getGroups(){
+        return this.groups;
+    }
+
+    public void setCampLocation(CampLocation campLocation){
+        this.campLocation = campLocation;
+    }
+
+    public CampLocation getCampLocation(){
+        return this.campLocation;
+    }
+
     public boolean canRegisterCamper() {
         if (currentCampers < maxCampers) {
             return true;
