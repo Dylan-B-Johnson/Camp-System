@@ -42,9 +42,9 @@ public class UserList {
 
     private void parseCustomers(){
         ArrayList<Customer> customers = new ArrayList<Customer>();
-        for(int i=0; i < users.size(); i++){
-            if(users.get(i).typeOfUser.equals(TypeOfUser.CUSTOMER)){
-                customers.add((Customer)users.get(i));
+        for(User user : users){
+            if(user.typeOfUser.equals(TypeOfUser.CUSTOMER)){
+                customers.add((Customer)user);
             }
         }
         this.customers = customers;
@@ -56,9 +56,9 @@ public class UserList {
 
     private void parseCounselors(){
         ArrayList<Counselor> counselors = new ArrayList<Counselor>();
-        for(int i=0; i < users.size(); i++){
-            if(users.get(i).typeOfUser.equals(TypeOfUser.COUNSELOR)){
-                counselors.add((Counselor)users.get(i));
+        for(User user : users){
+            if(user.typeOfUser.equals(TypeOfUser.COUNSELOR)){
+                counselors.add((Counselor)user);
             }
         }
         this.counselors = counselors;
@@ -70,9 +70,9 @@ public class UserList {
 
     private void parseCampers(){
         ArrayList<Camper> campers = new ArrayList<Camper>();
-        for(int i=0; i < this.customers.size(); i++){
-            for(int j=0; j < this.customers.get(i).getCampers().size(); j++){
-                campers.add(this.customers.get(i).getCampers().get(j));
+        for(Customer customer : customers){
+            for(int j=0; j < customer.getCampers().size(); j++){
+                campers.add(customer.getCampers().get(j));
             }
         }
         this.campers = campers;
@@ -83,9 +83,9 @@ public class UserList {
     }
 
     private void parseDirector(){
-        for(int i=0; i < users.size(); i++){
-            if(users.get(i).typeOfUser.equals(TypeOfUser.DIRECTOR)){
-                this.director = (Director)users.get(i);
+        for(User user : users){
+            if(user.typeOfUser.equals(TypeOfUser.DIRECTOR)){
+                this.director = (Director)user;
             }
         }
     }
@@ -95,9 +95,9 @@ public class UserList {
     }
 
     public User getUser(UUID id){
-        for(int i=0; i < users.size(); i++){
-            if(users.get(i).id.equals(id)){
-                return users.get(i);
+        for(User user : users){
+            if(user.id.equals(id)){
+                return user;
             }
         }
         return null;
