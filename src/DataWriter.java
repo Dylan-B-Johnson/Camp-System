@@ -20,14 +20,15 @@ public class DataWriter {
             FileWriter file = new FileWriter("data/customersTest.json");
             JSONArray customersJsonArray = new JSONArray();
             for (Customer customer : customers.values()) {
-                JSONObject customerJsonObject = new JSONObject();
-                customerJsonObject.put(DataConstants.ID, customer.getId().toString());
-                customerJsonObject.put(DataConstants.EMAIL, customer.getEmail());
-                customerJsonObject.put(DataConstants.FIRSTNAME, customer.getFirstName());
-                customerJsonObject.put(DataConstants.LASTNAME, customer.getLastName());
-                customerJsonObject.put(DataConstants.PASSWORD, customer.getPassword());
-                customerJsonObject.put(DataConstants.CAMPLOCATION, "2abbae6f-07eb-4e30-ba07-ec8fc05a503b");
-                customerJsonObject.put(DataConstants.TYPEOFUSER, "CUSTOMER");
+                HashMap<String, String> customerHashMap = new HashMap<>();
+                customerHashMap.put(DataConstants.ID, customer.getId().toString());
+                customerHashMap.put(DataConstants.EMAIL, customer.getEmail());
+                customerHashMap.put(DataConstants.FIRSTNAME, customer.getFirstName());
+                customerHashMap.put(DataConstants.LASTNAME, customer.getLastName());
+                customerHashMap.put(DataConstants.PASSWORD, customer.getPassword());
+                customerHashMap.put(DataConstants.CAMPLOCATION, "2abbae6f-07eb-4e30-ba07-ec8fc05a503b");
+                customerHashMap.put(DataConstants.TYPEOFUSER, "CUSTOMER");
+                JSONObject customerJsonObject = new JSONObject(customerHashMap);
                 JSONArray campersJsonArray = new JSONArray();
                 for (Camper camper : customer.getCampers()) {
                     campersJsonArray.add(camper.getId().toString());
@@ -42,6 +43,12 @@ public class DataWriter {
             return false;
         }
         return true;
+    }
+
+    public static boolean saveCustomer(Customer customer) {
+        HashMap<UUID, Customer> modifiedCustomers = DataReader.getCustomers();
+        modifiedCustomers.put(customer.getId(), customer);
+        return saveCustomers(modifiedCustomers);
     }
 
     public static boolean editCustomer(UUID id, Customer customer) {
