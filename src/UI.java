@@ -9,8 +9,8 @@ public class UI {
     public static void welcomeScreen() {
         while (true) {
             Facade f = new Facade();
-            print("***** Welcome to " + f.getCampLocation().getName() + " *****\n" +
-                    "Located at " + f.getCampLocation().getLocation() + ", and managed by "
+            title("Welcome to " + f.getCampLocation().getName());
+            print("Located at " + f.getCampLocation().getLocation() + ", and managed by "
                     + f.getDirector().getFirstName()
                     + " " + f.getDirector().getLastName() + ".\n" + f.getCampLocation().getName()
                     + " offers many fun activities:");
@@ -45,7 +45,10 @@ public class UI {
 
     public static void createAccount() {
         Facade f = new Facade();
-        print("***** Create Your Account *****");
+        title("Create Your Account");
+        while (true){
+            
+        }
     }
 
     public static void login() {
@@ -70,11 +73,14 @@ public class UI {
     }
 
     public static void basicError(String answer) {
+        title("ERROR");
+        input(answer+ "\" is not a valid option, please try again.\n(Press enter to continue).");
         cls();
-        print("***** ERROR *****\n\"" + answer
-                + "\" is not a valid option, please try again.\n(Press enter to continue).");
-        input("");
+    }
+
+    public static void title(String title) {
         cls();
+        print("***** " + title + " *****");
     }
 
 }
