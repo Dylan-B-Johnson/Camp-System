@@ -7,12 +7,17 @@ public class CampLocation {
     private UUID id;
     private String name;
     private String location;
+    private CampLocation campLocation;
 
-    public CampLocation(UUID id, String name, String location, double pricePerCamper) {
-        this.id = id;
-        this.name = name;
-        this.location = location;
-        this.pricePerCamper = pricePerCamper;
+    private CampLocation() {
+
+    }
+
+    public CampLocation getCampLocation(){
+        if (campLocation==null){
+            campLocation=new CampLocation();
+        }
+        return campLocation;
     }
 
     public double getPricePerCamper() {
@@ -47,5 +52,4 @@ public class CampLocation {
         this.location = location;
     }
 
-    
 }

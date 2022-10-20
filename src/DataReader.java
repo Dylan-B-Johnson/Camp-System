@@ -304,7 +304,11 @@ public class DataReader {
             String name = (String) campLocation.get(DataConstants.NAME);
             String location = (String) campLocation.get(DataConstants.LOCATION);
             double pricePerCamper = (double) campLocation.get(DataConstants.PRICEPERCAMPER);
-            CampLocation campLocationObject = new CampLocation(id, name, location, pricePerCamper);
+            CampLocation campLocationObject = getCampLocation();
+            campLocationObject.setId(id);
+            campLocationObject.setLocation(location);
+            campLocationObject.setName(name);
+            campLocationObject.setPricePerCamper(pricePerCamper);
             campLocationCache = campLocationObject;
             return campLocationObject;
         } catch (Exception exception) {

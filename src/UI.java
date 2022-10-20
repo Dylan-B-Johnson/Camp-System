@@ -1,4 +1,3 @@
-import java.util.LinkedList;
 import java.util.Scanner;
 
 public class UI {
@@ -8,10 +7,11 @@ public class UI {
     }
 
     public static void welcomeScreen() {
-        while (true){
+        while (true) {
             Facade f = new Facade();
             print("***** Welcome to " + f.getCampLocation().getName() + " *****\n" +
-                    "Located at " + f.getCampLocation().getLocation() + ", and managed by " + f.getDirector().getFirstName()
+                    "Located at " + f.getCampLocation().getLocation() + ", and managed by "
+                    + f.getDirector().getFirstName()
                     + " " + f.getDirector().getLastName() + ".\n" + f.getCampLocation().getName()
                     + " offers many fun activities:");
             for (Activity i : f.getActivities()) {
@@ -19,30 +19,37 @@ public class UI {
             }
             print("");
             String answer = input("Please select one of the following options by entering the coresponding number:\n"
-            + "(1) Login\n(2) Create Account");
+                    + "(1) Login\n(2) Create Account");
             Scanner scan = new Scanner(answer);
-            if (answer.equalsIgnoreCase("login")){
-
+            if (answer.equalsIgnoreCase("login")) {
+                login();
             }
-            if (answer.equalsIgnoreCase("create account")){
-
+            if (answer.equalsIgnoreCase("create account")) {
+                createAccount();
             }
-            try{
-                if (scan.nextInt()==1){
-
+            try {
+                if (scan.nextInt() == 1) {
+                    login();
                 }
-                if (scan.nextInt()==2){
-                    
+                if (scan.nextInt() == 2) {
+                    createAccount();
                 }
-            }
-            catch (Exception e){
+            } catch (Exception e) {
                 basicError(answer);
             }
             scan.close();
-           
+
         }
 
+    }
+
+    public static void createAccount() {
+        Facade f = new Facade();
         
+    }
+
+    public static void login() {
+
     }
 
     public static void print(String string) {
@@ -62,9 +69,10 @@ public class UI {
         System.out.flush();
     }
 
-    public static void basicError(String answer){
+    public static void basicError(String answer) {
         cls();
-        print("***** ERROR *****\n\""+answer+"\" is not a valid option, please try again.\n(Press enter to continue).");
+        print("***** ERROR *****\n\"" + answer
+                + "\" is not a valid option, please try again.\n(Press enter to continue).");
         input("");
         cls();
     }
