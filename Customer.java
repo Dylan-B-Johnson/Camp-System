@@ -24,4 +24,8 @@ public class Customer extends User {
     public double getDiscount() {
         return 404;
     }
+
+    public ArrayList<Camper> getCampers(){
+        return this.campers;
+    }
 }
