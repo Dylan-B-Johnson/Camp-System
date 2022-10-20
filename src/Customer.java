@@ -13,6 +13,10 @@ public class Customer extends User {
         this.campers = campers;
     }
 
+    public ArrayList<Camper> getCampers() {
+        return this.campers;
+    }
+
     public String getName() {
         return this.firstName;
     }
