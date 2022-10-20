@@ -8,7 +8,7 @@ public class CampLocation {
     private String name;
     private String location;
 
-    private CampLocation(UUID id, String name, String location, double pricePerCamper) {
+    public CampLocation(UUID id, String name, String location, double pricePerCamper) {
         this.id = id;
         this.name = name;
         this.location = location;
