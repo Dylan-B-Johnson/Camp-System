@@ -5,9 +5,17 @@ import java.time.LocalDate;
 public class Facade {
 
     private User user;
-
+    
     public Facade() {
 
+    }
+
+    public User getDirector(){
+        return null;
+    }
+
+    public CampLocation getCampLocation(){
+        return null;
     }
 
     public User login(String email, String password) {
