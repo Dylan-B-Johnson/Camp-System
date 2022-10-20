@@ -1,3 +1,5 @@
+// Copyright 2022 Row 3
+
 import java.util.ArrayList;
 
 public class WeekList {

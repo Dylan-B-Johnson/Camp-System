@@ -11,22 +11,26 @@ public abstract class User {
     protected CampLocation campLocation;
     protected TypeOfUser typeOfUser;
 
-    public User(String email, String password) {
-        setId(UUID.randomUUID());
-        changeEmail(email);
-        setPassword(password);
-    }
-
-    public User(UUID id) {
-        setId(id);
-    }
-
-    public boolean changeEmail(String email) {
-        if (email == null || !email.contains("@") || !email.contains(".")
-                || !UserList.getInstance().emailAvailable(email))
-            return false;
+    public User(String email, String firstName, String lastName, String password, CampLocation campLocation,
+            TypeOfUser typeOfUser) {
+        this.id = UUID.randomUUID();
         this.email = email;
-        return true;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.password = password;
+        this.campLocation = campLocation;
+        this.typeOfUser = typeOfUser;
+    }
+
+    public User(UUID id, String email, String firstName, String lastName, String password, CampLocation campLocation,
+            TypeOfUser typeOfUser) {
+        this.id = id;
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.password = password;
+        this.campLocation = campLocation;
+        this.typeOfUser = typeOfUser;
     }
 
     public String toString() {
@@ -35,21 +39,22 @@ public abstract class User {
                 "Type of User: " + typeOfUser;
     }
 
-    public UUID getId(){
+    public UUID getId() {
         return this.id;
-    }
-
-    public void setId(UUID id){
-        if (id!=null)
-            this.id=id;
     }
 
     public String getEmail() {
         return email;
     }
 
+    public static boolean emailIsValid(String email) {
+        return email != null && email.contains("@") && email.contains(".") && email.length() >= 3
+                && UserList.getInstance().emailAvailable(email);
+    }
+
     public void setEmail(String email) {
-        if (email != null)
+        if (email != null && email.contains("@") && email.contains(".") && email.length() >= 3
+                && UserList.getInstance().emailAvailable(email))
             this.email = email;
     }
 

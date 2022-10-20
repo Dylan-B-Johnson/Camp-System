@@ -1,0 +1,20 @@
+[{
+    "id": "1b55a14a-1b29-46cb-bb27-078ef1866e73",
+    "maxCampers": 200,
+    "currentCampers": 47,
+    "startOfWeek": "2022-07-01",
+    "groups": [
+        "64790bc1-c498-47e6-97c4-6804d557d94a",
+        "5253cfe4-ea9b-4693-87ec-7d62b083c4a9"
+    ]
+},
+{
+    "id": "d3b8a177-f71f-4785-a139-f7dc89b92bf1",
+    "maxCampers": 200,
+    "currentCampers": 40,
+    "startOfWeek": "2022-07-08",
+    "groups": [
+        "64790bc1-c498-47e6-97c4-6804d557d94a",
+        "5253cfe4-ea9b-4693-87ec-7d62b083c4a9"
+    ]  
+}]
