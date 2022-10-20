@@ -45,13 +45,13 @@ public class DataWriter {
         return true;
     }
 
-    public static boolean saveCustomer(Customer customer) {
+    public static boolean createCustomer(Customer customer) {
         HashMap<UUID, Customer> modifiedCustomers = DataReader.getCustomers();
         modifiedCustomers.put(customer.getId(), customer);
         return saveCustomers(modifiedCustomers);
     }
 
-    public static boolean editCustomer(UUID id, Customer customer) {
+    public static boolean updateCustomer(UUID id, Customer customer) {
         HashMap<UUID, Customer> modifiedCustomers = DataReader.getCustomers();
         if (!modifiedCustomers.containsKey(id))
             return false;
@@ -59,7 +59,7 @@ public class DataWriter {
         return saveCustomers(modifiedCustomers);
     }
 
-    public static boolean removeCustomer(UUID id) {
+    public static boolean deleteCustomer(UUID id) {
         HashMap<UUID, Customer> modifiedCustomers = DataReader.getCustomers();
         if (!modifiedCustomers.containsKey(id))
             return false;
@@ -86,6 +86,28 @@ public class DataWriter {
             return false;
         }
         return true;
+    }
+
+    public static boolean createActivity(Activity activity) {
+        HashMap<UUID, Activity> modifiedActivities = DataReader.getActivities();
+        modifiedActivities.put(activity.getId(), activity);
+        return saveActivities(modifiedActivities);
+    }
+
+    public static boolean updateActivity(UUID id, Activity activity) {
+        HashMap<UUID, Activity> modifiedActivities = DataReader.getActivities();
+        if (!modifiedActivities.containsKey(id))
+            return false;
+        modifiedActivities.put(id, activity);
+        return saveActivities(modifiedActivities);
+    }
+
+    public static boolean deleteActivity(UUID id) {
+        HashMap<UUID, Activity> modifiedActivities = DataReader.getActivities();
+        if (!modifiedActivities.containsKey(id))
+            return false;
+        modifiedActivities.remove(id);
+        return saveActivities(modifiedActivities);
     }
 
     public static boolean saveWeeks(ArrayList<Week> weeks) {
