@@ -14,7 +14,7 @@ public class UserList {
     private UserList(){
         ArrayList<User> users = new ArrayList<User>();
         ArrayList<Counselor> counselors = new ArrayList<Counselor>();
-        ArrayList<Customer> customers = new ArrayList<>(Customer);
+        ArrayList<Customer> customers = new ArrayList<Customer>();
         User director = new Director(null, null, null, null, null);
         ArrayList<Camper> campers = new ArrayList<Camper>();
     }
