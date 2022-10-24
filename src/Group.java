@@ -22,6 +22,10 @@ public class Group {
         return this.id;
     }
 
+    public ArrayList<DaySchedule> getSchedule(){
+        return this.schedule;
+    }
+
     public void addCamper(Camper camper) {
         if (groupSize < MAX_CAMPERS){
             campers.add(camper);
