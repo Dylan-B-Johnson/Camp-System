@@ -5,16 +5,16 @@ import java.time.LocalDate;
 public class Facade {
 
     private User user;
-    
+
     public Facade() {
 
     }
 
-    public User getDirector(){
+    public User getDirector() {
         return null;
     }
 
-    public CampLocation getCampLocation(){
+    public CampLocation getCampLocation() {
         return null;
     }
 
@@ -42,7 +42,7 @@ public class Facade {
 
     }
 
-    public ArrayList<Camper> getCampter(String firstName) {
+    public ArrayList<Camper> getCamper(String firstName) {
         return null;
     }
 
@@ -59,7 +59,7 @@ public class Facade {
     }
 
     public double getTotalPrice() {
-        return -404;
+        return -1;
     }
 
     public ArrayList<User> getCounselors() {

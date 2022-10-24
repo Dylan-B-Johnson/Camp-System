@@ -1,4 +1,5 @@
-[{
+[
+  {
     "id": "e7eb756c-8703-4ab4-a744-df0513f82a96",
     "email": "jamesh1997@gmail.com",
     "firstName": "James",
@@ -6,34 +7,34 @@
     "password": "secure",
     "typeOfUser": "COUNSELOR",
     "group": "64790bc1-c498-47e6-97c4-6804d557d94a",
-    "allergies": [ 
-        "none"
+    "allergies": [
+      "none"
     ],
     "birthday": "1997-02-27",
     "primaryEmergencyContact": {
-        "email": "bob@hotmail.com",
+      "email": "bob@hotmail.com",
       "firstName": "Bob",
       "lastName": "Damien",
-      "phoneNum": "654-234-1262",
+      "phoneNumber": "654-234-1262",
       "relationship": "father",
       "address": "62 Hoback St, Helena, MT 27909"
-      },
-      "secondaryEmergencyContact": {
-        "email": "virla2@utk.edu",
+    },
+    "secondaryEmergencyContact": {
+      "email": "virla2@utk.edu",
       "firstName": "Virla",
       "lastName": "Chapman",
-      "phoneNum": "123-456-5262",
+      "phoneNumber": "123-456-5262",
       "relationship": "mother",
       "address": "62 Hoback St, Helena, MT 27909"
-      },
+    },
     "primaryCarePhysician": {
-        "email": "ron@columbiaPediatrics.com",
+      "email": "ron@columbiaPediatrics.com",
       "firstName": "Ron",
       "lastName": "Rhymer",
-      "phoneNum": "865-399-5462",
+      "phoneNumber": "865-399-5462",
       "relationship": "primary-care physician",
       "address": "823 Lyons View Rd, Columbia, SC 37909"
-      }
+    }
   },
   {
     "id": "9946fa93-68c1-461c-819b-c157a945ad74",
@@ -43,31 +44,31 @@
     "password": "takeaguess",
     "typeOfUser": "COUNSELOR",
     "group": "5253cfe4-ea9b-4693-87ec-7d62b083c4a9",
-    "allergies": [ 
-        "none"
+    "allergies": [
+      "none"
     ],
     "birthday": "2000-07-30",
     "primaryEmergencyContact": {
-        "email": "bob@hotmail.com",
+      "email": "bob@hotmail.com",
       "firstName": "Bob",
       "lastName": "Damien",
-      "phoneNum": "654-234-1262",
+      "phoneNumber": "654-234-1262",
       "relationship": "father",
       "address": "62 Hoback St, Helena, MT 27909"
-      },
-      "secondaryEmergencyContact": {
-        "email": "virla2@utk.edu",
+    },
+    "secondaryEmergencyContact": {
+      "email": "virla2@utk.edu",
       "firstName": "Virla",
       "lastName": "Chapman",
-      "phoneNum": "123-456-5262",
+      "phoneNumber": "123-456-5262",
       "relationship": "mother",
       "address": "62 Hoback St, Helena, MT 27909"
-      },
+    },
     "primaryCarePhysician": {
-        "email": "ron@columbiaPediatrics.com",
+      "email": "ron@columbiaPediatrics.com",
       "firstName": "Ron",
       "lastName": "Rhymer",
-      "phoneNum": "865-399-5462",
+      "phoneNumber": "865-399-5462",
       "relationship": "primary-care physician",
       "address": "823 Lyons View Rd, Columbia, SC 37909"
     }

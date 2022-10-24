@@ -7,17 +7,23 @@ public class CampLocation {
     private UUID id;
     private String name;
     private String location;
-    private CampLocation campLocation;
 
-    private CampLocation() {
-
+    public CampLocation(UUID id, String name, String location, double pricePerCamper) {
+        this.id = id;
+        this.name = name;
+        this.location = location;
+        this.pricePerCamper = pricePerCamper;
     }
 
-    public CampLocation getCampLocation(){
-        if (campLocation==null){
-            campLocation=new CampLocation();
-        }
-        return campLocation;
+    public CampLocation(String name, String location, double pricePerCamper) {
+        this.id = UUID.randomUUID();
+        this.name = name;
+        this.location = location;
+        this.pricePerCamper = pricePerCamper;
+    }
+
+    public static CampLocation getCampLocation() {
+        return DataReader.getCampLocation();
     }
 
     public double getPricePerCamper() {

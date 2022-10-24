@@ -49,12 +49,12 @@ public abstract class User {
 
     public static boolean emailIsValid(String email) {
         return email != null && email.contains("@") && email.contains(".") && email.length() >= 3
-                && UserList.getInstance().emailAvailable(email);
+                && UserList.emailAvailable(email);
     }
 
     public void setEmail(String email) {
         if (email != null && email.contains("@") && email.contains(".") && email.length() >= 3
-                && UserList.getInstance().emailAvailable(email))
+                && UserList.emailAvailable(email))
             this.email = email;
     }
 
