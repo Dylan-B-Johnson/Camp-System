@@ -21,4 +21,73 @@ public class Counselor extends User {
             CampLocation campLocation) {
         super(id, email, firstName, lastName, password, campLocation, TypeOfUser.COUNSELOR);
     }
+
+    public void setGroup(Group group){
+        if(group != null){
+            this.group = group;
+        }
+    }
+
+    public Group getGroup(){
+        return this.group;
+    }
+
+    public void setAllergies(ArrayList<String> allergies){
+        if(allergies != null){
+            this.allergies = allergies;
+        }
+    }
+
+    public ArrayList<String> getAllergies(){
+        return this.allergies;
+    }
+
+    public void setBirthday(LocalDate birthday){
+        if(birthday != null){
+            this.birthday = birthday;
+        }
+    }
+
+    public LocalDate getBirthday(){
+        return this.birthday;
+    }
+
+    public void setPrimaryEmergencyContact(Contact primaryEmergencyContact){
+        if(primaryEmergencyContact != null){
+            this.primaryEmergencyContact = primaryEmergencyContact;
+        }
+    }
+
+    public Contact getPrimaryEmergencyContact(){
+        return this.primaryEmergencyContact;
+    }
+
+    public void setSecondaryEmergencyContact(Contact secondaryEmergencyContact){
+        if(secondaryEmergencyContact != null){
+            this.secondaryEmergencyContact = secondaryEmergencyContact;
+        }
+    }
+
+    public Contact getSecondaryEmergencyContact(){
+        return this.secondaryEmergencyContact;
+    }
+
+    public void setPrimaryCarePhysician(Contact primaryCarePhysician){
+        if(primaryCarePhysician != null){
+            this.primaryCarePhysician = primaryCarePhysician;
+        }
+    }
+
+    public Contact getPrimaryCarePhysician(){
+        return this.primaryCarePhysician;
+    }
+
+    public String toString(){
+        return "Counselor Name: " + this.firstName + " " + this.lastName +
+        "\nAllergies: " + this.allergies.toString() +
+        "\nBirthday: " + this.birthday.toString() +
+        "\nEmergency Contact One: " + this.primaryEmergencyContact.toString() +
+        "\nEmergency Contact Two: " + this.secondaryEmergencyContact.toString() +
+        "\nPrimary Care Physician: " + this.primaryCarePhysician.toString();
+    }
 }

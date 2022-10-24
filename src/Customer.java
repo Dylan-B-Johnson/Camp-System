@@ -6,6 +6,13 @@ import java.util.UUID;
 public class Customer extends User {
     private ArrayList<Camper> campers;
 
+    public Customer(String email, String firstName, String lastName, String password,
+            CampLocation campLocation,
+            ArrayList<Camper> campers) {
+        super(email, firstName, lastName, password, campLocation, TypeOfUser.CUSTOMER);
+        this.campers = campers;
+    }
+    
     public Customer(UUID id, String email, String firstName, String lastName, String password,
             CampLocation campLocation,
             ArrayList<Camper> campers) {
@@ -21,20 +28,35 @@ public class Customer extends User {
         return this.firstName;
     }
 
-    public void addCamper() {
-
+    public void addCamper(Camper camper) {
+        if(camper != null){
+            this.campers.add(camper);
+        }
     }
 
-    public void removeCamper(String id) {
-
+    public void removeCamper(UUID id) {
+        for(Camper camper : this.campers){
+            if(camper.getId().equals(id)){
+                this.campers.remove(camper);
+            }
+        }
     }
 
-    public void editCamper(String id, Camper camper) {
-
+    public void editCamper(UUID id, Camper camper) {
+        for(Camper campers : this.campers){
+            if(campers.getId().equals(id)){
+                this.campers.set(this.campers.indexOf(camper), camper);
+            }
+        }
     }
 
     public double getDiscount() {
-        return 404;
+        for(Camper camper : this.campers){
+            if(camper.getPastEnrollment()!=0){
+                return 10;
+            }
+        }
+        return 0;
     }
 
     public String toString() {

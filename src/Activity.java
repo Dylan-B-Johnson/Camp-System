@@ -10,16 +10,16 @@ public class Activity {
 
     public Activity(String name, String location, String description) {
         this.id = UUID.randomUUID();
-        this.name = name;
-        this.location = location;
-        this.description = description;
+        setName(name);
+        setLocation(location);
+        setDescription(description);
     }
 
     public Activity(UUID id, String name, String location, String description) {
         this.id = id;
-        this.name = name;
-        this.location = location;
-        this.description = description;
+        setName(name);
+        setLocation(location);
+        setDescription(description);
     }
 
     public UUID getId() {
@@ -31,7 +31,9 @@ public class Activity {
     }
 
     public void setName(String name) {
-        this.name = name;
+        if(name != null){
+            this.name = name;
+        }
     }
 
     public String getLocation() {
@@ -39,7 +41,9 @@ public class Activity {
     }
 
     public void setLocation(String location) {
-        this.location = location;
+        if(location != null){
+            this.location = location;
+        }
     }
 
     public String getDescription() {
@@ -47,6 +51,14 @@ public class Activity {
     }
 
     public void setDescription(String description) {
-        this.description = description;
+        if(description != null){
+            this.description = description;
+        }
+    }
+
+    public String toString(){
+        return "Activity name: " + this.name +
+        "\nActivity location: " + this.location +
+        "\nActivity description: " + this.description;
     }
 }

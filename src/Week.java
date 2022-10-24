@@ -87,8 +87,8 @@ public class Week {
         }
     }
 
-    public void registerCamper() {
-
+    public void registerCamper(Camper camper) {
+        
     }
 
     public boolean currentWeek() {
