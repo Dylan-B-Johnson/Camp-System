@@ -62,6 +62,14 @@ public class Facade {
         return -1;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public ArrayList<User> getCounselors() {
         return null;
     }

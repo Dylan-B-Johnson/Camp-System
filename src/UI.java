@@ -1,14 +1,29 @@
 import java.util.Scanner;
 
 public class UI {
+    private static Facade f = new Facade();
 
     public static void main(String args[]) {
-        UI.welcomeScreen();
+        run();
     }
 
-    public static void welcomeScreen() {
+    public static void run(){
+        while (true){
+            if (welcomeScreen()){
+                f.setUser(login());
+            }
+            else{
+                f.setUser(createAccount());
+            }
+            if (f.getUser()!=null){
+                // select appropriate user screen
+            }
+
+        }
+    }
+
+    public static boolean welcomeScreen() {
         while (true) {
-            Facade f = new Facade();
             title("Welcome to " + f.getCampLocation().getName());
             print("Located at " + f.getCampLocation().getLocation() + ", and managed by "
                     + f.getDirector().getFirstName()
@@ -29,10 +44,12 @@ public class UI {
             }
             try {
                 if (scan.nextInt() == 1) {
-                    login();
+                    scan.close();
+                    return true;
                 }
                 if (scan.nextInt() == 2) {
-                    createAccount();
+                    scan.close();
+                    return false;
                 }
             } catch (Exception e) {
                 basicError(answer);
@@ -43,15 +60,14 @@ public class UI {
 
     }
 
-    public static void createAccount() {
-        Facade f = new Facade();
+    public static User createAccount() {
         title("Create Your Account");
         while (true){
             
         }
     }
 
-    public static void login() {
+    public static User login() {
 
     }
 
