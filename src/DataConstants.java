@@ -29,4 +29,6 @@ public class DataConstants {
     public static final String DAY = "day";
     public static final String CAMPLOCATION = "campLocation";
     public static final String TYPEOFUSER = "typeOfUser";
+    public static final String GROUP = "group";
+    public static final String BIRTHDAY = "birthday";
 }

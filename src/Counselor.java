@@ -12,82 +12,98 @@ public class Counselor extends User {
     private Contact secondaryEmergencyContact;
     private Contact primaryCarePhysician;
 
-    public Counselor(String email, String firstName, String lastName, String password,
-            CampLocation campLocation) {
+    public Counselor(Group group, ArrayList<String> allergies, LocalDate birthday, String email, String firstName,
+            String lastName, String password,
+            CampLocation campLocation, Contact primaryEmergencyContact, Contact secondaryEmergencyContact,
+            Contact primaryCarePhysician) {
         super(email, firstName, lastName, password, campLocation, TypeOfUser.COUNSELOR);
+        this.group = group;
+        this.allergies = allergies;
+        this.birthday = birthday;
+        this.primaryEmergencyContact = primaryEmergencyContact;
+        this.secondaryEmergencyContact = secondaryEmergencyContact;
+        this.primaryCarePhysician = primaryCarePhysician;
     }
 
-    public Counselor(UUID id, String email, String firstName, String lastName, String password,
-            CampLocation campLocation) {
+    public Counselor(UUID id, Group group, ArrayList<String> allergies, LocalDate birthday, String email,
+            String firstName, String lastName, String password,
+            CampLocation campLocation, Contact primaryEmergencyContact, Contact secondaryEmergencyContact,
+            Contact primaryCarePhysician) {
         super(id, email, firstName, lastName, password, campLocation, TypeOfUser.COUNSELOR);
+        this.group = group;
+        this.allergies = allergies;
+        this.birthday = birthday;
+        this.primaryEmergencyContact = primaryEmergencyContact;
+        this.secondaryEmergencyContact = secondaryEmergencyContact;
+        this.primaryCarePhysician = primaryCarePhysician;
     }
 
-    public void setGroup(Group group){
-        if(group != null){
+    public void setGroup(Group group) {
+        if (group != null) {
             this.group = group;
         }
     }
 
-    public Group getGroup(){
+    public Group getGroup() {
         return this.group;
     }
 
-    public void setAllergies(ArrayList<String> allergies){
-        if(allergies != null){
+    public void setAllergies(ArrayList<String> allergies) {
+        if (allergies != null) {
             this.allergies = allergies;
         }
     }
 
-    public ArrayList<String> getAllergies(){
+    public ArrayList<String> getAllergies() {
         return this.allergies;
     }
 
-    public void setBirthday(LocalDate birthday){
-        if(birthday != null){
+    public void setBirthday(LocalDate birthday) {
+        if (birthday != null) {
             this.birthday = birthday;
         }
     }
 
-    public LocalDate getBirthday(){
+    public LocalDate getBirthday() {
         return this.birthday;
     }
 
-    public void setPrimaryEmergencyContact(Contact primaryEmergencyContact){
-        if(primaryEmergencyContact != null){
+    public void setPrimaryEmergencyContact(Contact primaryEmergencyContact) {
+        if (primaryEmergencyContact != null) {
             this.primaryEmergencyContact = primaryEmergencyContact;
         }
     }
 
-    public Contact getPrimaryEmergencyContact(){
+    public Contact getPrimaryEmergencyContact() {
         return this.primaryEmergencyContact;
     }
 
-    public void setSecondaryEmergencyContact(Contact secondaryEmergencyContact){
-        if(secondaryEmergencyContact != null){
+    public void setSecondaryEmergencyContact(Contact secondaryEmergencyContact) {
+        if (secondaryEmergencyContact != null) {
             this.secondaryEmergencyContact = secondaryEmergencyContact;
         }
     }
 
-    public Contact getSecondaryEmergencyContact(){
+    public Contact getSecondaryEmergencyContact() {
         return this.secondaryEmergencyContact;
     }
 
-    public void setPrimaryCarePhysician(Contact primaryCarePhysician){
-        if(primaryCarePhysician != null){
+    public void setPrimaryCarePhysician(Contact primaryCarePhysician) {
+        if (primaryCarePhysician != null) {
             this.primaryCarePhysician = primaryCarePhysician;
         }
     }
 
-    public Contact getPrimaryCarePhysician(){
+    public Contact getPrimaryCarePhysician() {
         return this.primaryCarePhysician;
     }
 
-    public String toString(){
+    public String toString() {
         return "Counselor Name: " + this.firstName + " " + this.lastName +
-        "\nAllergies: " + this.allergies.toString() +
-        "\nBirthday: " + this.birthday.toString() +
-        "\nEmergency Contact One: " + this.primaryEmergencyContact.toString() +
-        "\nEmergency Contact Two: " + this.secondaryEmergencyContact.toString() +
-        "\nPrimary Care Physician: " + this.primaryCarePhysician.toString();
+                "\nAllergies: " + this.allergies.toString() +
+                "\nBirthday: " + this.birthday.toString() +
+                "\nEmergency Contact One: " + this.primaryEmergencyContact.toString() +
+                "\nEmergency Contact Two: " + this.secondaryEmergencyContact.toString() +
+                "\nPrimary Care Physician: " + this.primaryCarePhysician.toString();
     }
 }
