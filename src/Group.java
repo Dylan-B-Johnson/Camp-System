@@ -10,10 +10,10 @@ public class Group {
 
     public Group(UUID id, ArrayList<Camper> campers, int groupSize,
             ArrayList<DaySchedule> schedule) {
-        this.id = id;
-        this.campers = campers;
-        this.groupSize = groupSize;
-        this.schedule = schedule;
+                setID(id);
+                setCampers(campers);
+                setGroupSize(groupSize);
+                setSchedule(schedule);
     }
 
     public UUID getId() {
@@ -52,7 +52,7 @@ public class Group {
         if (groupSize < MAX_CAMPERS) {
             campers.add(camper);
         }else{
-            
+
         }
     }
 
