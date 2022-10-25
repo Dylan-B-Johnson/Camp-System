@@ -2,8 +2,9 @@
 
 import java.util.UUID;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Collection;
 import java.time.LocalDate;
+import java.util.Random;
 
 public class DaySchedule {
     private UUID id;
@@ -12,11 +13,32 @@ public class DaySchedule {
     private LocalDate day;
     private final int MAX_ACTIVITY = 6;
 
+    public DaySchedule(ArrayList<Activity> currentActivities, Week week, LocalDate day) {
+        this.id = UUID.randomUUID();
+        this.currentActivities = currentActivities;
+        this.week = week;
+        this.day = day;
+    }
+
     public DaySchedule(UUID id, ArrayList<Activity> currentActivities, Week week, LocalDate day) {
         this.id = id;
         this.currentActivities = currentActivities;
         this.week = week;
         this.day = day;
+    }
+
+    public DaySchedule getRandomDaySchedule(Week week, LocalDate day) {
+        ArrayList<Activity> activities = ActivitiesList.getInstance().getActivities();
+        ArrayList<Activity> curActivities = new ArrayList<Activity>();
+        Random random = new Random();
+        for (int i = 0; i < 6; i++) {
+            Activity nextActivity = activities.get(random.nextInt(activities.size()));
+            while (!verifyActivityAvailablility(nextActivity.getName(), i)) {
+                nextActivity = activities.get(random.nextInt(activities.size()));
+            }
+            curActivities.set(i, nextActivity);
+        }
+        return new DaySchedule(curActivities, week, day);
     }
 
     public UUID getId() {
@@ -37,8 +59,8 @@ public class DaySchedule {
 
     public boolean addToSchedule(String nameOfActivity) {
         if (currentActivities.size() <= MAX_ACTIVITY) {
-            HashMap<UUID, Activity> activities = DataReader.getActivities();
-            for (Activity activity : activities.values()) {
+            ArrayList<Activity> activities = ActivitiesList.getInstance().getActivities();
+            for (Activity activity : activities) {
                 if (activity.getName().equals(nameOfActivity)
                         && verifyActivityAvailablility(nameOfActivity, currentActivities.size())) {
                     currentActivities.add(activity);
@@ -50,8 +72,8 @@ public class DaySchedule {
     }
 
     public boolean replaceActivity(int timeSLot, String nameOfNewActivity) {
-        HashMap<UUID, Activity> activities = DataReader.getActivities();
-        for (Activity activity : activities.values()) {
+        ArrayList<Activity> activities = ActivitiesList.getInstance().getActivities();
+        for (Activity activity : activities) {
             if (activity.getName().equals(nameOfNewActivity)
                     && verifyActivityAvailablility(nameOfNewActivity, timeSLot)) {
                 currentActivities.set(timeSLot, activity);
@@ -63,14 +85,15 @@ public class DaySchedule {
 
     private boolean verifyActivityAvailablility(String nameOfActivity, int timeSlot) {
         Activity foundActivity = new Activity(null, null, null);
-        HashMap<UUID, Activity> activities = DataReader.getActivities();
-        for (Activity activity : activities.values()) {
+        ArrayList<Activity> activities = ActivitiesList.getInstance().getActivities();
+        for (Activity activity : activities) {
             if (activity.getName().equals(nameOfActivity)) {
                 foundActivity = activity;
                 break;
             }
         }
-        for (Group group : DataReader.getGroups().values()) {
+        Collection<Group> groups = DataReader.getGroups().values();
+        for (Group group : groups) {
             for (DaySchedule schedule : group.getSchedule()) {
                 if (schedule.getCurrentAcitivities().get(timeSlot).equals(foundActivity)
                         && schedule.getDay().equals(this.day)
@@ -83,6 +106,14 @@ public class DaySchedule {
     }
 
     public String toString() {
-        return null;
+        return "Breakfast (6:00-6:30): " +
+                "\nActivity 1 (6:45-8:15): \n" + currentActivities.get(0) +
+                "\nActivity 2 (8:30-10:00): \n" + currentActivities.get(1) +
+                "\nActivity 3 (10:15-11:45): \n" + currentActivities.get(2) +
+                "\nLunch (12:00-12:30): " +
+                "\nActivity 4 (12:45-2:15): \n" + currentActivities.get(3) +
+                "\nActivity 5 (2:30-4:00): \n" + currentActivities.get(4) +
+                "\nActivity 6 (4:15-5:45): \n" + currentActivities.get(5) +
+                "\nDinner (6:00-6:30): ";
     }
 }

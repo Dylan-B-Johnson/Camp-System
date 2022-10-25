@@ -11,11 +11,11 @@ public class Facade {
     }
 
     public User getDirector() {
-        return null;
+        return DataReader.getDirector();
     }
 
     public CampLocation getCampLocation() {
-        return null;
+        return DataReader.getCampLocation();
     }
 
     public User login(String email, String password) {
@@ -35,7 +35,7 @@ public class Facade {
     }
 
     public ArrayList<Activity> getActivities() {
-        return null;
+        return new ArrayList<Activity>(DataReader.getActivities().values()) ;
     }
 
     public void quitAndSave() {
@@ -50,12 +50,12 @@ public class Facade {
         return null;
     }
 
-    public User getCustomers() {
-        return null;
+    public ArrayList<Customer> getCustomers() {
+        return new ArrayList<Customer>(DataReader.getCustomers().values());
     }
 
     public ArrayList<Camper> getCampers() {
-        return null;
+        return new ArrayList<Camper>(DataReader.getCampers().values());
     }
 
     public double getTotalPrice() {
@@ -71,7 +71,7 @@ public class Facade {
     }
 
     public ArrayList<User> getCounselors() {
-        return null;
+        return new ArrayList<User>(DataReader.getCounselors().values());
     }
 
     public ArrayList<User> getCounselor(String firstName) {
@@ -93,6 +93,10 @@ public class Facade {
         return false;
     }
 
+    public DaySchedule getDaySchedule(int daysFromNow, User counselor) {
+        return WeekList.getInstance().getDaySchedule(LocalDate.now().plusDays(daysFromNow), counselor);
+    }
+
     public String[] nextWeek() {
         String[] rtn = new String[7];
         LocalDate date = LocalDate.now();
@@ -101,6 +105,46 @@ public class Facade {
             rtn[i] = (plusDays.format(DateTimeFormatter.ofPattern("E, LLL d")));
         }
         return rtn;
+    }
+
+    public String displayTime(int[] time) {
+        int hour = time[0];
+        int minute = time[1];
+        String half;
+        int displayHour;
+        if (hour >= 12) {
+            half = "pm";
+            if (hour >= 13) {
+                displayHour = hour - 12;
+            } else {
+                displayHour = hour;
+            }
+        } else {
+            half = "am";
+            if (hour == 0) {
+                displayHour = 12;
+            } else {
+                displayHour = hour;
+            }
+        }
+        if (minute != 0) {
+            if (minute > 9) {
+                return displayHour + ":" + minute + " " + half;
+            } else {
+                return displayHour + ":0" + minute + " " + half;
+            }
+
+        } else {
+            return displayHour + " " + half;
+        }
+    }
+
+    public int[] addTime(int hour, int minute, int minutes) {
+        minute += minutes;
+        hour += minute / 60;
+        minute %= 60;
+        hour %= 24;
+        return new int[] { hour, minute };
     }
 
 }

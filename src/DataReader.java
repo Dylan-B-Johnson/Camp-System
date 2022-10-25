@@ -165,7 +165,7 @@ public class DataReader {
                 for (Object o : jsonAllergies) {
                     allergies.add((String) o);
                 }
-                LocalDate birthday = LocalDate.now();
+                LocalDate birthday = LocalDate.parse((String) camper.get(DataConstants.BIRTHDAY));
                 JSONObject pec = (JSONObject) camper.get(DataConstants.PRIMARYEMERGENCYCONTACT);
                 Contact primaryEmergencyContact = new Contact((String) pec.get(DataConstants.FIRSTNAME),
                         (String) pec.get(DataConstants.LASTNAME), (String) pec.get(DataConstants.EMAIL),
