@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class UI {
@@ -41,10 +42,47 @@ public class UI {
     }
 
     private static void viewSchedule() {
+        final int MEAL_LENGTH=30;
+        final int TRANSITION_TIME=15;
+        final int ACTIVITY_TIME=150;
         while (true) {
             title("View Schedule");
-            int answer=options(f.nextWeek());
-
+            int answer = options(f.nextWeek());
+            if (answer != -1) {
+                title(f.nextWeek()[answer]);
+                ArrayList<Activity> activities = f.getDaySchedule(answer, f.getUser()).getCurrentAcitivities();
+                int[] start = new int[] {6,0};
+                int[] end = new int[] {6,30};
+                for (int i = 0; i < activities.size() + 3; i++) {
+                    if(i==0){
+                        print(f.displayTime(start)+"-"+f.displayTime(end)+": Breaksfast");
+                    }
+                    else if(i==4){
+                        start = f.addTime(end[0], end[1], TRANSITION_TIME);
+                        end = f.addTime(start[0], start[1], MEAL_LENGTH);
+                        print(f.displayTime(start)+"-"+f.displayTime(end)+": Lunch");
+                    }
+                    else if (i==8){
+                        start = f.addTime(end[0], end[1], TRANSITION_TIME);
+                        end = f.addTime(start[0], start[1], MEAL_LENGTH);
+                        print(f.displayTime(start)+"-"+f.displayTime(end)+": Dinner");
+                    }
+                    else {
+                        int activitiesIndex;
+                        if (i<4){
+                            activitiesIndex=i-1;
+                        }
+                        else{
+                            activitiesIndex=i-2;
+                        }
+                        start = f.addTime(end[0], end[1], TRANSITION_TIME);
+                        end = f.addTime(start[0], start[1], ACTIVITY_TIME+TRANSITION_TIME);
+                        print(f.displayTime(start)+"-"+f.displayTime(end)+": "+activities.get(activitiesIndex));
+                    }
+                }
+                input("Press enter to exit.");
+                break;
+            }
         }
     }
 
