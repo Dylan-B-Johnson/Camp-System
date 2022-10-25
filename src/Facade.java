@@ -1,6 +1,6 @@
 import java.util.ArrayList;
-import java.util.UUID;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class Facade {
 
@@ -62,6 +62,14 @@ public class Facade {
         return -1;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public ArrayList<User> getCounselors() {
         return null;
     }
@@ -83,6 +91,16 @@ public class Facade {
 
     public boolean addActivity(Activity activity) {
         return false;
+    }
+
+    public String[] nextWeek() {
+        String[] rtn = new String[7];
+        LocalDate date = LocalDate.now();
+        for (int i = 0; i < rtn.length; i++) {
+            LocalDate plusDays = date.plusDays(i);
+            rtn[i] = (plusDays.format(DateTimeFormatter.ofPattern("E, LLL d")));
+        }
+        return rtn;
     }
 
 }
