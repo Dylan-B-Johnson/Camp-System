@@ -10,7 +10,7 @@ public class Group {
 
     public Group(UUID id, ArrayList<Camper> campers, int groupSize,
             ArrayList<DaySchedule> schedule) {
-        setID(id);
+        this.id = id;
         setCampers(campers);
         setGroupSize(groupSize);
         setSchedule(schedule);
@@ -18,14 +18,6 @@ public class Group {
 
     public UUID getId() {
         return this.id;
-    }
-
-    public int getGroupSize() {
-        return this.groupSize;
-    }
-
-    public ArrayList<Camper> getCampers() {
-        return this.campers;
     }
 
     public ArrayList<DaySchedule> getSchedule() {
