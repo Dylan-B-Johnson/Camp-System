@@ -11,11 +11,11 @@ public class Facade {
     }
 
     public User getDirector() {
-        return null;
+        return DataReader.getDirector();
     }
 
     public CampLocation getCampLocation() {
-        return null;
+        return DataReader.getCampLocation();
     }
 
     public User login(String email, String password) {
@@ -35,7 +35,7 @@ public class Facade {
     }
 
     public ArrayList<Activity> getActivities() {
-        return null;
+        return new ArrayList<Activity>(DataReader.getActivities().values()) ;
     }
 
     public void quitAndSave() {
@@ -50,12 +50,12 @@ public class Facade {
         return null;
     }
 
-    public User getCustomers() {
-        return null;
+    public ArrayList<Customer> getCustomers() {
+        return new ArrayList<Customer>(DataReader.getCustomers().values());
     }
 
     public ArrayList<Camper> getCampers() {
-        return null;
+        return new ArrayList<Camper>(DataReader.getCampers().values());
     }
 
     public double getTotalPrice() {
@@ -71,7 +71,7 @@ public class Facade {
     }
 
     public ArrayList<User> getCounselors() {
-        return null;
+        return new ArrayList<User>(DataReader.getCounselors().values());
     }
 
     public ArrayList<User> getCounselor(String firstName) {

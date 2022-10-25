@@ -8,14 +8,18 @@ public class ActivitiesList {
     private static ActivitiesList activitiesList;
 
     private ActivitiesList(){
-
+        
     }
 
     public static ActivitiesList getInstance(){
-        return null;
+        return new ActivitiesList();
     }
 
     public boolean addActivity(Activity activity){
         return false; 
+    }
+
+    public ArrayList<Activity> getActivities() {
+        return new ArrayList<Activity>(DataReader.getActivities().values());
     }
 }
