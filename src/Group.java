@@ -28,10 +28,19 @@ public class Group {
         if (groupSize < MAX_CAMPERS) {
             campers.add(camper);
         }
+        else{
+
+        }
     }
 
     // probably will need a equals method in Camper
     public boolean removeCamper(Camper camper) {
+        for(Camper foundCamper: this.campers){
+            if(foundCamper.getId().equals(camper.getId())){
+                this.campers.remove(foundCamper);
+                return true;
+            }
+        }
         return false;
     }
 
