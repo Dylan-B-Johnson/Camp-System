@@ -20,23 +20,30 @@ public class Group {
         return this.id;
     }
 
-    public ArrayList<DaySchedule> getSchedule(){
+    public int getGroupSize() {
+        return this.groupSize;
+    }
+
+    public ArrayList<Camper> getCampers() {
+        return this.campers;
+    }
+
+    public ArrayList<DaySchedule> getSchedule() {
         return this.schedule;
     }
 
     public void addCamper(Camper camper) {
         if (groupSize < MAX_CAMPERS) {
             campers.add(camper);
-        }
-        else{
+        } else {
 
         }
     }
 
     // probably will need a equals method in Camper
     public boolean removeCamper(Camper camper) {
-        for(Camper foundCamper: this.campers){
-            if(foundCamper.getId().equals(camper.getId())){
+        for (Camper foundCamper : this.campers) {
+            if (foundCamper.getId().equals(camper.getId())) {
                 this.campers.remove(foundCamper);
                 return true;
             }
