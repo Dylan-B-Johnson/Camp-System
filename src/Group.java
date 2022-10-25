@@ -24,12 +24,23 @@ public class Group {
         return this.schedule;
     }
 
+    public void getRandomSchedule(Week week){
+        for(int i=0; i<5; i++){
+            DaySchedule schedule = new DaySchedule(null, null, null);
+            this.schedule.add(schedule.getRandomDaySchedule(week, week.getStartOfWeek()));
+        }
+    }
+
     public void addCamper(Camper camper) {
         if (groupSize < MAX_CAMPERS) {
             campers.add(camper);
         }
         else{
-
+            for(Camper aCamper : this.campers){
+                if(aCamper==null){
+                    campers.set(this.campers.indexOf(aCamper), camper);
+                }
+            }
         }
     }
 
