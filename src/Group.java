@@ -20,16 +20,39 @@ public class Group {
         return this.id;
     }
 
+    public void setID(UUID id){
+        this.id = id;
+    }
+
     public ArrayList<DaySchedule> getSchedule(){
         return this.schedule;
+    }
+
+    public void setSchedule(ArrayList<DaySchedule> schedule){
+        this.schedule = schedule;
+    }
+
+    public int getGroupSize(){
+        return this.groupSize;
+    }
+
+    public void setGroupSize(int groupSize){
+        this.groupSize = groupSize;
+    }
+
+    public ArrayList<Camper> getCampers(){
+        return this.campers;
+    }
+
+    public void setCampers(ArrayList<Camper> campers){
+        this.campers = campers;
     }
 
     public void addCamper(Camper camper) {
         if (groupSize < MAX_CAMPERS) {
             campers.add(camper);
-        }
-        else{
-
+        }else{
+            
         }
     }
 
