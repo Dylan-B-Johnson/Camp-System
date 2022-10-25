@@ -10,18 +10,42 @@ public class Group {
 
     public Group(UUID id, ArrayList<Camper> campers, int groupSize,
             ArrayList<DaySchedule> schedule) {
-        this.id = id;
-        this.campers = campers;
-        this.groupSize = groupSize;
-        this.schedule = schedule;
+                setID(id);
+                setCampers(campers);
+                setGroupSize(groupSize);
+                setSchedule(schedule);
     }
 
     public UUID getId() {
         return this.id;
     }
 
+    public void setID(UUID id){
+        this.id = id;
+    }
+
     public ArrayList<DaySchedule> getSchedule(){
         return this.schedule;
+    }
+
+    public void setSchedule(ArrayList<DaySchedule> schedule){
+        this.schedule = schedule;
+    }
+
+    public int getGroupSize(){
+        return this.groupSize;
+    }
+
+    public void setGroupSize(int groupSize){
+        this.groupSize = groupSize;
+    }
+
+    public ArrayList<Camper> getCampers(){
+        return this.campers;
+    }
+
+    public void setCampers(ArrayList<Camper> campers){
+        this.campers = campers;
     }
 
     public void getRandomSchedule(Week week){
