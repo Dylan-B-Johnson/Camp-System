@@ -221,6 +221,10 @@ public class DataReader {
                     campers.add(getCamper(UUID.fromString((String) camper)));
                 }
                 ArrayList<DaySchedule> schedule = new ArrayList<>();
+                JSONArray scheduleJsonArray = (JSONArray) group.get(DataConstants.SCHEDULE);
+                for (Object scheduleObject : scheduleJsonArray) {
+                    schedule.add(getDaySchedule(UUID.fromString((String) scheduleObject)));
+                }
                 groupList.put(id, new Group(id, campers, groupSize, schedule));
             }
         } catch (Exception exception) {
@@ -359,7 +363,7 @@ public class DataReader {
                 weeksList.put(id, new Week(id, maxCampers, currentCampers, startOfWeek, groups, campLocation));
             }
         } catch (Exception exception) {
-
+            System.out.println(exception);
         }
         weeksCache = weeksList;
         return weeksList;
@@ -379,22 +383,21 @@ public class DataReader {
         JSONParser parser = new JSONParser();
         HashMap<UUID, DaySchedule> dayScheduleList = new HashMap<>();
         try {
-            JSONArray dayScheduleArray = (JSONArray) parser.parse(new FileReader("data/daySchedule.json"));
+            JSONArray dayScheduleArray = (JSONArray) parser.parse(new FileReader("data/daySchedules.json"));
             for (Object dayScheduleObject : dayScheduleArray) {
                 JSONObject dayScheduleJsonObject = (JSONObject) dayScheduleObject;
                 UUID id = UUID.fromString((String) dayScheduleJsonObject.get(DataConstants.ID));
                 ArrayList<Activity> currentActivities = new ArrayList<>();
                 JSONArray activities = (JSONArray) dayScheduleJsonObject.get(DataConstants.CURRENTACTIVITIES);
                 for (Object aObject : activities) {
-                    JSONObject aJsonObject = (JSONObject) aObject;
-                    currentActivities.add(getActivity(UUID.fromString((String) aJsonObject.get(DataConstants.ID))));
+                    currentActivities.add(getActivity(UUID.fromString((String) aObject)));
                 }
                 Week week = null;
                 LocalDate day = LocalDate.parse((String) dayScheduleJsonObject.get(DataConstants.DAY));
                 dayScheduleList.put(id, new DaySchedule(id, currentActivities, week, day));
             }
         } catch (Exception exception) {
-
+            System.out.println(exception);
         }
         daySchedulesCache = dayScheduleList;
         return dayScheduleList;

@@ -19,7 +19,7 @@ public class DaySchedule {
         this.week = week;
         this.day = day;
     }
-    
+
     public DaySchedule(UUID id, ArrayList<Activity> currentActivities, Week week, LocalDate day) {
         this.id = id;
         this.currentActivities = currentActivities;
@@ -27,13 +27,13 @@ public class DaySchedule {
         this.day = day;
     }
 
-    public DaySchedule getRandomDaySchedule(Week week, LocalDate day){
+    public DaySchedule getRandomDaySchedule(Week week, LocalDate day) {
         ArrayList<Activity> activities = ActivitiesList.getInstance().getActivities();
         ArrayList<Activity> curActivities = new ArrayList<Activity>();
         Random random = new Random();
-        for(int i=0; i<6; i++){
+        for (int i = 0; i < 6; i++) {
             Activity nextActivity = activities.get(random.nextInt(activities.size()));
-            while(!verifyActivityAvailablility(nextActivity.getName(), i)){
+            while (!verifyActivityAvailablility(nextActivity.getName(), i)) {
                 nextActivity = activities.get(random.nextInt(activities.size()));
             }
             curActivities.set(i, nextActivity);
@@ -45,23 +45,24 @@ public class DaySchedule {
         return this.id;
     }
 
-    public ArrayList<Activity> getCurrentAcitivities(){
+    public ArrayList<Activity> getCurrentAcitivities() {
         return this.currentActivities;
     }
 
-    public LocalDate getDay(){
+    public LocalDate getDay() {
         return this.day;
     }
 
-    public Week getWeek(){
+    public Week getWeek() {
         return this.week;
     }
 
     public boolean addToSchedule(String nameOfActivity) {
-        if(currentActivities.size()<=MAX_ACTIVITY){
+        if (currentActivities.size() <= MAX_ACTIVITY) {
             ArrayList<Activity> activities = ActivitiesList.getInstance().getActivities();
-            for(Activity activity : activities){
-                if(activity.getName().equals(nameOfActivity) && verifyActivityAvailablility(nameOfActivity, currentActivities.size())){
+            for (Activity activity : activities) {
+                if (activity.getName().equals(nameOfActivity)
+                        && verifyActivityAvailablility(nameOfActivity, currentActivities.size())) {
                     currentActivities.add(activity);
                     return true;
                 }
@@ -72,8 +73,9 @@ public class DaySchedule {
 
     public boolean replaceActivity(int timeSLot, String nameOfNewActivity) {
         ArrayList<Activity> activities = ActivitiesList.getInstance().getActivities();
-        for(Activity activity : activities){
-            if(activity.getName().equals(nameOfNewActivity) && verifyActivityAvailablility(nameOfNewActivity, timeSLot)){
+        for (Activity activity : activities) {
+            if (activity.getName().equals(nameOfNewActivity)
+                    && verifyActivityAvailablility(nameOfNewActivity, timeSLot)) {
                 currentActivities.set(timeSLot, activity);
                 return true;
             }
@@ -84,18 +86,18 @@ public class DaySchedule {
     private boolean verifyActivityAvailablility(String nameOfActivity, int timeSlot) {
         Activity foundActivity = new Activity(null, null, null);
         ArrayList<Activity> activities = ActivitiesList.getInstance().getActivities();
-        for(Activity activity : activities){
-            if(activity.getName().equals(nameOfActivity)){
+        for (Activity activity : activities) {
+            if (activity.getName().equals(nameOfActivity)) {
                 foundActivity = activity;
                 break;
             }
         }
         Collection<Group> groups = DataReader.getGroups().values();
-        for(Group group : groups){
-            for(DaySchedule schedule : group.getSchedule()){
-                if(schedule.getCurrentAcitivities().get(timeSlot).equals(foundActivity) 
-                && schedule.getDay().equals(this.day)
-                && schedule.getWeek().equals(this.week)){
+        for (Group group : groups) {
+            for (DaySchedule schedule : group.getSchedule()) {
+                if (schedule.getCurrentAcitivities().get(timeSlot).equals(foundActivity)
+                        && schedule.getDay().equals(this.day)
+                        && schedule.getWeek().equals(this.week)) {
                     return false;
                 }
             }
@@ -105,13 +107,13 @@ public class DaySchedule {
 
     public String toString() {
         return "Breakfast (6:00-6:30): " +
-        "\nActivity 1 (6:45-8:15): \n" + currentActivities.get(0) + 
-        "\nActivity 2 (8:30-10:00): \n" + currentActivities.get(1) +
-        "\nActivity 3 (10:15-11:45): \n" + currentActivities.get(2) +
-        "\nLunch (12:00-12:30): " +
-        "\nActivity 4 (12:45-2:15): \n" + currentActivities.get(3) +
-        "\nActivity 5 (2:30-4:00): \n" + currentActivities.get(4) +
-        "\nActivity 6 (4:15-5:45): \n" + currentActivities.get(5) +
-        "\nDinner (6:00-6:30): ";
+                "\nActivity 1 (6:45-8:15): \n" + currentActivities.get(0) +
+                "\nActivity 2 (8:30-10:00): \n" + currentActivities.get(1) +
+                "\nActivity 3 (10:15-11:45): \n" + currentActivities.get(2) +
+                "\nLunch (12:00-12:30): " +
+                "\nActivity 4 (12:45-2:15): \n" + currentActivities.get(3) +
+                "\nActivity 5 (2:30-4:00): \n" + currentActivities.get(4) +
+                "\nActivity 6 (4:15-5:45): \n" + currentActivities.get(5) +
+                "\nDinner (6:00-6:30): ";
     }
 }

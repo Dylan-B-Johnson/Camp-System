@@ -17,7 +17,7 @@ public class UserList {
     public void addUser(User user) {
         switch (user.getTypeOfUser()) {
             case DIRECTOR:
-                DataWriter.editDirector((Director) user);
+                DataWriter.updateDirector((Director) user);
                 break;
             case COUNSELOR:
                 DataWriter.createCounselor((Counselor) user);
