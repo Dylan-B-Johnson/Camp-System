@@ -19,6 +19,11 @@ public class Facade {
     }
 
     public User login(String email, String password) {
+        for(User user : UserList.getUsers()){
+            if(user.getEmail().equals(email) && user.getPassword().equals(password)){
+                return user;
+            }
+        }
         return null;
     }
 

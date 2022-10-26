@@ -28,6 +28,10 @@ public class UserList {
         }
     }
 
+    public static ArrayList<User> getUsers(){
+        return new ArrayList<User>(DataReader.getUsers().values());
+    }
+
     public ArrayList<Customer> getCustomers() {
         return new ArrayList<Customer>(DataReader.getCustomers().values());
     }
