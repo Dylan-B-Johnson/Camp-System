@@ -87,11 +87,12 @@ public class Group {
 
     private long minAge() {
 
-        LocalDate min = LocalDate.now();
+        
+        LocalDate min = LocalDate.of(1900, 1, 1);
         long rtn = 0;
 
         for(Camper camper: this.campers){
-            if (camper.getBirthday().isBefore(min)){
+            if (camper.getBirthday().isAfter(min)){
                 min = camper.getBirthday();
                 long monthsElapsed = ChronoUnit.MONTHS.between(min, camper.getBirthday());                
                 rtn = monthsElapsed;
@@ -105,11 +106,11 @@ public class Group {
 
     private long maxAge() {
 
-        LocalDate max = LocalDate.of(1900, 1, 1);
+        LocalDate max = LocalDate.now();
         long rtn = 0;
 
         for(Camper camper: this.campers){
-            if (camper.getBirthday().isAfter(max)){
+            if (camper.getBirthday().isBefore(max)){
                 max = camper.getBirthday();
                 long monthsElapsed = ChronoUnit.MONTHS.between(max, camper.getBirthday());                
                 rtn = monthsElapsed;
