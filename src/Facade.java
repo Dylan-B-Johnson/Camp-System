@@ -33,15 +33,15 @@ public class Facade {
     }
 
     public Week getCurrentWeek() {
-        return null;
+        return WeekList.getCurrentWeek();
     }
 
-    private ArrayList<Week> getWeeksAvailableForRegistrationWeek() {
-        return null;
+    private ArrayList<Week> getWeeksAvailableForRegistration() {
+        return WeekList.getWeeksAvailableForRegistration();
     }
 
-    public String[] getWeeksAvailableForRegistration() {
-        ArrayList<Week> weeks = getWeeksAvailableForRegistrationWeek();
+    public String[] getStringWeeksAvailableForRegistration() {
+        ArrayList<Week> weeks = getWeeksAvailableForRegistration();
         String[] rtn = new String[weeks.size()];
         for (int i = 0; i < weeks.size(); i++) {
             rtn[i] = (weeks.get(i).toString());
@@ -53,16 +53,16 @@ public class Facade {
         ArrayList<Camper> campers = ((Customer) user).getCampers();
         String[] rtn = new String[campers.size()];
         for (int i = 0; i < rtn.length; i++) {
-            rtn[i]=campers.get(i).getFirstName()+" "+campers.get(i).getLastName();
+            rtn[i] = campers.get(i).getFirstName() + " " + campers.get(i).getLastName();
         }
         return rtn;
     }
 
-    public double getCostOfRegistration(){
+    public double getCostOfRegistration() {
         return -404;
     }
 
-    public double getDiscoutOnRegistration(){
+    public double getDiscoutOnRegistration() {
         return -404;
     }
 
@@ -75,11 +75,23 @@ public class Facade {
     }
 
     public ArrayList<Camper> getCamper(String firstName) {
-        return null;
+        ArrayList<Camper> campers = new ArrayList<Camper>();
+        for (Camper camper : UserList.getCampers()) {
+            if (camper.getFirstName().equals(firstName)) {
+                campers.add(camper);
+            }
+        }
+        return campers;
     }
 
     public ArrayList<User> getUser(String firstName) {
-        return null;
+        ArrayList<User> users = new ArrayList<User>();
+        for (User user : UserList.getUsers()) {
+            if (user.getFirstName().equals(firstName)) {
+                users.add(user);
+            }
+        }
+        return users;
     }
 
     public ArrayList<Customer> getCustomers() {
@@ -91,7 +103,7 @@ public class Facade {
     }
 
     public double getTotalPrice() {
-        return -1;
+        return 100 - ((Customer) this.user).getDiscount();
     }
 
     public User getUser() {
@@ -107,7 +119,13 @@ public class Facade {
     }
 
     public ArrayList<User> getCounselor(String firstName) {
-        return null;
+        ArrayList<User> users = new ArrayList<User>();
+        for (User user : UserList.getUsers()) {
+            if (user.getFirstName().equals(firstName)) {
+                users.add(user);
+            }
+        }
+        return users;
     }
 
     public Contact makeContact(String firstName, String lastName, String email,
@@ -130,7 +148,7 @@ public class Facade {
     }
 
     public DaySchedule getDaySchedule(int daysFromNow, User counselor) {
-        return WeekList.getInstance().getDaySchedule(LocalDate.now().plusDays(daysFromNow), counselor);
+        return WeekList.getDaySchedule(LocalDate.now().plusDays(daysFromNow), counselor);
     }
 
     public String[] nextWeek() {
@@ -144,7 +162,7 @@ public class Facade {
     }
 
     public Group getGroup(User counselor) {
-        return null;
+        return ((Counselor) counselor).getGroup();
     }
 
     /**

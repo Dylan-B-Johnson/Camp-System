@@ -14,7 +14,7 @@ public class UserList {
         return true;
     }
 
-    public void addUser(User user) {
+    public static void addUser(User user) {
         switch (user.getTypeOfUser()) {
             case DIRECTOR:
                 DataWriter.updateDirector((Director) user);
@@ -32,23 +32,23 @@ public class UserList {
         return new ArrayList<User>(DataReader.getUsers().values());
     }
 
-    public ArrayList<Customer> getCustomers() {
+    public static ArrayList<Customer> getCustomers() {
         return new ArrayList<Customer>(DataReader.getCustomers().values());
     }
 
-    public ArrayList<Counselor> getCounselors() {
+    public static ArrayList<Counselor> getCounselors() {
         return new ArrayList<Counselor>(DataReader.getCounselors().values());
     }
 
-    public ArrayList<Camper> getCampers() {
+    public static ArrayList<Camper> getCampers() {
         return new ArrayList<Camper>(DataReader.getCampers().values());
     }
 
-    public Director getDirector() {
+    public static Director getDirector() {
         return DataReader.getDirector();
     }
 
-    public User getUser(UUID id) {
+    public static User getUser(UUID id) {
         if (!DataReader.getUsers().containsKey(id))
             return null;
         return DataReader.getUsers().get(id);

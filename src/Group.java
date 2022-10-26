@@ -1,6 +1,6 @@
 import java.util.UUID;
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
+import java.time.Period;
 import java.util.ArrayList;
 
 public class Group {
@@ -27,7 +27,7 @@ public class Group {
     }
 
     public Counselor getCounselor() {
-        for (Counselor counselor : DataReader.getCounselors().values()) {
+        for (Counselor counselor : UserList.getCounselors()) {
             if (counselor.getGroup().getId().compareTo(this.id) == 0) {
                 return counselor;
             }
@@ -58,7 +58,7 @@ public class Group {
     public void getRandomSchedule(Week week) {
         for (int i = 0; i < 5; i++) {
             DaySchedule schedule = new DaySchedule(null, null, null);
-            this.schedule.add(schedule.getRandomDaySchedule(week, week.getStartOfWeek()));
+            this.schedule.add(schedule.getRandomDaySchedule(week, week.getStartOfWeek().plusDays(i)));
         }
     }
 
@@ -96,31 +96,31 @@ public class Group {
     private int minAge() {
 
         LocalDate min = LocalDate.of(1900, 1, 1);
-        long rtn = 0;
+        int rtn = 0;
 
         for (Camper camper : this.campers) {
             if (camper.getBirthday().isAfter(min)) {
                 min = camper.getBirthday();
-                rtn = ChronoUnit.YEARS.between(min, camper.getBirthday());
+                rtn = Period.between(min, LocalDate.now()).getYears();
             }
         }
 
-        return (int) rtn;
+        return rtn;
     }
 
     private int maxAge() {
 
         LocalDate max = LocalDate.now();
-        long rtn = 0;
+        int rtn = 0;
 
         for (Camper camper : this.campers) {
             if (camper.getBirthday().isBefore(max)) {
                 max = camper.getBirthday();
-                rtn = ChronoUnit.YEARS.between(max, camper.getBirthday());
+                rtn = Period.between(max, LocalDate.now()).getYears();
             }
         }
 
-        return (int) rtn;
+        return rtn;
     }
 
 }

@@ -1,5 +1,4 @@
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Scanner;
@@ -66,7 +65,7 @@ public class UI {
     private static void registerACamper() {
         while (true) {
             title("Select the Week to Register For");
-            String[] weeks = f.getWeeksAvailableForRegistration();
+            String[] weeks = f.getStringWeeksAvailableForRegistration();
             int answerWeek = options(weeks);
             if (answerWeek != -1) {
                 while (true) {
@@ -78,6 +77,7 @@ public class UI {
                             System.out.printf("Registering "
                                     + ((Customer) f.getUser()).getCampers().get(answerCamper - 1).getFirstName()
                                     + "\nFor the week:\n" + weeks[answerWeek] + "\nWill cost $%2f",
+                                   
                                     f.getCostOfRegistration());
                             double discount = f.getDiscoutOnRegistration();
                             if (discount != 0) {
@@ -327,21 +327,21 @@ public class UI {
                 return i + 1;
             }
         }
-        Scanner scan = new Scanner(answer);
+        scan = new Scanner(answer);
         int optionNum;
         try {
             optionNum = scan.nextInt();
         } catch (Exception e) {
-            scan.close();
+            ;
             basicError(answer);
             return -1;
         }
         if (optionNum < 1 || optionNum > options.length) {
-            scan.close();
+            ;
             basicError(answer);
             return -1;
         }
-        scan.close();
+        ;
         return optionNum;
     }
 
