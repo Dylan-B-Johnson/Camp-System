@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.UUID;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -35,8 +36,34 @@ public class Facade {
         return null;
     }
 
-    public ArrayList<Week> getWeeksAvailableForRegistration() {
+    private ArrayList<Week> getWeeksAvailableForRegistrationWeek() {
         return null;
+    }
+
+    public String[] getWeeksAvailableForRegistration() {
+        ArrayList<Week> weeks = getWeeksAvailableForRegistrationWeek();
+        String[] rtn = new String[weeks.size()];
+        for (int i = 0; i < weeks.size(); i++) {
+            rtn[i] = (weeks.get(i).toString());
+        }
+        return rtn;
+    }
+
+    public String[] getCamperStrings() {
+        ArrayList<Camper> campers = ((Customer) user).getCampers();
+        String[] rtn = new String[campers.size()];
+        for (int i = 0; i < rtn.length; i++) {
+            rtn[i]=campers.get(i).getFirstName()+" "+campers.get(i).getLastName();
+        }
+        return rtn;
+    }
+
+    public double getCostOfRegistration(){
+        return -404;
+    }
+
+    public double getDiscoutOnRegistration(){
+        return -404;
     }
 
     public ArrayList<Activity> getActivities() {
@@ -88,9 +115,7 @@ public class Facade {
         return null;
     }
 
-    public boolean registerCamper(String firstName, String lastName, ArrayList<String> allergies,
-            LocalDate birthday, String relationToCustomer, Contact primaryEmergencyContact,
-            Contact secondaryEmergencyContact, Contact primaryCarePhysician) {
+    public boolean registerCamper(UUID id) {
         return false;
     }
 
@@ -122,44 +147,28 @@ public class Facade {
         return null;
     }
 
-    public String displayTime(int[] time) {
-        int hour = time[0];
-        int minute = time[1];
-        String half;
-        int displayHour;
-        if (hour >= 12) {
-            half = "pm";
-            if (hour >= 13) {
-                displayHour = hour - 12;
-            } else {
-                displayHour = hour;
-            }
-        } else {
-            half = "am";
-            if (hour == 0) {
-                displayHour = 12;
-            } else {
-                displayHour = hour;
-            }
-        }
-        if (minute != 0) {
-            if (minute > 9) {
-                return displayHour + ":" + minute + " " + half;
-            } else {
-                return displayHour + ":0" + minute + " " + half;
-            }
+    /**
+     * A method which gets the ith number properly formatted with the
+     * gramatically-correct suffix.
+     * 
+     * @author Bohemian
+     *         (https://stackoverflow.com/users/256196/bohemian)
+     *         (https://stackoverflow.com/questions/6810336/is-there-a-way-in-java-to-convert-an-integer-to-its-ordinal-name)
+     *         Row 3 claims no ownership or copywrite over this method.
+     * @param i The number to get the proper suffix for the ith number for
+     * @return A string for the properly formatted ith number
+     */
+    public String ordinal(int i) {
+        String[] suffixes = new String[] { "th", "st", "nd", "rd", "th", "th", "th", "th", "th", "th" };
+        switch (i % 100) {
+            case 11:
+            case 12:
+            case 13:
+                return i + "th";
+            default:
+                return i + suffixes[i % 10];
 
-        } else {
-            return displayHour + " " + half;
         }
-    }
-
-    public int[] addTime(int hour, int minute, int minutes) {
-        minute += minutes;
-        hour += minute / 60;
-        minute %= 60;
-        hour %= 24;
-        return new int[] { hour, minute };
     }
 
 }

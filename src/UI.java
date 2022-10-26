@@ -1,4 +1,5 @@
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Scanner;
@@ -30,7 +31,14 @@ public class UI {
                         }
                         break;
                     case CUSTOMER:
-                        switch (options(new String[] { "View Your Campers", "Add a Camper", "Register a Camper" })) {
+                        String[] options;
+                        if (((Customer) f.getUser()).getCampers().size() < 1) {
+                            options = new String[] { "View Your Campers", "Add a Camper" };
+                        } else {
+                            options = new String[] { "View Your Campers", "Add a Camper",
+                                    "Register a Camper" };
+                        }
+                        switch (options(options)) {
                             case 1:
                                 viewYourCampers();
                                 break;
@@ -53,7 +61,35 @@ public class UI {
     }
 
     private static void registerACamper() {
-
+        while (true) {
+            title("Select the Week to Register For");
+            String[] weeks = f.getWeeksAvailableForRegistration();
+            int answerWeek = options(weeks);
+            if (answerWeek != -1) {
+                while (true) {
+                    title("Select the Camper to Register");
+                    int answerCamper = options(f.getCamperStrings());
+                    if (answerCamper != -1) {
+                        if (f.registerCamper(((Customer) f.getUser()).getCampers().get(answerCamper - 1).getId())) {
+                            title("Registration Complete");
+                            System.out.printf("Registering "
+                                    + ((Customer) f.getUser()).getCampers().get(answerCamper - 1).getFirstName()
+                                    + "\nFor the week:\n" + weeks[answerWeek] + "\nWill cost $%2f", f.getCostOfRegistration());
+                            double discount = f.getDiscoutOnRegistration();
+                            if (discount != 0) {
+                                System.out.printf("(Having applied a discount of $%2f).", discount);
+                            }
+                            return;
+                        } else {
+                            title("ERROR");
+                            print("Something went wrong. Please try again");
+                            enterToExit();
+                            return;
+                        }
+                    }
+                }
+            }
+        }
     }
 
     private static void viewYourCampers() {
@@ -67,36 +103,12 @@ public class UI {
         enterToExit();
     }
 
-    /**
-     * A method which gets the ith number properly formatted with the
-     * gramatically-correct suffix.
-     * 
-     * @author Bohemian
-     *         (https://stackoverflow.com/users/256196/bohemian)
-     *         (https://stackoverflow.com/questions/6810336/is-there-a-way-in-java-to-convert-an-integer-to-its-ordinal-name)
-     *         Row 3 claims no ownership or copywrite over this method.
-     * @param i The number to get the proper suffix for the ith number for
-     * @return A string for the properly formatted ith number
-     */
-    private static String ordinal(int i) {
-        String[] suffixes = new String[] { "th", "st", "nd", "rd", "th", "th", "th", "th", "th", "th" };
-        switch (i % 100) {
-            case 11:
-            case 12:
-            case 13:
-                return i + "th";
-            default:
-                return i + suffixes[i % 10];
-
-        }
-    }
-
     private static ArrayList<String> getAllergies() {
         ArrayList<String> rtn = new ArrayList<String>();
         int i = 1;
         while (true) {
             title("Camper Allergies");
-            String answer = input("Please enter the " + ordinal(i)
+            String answer = input("Please enter the " + f.ordinal(i)
                     + " allergy of your camper:\n(To quit adding allergies enter \"q\").");
             if (answer.equals("q") || answer.equals("quit")) {
                 return rtn;
@@ -183,43 +195,11 @@ public class UI {
     }
 
     private static void viewSchedule() {
-        final int MEAL_LENGTH = 30;
-        final int TRANSITION_TIME = 15;
-        final int ACTIVITY_TIME = 150;
         while (true) {
             title("View Schedule");
             int answer = options(f.nextWeek());
             if (answer != -1) {
-                title(f.nextWeek()[answer]);
-                ArrayList<Activity> activities = f.getDaySchedule(answer, f.getUser()).getCurrentAcitivities();
-                int[] start = new int[] { 6, 0 };
-                int[] end = new int[] { 6, 30 };
-                for (int i = 0; i < activities.size() + 3; i++) {
-                    if (i == 0) {
-                        print(f.displayTime(start) + "-" + f.displayTime(end) + ": Breaksfast");
-                    } else if (i == 4) {
-                        start = f.addTime(end[0], end[1], TRANSITION_TIME);
-                        end = f.addTime(start[0], start[1], MEAL_LENGTH);
-                        print(f.displayTime(start) + "-" + f.displayTime(end) + ": Lunch");
-                    } else if (i == 8) {
-                        start = f.addTime(end[0], end[1], TRANSITION_TIME);
-                        end = f.addTime(start[0], start[1], MEAL_LENGTH);
-                        print(f.displayTime(start) + "-" + f.displayTime(end) + ": Dinner");
-                    } else {
-                        int activitiesIndex;
-                        if (i < 4) {
-                            activitiesIndex = i - 1;
-                        } else {
-                            activitiesIndex = i - 2;
-                        }
-                        start = f.addTime(end[0], end[1], TRANSITION_TIME);
-                        end = f.addTime(start[0], start[1], ACTIVITY_TIME + TRANSITION_TIME);
-                        print(f.displayTime(start) + "-" + f.displayTime(end) + ": "
-                                + activities.get(activitiesIndex).getName() +
-                                "\nLocation: " + activities.get(activitiesIndex).getLocation() + "\nDescription: "
-                                + activities.get(activitiesIndex).getDescription());
-                    }
-                }
+                print(f.getDaySchedule(answer, f.getUser()).toString());
                 enterToExit();
                 break;
             }
