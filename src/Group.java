@@ -1,4 +1,6 @@
 import java.util.UUID;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 
 public class Group {
@@ -75,15 +77,48 @@ public class Group {
     }
 
     public String toString() {
-        return null;
+        return 
+        "\nMinimum age: " + this.campers.minAge() +
+        "\nMaximum age: " + this.campers.maxAge() +
+        "\nCampers: " + this.campers.toString() +
+        "\nGroup size: " + groupSize +
+        "\nSchedule: " + this.schedule.toString();
     }
 
-    private int minAge() {
-        return -1;
+    private long minAge() {
+
+        LocalDate min = LocalDate.now();
+        long rtn = 0;
+
+        for(Camper camper: this.campers){
+            if (camper.getBirthday().isBefore(min)){
+                min = camper.getBirthday();
+                long monthsElapsed = ChronoUnit.MONTHS.between(min, camper.getBirthday());                
+                rtn = monthsElapsed;
+            }
+
+            rtn = rtn/12;
+        }
+
+        return rtn;
     }
 
-    private int maxAge() {
-        return -1;
+    private long maxAge() {
+
+        LocalDate max = LocalDate.of(1900, 1, 1);
+        long rtn = 0;
+
+        for(Camper camper: this.campers){
+            if (camper.getBirthday().isAfter(max)){
+                max = camper.getBirthday();
+                long monthsElapsed = ChronoUnit.MONTHS.between(max, camper.getBirthday());                
+                rtn = monthsElapsed;
+            }
+
+            rtn = rtn/12;
+        }
+
+        return rtn;
     }
 
 }
