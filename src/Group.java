@@ -27,7 +27,7 @@ public class Group {
     }
 
     public Counselor getCounselor() {
-        for (Counselor counselor : DataReader.getCounselors()) {
+        for (Counselor counselor : DataReader.getCounselors().values()) {
             if (counselor.getGroup().getId().compareTo(this.id) == 0 {
                 return counselor;
             }
