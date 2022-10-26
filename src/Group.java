@@ -77,28 +77,26 @@ public class Group {
     }
 
     public String toString() {
-        return 
-        "\nMinimum age: " + this.campers.minAge() +
-        "\nMaximum age: " + this.campers.maxAge() +
-        "\nCampers: " + this.campers.toString() +
-        "\nGroup size: " + groupSize +
-        "\nSchedule: " + this.schedule.toString();
+        return "\nMinimum age: " + this.minAge() +
+                "\nMaximum age: " + this.maxAge() +
+                "\nCampers: " + this.campers.toString() +
+                "\nGroup size: " + groupSize +
+                "\nSchedule: " + this.schedule.toString();
     }
 
     private long minAge() {
 
-        
         LocalDate min = LocalDate.of(1900, 1, 1);
         long rtn = 0;
 
-        for(Camper camper: this.campers){
-            if (camper.getBirthday().isAfter(min)){
+        for (Camper camper : this.campers) {
+            if (camper.getBirthday().isAfter(min)) {
                 min = camper.getBirthday();
-                long monthsElapsed = ChronoUnit.MONTHS.between(min, camper.getBirthday());                
+                long monthsElapsed = ChronoUnit.MONTHS.between(min, camper.getBirthday());
                 rtn = monthsElapsed;
             }
 
-            rtn = rtn/12;
+            rtn = rtn / 12;
         }
 
         return rtn;
@@ -109,14 +107,14 @@ public class Group {
         LocalDate max = LocalDate.now();
         long rtn = 0;
 
-        for(Camper camper: this.campers){
-            if (camper.getBirthday().isBefore(max)){
+        for (Camper camper : this.campers) {
+            if (camper.getBirthday().isBefore(max)) {
                 max = camper.getBirthday();
-                long monthsElapsed = ChronoUnit.MONTHS.between(max, camper.getBirthday());                
+                long monthsElapsed = ChronoUnit.MONTHS.between(max, camper.getBirthday());
                 rtn = monthsElapsed;
             }
 
-            rtn = rtn/12;
+            rtn = rtn / 12;
         }
 
         return rtn;
