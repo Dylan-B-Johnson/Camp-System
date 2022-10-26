@@ -285,6 +285,11 @@ public class UI {
         return answer;
     }
 
+    /**
+     * @author Code snipped derived from:
+     * https://www.javatpoint.com/how-to-clear-screen-in-java#Platform-Specific-Command 
+     * Row 3 Claims no copywrite or authorship over this method
+     */
     private static void cls() {
         try {
             String os = System.getProperty("os.name");
