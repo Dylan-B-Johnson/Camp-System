@@ -1,5 +1,4 @@
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Scanner;
@@ -8,11 +7,19 @@ public class UI {
     private static Facade f = new Facade();
     private static final String PCP = "primary care physician";
 
-    public static void main(String args[]) {
-        run();
+    private Scanner scan;
+
+    public UI() {
+        scan = new Scanner(System.in);
     }
 
-    private static void run() {
+    public static void main(String args[]) {
+        UI ui = new UI();
+
+        ui.run();
+    }
+
+    private void run() {
         while (true) {
             if (f.getUser() == null) {
                 if (welcomeScreen()) {
@@ -60,7 +67,7 @@ public class UI {
         }
     }
 
-    private static void registerACamper() {
+    private void registerACamper() {
         while (true) {
             title("Select the Week to Register For");
             String[] weeks = f.getStringWeeksAvailableForRegistration();
@@ -93,7 +100,7 @@ public class UI {
         }
     }
 
-    private static void viewYourCampers() {
+    private void viewYourCampers() {
         title("View Your Campers");
         int i = 1;
         for (Camper camper : ((Customer) (f.getUser())).getCampers()) {
@@ -104,7 +111,7 @@ public class UI {
         enterToExit();
     }
 
-    private static ArrayList<String> getAllergies() {
+    private ArrayList<String> getAllergies() {
         ArrayList<String> rtn = new ArrayList<String>();
         int i = 1;
         while (true) {
@@ -119,7 +126,7 @@ public class UI {
         }
     }
 
-    private static LocalDate getBirthday() {
+    private LocalDate getBirthday() {
         while (true) {
             title("Camper Birthday");
             int day, month, year;
@@ -156,7 +163,7 @@ public class UI {
         }
     }
 
-    private static Contact getEmergencyContact(String typeOfContact) {
+    private Contact getEmergencyContact(String typeOfContact) {
         String firstname = input("Please enter the first name of your camper's " + typeOfContact + ":");
         String lastname = input("Please enter the last name of your camper's " + typeOfContact + ":");
         String email = input("Please enter the email of your camper's " + typeOfContact + ":");
@@ -171,7 +178,7 @@ public class UI {
         return f.makeContact(firstname, lastname, email, phoneNumber, relationship, address);
     }
 
-    private static void addACamper() {
+    private void addACamper() {
         title("Add a Camper");
         String firstname = input("Please enter your camper's first name: ");
         String lastname = input("Please enter your camper's last name: ");
@@ -195,7 +202,7 @@ public class UI {
         enterToExit();
     }
 
-    private static void viewSchedule() {
+    private void viewSchedule() {
         while (true) {
             title("View Schedule");
             int answer = options(f.nextWeek());
@@ -207,7 +214,7 @@ public class UI {
         }
     }
 
-    private static void viewGroup() {
+    private void viewGroup() {
         title("View Group");
         int i = 1;
         for (Camper camper : f.getGroup(f.getUser()).getCampers()) {
@@ -218,7 +225,7 @@ public class UI {
         enterToExit();
     }
 
-    private static boolean counselorScreen() {
+    private boolean counselorScreen() {
         while (true) {
             title("Welcome " + f.getUser().getFirstName() + "!");
             switch (options(new String[] { "View Schedule", "View Group" })) {
@@ -231,7 +238,7 @@ public class UI {
         }
     }
 
-    private static boolean welcomeScreen() {
+    private boolean welcomeScreen() {
         while (true) {
             title("Welcome to " + f.getCampLocation().getName());
             print("Located at " + f.getCampLocation().getLocation() + ", and managed by "
@@ -253,7 +260,7 @@ public class UI {
 
     }
 
-    private static void createAccount() {
+    private void createAccount() {
         title("Create Your Account");
         f.setUser(f.signUp(input("Please enter your email address:"),
                 input("Please enter a password for your account:")));
@@ -263,7 +270,7 @@ public class UI {
         }
     }
 
-    private static void login() {
+    private void login() {
         title("Login");
         f.setUser(f.login(input("Please enter your email address:"),
                 input("Please enter a password for your account:")));
@@ -273,35 +280,35 @@ public class UI {
         }
     }
 
-    private static void print(String string) {
+    private void print(String string) {
         System.out.println(string);
     }
 
-    private static String input(String prompt) {
+    private String input(String prompt) {
         print(prompt);
-        Scanner scan = new Scanner(System.in);
+        scan = new Scanner(System.in);
         String answer = scan.nextLine();
-        scan.close();
+        ;
         return answer;
     }
 
-    private static void cls() {
+    private void cls() {
         System.out.print("\033[H\033[2J");
         System.out.flush();
     }
 
-    private static void basicError(String answer) {
+    private void basicError(String answer) {
         title("ERROR");
         input(answer + "\" is not a valid option, please try again.\n(Press enter to continue).");
         cls();
     }
 
-    private static void title(String title) {
+    private void title(String title) {
         cls();
         print("***** " + title + " *****");
     }
 
-    private static int options(String[] options) {
+    private int options(String[] options) {
         String optionsString = "";
         for (int i = 0; i < options.length; i++) {
             if (i < options.length - 1) {
@@ -317,25 +324,25 @@ public class UI {
                 return i + 1;
             }
         }
-        Scanner scan = new Scanner(answer);
+        scan = new Scanner(answer);
         int optionNum;
         try {
             optionNum = scan.nextInt();
         } catch (Exception e) {
-            scan.close();
+            ;
             basicError(answer);
             return -1;
         }
         if (optionNum < 1 || optionNum > options.length) {
-            scan.close();
+            ;
             basicError(answer);
             return -1;
         }
-        scan.close();
+        ;
         return optionNum;
     }
 
-    public static void enterToExit() {
+    public void enterToExit() {
         input("Press enter to exit.");
     }
 }
