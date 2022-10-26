@@ -7,9 +7,11 @@ import java.util.Scanner;
 public class UI {
     private static Facade f = new Facade();
     private static final String PCP = "primary care physician";
+    private static Scanner scan = new Scanner(System.in);
 
     public static void main(String args[]) {
         run();
+        scan.close();
     }
 
     private static void run() {
@@ -22,6 +24,7 @@ public class UI {
                 }
             }
             if (f.getUser() != null) {
+                title("Welcome " + f.getUser().getFirstName() + "!");
                 switch (f.getUser().getTypeOfUser()) {
                     case COUNSELOR:
                         if (counselorScreen()) {
@@ -49,7 +52,6 @@ public class UI {
                                 registerACamper();
                         }
                         break;
-                    // select appropriate user screen
 
                     case DIRECTOR:
                         // select appropriate user screen
@@ -58,6 +60,7 @@ public class UI {
             }
 
         }
+
     }
 
     private static void registerACamper() {
@@ -74,7 +77,8 @@ public class UI {
                             title("Registration Complete");
                             System.out.printf("Registering "
                                     + ((Customer) f.getUser()).getCampers().get(answerCamper - 1).getFirstName()
-                                    + "\nFor the week:\n" + weeks[answerWeek] + "\nWill cost $%2f", f.getCostOfRegistration());
+                                    + "\nFor the week:\n" + weeks[answerWeek] + "\nWill cost $%2f",
+                                    f.getCostOfRegistration());
                             double discount = f.getDiscoutOnRegistration();
                             if (discount != 0) {
                                 System.out.printf("(Having applied a discount of $%2f).", discount);
@@ -219,7 +223,6 @@ public class UI {
 
     private static boolean counselorScreen() {
         while (true) {
-            title("Welcome " + f.getUser().getFirstName() + "!");
             switch (options(new String[] { "View Schedule", "View Group" })) {
                 case 1:
                     return true;
@@ -278,15 +281,23 @@ public class UI {
 
     private static String input(String prompt) {
         print(prompt);
-        Scanner scan = new Scanner(System.in);
         String answer = scan.nextLine();
-        scan.close();
         return answer;
     }
 
     private static void cls() {
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
+        try {
+            final String os = System.getProperty("os.name");
+            if (os.contains("Windows")) {
+                Runtime.getRuntime().exec("cls");
+            } else {
+                Runtime.getRuntime().exec("clear");
+            }
+        } catch (final Exception e) {
+            System.out.print("\033[H\033[2J");
+            System.out.flush();
+        }
+
     }
 
     private static void basicError(String answer) {
