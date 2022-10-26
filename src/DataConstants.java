@@ -32,4 +32,13 @@ public class DataConstants {
     public static final String GROUP = "group";
     public static final String BIRTHDAY = "birthday";
     public static final String SCHEDULE = "schedule";
+    public static final String CUSTOMERPATH = "data/customers.json";
+    public static final String ACTIVITYPATH = "data/customers.json";
+    public static final String WEEKPATH = "data/weeks.json";
+    public static final String CAMPLOCATIONPATH = "data/campLocation.json";
+    public static final String COUNSELORPATH = "data/counselors.json";
+    public static final String DIRECTORPATH = "data/director.json";
+    public static final String CAMPERPATH = "data/campers.json";
+    public static final String DAYSCHEDULEPATH = "data/daySchedules.json";
+    public static final String GROUPPATH = "data/groups.json";
 }
