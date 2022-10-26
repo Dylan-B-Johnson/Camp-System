@@ -63,7 +63,7 @@ public class UI {
     private static void registerACamper() {
         while (true) {
             title("Select the Week to Register For");
-            String[] weeks = f.getWeeksAvailableForRegistration();
+            String[] weeks = f.getStringWeeksAvailableForRegistration();
             int answerWeek = options(weeks);
             if (answerWeek != -1) {
                 while (true) {
@@ -74,7 +74,8 @@ public class UI {
                             title("Registration Complete");
                             System.out.printf("Registering "
                                     + ((Customer) f.getUser()).getCampers().get(answerCamper - 1).getFirstName()
-                                    + "\nFor the week:\n" + weeks[answerWeek] + "\nWill cost $%2f", f.getCostOfRegistration());
+                                    + "\nFor the week:\n" + weeks[answerWeek] + "\nWill cost $%2f",
+                                    f.getCostOfRegistration());
                             double discount = f.getDiscoutOnRegistration();
                             if (discount != 0) {
                                 System.out.printf("(Having applied a discount of $%2f).", discount);

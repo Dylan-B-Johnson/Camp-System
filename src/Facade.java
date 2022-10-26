@@ -29,14 +29,14 @@ public class Facade {
     }
 
     public User signUp(String email, String password) {
-       return null;
+        return null;
     }
 
     public Week getCurrentWeek() {
         return WeekList.getCurrentWeek();
     }
 
-    public ArrayList<Week> getWeeksAvailableForRegistration() {
+    private ArrayList<Week> getWeeksAvailableForRegistration() {
         return WeekList.getWeeksAvailableForRegistration();
     }
 
@@ -53,16 +53,16 @@ public class Facade {
         ArrayList<Camper> campers = ((Customer) user).getCampers();
         String[] rtn = new String[campers.size()];
         for (int i = 0; i < rtn.length; i++) {
-            rtn[i]=campers.get(i).getFirstName()+" "+campers.get(i).getLastName();
+            rtn[i] = campers.get(i).getFirstName() + " " + campers.get(i).getLastName();
         }
         return rtn;
     }
 
-    public double getCostOfRegistration(){
+    public double getCostOfRegistration() {
         return -404;
     }
 
-    public double getDiscoutOnRegistration(){
+    public double getDiscoutOnRegistration() {
         return -404;
     }
 
@@ -76,8 +76,8 @@ public class Facade {
 
     public ArrayList<Camper> getCamper(String firstName) {
         ArrayList<Camper> campers = new ArrayList<Camper>();
-        for(Camper camper : UserList.getCampers()){
-            if(camper.getFirstName().equals(firstName)){
+        for (Camper camper : UserList.getCampers()) {
+            if (camper.getFirstName().equals(firstName)) {
                 campers.add(camper);
             }
         }
@@ -86,8 +86,8 @@ public class Facade {
 
     public ArrayList<User> getUser(String firstName) {
         ArrayList<User> users = new ArrayList<User>();
-        for(User user : UserList.getUsers()){
-            if(user.getFirstName().equals(firstName)){
+        for (User user : UserList.getUsers()) {
+            if (user.getFirstName().equals(firstName)) {
                 users.add(user);
             }
         }
@@ -103,7 +103,7 @@ public class Facade {
     }
 
     public double getTotalPrice() {
-        return 100 - ((Customer)this.user).getDiscount();
+        return 100 - ((Customer) this.user).getDiscount();
     }
 
     public User getUser() {
@@ -120,8 +120,8 @@ public class Facade {
 
     public ArrayList<User> getCounselor(String firstName) {
         ArrayList<User> users = new ArrayList<User>();
-        for(User user : UserList.getUsers()){
-            if(user.getFirstName().equals(firstName)){
+        for (User user : UserList.getUsers()) {
+            if (user.getFirstName().equals(firstName)) {
                 users.add(user);
             }
         }
