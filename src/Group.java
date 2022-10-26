@@ -26,6 +26,15 @@ public class Group {
         return this.schedule;
     }
 
+    public Counselor getCounselor() {
+        for (Counselor counselor : DataReader.getCounselors()) {
+            if (counselor.getGroup().getId().compareTo(this.id) == 0 {
+                return counselor;
+            }
+        }
+        return null;
+    }
+
     public void setSchedule(ArrayList<DaySchedule> schedule) {
         this.schedule = schedule;
     }
@@ -84,7 +93,7 @@ public class Group {
                 "\nSchedule: " + this.schedule.toString();
     }
 
-    private long minAge() {
+    private int minAge() {
 
         LocalDate min = LocalDate.of(1900, 1, 1);
         long rtn = 0;
@@ -92,17 +101,14 @@ public class Group {
         for (Camper camper : this.campers) {
             if (camper.getBirthday().isAfter(min)) {
                 min = camper.getBirthday();
-                long monthsElapsed = ChronoUnit.MONTHS.between(min, camper.getBirthday());
-                rtn = monthsElapsed;
+                rtn = ChronoUnit.YEARS.between(min, camper.getBirthday());
             }
-
-            rtn = rtn / 12;
         }
 
-        return rtn;
+        return (int) rtn;
     }
 
-    private long maxAge() {
+    private int maxAge() {
 
         LocalDate max = LocalDate.now();
         long rtn = 0;
@@ -110,14 +116,11 @@ public class Group {
         for (Camper camper : this.campers) {
             if (camper.getBirthday().isBefore(max)) {
                 max = camper.getBirthday();
-                long monthsElapsed = ChronoUnit.MONTHS.between(max, camper.getBirthday());
-                rtn = monthsElapsed;
+                rtn = ChronoUnit.YEARS.between(max, camper.getBirthday());
             }
-
-            rtn = rtn / 12;
         }
 
-        return rtn;
+        return (int) rtn;
     }
 
 }
