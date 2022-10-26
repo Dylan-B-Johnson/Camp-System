@@ -162,7 +162,7 @@ public class Facade {
     }
 
     public Group getGroup(User counselor) {
-        return null;
+        return ((Counselor) counselor).getGroup();
     }
 
     /**
