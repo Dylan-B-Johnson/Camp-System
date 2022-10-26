@@ -29,14 +29,18 @@ public class Facade {
     }
 
     public User signUp(String email, String password) {
-        return null;
+        if(UserList.emailAvailable(email)){
+            User user = new Customer(email, null, null, password, getCampLocation(), null);
+            UserList.addUser(user);
+        }
+        return user;
     }
 
     public Week getCurrentWeek() {
         return WeekList.getCurrentWeek();
     }
 
-    private ArrayList<Week> getWeeksAvailableForRegistration() {
+    public ArrayList<Week> getWeeksAvailableForRegistration() {
         return WeekList.getWeeksAvailableForRegistration();
     }
 
@@ -133,14 +137,27 @@ public class Facade {
         return null;
     }
 
-    public boolean registerCamper(UUID id) {
+    public boolean registerCamper(UUID id, Week week) {
+        if(week.canRegisterCamper()){
+            Camper foundCamper = null;
+            for(Camper camper : UserList.getCampers()){
+                if(camper.getId().equals(id)){
+                    foundCamper = camper;
+                }
+            }
+            week.registerCamper(foundCamper);
+            return true;
+        }
         return false;
     }
 
     public boolean addCamperToUser(String firstName, String lastName, ArrayList<String> allergies,
             LocalDate birthday, String relationToCustomer, Contact primaryEmergencyContact,
             Contact secondaryEmergencyContact, Contact primaryCarePhysician) {
-        return false;
+        Camper camper = new Camper(firstName, lastName, allergies, birthday, primaryEmergencyContact, 
+        secondaryEmergencyContact, primaryCarePhysician, 0, lastName, relationToCustomer);
+        ((Customer)getUser()).addCamper(camper);
+        return true;
     }
 
     public boolean addActivity(Activity activity) {

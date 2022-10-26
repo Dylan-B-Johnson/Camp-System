@@ -72,7 +72,7 @@ public class UI {
                     title("Select the Camper to Register");
                     int answerCamper = options(f.getCamperStrings());
                     if (answerCamper != -1) {
-                        if (f.registerCamper(((Customer) f.getUser()).getCampers().get(answerCamper - 1).getId())) {
+                        if (f.registerCamper(((Customer) f.getUser()).getCampers().get(answerCamper - 1).getId(), f.getWeeksAvailableForRegistration().get(answerWeek))) {
                             title("Registration Complete");
                             System.out.printf("Registering "
                                     + ((Customer) f.getUser()).getCampers().get(answerCamper - 1).getFirstName()
