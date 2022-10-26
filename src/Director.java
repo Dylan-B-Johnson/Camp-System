@@ -13,16 +13,29 @@ public class Director extends User {
         super(email, firstName, lastName, password, campLocation, TypeOfUser.DIRECTOR);
     }
 
-    public void removeCamper(String id) {
-
+    public void removeCamper(String firstName, String lastName) {
+        for(Camper camper : UserList.getCampers()){
+            if(firstName.equals(camper.getFirstName())&&lastName.equals(camper.getLastName())){
+                DataWriter.deleteCamper(camper.getId());
+            }
+        }
     }
 
-    public void removeCounselor(String id) {
-
+    public void removeCounselor(String email) {
+        for(Counselor counselor : UserList.getCounselors()){
+            if(email.equals(counselor.getEmail())){
+                DataWriter.deleteCounselor(counselor.getId());
+            }
+        }
+        
     }
 
-    public void removeUser(String id) {
-
+    public void removeCustomer(String email) {
+        for(Customer customer : UserList.getCustomers()){
+            if(email.equals(customer.getEmail())){
+                DataWriter.deleteCustomer(customer.getId());
+            }
+        }
     }
 
 }

@@ -5,32 +5,45 @@ import java.util.ArrayList;
 
 public class WeekList {
 
-    private ArrayList<Week> weeks;
-    private static WeekList weekList;
-
-    private WeekList() {
-
-    }
-
-    public static WeekList getInstance() {
-        return null;
-    }
-
-    public boolean addWeek(Week week) {
-        return false;
+    public static boolean addWeek(Week week) {
+        for(Week weekFound : getWeeksAvailableForRegistration()){
+            if(weekFound.getId().equals(week.getId())){
+                return false;
+            }
+        }
+        DataWriter.createWeek(week);
+        return true;
     }
     
-    public Week getCurrentWeek() {
+    public static Week getCurrentWeek() {
+        for(Week week : DataReader.getWeeks().values()){
+            if(week.getStartOfWeek().until(LocalDate.now()).getDays()<7){
+                return week;
+            }
+        }
         return null;
     }
 
-    public ArrayList<Week> getWeeksAvailableForRegistration() {
-        return null;
+    public static ArrayList<Week> getWeeksAvailableForRegistration() {
+        ArrayList<Week> weeks = new ArrayList<Week>();
+        for(Week week : DataReader.getWeeks().values()){
+            if(week.getMaxCampers()-week.getCurrentCampers()>0){
+                weeks.add(week);
+            }
+        }
+        return weeks;
     }
 
-    public DaySchedule getDaySchedule(LocalDate date, User counselor){
-        for (Week i: weeks){
+    public static DaySchedule getDaySchedule(LocalDate date, User counselor){
+        for (Week i: DataReader.getWeeks().values()){
             for (Group j: i.getGroups()){
+                if(((Counselor)counselor).getGroup().equals(j)){
+                    for(DaySchedule schedule : j.getSchedule()){
+                        if(schedule.getDay().equals(date)){
+                            return schedule;
+                        }
+                    }
+                }
             }
         }
         return null;

@@ -49,7 +49,7 @@ public class Group {
     public void getRandomSchedule(Week week) {
         for (int i = 0; i < 5; i++) {
             DaySchedule schedule = new DaySchedule(null, null, null);
-            this.schedule.add(schedule.getRandomDaySchedule(week, week.getStartOfWeek()));
+            this.schedule.add(schedule.getRandomDaySchedule(week, week.getStartOfWeek().plusDays(i)));
         }
     }
 

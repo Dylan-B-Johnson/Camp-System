@@ -28,15 +28,15 @@ public class Facade {
     }
 
     public User signUp(String email, String password) {
-        return null;
+       return null;
     }
 
     public Week getCurrentWeek() {
-        return null;
+        return WeekList.getCurrentWeek();
     }
 
     public ArrayList<Week> getWeeksAvailableForRegistration() {
-        return null;
+        return WeekList.getWeeksAvailableForRegistration();
     }
 
     public ArrayList<Activity> getActivities() {
@@ -48,11 +48,23 @@ public class Facade {
     }
 
     public ArrayList<Camper> getCamper(String firstName) {
-        return null;
+        ArrayList<Camper> campers = new ArrayList<Camper>();
+        for(Camper camper : UserList.getCampers()){
+            if(camper.getFirstName().equals(firstName)){
+                campers.add(camper);
+            }
+        }
+        return campers;
     }
 
     public ArrayList<User> getUser(String firstName) {
-        return null;
+        ArrayList<User> users = new ArrayList<User>();
+        for(User user : UserList.getUsers()){
+            if(user.getFirstName().equals(firstName)){
+                users.add(user);
+            }
+        }
+        return users;
     }
 
     public ArrayList<Customer> getCustomers() {
@@ -64,7 +76,7 @@ public class Facade {
     }
 
     public double getTotalPrice() {
-        return -1;
+        return 100 - ((Customer)this.user).getDiscount();
     }
 
     public User getUser() {
@@ -80,7 +92,13 @@ public class Facade {
     }
 
     public ArrayList<User> getCounselor(String firstName) {
-        return null;
+        ArrayList<User> users = new ArrayList<User>();
+        for(User user : UserList.getUsers()){
+            if(user.getFirstName().equals(firstName)){
+                users.add(user);
+            }
+        }
+        return users;
     }
 
     public Contact makeContact(String firstName, String lastName, String email,
@@ -105,7 +123,7 @@ public class Facade {
     }
 
     public DaySchedule getDaySchedule(int daysFromNow, User counselor) {
-        return WeekList.getInstance().getDaySchedule(LocalDate.now().plusDays(daysFromNow), counselor);
+        return WeekList.getDaySchedule(LocalDate.now().plusDays(daysFromNow), counselor);
     }
 
     public String[] nextWeek() {
