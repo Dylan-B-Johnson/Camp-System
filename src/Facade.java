@@ -40,8 +40,8 @@ public class Facade {
         return WeekList.getWeeksAvailableForRegistration();
     }
 
-    public String[] getWeeksAvailableForRegistration() {
-        ArrayList<Week> weeks = getWeeksAvailableForRegistrationWeek();
+    public String[] getStringWeeksAvailableForRegistration() {
+        ArrayList<Week> weeks = getWeeksAvailableForRegistration();
         String[] rtn = new String[weeks.size()];
         for (int i = 0; i < weeks.size(); i++) {
             rtn[i] = (weeks.get(i).toString());
