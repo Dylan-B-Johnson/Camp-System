@@ -19,8 +19,8 @@ public class Facade {
     }
 
     public User login(String email, String password) {
-        for(User user : UserList.getUsers()){
-            if(user.getEmail().equals(email) && user.getPassword().equals(password)){
+        for (User user : UserList.getUsers()) {
+            if (user.getEmail().equals(email) && user.getPassword().equals(password)) {
                 return user;
             }
         }
@@ -40,7 +40,7 @@ public class Facade {
     }
 
     public ArrayList<Activity> getActivities() {
-        return new ArrayList<Activity>(DataReader.getActivities().values()) ;
+        return new ArrayList<Activity>(DataReader.getActivities().values());
     }
 
     public void quitAndSave() {
@@ -94,6 +94,12 @@ public class Facade {
         return false;
     }
 
+    public boolean addCamperToUser(String firstName, String lastName, ArrayList<String> allergies,
+            LocalDate birthday, String relationToCustomer, Contact primaryEmergencyContact,
+            Contact secondaryEmergencyContact, Contact primaryCarePhysician) {
+        return false;
+    }
+
     public boolean addActivity(Activity activity) {
         return false;
     }
@@ -110,6 +116,10 @@ public class Facade {
             rtn[i] = (plusDays.format(DateTimeFormatter.ofPattern("E, LLL d")));
         }
         return rtn;
+    }
+
+    public Group getGroup(User counselor) {
+        return null;
     }
 
     public String displayTime(int[] time) {
