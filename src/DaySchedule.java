@@ -106,14 +106,14 @@ public class DaySchedule {
     }
 
     public String toString() {
-        return "Breakfast (6:00-6:30): " +
+        return "Breakfast (6:00-6:30)" +
                 "\nActivity 1 (6:45-8:15): \n" + currentActivities.get(0) +
                 "\nActivity 2 (8:30-10:00): \n" + currentActivities.get(1) +
                 "\nActivity 3 (10:15-11:45): \n" + currentActivities.get(2) +
-                "\nLunch (12:00-12:30): " +
+                "\nLunch (12:00-12:30)" +
                 "\nActivity 4 (12:45-2:15): \n" + currentActivities.get(3) +
                 "\nActivity 5 (2:30-4:00): \n" + currentActivities.get(4) +
                 "\nActivity 6 (4:15-5:45): \n" + currentActivities.get(5) +
-                "\nDinner (6:00-6:30): ";
+                "\nDinner (6:00-6:30)";
     }
 }

@@ -1,6 +1,7 @@
 
 //Copyright Row 3
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -63,19 +64,19 @@ public class Week {
         return this.startOfWeek;
     }
 
-    public void setGroups(ArrayList<Group> groups){
+    public void setGroups(ArrayList<Group> groups) {
         this.groups = groups;
     }
 
-    public ArrayList<Group> getGroups(){
+    public ArrayList<Group> getGroups() {
         return this.groups;
     }
 
-    public void setCampLocation(CampLocation campLocation){
+    public void setCampLocation(CampLocation campLocation) {
         this.campLocation = campLocation;
     }
 
-    public CampLocation getCampLocation(){
+    public CampLocation getCampLocation() {
         return this.campLocation;
     }
 
@@ -88,7 +89,7 @@ public class Week {
     }
 
     public void registerCamper(Camper camper) {
-        
+
     }
 
     public boolean currentWeek() {
@@ -104,6 +105,7 @@ public class Week {
     }
 
     public String toString() {
-        return null;
+        return "\tStart of Week: " + this.startOfWeek.format(DateTimeFormatter.ofPattern("MM-DD-YY"))
+                + "\n\tEnd of Week: " + this.startOfWeek.plusDays(6).format(DateTimeFormatter.ofPattern("MM-DD-YY"));
     }
 }
