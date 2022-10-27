@@ -33,7 +33,7 @@ public class DaySchedule {
         Random random = new Random();
         for (int i = 0; i < 6; i++) {
             Activity nextActivity = activities.get(random.nextInt(activities.size()));
-            while (!verifyActivityAvailablility(nextActivity.getName(), i)) {
+            while (!verifyActivityAvailablility(nextActivity.getName(), i) || curActivities.contains(nextActivity)) {
                 nextActivity = activities.get(random.nextInt(activities.size()));
             }
             curActivities.set(i, nextActivity);
