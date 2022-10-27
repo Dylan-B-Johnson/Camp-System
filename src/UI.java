@@ -136,7 +136,11 @@ public class UI {
 
     private static void addActivity() {
         title("Adding an Activity");
-        if (f.addActivity(input("Please enter the name of the activity to add:"),
+        String name = input("Please enter the name of the activity to add:");
+        if (f.activityExists(name)) {
+            title("ERROR");
+            print("An activity with that name already exists.");
+        } else if (f.addActivity(name,
                 input("Please enter the location that the activity is performed:"),
                 input("Please enter a description for the activity:"))) {
             print("Activity sucessfully added.");

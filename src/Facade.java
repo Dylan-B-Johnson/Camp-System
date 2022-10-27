@@ -127,6 +127,15 @@ public class Facade {
         return user;
     }
 
+    public boolean activityExists(String name){
+        for (Activity i : ActivitiesList.getInstance().getActivities()){
+            if (i.getName().equalsIgnoreCase(name)){
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void setUser(User user) {
         this.user = user;
     }
