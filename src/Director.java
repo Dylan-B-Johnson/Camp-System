@@ -1,5 +1,6 @@
 // Copyright 2022 Row 3
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 public class Director extends User {
@@ -35,6 +36,12 @@ public class Director extends User {
             if(email.equals(customer.getEmail())){
                 DataWriter.deleteCustomer(customer.getId());
             }
+        }
+    }
+
+    public void giveWeekRandomSchedule(Week week){
+        for(Group group : week.getGroups()){
+            group.getRandomSchedule(week);;
         }
     }
 
