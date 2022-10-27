@@ -29,9 +29,18 @@ public class Facade {
         return null;
     }
 
-    public User signUp(String email, String password) {
+    public User signUpCustomer(String email, String password) {
         if (UserList.emailAvailable(email)) {
             User user = new Customer(email, null, null, password, getCampLocation(), null);
+            UserList.addUser(user);
+            setUser(user);
+        }
+        return user;
+    }
+
+    public User signUpCounselor(String email, String password) {
+        if (UserList.emailAvailable(email)) {
+            User user = new Counselor(null, null, null, email, null, null, password, getCampLocation(), null, null, null);
             UserList.addUser(user);
             setUser(user);
         }
