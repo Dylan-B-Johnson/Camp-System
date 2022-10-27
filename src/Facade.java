@@ -191,6 +191,15 @@ public class Facade {
         return rtn;
     }
 
+    public ArrayList<Week> getFutureOrCurrentWeeks(){
+        ArrayList<Week> futureOrCurrentWeeks = WeekList.getFutureWeeks();
+        Week current = getCurrentWeek();
+        if (current!=null){
+            futureOrCurrentWeeks.add(current);
+        }
+        return futureOrCurrentWeeks;
+    }
+
     public Group getGroup(User counselor) {
         return ((Counselor) counselor).getGroup();
     }

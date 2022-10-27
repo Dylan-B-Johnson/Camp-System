@@ -26,12 +26,27 @@ public class WeekList {
 
     public static ArrayList<Week> getWeeksAvailableForRegistration() {
         ArrayList<Week> weeks = new ArrayList<Week>();
-        for(Week week : DataReader.getWeeks().values()){
+        ArrayList<Week> futureOrCurrentWeeks = getFutureWeeks();
+        Week current = getCurrentWeek();
+        if (current!=null){
+            futureOrCurrentWeeks.add(current);
+        }
+        for(Week week : futureOrCurrentWeeks){
             if(week.getMaxCampers()-week.getCurrentCampers()>0){
                 weeks.add(week);
             }
         }
         return weeks;
+    }
+
+    public static ArrayList<Week> getFutureWeeks(){
+        ArrayList<Week> rtn = new ArrayList<Week>();
+        for (Week i: DataReader.getWeeks().values()){
+            if (i.futureWeek()){
+                rtn.add(i);
+            }
+        }
+        return rtn;
     }
 
     public static DaySchedule getDaySchedule(LocalDate date, User counselor){

@@ -26,10 +26,15 @@ public class UI {
                 title("Welcome " + f.getUser().getFirstName() + "!");
                 switch (f.getUser().getTypeOfUser()) {
                     case COUNSELOR:
-                        if (counselorScreen()) {
-                            viewSchedule();
-                        } else {
-                            viewGroup();
+                        switch (options(new String[] { "View Schedule", "View Group", "Export Schedule" })) {
+                            case 1:
+                                viewSchedule();
+                                break;
+                            case 2:
+                                viewGroup();
+                                break;
+                            case 3:
+                                exportSchedule();
                         }
                         break;
                     case CUSTOMER:
@@ -53,7 +58,27 @@ public class UI {
                         break;
 
                     case DIRECTOR:
-                        // select appropriate user screen
+                        switch (options(new String[] { "Search Campers", "Search Counselors", "Add Activity",
+                                "Edit Schedule", "View Schedule", "Export Schedule", "Add Week" })) {
+                            case 1:
+
+                                break;
+                            case 2:
+
+                                break;
+                            case 3:
+
+                                break;
+                            case 4:
+
+                                break;
+                            case 5:
+                                break;
+                            case 6:
+                                break;
+                            case 7:
+
+                        }
 
                 }
             }
@@ -61,6 +86,11 @@ public class UI {
         }
 
     }
+
+    private static void exportSchedule() {
+
+    }
+
 
     private static void registerACamper() {
         while (true) {
@@ -241,9 +271,16 @@ public class UI {
             title("View Schedule");
             int answer = options(f.nextWeek());
             if (answer != -1) {
-                print(f.getDaySchedule(answer, f.getUser()).toString());
+                String schedule = f.getDaySchedule(answer, f.getUser()).toString();
+                if (schedule != null) {
+                    print(schedule);
+                } else {
+                    title("ERROR");
+                    print("You are not scheduled for this week.");
+                }
                 enterToExit();
                 break;
+
             }
         }
     }
@@ -259,18 +296,6 @@ public class UI {
         enterToExit();
     }
 
-    private static boolean counselorScreen() {
-        while (true) {
-            switch (options(new String[] { "View Schedule", "View Group" })) {
-                case 1:
-                    return true;
-                case 2:
-                    return false;
-            }
-
-        }
-    }
-
     private static boolean welcomeScreen() {
         while (true) {
             title("Welcome to " + f.getCampLocation().getName());
@@ -279,7 +304,7 @@ public class UI {
                     + " " + f.getDirector().getLastName() + ".\n" + f.getCampLocation().getName()
                     + " offers many fun activities:");
             for (Activity i : f.getActivities()) {
-                print("- "+i.getName());
+                print("- " + i.getName());
             }
             print("");
             switch (options(new String[] { "Login", "Create Account" })) {
@@ -346,7 +371,7 @@ public class UI {
 
     private static void basicError(String answer) {
         title("ERROR");
-        input("\""+answer + "\" is not a valid option, please try again.\n(Press enter to continue).");
+        input("\"" + answer + "\" is not a valid option, please try again.\n(Press enter to continue).");
         cls();
     }
 
