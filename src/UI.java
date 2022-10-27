@@ -20,7 +20,7 @@ public class UI {
                 if (welcomeScreen()) {
                     login();
                 } else {
-                    createAccount();
+                    createCustomerAccount();
                 }
             }
             if (f.getUser() != null) {
@@ -152,7 +152,8 @@ public class UI {
     }
 
     private static void addWeek() {
-
+        title("Add a Week");
+        
     }
 
     private static void editSchedule() {
@@ -304,6 +305,13 @@ public class UI {
         }
     }
 
+    private static Contact getCustomerConctact() {
+        String phoneNumber = input("Please enter your phone number:");
+        String relationship = "Self";
+        String address = input("Please enter your address:");
+        return f.makeContact(f.getUser().getFirstName(), f.getUser().getLastName(), f.getUser().getEmail(), phoneNumber, relationship, address);
+    }
+
     private static Contact getEmergencyContact(String typeOfContact) {
         String firstname = input("Please enter the first name of your camper's " + typeOfContact + ":");
         String lastname = input("Please enter the last name of your camper's " + typeOfContact + ":");
@@ -395,13 +403,18 @@ public class UI {
 
     }
 
-    private static void createAccount() {
+    private static void createCustomerAccount() {
         title("Create Your Account");
         f.setUser(f.signUp(input("Please enter your email address:"),
                 input("Please enter a password for your account:")));
         if (f.getUser() == null) {
             title("ERROR");
             input("Your email or password were invalid. Please try again.\n(Press enter to continue).");
+        }
+        else{
+            f.getUser().setFirstName(input("Please enter your first name:"));
+            f.getUser().setLastName(input("Please enter your last name:"));
+            f.getUser().setContact(getCustomerConctact());
         }
     }
 
