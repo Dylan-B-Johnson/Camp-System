@@ -34,8 +34,20 @@ public class Camper {
         setRelationshipToCustomer(relationshipToCustomer);
     }
 
-    public Camper(UUID id) {
-        this.id = id;
+    public Camper(String firstName, String lastName, ArrayList<String> allergies, LocalDate birthday,
+    Contact primaryEmergencyContact, Contact secondaryEmergencyContact, Contact primaryCarePhysician,
+    int pastEnrollment, String swimTestResult, String relationshipToCustomer) {
+        setID(UUID.randomUUID());
+        setFirstName(firstName);
+        setLastName(lastName);
+        setAllergies(allergies);
+        setBirthday(birthday);
+        setPrimaryEmergencyContact(primaryEmergencyContact);
+        setSecondaryEmergencyContact(secondaryEmergencyContact);
+        setPrimaryCarePhysician(primaryCarePhysician);
+        setPastEnrollment(pastEnrollment);
+        setSwimTestResult(swimTestResult);
+        setRelationshipToCustomer(relationshipToCustomer);
     }
 
     public void setID(UUID id){
