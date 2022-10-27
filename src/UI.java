@@ -135,7 +135,16 @@ public class UI {
     }
 
     private static void addActivity() {
-
+        title("Adding an Activity");
+        if (f.addActivity(input("Please enter the name of the activity to add:"),
+                input("Please enter the location that the activity is performed:"),
+                input("Please enter a description for the activity:"))) {
+            print("Activity sucessfully added.");
+        } else {
+            title("ERROR");
+            print("Something went wrong. Please try again.");
+        }
+        enterToExit();
     }
 
     private static void addWeek() {

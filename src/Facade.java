@@ -30,7 +30,7 @@ public class Facade {
     }
 
     public User signUp(String email, String password) {
-        if(UserList.emailAvailable(email)){
+        if (UserList.emailAvailable(email)) {
             User user = new Customer(email, null, null, password, getCampLocation(), null);
             UserList.addUser(user);
             setUser(user);
@@ -151,10 +151,10 @@ public class Facade {
     }
 
     public boolean registerCamper(UUID id, Week week) {
-        if(week.canRegisterCamper()){
+        if (week.canRegisterCamper()) {
             Camper foundCamper = null;
-            for(Camper camper : UserList.getCampers()){
-                if(camper.getId().equals(id)){
+            for (Camper camper : UserList.getCampers()) {
+                if (camper.getId().equals(id)) {
                     foundCamper = camper;
                 }
             }
@@ -167,14 +167,14 @@ public class Facade {
     public boolean addCamperToUser(String firstName, String lastName, ArrayList<String> allergies,
             LocalDate birthday, String relationToCustomer, Contact primaryEmergencyContact,
             Contact secondaryEmergencyContact, Contact primaryCarePhysician) {
-        Camper camper = new Camper(firstName, lastName, allergies, birthday, primaryEmergencyContact, 
-        secondaryEmergencyContact, primaryCarePhysician, 0, lastName, relationToCustomer);
-        ((Customer)getUser()).addCamper(camper);
+        Camper camper = new Camper(firstName, lastName, allergies, birthday, primaryEmergencyContact,
+                secondaryEmergencyContact, primaryCarePhysician, 0, lastName, relationToCustomer);
+        ((Customer) getUser()).addCamper(camper);
         return true;
     }
 
-    public boolean addActivity(Activity activity) {
-        return false;
+    public boolean addActivity(String name, String location, String description) {
+        return ActivitiesList.getInstance().addActivity(new Activity(name, location, description));
     }
 
     public DaySchedule getDaySchedule(int daysFromNow, User counselor) {
@@ -191,10 +191,10 @@ public class Facade {
         return rtn;
     }
 
-    public ArrayList<Week> getFutureOrCurrentWeeks(){
+    public ArrayList<Week> getFutureOrCurrentWeeks() {
         ArrayList<Week> futureOrCurrentWeeks = WeekList.getFutureWeeks();
         Week current = getCurrentWeek();
-        if (current!=null){
+        if (current != null) {
             futureOrCurrentWeeks.add(current);
         }
         return futureOrCurrentWeeks;
