@@ -100,7 +100,7 @@ public class Week {
     }
 
     public void registerCamper(Camper camper) {
-
+        currentCampers += 1;
     }
 
     public boolean currentWeek() {
