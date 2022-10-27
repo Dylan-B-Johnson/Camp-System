@@ -30,10 +30,10 @@ public class Facade {
         return null;
     }
 
-    public User signUpCustomer(String firstName, String lastName, String email, String password) {
+    public User signUpCustomer(String firstName, String lastName, String email, String password, Contact self) {
         if (!UserList.emailAvailable(email))
             return null;
-        User user = new Customer(email, firstName, lastName, password, getCampLocation(), null, null);
+        User user = new Customer(email, firstName, lastName, password, getCampLocation(), new ArrayList<Camper>(), self);
         UserList.addUser(user);
         setUser(user);
         return user;
@@ -232,6 +232,10 @@ public class Facade {
         return rtn;
     }
 
+    public Week getNextScheduledWeek(){
+        return null;
+    }
+
     public ArrayList<Week> getFutureOrCurrentWeeks() {
         ArrayList<Week> futureOrCurrentWeeks = WeekList.getFutureWeeks();
         Week current = getCurrentWeek();
@@ -239,10 +243,6 @@ public class Facade {
             futureOrCurrentWeeks.add(current);
         }
         return futureOrCurrentWeeks;
-    }
-
-    public Group getGroup(User counselor) {
-        return ((Counselor) counselor).getGroup();
     }
 
     /**
