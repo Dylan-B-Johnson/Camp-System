@@ -22,6 +22,7 @@ public class Facade {
     public User login(String email, String password) {
         for (User user : UserList.getUsers()) {
             if (user.getEmail().equals(email) && user.getPassword().equals(password)) {
+                setUser(user);
                 return user;
             }
         }
@@ -32,6 +33,7 @@ public class Facade {
         if(UserList.emailAvailable(email)){
             User user = new Customer(email, null, null, password, getCampLocation(), null);
             UserList.addUser(user);
+            setUser(user);
         }
         return user;
     }
