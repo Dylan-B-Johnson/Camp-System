@@ -81,7 +81,7 @@ public class UI {
                     Camper camper = f
                             .getCampersElligableForRegistration(f.getWeeksAvailableForRegistration().get(answerWeek))
                             .get(0);
-                    if (f.registerCamper(camper.getId())) {
+                    if (f.registerCamper(camper.getId(), f.getWeeksAvailableForRegistration().get(answerWeek))) {
                         title("Registration Complete");
                         System.out.printf("Registering "
                                 + camper.getFirstName()
@@ -109,7 +109,7 @@ public class UI {
                     if (answerCamper != -1) {
                         Camper camper = f.getCampersElligableForRegistration(
                                 f.getWeeksAvailableForRegistration().get(answerWeek)).get(answerCamper - 1);
-                        if (f.registerCamper(camper.getId())) {
+                        if (f.registerCamper(camper.getId(), f.getWeeksAvailableForRegistration().get(answerWeek))) {
                             title("Registration Complete");
                             System.out.printf("Registering "
                                     + camper.getFirstName()
