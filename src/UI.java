@@ -7,6 +7,7 @@ public class UI {
     private static Facade f = new Facade();
     private static final String PCP = "primary care physician";
     private static Scanner scan = new Scanner(System.in);
+    private static ArrayList<Week> currentOrFutureWeeks;
 
     public static void main(String args[]) {
         run();
@@ -24,6 +25,7 @@ public class UI {
             }
             if (f.getUser() != null) {
                 title("Welcome " + f.getUser().getFirstName() + "!");
+                String[] options;
                 switch (f.getUser().getTypeOfUser()) {
                     case COUNSELOR:
                         switch (options(new String[] { "View Schedule", "View Group", "Export Schedule" })) {
@@ -38,7 +40,6 @@ public class UI {
                         }
                         break;
                     case CUSTOMER:
-                        String[] options;
                         if (((Customer) f.getUser()).getCampers().size() < 1) {
                             options = new String[] { "View Your Campers", "Add a Camper" };
                         } else {
@@ -56,28 +57,36 @@ public class UI {
                                 registerACamper();
                         }
                         break;
-
                     case DIRECTOR:
-                        switch (options(new String[] { "Search Campers", "Search Counselors", "Add Activity",
-                                "Edit Schedule", "View Schedule", "Export Schedule", "Add Week" })) {
+                        currentOrFutureWeeks = f.getFutureOrCurrentWeeks();
+                        if (currentOrFutureWeeks.size() == 0) {
+                            options = new String[] { "Search Campers", "Search Counselors", "Add Activity",
+                                    "Add Week", "Edit Schedule", "View Schedule", "Export Schedule" };
+                        } else {
+                            options = new String[] { "Search Campers", "Search Counselors", "Add Activity",
+                                    "Add Week" };
+                        }
+                        switch (options(options)) {
                             case 1:
-
+                                searchCampers();
                                 break;
                             case 2:
-
+                                searchCounselors();
                                 break;
                             case 3:
-
+                                addActivity();
                                 break;
                             case 4:
-
+                                addWeek();
                                 break;
                             case 5:
+                                editSchedule();
                                 break;
                             case 6:
+                                viewScheduleDirector();
                                 break;
                             case 7:
-
+                                exportScheduleDirector();
                         }
 
                 }
@@ -87,30 +96,115 @@ public class UI {
 
     }
 
+    private static void searchCampers() {
+        title("Search for a Camper");
+        ArrayList<Camper> results = f.getCamper(input("Please enter the first name of the camper:"));
+        if (results.size() == 0) {
+            title("ERROR");
+            print("No campers were found with that firstname. Please try again.");
+            enterToExit();
+            return;
+        }
+        title("Results");
+        int i = 1;
+        for (Camper camper : results) {
+            print("\nCamper " + i + ":");
+            print(camper.toString());
+            i++;
+        }
+        enterToExit();
+        return;
+    }
+
+    private static void searchCounselors() {
+        title("Search for a Counselor");
+        ArrayList<User> results = f.getCounselor(input("Please enter the first name of the counselor:"));
+        if (results.size() == 0) {
+            title("ERROR");
+            print("No counselors were found with that firstname. Please try again.");
+            enterToExit();
+            return;
+        }
+        title("Results");
+        int i = 1;
+        for (User counselor : results) {
+            print("\nCounselor " + i + ":");
+            print(counselor.toString());
+            i++;
+        }
+        enterToExit();
+    }
+
+    private static void addActivity() {
+        
+    }
+
+    private static void addWeek() {
+
+    }
+
+    private static void editSchedule() {
+
+    }
+
+    private static void viewScheduleDirector() {
+
+    }
+
+    private static void exportScheduleDirector() {
+
+    }
+
     private static void exportSchedule() {
 
     }
 
-
     private static void registerACamper() {
-        while (true) {
-            title("Select the Week to Register For");
-            String[] weeks = f.getStringWeeksAvailableForRegistration();
-            int answerWeek = options(weeks);
-            if (answerWeek != -1) {
-                String[] camperOptions = f.getCamperStrings(f.getWeeksAvailableForRegistration().get(answerWeek));
-                if (camperOptions.length == 0) {
-                    title("ERROR");
-                    print("You have not added any campers that will be in the appropriate age range for the selected week.\n"
-                            +
-                            "(Between " + f.getCampLocation().getMinCamperAge() + " and "
-                            + f.getCampLocation().getMaxCamperAge() + " years old).");
+        title("Select the Week to Register For");
+        String[] weeks = f.getStringWeeksAvailableForRegistration();
+        int answerWeek = options(weeks);
+        if (answerWeek != -1) {
+            String[] camperOptions = f.getCamperStrings(f.getWeeksAvailableForRegistration().get(answerWeek));
+            if (camperOptions.length == 0) {
+                title("ERROR");
+                print("You have not added any campers that will be in the appropriate age range for the selected week.\n"
+                        +
+                        "(Between " + f.getCampLocation().getMinCamperAge() + " and "
+                        + f.getCampLocation().getMaxCamperAge() + " years old).");
+                enterToExit();
+                return;
+            } else if (camperOptions.length == 1) {
+                Camper camper = f
+                        .getCampersElligableForRegistration(f.getWeeksAvailableForRegistration().get(answerWeek))
+                        .get(0);
+                if (f.registerCamper(camper.getId(), f.getWeeksAvailableForRegistration().get(answerWeek))) {
+                    title("Registration Complete");
+                    System.out.printf("Registering "
+                            + camper.getFirstName()
+                            + "\nFor the week:\n" + weeks[answerWeek] + "\nWill cost $%2f",
+
+                            f.getCostOfRegistration());
+                    double discount = f.getDiscoutOnRegistration();
+                    if (discount != 0) {
+                        System.out.printf("(Having applied a discount of $%2f).", discount);
+                    }
                     enterToExit();
                     return;
-                } else if (camperOptions.length == 1) {
-                    Camper camper = f
-                            .getCampersElligableForRegistration(f.getWeeksAvailableForRegistration().get(answerWeek))
-                            .get(0);
+                } else {
+                    title("ERROR");
+                    print("We could not register " + camper.getFirstName() + " for the week " + weeks[answerWeek]
+                            + ".\n(" + camper.getFirstName()
+                            + " is your only camper elligable for registration).\nPlease try again.");
+                    enterToExit();
+                    return;
+                }
+            }
+            while (true) {
+                title("Select the Camper to Register");
+                int answerCamper = options(camperOptions);
+                if (answerCamper != -1) {
+                    Camper camper = f.getCampersElligableForRegistration(
+                            f.getWeeksAvailableForRegistration().get(answerWeek)).get(answerCamper - 1);
                     if (f.registerCamper(camper.getId(), f.getWeeksAvailableForRegistration().get(answerWeek))) {
                         title("Registration Complete");
                         System.out.printf("Registering "
@@ -126,38 +220,9 @@ public class UI {
                         return;
                     } else {
                         title("ERROR");
-                        print("We could not register " + camper.getFirstName() + " for the week " + weeks[answerWeek]
-                                + ".\n(" + camper.getFirstName()
-                                + " is your only camper elligable for registration).\nPlease try again.");
+                        print("Something went wrong. Please try again.");
                         enterToExit();
                         return;
-                    }
-                }
-                while (true) {
-                    title("Select the Camper to Register");
-                    int answerCamper = options(camperOptions);
-                    if (answerCamper != -1) {
-                        Camper camper = f.getCampersElligableForRegistration(
-                                f.getWeeksAvailableForRegistration().get(answerWeek)).get(answerCamper - 1);
-                        if (f.registerCamper(camper.getId(), f.getWeeksAvailableForRegistration().get(answerWeek))) {
-                            title("Registration Complete");
-                            System.out.printf("Registering "
-                                    + camper.getFirstName()
-                                    + "\nFor the week:\n" + weeks[answerWeek] + "\nWill cost $%2f",
-
-                                    f.getCostOfRegistration());
-                            double discount = f.getDiscoutOnRegistration();
-                            if (discount != 0) {
-                                System.out.printf("(Having applied a discount of $%2f).", discount);
-                            }
-                            enterToExit();
-                            return;
-                        } else {
-                            title("ERROR");
-                            print("Something went wrong. Please try again.");
-                            enterToExit();
-                            return;
-                        }
                     }
                 }
             }
