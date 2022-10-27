@@ -39,12 +39,14 @@ public class Facade {
         return user;
     }
 
-    public User signUpCounselor(String firstName, String lastName, String email, String password) {
+    public User signUpCounselor(String firstName, String lastName, String email, String password,
+            ArrayList<String> allergies, LocalDate birthday, Contact primaryEmergencyContact,
+            Contact secondaryEmergencyContact, Contact primaryCarePhysician) {
         if (!UserList.emailAvailable(email))
             return null;
-        User user = new Counselor(null, null, null, email, firstName, lastName, password, getCampLocation(), null,
-                null,
-                null);
+        User user = new Counselor(allergies, birthday, email, firstName, lastName, password, getCampLocation(), primaryEmergencyContact,
+        secondaryEmergencyContact,
+                primaryCarePhysician);
         UserList.addUser(user);
         setUser(user);
         return user;
