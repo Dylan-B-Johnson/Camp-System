@@ -55,8 +55,8 @@ public class Facade {
         return rtn;
     }
 
-    public String[] getCamperStrings() {
-        ArrayList<Camper> campers = ((Customer) user).getCampers();
+    public String[] getCamperStrings(Week weekOfRegistration) {
+        ArrayList<Camper> campers = getCampersElligableForRegistration(weekOfRegistration);
         String[] rtn = new String[campers.size()];
         for (int i = 0; i < rtn.length; i++) {
             rtn[i] = campers.get(i).getFirstName() + " " + campers.get(i).getLastName();
@@ -106,6 +106,17 @@ public class Facade {
 
     public ArrayList<Camper> getCampers() {
         return new ArrayList<Camper>(DataReader.getCampers().values());
+    }
+
+    public ArrayList<Camper> getCampersElligableForRegistration(Week weekOfRegistration) {
+        ArrayList<Camper> rtn = new ArrayList<Camper>();
+        for (Camper i : ((Customer) user).getCampers()) {
+            if (i.getAge(weekOfRegistration) >= getCampLocation().getMaxCamperAge()
+                    && i.getAge(weekOfRegistration) <= getCampLocation().getMinCamperAge()) {
+                rtn.add(i);
+            }
+        }
+        return rtn;
     }
 
     public double getTotalPrice() {
