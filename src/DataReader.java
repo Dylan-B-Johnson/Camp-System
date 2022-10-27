@@ -96,11 +96,17 @@ public class DataReader {
                     Camper camper = getCamper(UUID.fromString(camperId));
                     campers.add(camper);
                 }
+                JSONObject contactInfo = (JSONObject) user.get(DataConstants.CONTACTINFO);
+                Contact contact = new Contact((String) contactInfo.get(DataConstants.FIRSTNAME),
+                        (String) contactInfo.get(DataConstants.LASTNAME), (String) contactInfo.get(DataConstants.EMAIL),
+                        (String) contactInfo.get(DataConstants.PHONENUMBER),
+                        (String) contactInfo.get(DataConstants.RELATIONSHIP),
+                        (String) contactInfo.get(DataConstants.ADDRESS));
                 customerList
                         .put(UUID.fromString(id),
                                 new Customer(UUID.fromString(id), email, firstName, lastName, password,
                                         getCampLocation(),
-                                        campers));
+                                        campers, contact));
             }
         } catch (Exception exception) {
             System.out.println(exception);
@@ -356,11 +362,12 @@ public class DataReader {
                 LocalDate startOfWeek = LocalDate.parse((String) weekJsonObject.get(DataConstants.STARTOFWEEK));
                 ArrayList<Group> groups = new ArrayList<>();
                 JSONArray groupArray = (JSONArray) weekJsonObject.get(DataConstants.GROUPS);
+                String theme = (String) weekJsonObject.get(DataConstants.THEME);
                 for (Object groupObject : groupArray) {
                     groups.add(getGroup(UUID.fromString((String) groupObject)));
                 }
                 CampLocation campLocation = getCampLocation();
-                weeksList.put(id, new Week(id, maxCampers, currentCampers, startOfWeek, groups, campLocation));
+                weeksList.put(id, new Week(id, maxCampers, currentCampers, startOfWeek, groups, campLocation, theme));
             }
         } catch (Exception exception) {
             System.out.println(exception);
