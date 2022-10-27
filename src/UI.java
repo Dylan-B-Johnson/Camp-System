@@ -1,4 +1,5 @@
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Scanner;
@@ -152,6 +153,10 @@ public class UI {
     }
 
     private static void addWeek() {
+        title("Adding a Week");
+        String str = input("Please enter the week you would like to add [dd, MM, yyyy]");
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd, MM, yyyy");
+        LocalDate week = LocalDate.parse(str, dtf);
 
     }
 
