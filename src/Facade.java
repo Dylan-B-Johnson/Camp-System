@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.UUID;
+import java.io.FileWriter;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -29,9 +30,18 @@ public class Facade {
         return null;
     }
 
-    public User signUp(String email, String password) {
+    public User signUpCustomer(String email, String password) {
         if (UserList.emailAvailable(email)) {
             User user = new Customer(email, null, null, password, getCampLocation(), null);
+            UserList.addUser(user);
+            setUser(user);
+        }
+        return user;
+    }
+
+    public User signUpCounselor(String email, String password) {
+        if (UserList.emailAvailable(email)) {
+            User user = new Counselor(null, null, null, email, null, null, password, getCampLocation(), null, null, null);
             UserList.addUser(user);
             setUser(user);
         }
@@ -80,6 +90,16 @@ public class Facade {
 
     }
 
+    // public void exportSchedule(DaySchedule daySchedule) {
+    // ArrayList<String> output = new ArrayList<>();
+
+    // try {
+    // FileWriter file = new FileWriter("schedule_of_0-0-0.txt");
+    // } catch (Exception e) {
+    // // TODO: handle exception
+    // }
+    // }
+
     public ArrayList<Camper> getCamper(String firstName) {
         ArrayList<Camper> campers = new ArrayList<Camper>();
         for (Camper camper : UserList.getCampers()) {
@@ -127,9 +147,9 @@ public class Facade {
         return user;
     }
 
-    public boolean activityExists(String name){
-        for (Activity i : ActivitiesList.getInstance().getActivities()){
-            if (i.getName().equalsIgnoreCase(name)){
+    public boolean activityExists(String name) {
+        for (Activity i : ActivitiesList.getInstance().getActivities()) {
+            if (i.getName().equalsIgnoreCase(name)) {
                 return true;
             }
         }

@@ -16,7 +16,7 @@ public class Week {
     private String theme;
 
     public Week(UUID id, int maxCampers, int currentCampers, LocalDate startOfWeek, ArrayList<Group> groups,
-            CampLocation campLocation) {
+            CampLocation campLocation, String theme) {
         this.id = id;
         this.startOfWeek = startOfWeek;
         this.maxCampers = maxCampers;
@@ -37,12 +37,12 @@ public class Week {
         return this.id;
     }
 
-    public String getTheme(){
+    public String getTheme() {
         return theme;
     }
 
-    public void setTheme(String theme){
-        if (theme!=null){
+    public void setTheme(String theme) {
+        if (theme != null) {
             this.theme = theme;
         }
     }
@@ -104,19 +104,36 @@ public class Week {
     }
 
     public boolean currentWeek() {
+        for (Week week : DataReader.getWeeks().values()) {
+            if (week.getStartOfWeek().until(LocalDate.now()).getDays() < 7
+                    && week.getStartOfWeek().until(LocalDate.now()).getDays() > 0) {
+                return true;
+            }
+        }
         return false;
     }
 
     public boolean futureWeek() {
+        for (Week week : DataReader.getWeeks().values()) {
+            if (week.getStartOfWeek().until(LocalDate.now()).getDays() > 7) {
+                return true;
+            }
+        }
         return false;
     }
 
     public boolean pastWeek() {
+        for (Week week : DataReader.getWeeks().values()) {
+            if (week.getStartOfWeek().until(LocalDate.now()).getDays() < 0) {
+                return true;
+            }
+        }
         return false;
     }
 
     public String toString() {
         return "\tStart of Week: " + this.startOfWeek.format(DateTimeFormatter.ofPattern("E, LLL d, uuuu"))
-                + "\n\tEnd of Week: " + this.startOfWeek.plusDays(6).format(DateTimeFormatter.ofPattern("E, LLL d, uuuu"));
+                + "\n\tEnd of Week: "
+                + this.startOfWeek.plusDays(6).format(DateTimeFormatter.ofPattern("E, LLL d, uuuu"));
     }
 }
