@@ -25,11 +25,11 @@ public class Contact {
     }
 
     public String toString() {
-        return "Name: " + firstName + " " + lastName + "\n" +
-                "Email: " + email + "\n" +
-                "Phone #: " + phoneNum + "\n" +
-                "Relationship: " + relationship + "\n" +
-                "Address: " + address;
+        return "\tName: " + firstName + " " + lastName + "\n" +
+                "\tEmail: " + email + "\n" +
+                "\tPhone #: " + phoneNum + "\n" +
+                "\tRelationship: " + relationship + "\n" +
+                "\tAddress: " + address;
     }
 
     public UUID getId() {

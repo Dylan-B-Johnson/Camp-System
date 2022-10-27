@@ -105,7 +105,7 @@ public class Week {
     }
 
     public String toString() {
-        return "\tStart of Week: " + this.startOfWeek.format(DateTimeFormatter.ofPattern("MM-DD-YY"))
-                + "\n\tEnd of Week: " + this.startOfWeek.plusDays(6).format(DateTimeFormatter.ofPattern("MM-DD-YY"));
+        return "\tStart of Week: " + this.startOfWeek.format(DateTimeFormatter.ofPattern("E, LLL d, uuuu"))
+                + "\n\tEnd of Week: " + this.startOfWeek.plusDays(6).format(DateTimeFormatter.ofPattern("E, LLL d, uuuu"));
     }
 }

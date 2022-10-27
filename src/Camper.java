@@ -2,6 +2,7 @@
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -35,8 +36,8 @@ public class Camper {
     }
 
     public Camper(String firstName, String lastName, ArrayList<String> allergies, LocalDate birthday,
-    Contact primaryEmergencyContact, Contact secondaryEmergencyContact, Contact primaryCarePhysician,
-    int pastEnrollment, String swimTestResult, String relationshipToCustomer) {
+            Contact primaryEmergencyContact, Contact secondaryEmergencyContact, Contact primaryCarePhysician,
+            int pastEnrollment, String swimTestResult, String relationshipToCustomer) {
         setID(UUID.randomUUID());
         setFirstName(firstName);
         setLastName(lastName);
@@ -50,8 +51,8 @@ public class Camper {
         setRelationshipToCustomer(relationshipToCustomer);
     }
 
-    public void setID(UUID id){
-        if(id != null){
+    public void setID(UUID id) {
+        if (id != null) {
             this.id = id;
         }
     }
@@ -65,8 +66,8 @@ public class Camper {
         return diffPeriod.getYears();
     }
 
-    public void setFirstName(String firstName){
-        if(firstName != null){
+    public void setFirstName(String firstName) {
+        if (firstName != null) {
             this.firstName = firstName;
         }
     }
@@ -75,9 +76,8 @@ public class Camper {
         return firstName;
     }
 
-
-    public void setLastName(String lastName){
-        if(lastName != null){
+    public void setLastName(String lastName) {
+        if (lastName != null) {
             this.lastName = lastName;
         }
     }
@@ -86,94 +86,102 @@ public class Camper {
         return lastName;
     }
 
-    public void setAllergies(ArrayList<String> allergies){
-        if(allergies != null){
+    public void setAllergies(ArrayList<String> allergies) {
+        if (allergies != null) {
             this.allergies = allergies;
         }
     }
 
-    public ArrayList<String> getAllergies(){
+    public ArrayList<String> getAllergies() {
         return this.allergies;
     }
 
-    public void setBirthday(LocalDate birthday){
-        if(birthday != null){
+    public void setBirthday(LocalDate birthday) {
+        if (birthday != null) {
             this.birthday = birthday;
         }
     }
 
-    public LocalDate getBirthday(){
+    public LocalDate getBirthday() {
         return this.birthday;
     }
 
-    public void setPrimaryEmergencyContact(Contact primaryEmergencyContact){
-        if(primaryEmergencyContact != null){
+    public void setPrimaryEmergencyContact(Contact primaryEmergencyContact) {
+        if (primaryEmergencyContact != null) {
             this.primaryEmergencyContact = primaryEmergencyContact;
         }
     }
 
-    public Contact getPrimaryEmergencyContact(){
+    public Contact getPrimaryEmergencyContact() {
         return this.primaryEmergencyContact;
     }
 
-    public void setSecondaryEmergencyContact(Contact secondaryEmergencyContact){
-        if(secondaryEmergencyContact != null){
+    public void setSecondaryEmergencyContact(Contact secondaryEmergencyContact) {
+        if (secondaryEmergencyContact != null) {
             this.secondaryEmergencyContact = secondaryEmergencyContact;
         }
     }
 
-    public Contact getSecondaryEmergencyContact(){
+    public Contact getSecondaryEmergencyContact() {
         return this.secondaryEmergencyContact;
     }
 
-    public void setPrimaryCarePhysician(Contact primaryCarePhysician){
-        if(primaryCarePhysician != null){
+    public void setPrimaryCarePhysician(Contact primaryCarePhysician) {
+        if (primaryCarePhysician != null) {
             this.primaryCarePhysician = primaryCarePhysician;
         }
     }
 
-    public Contact getPrimaryCarePhysician(){
+    public Contact getPrimaryCarePhysician() {
         return this.primaryCarePhysician;
     }
 
-    public void setPastEnrollment(int pastEnrollment){
-        if(pastEnrollment>=0){
+    public void setPastEnrollment(int pastEnrollment) {
+        if (pastEnrollment >= 0) {
             this.pastEnrollment = pastEnrollment;
         }
     }
 
-    public int getPastEnrollment(){
+    public int getPastEnrollment() {
         return this.pastEnrollment;
     }
 
-    public void setSwimTestResult(String swimTestResult){
-        if(swimTestResult != null){
+    public void setSwimTestResult(String swimTestResult) {
+        if (swimTestResult != null) {
             this.swimTestResult = swimTestResult;
         }
     }
 
-    public String getSwimTestResult(){
+    public String getSwimTestResult() {
         return this.swimTestResult;
     }
 
-    public void setRelationshipToCustomer(String relationshipToCustomer){
-        if(relationshipToCustomer != null){
+    public void setRelationshipToCustomer(String relationshipToCustomer) {
+        if (relationshipToCustomer != null) {
             this.relationshipToCustomer = relationshipToCustomer;
         }
     }
 
-    public String getRelationshipToCustomer(){
+    public String getRelationshipToCustomer() {
         return relationshipToCustomer;
     }
 
-    public String toString(){
+    public String toString() {
+        String allergiesString = "";
+        if (allergies.size() == 0) {
+            allergiesString = "none";
+        } else {
+            for (int i = 0; i < allergies.size(); i++) {
+                allergiesString += "\n\t" + allergies.get(i);
+            }
+        }
         return "Camper Name: " + this.firstName + " " + this.lastName +
-        "\nAllergies: " + this.allergies.toString() +
-        "\nBirthday: " + this.birthday.toString() +
-        "\nEmergency Contact One: " + this.primaryEmergencyContact.toString() +
-        "\nEmergency Contact Two: " + this.secondaryEmergencyContact.toString() +
-        "\nPrimary Care Physician: " + this.primaryCarePhysician.toString() +
-        "\nSwim Test Status: " + this.swimTestResult;
+                "\nAllergies: " + allergiesString +
+                "\nBirthday: " + this.birthday.format(DateTimeFormatter.ofPattern("E, LLL d, uuuu")) +
+                "\nEmergency Contact One:\n" + this.primaryEmergencyContact.toString() +
+                "\nEmergency Contact Two:\n" + this.secondaryEmergencyContact.toString() +
+                "\nPrimary Care Physician:\n" + this.primaryCarePhysician.toString() +
+                "\nSwim Test Status: " + this.swimTestResult;
     }
 
 }

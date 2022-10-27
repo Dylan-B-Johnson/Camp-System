@@ -279,7 +279,7 @@ public class UI {
                     + " " + f.getDirector().getLastName() + ".\n" + f.getCampLocation().getName()
                     + " offers many fun activities:");
             for (Activity i : f.getActivities()) {
-                print(i.getName());
+                print("- "+i.getName());
             }
             print("");
             switch (options(new String[] { "Login", "Create Account" })) {
@@ -306,7 +306,7 @@ public class UI {
     private static void login() {
         title("Login");
         f.setUser(f.login(input("Please enter your email address:"),
-                input("Please enter a password for your account:")));
+                input("Please enter the password for your account:")));
         if (f.getUser() == null) {
             title("ERROR");
             input("Your email or password were invalid. Please try again.\n(Press enter to continue).");
@@ -346,7 +346,7 @@ public class UI {
 
     private static void basicError(String answer) {
         title("ERROR");
-        input(answer + "\" is not a valid option, please try again.\n(Press enter to continue).");
+        input("\""+answer + "\" is not a valid option, please try again.\n(Press enter to continue).");
         cls();
     }
 

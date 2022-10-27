@@ -186,7 +186,7 @@ public class Facade {
         LocalDate date = LocalDate.now();
         for (int i = 0; i < rtn.length; i++) {
             LocalDate plusDays = date.plusDays(i);
-            rtn[i] = (plusDays.format(DateTimeFormatter.ofPattern("E, LLL d")));
+            rtn[i] = (plusDays.format(DateTimeFormatter.ofPattern("E, LLL d, uuuu")));
         }
         return rtn;
     }
