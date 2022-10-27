@@ -95,6 +95,27 @@ public class UI {
 
     }
 
+    private static void createCounselorAccount() {
+        title("Create Your Account");
+        f.setUser(f.signUpCounselor(input("Please enter your email address:"),
+                input("Please enter a password for your account:")));
+        if (f.getUser() == null) {
+            title("ERROR");
+            input("Your email or password were invalid. Please try again.\n(Press enter to continue).");
+        } else {
+            String firstname = input("Please enter your first name: ");
+            String lastname = input("Please enter your last name: ");
+            ArrayList<String> allergies = getAllergies();
+            LocalDate bday = getBirthday();
+            title("Create Your Account");
+            print("Please enter your first name: ");
+            print(firstname);
+            print("Please enter your last name: ");
+            print(lastname);
+            enterToExit();
+        }
+    }
+
     private static void searchCampers() {
         title("Search for a Camper");
         ArrayList<Camper> results = f.getCamper(input("Please enter the first name of the camper:"));
@@ -153,7 +174,7 @@ public class UI {
 
     private static void addWeek() {
         title("Add a Week");
-        
+
     }
 
     private static void editSchedule() {
@@ -309,7 +330,8 @@ public class UI {
         String phoneNumber = input("Please enter your phone number:");
         String relationship = "Self";
         String address = input("Please enter your address:");
-        return f.makeContact(f.getUser().getFirstName(), f.getUser().getLastName(), f.getUser().getEmail(), phoneNumber, relationship, address);
+        return f.makeContact(f.getUser().getFirstName(), f.getUser().getLastName(), f.getUser().getEmail(), phoneNumber,
+                relationship, address);
     }
 
     private static Contact getEmergencyContact(String typeOfContact) {
@@ -410,11 +432,10 @@ public class UI {
         if (f.getUser() == null) {
             title("ERROR");
             input("Your email or password were invalid. Please try again.\n(Press enter to continue).");
-        }
-        else{
+        } else {
             f.getUser().setFirstName(input("Please enter your first name:"));
             f.getUser().setLastName(input("Please enter your last name:"));
-            ((Customer)f.getUser()).setContact(getCustomerConctact());
+            ((Customer) f.getUser()).setContact(getCustomerConctact());
         }
     }
 
