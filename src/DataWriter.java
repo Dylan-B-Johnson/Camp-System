@@ -9,10 +9,6 @@ import org.json.simple.JSONObject;
 
 public class DataWriter {
 
-    public static void main(String[] args) {
-        saveGroups(DataReader.getGroups());
-    }
-
     public static boolean saveCustomers(HashMap<UUID, Customer> customers) {
         DataReader.setDirtyFlag(DataReader.CUSTOMERSDIRTY);
         try {
