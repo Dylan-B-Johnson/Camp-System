@@ -68,25 +68,63 @@ public class UI {
             String[] weeks = f.getStringWeeksAvailableForRegistration();
             int answerWeek = options(weeks);
             if (answerWeek != -1) {
+                String[] camperOptions = f.getCamperStrings(f.getWeeksAvailableForRegistration().get(answerWeek));
+                if (camperOptions.length == 0) {
+                    title("ERROR");
+                    print("You have not added any campers that will be in the appropriate age range for the selected week.\n"
+                            +
+                            "(Between " + f.getCampLocation().getMinCamperAge() + " and "
+                            + f.getCampLocation().getMaxCamperAge() + " years old).");
+                    enterToExit();
+                    return;
+                } else if (camperOptions.length == 1) {
+                    Camper camper = f
+                            .getCampersElligableForRegistration(f.getWeeksAvailableForRegistration().get(answerWeek))
+                            .get(0);
+                    if (f.registerCamper(camper.getId())) {
+                        title("Registration Complete");
+                        System.out.printf("Registering "
+                                + camper.getFirstName()
+                                + "\nFor the week:\n" + weeks[answerWeek] + "\nWill cost $%2f",
+
+                                f.getCostOfRegistration());
+                        double discount = f.getDiscoutOnRegistration();
+                        if (discount != 0) {
+                            System.out.printf("(Having applied a discount of $%2f).", discount);
+                        }
+                        enterToExit();
+                        return;
+                    } else {
+                        title("ERROR");
+                        print("We could not register " + camper.getFirstName() + " for the week " + weeks[answerWeek]
+                                + ".\n(" + camper.getFirstName()
+                                + " is your only camper elligable for registration).\nPlease try again.");
+                        enterToExit();
+                        return;
+                    }
+                }
                 while (true) {
                     title("Select the Camper to Register");
-                    int answerCamper = options(f.getCamperStrings());
+                    int answerCamper = options(camperOptions);
                     if (answerCamper != -1) {
-                        if (f.registerCamper(((Customer) f.getUser()).getCampers().get(answerCamper - 1).getId())) {
+                        Camper camper = f.getCampersElligableForRegistration(
+                                f.getWeeksAvailableForRegistration().get(answerWeek)).get(answerCamper - 1);
+                        if (f.registerCamper(camper.getId())) {
                             title("Registration Complete");
                             System.out.printf("Registering "
-                                    + ((Customer) f.getUser()).getCampers().get(answerCamper - 1).getFirstName()
+                                    + camper.getFirstName()
                                     + "\nFor the week:\n" + weeks[answerWeek] + "\nWill cost $%2f",
-                                   
+
                                     f.getCostOfRegistration());
                             double discount = f.getDiscoutOnRegistration();
                             if (discount != 0) {
                                 System.out.printf("(Having applied a discount of $%2f).", discount);
                             }
+                            enterToExit();
                             return;
                         } else {
                             title("ERROR");
-                            print("Something went wrong. Please try again");
+                            print("Something went wrong. Please try again.");
                             enterToExit();
                             return;
                         }
@@ -287,8 +325,8 @@ public class UI {
 
     /**
      * @author Code snipped derived from:
-     * https://www.javatpoint.com/how-to-clear-screen-in-java#Platform-Specific-Command 
-     * Row 3 Claims no copywrite or authorship over this method
+     *         https://www.javatpoint.com/how-to-clear-screen-in-java#Platform-Specific-Command
+     *         Row 3 Claims no copywrite or authorship over this method
      */
     private static void cls() {
         try {
