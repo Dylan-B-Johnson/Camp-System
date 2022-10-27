@@ -7,7 +7,7 @@ public class UI {
     private static Facade f = new Facade();
     private static final String PCP = "primary care physician";
     private static Scanner scan = new Scanner(System.in);
-    private static ArrayList<Week> currentOrFutureWeeks;
+    private static ArrayList<Week> currentOrFutureWeeks = f.getFutureOrCurrentWeeks();
 
     public static void main(String args[]) {
         run();
@@ -58,7 +58,6 @@ public class UI {
                         }
                         break;
                     case DIRECTOR:
-                        currentOrFutureWeeks = f.getFutureOrCurrentWeeks();
                         if (currentOrFutureWeeks.size() == 0) {
                             options = new String[] { "Search Campers", "Search Counselors", "Add Activity",
                                     "Add Week", "Edit Schedule", "View Schedule", "Export Schedule" };
@@ -136,7 +135,7 @@ public class UI {
     }
 
     private static void addActivity() {
-        
+
     }
 
     private static void addWeek() {
