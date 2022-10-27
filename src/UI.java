@@ -405,7 +405,7 @@ public class UI {
 
     private static void createCustomerAccount() {
         title("Create Your Account");
-        f.setUser(f.signUp(input("Please enter your email address:"),
+        f.setUser(f.signUpCustomer(input("Please enter your email address:"),
                 input("Please enter a password for your account:")));
         if (f.getUser() == null) {
             title("ERROR");
@@ -414,7 +414,7 @@ public class UI {
         else{
             f.getUser().setFirstName(input("Please enter your first name:"));
             f.getUser().setLastName(input("Please enter your last name:"));
-            f.getUser().setContact(getCustomerConctact());
+            ((Customer)f.getUser()).setContact(getCustomerConctact());
         }
     }
 

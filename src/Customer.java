@@ -31,6 +31,10 @@ public class Customer extends User {
         return this.contactInfo;
     }
 
+    public void setContact(Contact self){
+        this.contactInfo=self;
+    }
+
     public String getName() {
         return String.format("%s %s", this.firstName, this.lastName);
     }
