@@ -13,6 +13,7 @@ public class Week {
     private LocalDate startOfWeek;
     private ArrayList<Group> groups;
     private CampLocation campLocation;
+    private String theme;
 
     public Week(UUID id, int maxCampers, int currentCampers, LocalDate startOfWeek, ArrayList<Group> groups,
             CampLocation campLocation) {
@@ -34,6 +35,16 @@ public class Week {
 
     public UUID getId() {
         return this.id;
+    }
+
+    public String getTheme(){
+        return theme;
+    }
+
+    public void setTheme(String theme){
+        if (theme!=null){
+            this.theme = theme;
+        }
     }
 
     public int getMaxCampers() {
