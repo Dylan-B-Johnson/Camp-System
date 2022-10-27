@@ -184,4 +184,13 @@ public class Camper {
                 "\nSwim Test Status: " + this.swimTestResult;
     }
 
+    public Customer getParent() {
+        for (Customer customer : UserList.getCustomers()) {
+            for (Camper camper : customer.getCampers()) {
+                if (camper.getId().compareTo(this.id) == 0)
+                    return customer;
+            }
+        }
+        return null;
+    }
 }

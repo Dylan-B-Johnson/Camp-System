@@ -5,23 +5,34 @@ import java.util.UUID;
 
 public class Customer extends User {
     private ArrayList<Camper> campers;
+    private Contact contactInfo;
 
     public Customer(String email, String firstName, String lastName, String password,
             CampLocation campLocation,
-            ArrayList<Camper> campers) {
+            ArrayList<Camper> campers, Contact contact) {
         super(email, firstName, lastName, password, campLocation, TypeOfUser.CUSTOMER);
         this.campers = campers;
+        this.contactInfo = contact;
     }
 
     public Customer(UUID id, String email, String firstName, String lastName, String password,
             CampLocation campLocation,
-            ArrayList<Camper> campers) {
+            ArrayList<Camper> campers, Contact contact) {
         super(id, email, firstName, lastName, password, campLocation, TypeOfUser.CUSTOMER);
         this.campers = campers;
+        this.contactInfo = contact;
     }
 
     public ArrayList<Camper> getCampers() {
         return this.campers;
+    }
+
+    public Contact getContactInfo() {
+        return this.contactInfo;
+    }
+
+    public void setContact(Contact self){
+        this.contactInfo=self;
     }
 
     public String getName() {

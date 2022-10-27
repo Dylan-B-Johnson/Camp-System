@@ -32,6 +32,14 @@ public class DataWriter {
                     campersJsonArray.add(camper.getId().toString());
                 }
                 customerJsonObject.put(DataConstants.CAMPERS, campersJsonArray);
+                JSONObject contact = new JSONObject();
+                contact.put(DataConstants.EMAIL, customer.getContactInfo().getEmail());
+                contact.put(DataConstants.FIRSTNAME, customer.getContactInfo().getFirstName());
+                contact.put(DataConstants.LASTNAME, customer.getContactInfo().getLastName());
+                contact.put(DataConstants.PHONENUMBER, customer.getContactInfo().getPhoneNum());
+                contact.put(DataConstants.RELATIONSHIP, customer.getContactInfo().getRelationship());
+                contact.put(DataConstants.ADDRESS, customer.getContactInfo().getAddress());
+                customerJsonObject.put(DataConstants.PRIMARYEMERGENCYCONTACT, contact);
                 customersJsonArray.add(customerJsonObject);
             }
             file.write(customersJsonArray.toJSONString());
@@ -124,6 +132,7 @@ public class DataWriter {
                     groupJsonArray.add(group.getId().toString());
                 }
                 weekJsonObject.put(DataConstants.GROUPS, groupJsonArray);
+                weekJsonObject.put(DataConstants.THEME, week.getTheme());
                 weeksJsonArray.add(weekJsonObject);
             }
             file.write(weeksJsonArray.toJSONString());
