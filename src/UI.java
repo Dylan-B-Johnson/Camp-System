@@ -319,6 +319,7 @@ public class UI {
 
     private static String input(String prompt) {
         print(prompt);
+        scan = new Scanner(System.in);
         String answer = scan.nextLine();
         return answer;
     }
