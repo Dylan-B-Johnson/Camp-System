@@ -32,7 +32,7 @@ public class Facade {
 
     public User signUpCustomer(String email, String password) {
         if (UserList.emailAvailable(email)) {
-            User user = new Customer(email, null, null, password, getCampLocation(), null);
+            User user = new Customer(email, null, null, password, getCampLocation(), new ArrayList<Camper>(), null);
             UserList.addUser(user);
             setUser(user);
         }

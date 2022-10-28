@@ -18,6 +18,14 @@ public class Group {
         setSchedule(schedule);
     }
 
+    public Group(ArrayList<Camper> campers, int groupSize,
+            ArrayList<DaySchedule> schedule) {
+        this.id = UUID.randomUUID();
+        setCampers(campers);
+        setGroupSize(groupSize);
+        setSchedule(schedule);
+    }
+
     public UUID getId() {
         return this.id;
     }

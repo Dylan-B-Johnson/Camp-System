@@ -14,6 +14,7 @@ public class Week {
     private ArrayList<Group> groups;
     private CampLocation campLocation;
     private String theme;
+    private int[] ageRange;
 
     public Week(UUID id, int maxCampers, int currentCampers, LocalDate startOfWeek, ArrayList<Group> groups,
             CampLocation campLocation, String theme) {
@@ -23,6 +24,17 @@ public class Week {
         this.currentCampers = currentCampers;
         this.groups = groups;
         this.campLocation = campLocation;
+    }
+
+    public Week(int maxCampers, int currentCampers, LocalDate startOfWeek,
+            CampLocation campLocation, String theme) {
+        this.id = UUID.randomUUID();
+        this.startOfWeek = startOfWeek;
+        this.maxCampers = maxCampers;
+        this.currentCampers = currentCampers;
+        this.campLocation = campLocation;
+        int[] ageRange = {7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18};
+        this.ageRange = ageRange;
     }
 
     public void setMaxCampers(int maxCampers) {
@@ -129,6 +141,14 @@ public class Week {
             }
         }
         return false;
+    }
+
+    public ArrayList<Group> setUpGroups(){
+        ArrayList<Group> groups = new ArrayList<Group>();
+        for(int i=0; i<6; i++){
+            groups.add(new Group(new ArrayList<Camper>(), 8, new ArrayList<DaySchedule>()));
+        }
+        return groups;
     }
 
     public String toString() {
