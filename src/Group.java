@@ -8,10 +8,11 @@ public class Group {
     private ArrayList<Camper> campers;
     private int groupSize;
     private ArrayList<DaySchedule> schedule;
+    private Counselor counselor;
     private static final int MAX_CAMPERS = 6;
 
     public Group(UUID id, ArrayList<Camper> campers, int groupSize,
-            ArrayList<DaySchedule> schedule) {
+            ArrayList<DaySchedule> schedule, Counselor counselor) {
         this.id = id;
         setCampers(campers);
         setGroupSize(groupSize);
@@ -19,7 +20,7 @@ public class Group {
     }
 
     public Group(ArrayList<Camper> campers, int groupSize,
-            ArrayList<DaySchedule> schedule) {
+            ArrayList<DaySchedule> schedule, Counselor counselor) {
         this.id = UUID.randomUUID();
         setCampers(campers);
         setGroupSize(groupSize);
@@ -35,12 +36,17 @@ public class Group {
     }
 
     public Counselor getCounselor() {
-        for (Counselor counselor : UserList.getCounselors()) {
-            if (counselor.getGroup().getId().compareTo(this.id) == 0) {
-                return counselor;
+        return this.counselor;
+    }
+
+    public boolean setCounselor(Counselor counselor, Week week) {
+        for(Group group : week.getGroups()){
+            if(group.getCounselor().id.equals(counselor.getId())){
+                return false;
             }
         }
-        return null;
+        this.counselor = counselor;
+        return true;
     }
 
     public void setSchedule(ArrayList<DaySchedule> schedule) {
@@ -68,6 +74,19 @@ public class Group {
             DaySchedule schedule = new DaySchedule(null, null, null);
             this.schedule.add(schedule.getRandomDaySchedule(week, week.getStartOfWeek().plusDays(i)));
         }
+    }
+
+    public boolean canRegisterCamper(){
+        if (groupSize < MAX_CAMPERS) {
+            return true;
+        } else {
+            for (Camper aCamper : this.campers) {
+                if (aCamper == null) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     public void addCamper(Camper camper) {

@@ -90,6 +90,22 @@ public class Facade {
         return new ArrayList<Activity>(DataReader.getActivities().values());
     }
 
+    public Group getFirstGroup(User user){
+        for(Group group : WeekList.getCurrentWeek().getGroups()){
+            if(group.getCounselor().getId().equals(user.getId())){
+                return group;
+            }
+        }
+        for(Week week : WeekList.getFutureWeeks()){
+            for(Group group : week.getGroups()){
+                if(group.getCounselor().getId().equals(user.getId())){
+                    return group;
+                }
+            }
+        }
+        return null;
+    }
+
     public void quitAndSave() {
 
     }
@@ -192,13 +208,13 @@ public class Facade {
     }
 
     public boolean registerCamper(UUID id, Week week) {
-        if (week.canRegisterCamper()) {
-            Camper foundCamper = null;
-            for (Camper camper : UserList.getCampers()) {
-                if (camper.getId().equals(id)) {
-                    foundCamper = camper;
-                }
+        Camper foundCamper = null;
+        for (Camper camper : UserList.getCampers()) {
+            if (camper.getId().equals(id)) {
+                foundCamper = camper;
             }
+        }
+        if(week.canRegisterCamper(foundCamper)){
             week.registerCamper(foundCamper);
             return true;
         }

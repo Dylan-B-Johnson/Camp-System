@@ -461,7 +461,7 @@ public class UI {
     private static void viewGroup() {
         title("View Group");
         int i = 1;
-        for (Camper camper : f.getGroup(f.getUser()).getCampers()) {
+        for (Camper camper : f.getFirstGroup(f.getUser()).getCampers()) {
             print("\nCamper " + i + ":");
             print(camper.toString());
             i++;
@@ -487,8 +487,11 @@ public class UI {
 
     private static void createCustomerAccount() {
         title("Create Your Account");
-        f.setUser(f.signUpCustomer(input("Please enter your email address:"),
-                input("Please enter a password for your account:")));
+        f.setUser(f.signUpCustomer(input("Please enter your first name:"),
+                input("Please enter your last name:"), 
+                input("Please enter your email:"), 
+                input("Please enter your password:"),
+                getCustomerConctact()));
         if (f.getUser() == null) {
             title("ERROR");
             input("Your email or password were invalid. Please try again.\n(Press enter to continue).");

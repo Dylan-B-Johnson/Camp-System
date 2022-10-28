@@ -53,7 +53,7 @@ public class WeekList {
     public static DaySchedule getDaySchedule(LocalDate date, User counselor) {
         for (Week i : DataReader.getWeeks().values()) {
             for (Group j : i.getGroups()) {
-                if (((Counselor) counselor).getGroup().equals(j)) {
+                if (j.getCounselor().getId().equals(counselor.getId())) {
                     for (DaySchedule schedule : j.getSchedule()) {
                         if (schedule.getDay().equals(date)) {
                             return schedule;

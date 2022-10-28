@@ -3,6 +3,7 @@
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.UUID;
 
 public class Week {
@@ -24,6 +25,8 @@ public class Week {
         this.currentCampers = currentCampers;
         this.groups = groups;
         this.campLocation = campLocation;
+        int[] ageRange = {8, 10, 12, 14, 16, 18};
+        this.ageRange = ageRange;
     }
 
     public Week(int maxCampers, int currentCampers, LocalDate startOfWeek,
@@ -33,7 +36,7 @@ public class Week {
         this.maxCampers = maxCampers;
         this.currentCampers = currentCampers;
         this.campLocation = campLocation;
-        int[] ageRange = {7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18};
+        int[] ageRange = {8, 10, 12, 14, 16, 18};
         this.ageRange = ageRange;
     }
 
@@ -103,16 +106,23 @@ public class Week {
         return this.campLocation;
     }
 
-    public boolean canRegisterCamper() {
-        if (currentCampers < maxCampers) {
-            return true;
-        } else {
-            return false;
+    public boolean canRegisterCamper(Camper camper) {
+        for(Group group : this.groups){
+            if(camper.getAge(this) <= this.ageRange[groups.indexOf(group)] && group.canRegisterCamper()){
+                return true;
+            }
         }
+        return false;
     }
 
     public void registerCamper(Camper camper) {
-
+        boolean registered = false;
+        for(Group group : this.groups){
+            if(camper.getAge(this) <= this.ageRange[groups.indexOf(group)] && group.canRegisterCamper() && !registered){
+                group.addCamper(camper);
+                registered = true;
+            }
+        }
     }
 
     public boolean currentWeek() {
@@ -144,9 +154,14 @@ public class Week {
     }
 
     public ArrayList<Group> setUpGroups(){
+        Random rand = new Random();
         ArrayList<Group> groups = new ArrayList<Group>();
         for(int i=0; i<6; i++){
-            groups.add(new Group(new ArrayList<Camper>(), 8, new ArrayList<DaySchedule>()));
+            groups.add(new Group(new ArrayList<Camper>(), 8, new ArrayList<DaySchedule>(), null));
+            boolean set = false;
+            while(!set){
+                set = groups.get(i).setCounselor(UserList.getCounselors().get(rand.nextInt(UserList.getCounselors().size())), this);
+            }
         }
         return groups;
     }
