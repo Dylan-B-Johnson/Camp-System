@@ -17,10 +17,15 @@ public class UI {
     private static void run() {
         while (true) {
             if (f.getUser() == null) {
-                if (welcomeScreen()) {
-                    login();
-                } else {
-                    createCustomerAccount();
+                switch (welcomeScreen()) {
+                    case 1:
+                        login();
+                        break;
+                    case 2:
+                        createCustomerAccount();
+                        break;
+                    case 3:
+                        createCounselorAccount();
                 }
             }
             if (f.getUser() != null) {
@@ -95,6 +100,28 @@ public class UI {
 
     }
 
+    private static void createCounselorAccount() {
+        title("Create Your Account");
+        String firstname = input("Please enter your first name: ");
+        String lastname = input("Please enter your last name: ");
+        ArrayList<String> allergies = getAllergiesCounselor();
+        LocalDate bday = getBirthdayCounselor();
+        title("Create Your Account");
+        print("Please enter your first name: ");
+        print(firstname);
+        print("Please enter your last name: ");
+        print(lastname);
+        Contact pec = getEmergencyContactCounselor("primary emergency contact");
+        Contact sec = getEmergencyContactCounselor("secondary emergency contact");
+        Contact pcp = getEmergencyContactCounselor(PCP);
+        f.setUser(f.signUpCounselor(firstname, lastname, input("Please enter your email address:"),
+                input("Please enter a password for your account:"), allergies, bday, pec, sec, pcp));
+        if (f.getUser() == null) {
+            title("ERROR");
+            input("Your email or password were invalid. Please try again.\n(Press enter to continue).");
+        }
+    }
+
     private static void searchCampers() {
         title("Search for a Camper");
         ArrayList<Camper> results = f.getCamper(input("Please enter the first name of the camper:"));
@@ -153,7 +180,7 @@ public class UI {
 
     private static void addWeek() {
         title("Add a Week");
-        
+
     }
 
     private static void editSchedule() {
@@ -268,6 +295,51 @@ public class UI {
         }
     }
 
+    private static ArrayList<String> getAllergiesCounselor() {
+        ArrayList<String> rtn = new ArrayList<String>();
+        int i = 1;
+        while (true) {
+            title("Allergies");
+            String answer = input("Please enter your " + f.ordinal(i)
+                    + " allergy:\n(To quit adding allergies enter \"q\").");
+            if (answer.equals("q") || answer.equals("quit")) {
+                return rtn;
+            }
+            rtn.add(answer);
+            i++;
+        }
+    }
+
+    private static LocalDate getBirthdayCounselor() {
+        while (true) {
+            title("Birthday");
+            int day, month, year;
+            try {
+                month = Integer.parseInt(input("Please enter the month of your birth:"));
+                if (month < 1 || month > 12) {
+                    title("ERROR");
+                    print("You did not enter an integer in the appropriate range (1-12).");
+                    enterToExit();
+                    continue;
+                }
+                day = Integer.parseInt(input("Please enter day of the month of your birth:"));
+                if (day < 1 || day > 31) {
+                    title("ERROR");
+                    print("You did not enter an integer in the appropriate range (1-31).");
+                    enterToExit();
+                    continue;
+                }
+                year = Integer.parseInt(input("Please enter the number of the month of your birth:"));
+                return LocalDate.of(year, month, day);
+            } catch (Exception e) {
+                title("ERROR");
+                print("You did not enter an integer.");
+                input("Enter anything to continue.");
+                continue;
+            }
+        }
+    }
+
     private static LocalDate getBirthday() {
         while (true) {
             title("Camper Birthday");
@@ -287,7 +359,7 @@ public class UI {
                     enterToExit();
                     continue;
                 }
-                year = Integer.parseInt(input("Please enter number of the month of your camper's birth:"));
+                year = Integer.parseInt(input("Please enter the number of the month of your camper's birth:"));
                 if (year < Calendar.getInstance().get(Calendar.YEAR) - 19
                         || year >= Calendar.getInstance().get(Calendar.YEAR)) {
                     title("ERROR");
@@ -299,7 +371,7 @@ public class UI {
             } catch (Exception e) {
                 title("ERROR");
                 print("You did not enter an integer.");
-                enterToExit();
+                input("Enter anything to continue.");
                 continue;
             }
         }
@@ -309,7 +381,23 @@ public class UI {
         String phoneNumber = input("Please enter your phone number:");
         String relationship = "Self";
         String address = input("Please enter your address:");
-        return f.makeContact(f.getUser().getFirstName(), f.getUser().getLastName(), f.getUser().getEmail(), phoneNumber, relationship, address);
+        return f.makeContact(f.getUser().getFirstName(), f.getUser().getLastName(), f.getUser().getEmail(), phoneNumber,
+                relationship, address);
+    }
+
+    private static Contact getEmergencyContactCounselor(String typeOfContact) {
+        String firstname = input("Please enter the first name of your " + typeOfContact + ":");
+        String lastname = input("Please enter the last name of your " + typeOfContact + ":");
+        String email = input("Please enter the email of your " + typeOfContact + ":");
+        String phoneNumber = input("Please enter the phone number of your " + typeOfContact + ":");
+        String relationship;
+        if (!typeOfContact.equals(PCP)) {
+            relationship = input("Please enter the relationship between you and your " + typeOfContact + ":");
+        } else {
+            relationship = "Primary Care Physician";
+        }
+        String address = input("Please enter the address of your " + typeOfContact + ":");
+        return f.makeContact(firstname, lastname, email, phoneNumber, relationship, address);
     }
 
     private static Contact getEmergencyContact(String typeOfContact) {
@@ -381,7 +469,7 @@ public class UI {
         enterToExit();
     }
 
-    private static boolean welcomeScreen() {
+    private static int welcomeScreen() {
         while (true) {
             title("Welcome to " + f.getCampLocation().getName());
             print("Located at " + f.getCampLocation().getLocation() + ", and managed by "
@@ -392,13 +480,7 @@ public class UI {
                 print("- " + i.getName());
             }
             print("");
-            switch (options(new String[] { "Login", "Create Account" })) {
-                case 1:
-                    return true;
-                case 2:
-                    return false;
-            }
-
+            return options(new String[] { "Login", "Create Customer Account", "Create Counselor Account" });
         }
 
     }
@@ -410,11 +492,10 @@ public class UI {
         if (f.getUser() == null) {
             title("ERROR");
             input("Your email or password were invalid. Please try again.\n(Press enter to continue).");
-        }
-        else{
+        } else {
             f.getUser().setFirstName(input("Please enter your first name:"));
             f.getUser().setLastName(input("Please enter your last name:"));
-            ((Customer)f.getUser()).setContact(getCustomerConctact());
+            ((Customer) f.getUser()).setContact(getCustomerConctact());
         }
     }
 

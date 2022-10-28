@@ -30,21 +30,25 @@ public class Facade {
         return null;
     }
 
-    public User signUpCustomer(String email, String password) {
-        if (UserList.emailAvailable(email)) {
-            User user = new Customer(email, null, null, password, getCampLocation(), new ArrayList<Camper>(), null);
-            UserList.addUser(user);
-            setUser(user);
-        }
+    public User signUpCustomer(String firstName, String lastName, String email, String password, Contact self) {
+        if (!UserList.emailAvailable(email))
+            return null;
+        User user = new Customer(email, firstName, lastName, password, getCampLocation(), new ArrayList<Camper>(), self);
+        UserList.addUser(user);
+        setUser(user);
         return user;
     }
 
-    public User signUpCounselor(String email, String password) {
-        if (UserList.emailAvailable(email)) {
-            User user = new Counselor(null, null, null, email, null, null, password, getCampLocation(), null, null, null);
-            UserList.addUser(user);
-            setUser(user);
-        }
+    public User signUpCounselor(String firstName, String lastName, String email, String password,
+            ArrayList<String> allergies, LocalDate birthday, Contact primaryEmergencyContact,
+            Contact secondaryEmergencyContact, Contact primaryCarePhysician) {
+        if (!UserList.emailAvailable(email))
+            return null;
+        User user = new Counselor(allergies, birthday, email, firstName, lastName, password, getCampLocation(), primaryEmergencyContact,
+        secondaryEmergencyContact,
+                primaryCarePhysician);
+        UserList.addUser(user);
+        setUser(user);
         return user;
     }
 
@@ -90,15 +94,23 @@ public class Facade {
 
     }
 
-    // public void exportSchedule(DaySchedule daySchedule) {
-    // ArrayList<String> output = new ArrayList<>();
+    public void exportSchedule(DaySchedule daySchedule) {
+        ArrayList<String> output = new ArrayList<>();
 
-    // try {
-    // FileWriter file = new FileWriter("schedule_of_0-0-0.txt");
-    // } catch (Exception e) {
-    // // TODO: handle exception
-    // }
-    // }
+        for (Activity activity : daySchedule.getCurrentAcitivities()) {
+            output.add(activity.toString());
+        }
+
+        try {
+            FileWriter file = new FileWriter(String.format("schedule_of_%s.txt", daySchedule.getDay().toString()));
+            for (String activityString : output) {
+                file.append(activityString);
+            }
+            file.close();
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+    }
 
     public ArrayList<Camper> getCamper(String firstName) {
         ArrayList<Camper> campers = new ArrayList<Camper>();
@@ -220,6 +232,10 @@ public class Facade {
         return rtn;
     }
 
+    public Week getNextScheduledWeek(){
+        return null;
+    }
+
     public ArrayList<Week> getFutureOrCurrentWeeks() {
         ArrayList<Week> futureOrCurrentWeeks = WeekList.getFutureWeeks();
         Week current = getCurrentWeek();
@@ -227,10 +243,6 @@ public class Facade {
             futureOrCurrentWeeks.add(current);
         }
         return futureOrCurrentWeeks;
-    }
-
-    public Group getGroup(User counselor) {
-        return ((Counselor) counselor).getGroup();
     }
 
     /**
