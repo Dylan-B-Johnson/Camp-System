@@ -14,6 +14,7 @@ public class Week {
     private LocalDate startOfWeek;
     private ArrayList<Group> groups;
     private CampLocation campLocation;
+    public static final int NUM_GROUPS=6;
     private String theme;
     private int[] ageRange;
 
@@ -63,11 +64,7 @@ public class Week {
     }
 
     public int getMaxCampers() {
-        int totalCampers = 0;
-        for(Group group : this.groups){
-            totalCampers+=6;
-        }
-        return totalCampers;
+        return NUM_GROUPS*Group.MAX_CAMPERS;
     }
 
     public void setCurrentCampers(int currentCampers) {

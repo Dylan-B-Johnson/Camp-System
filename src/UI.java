@@ -65,10 +65,10 @@ public class UI {
                     case DIRECTOR:
                         if (currentOrFutureWeeks.size() == 0) {
                             options = new String[] { "Search Campers", "Search Counselors", "Add Activity",
-                                    "Add Week", "Edit Schedule", "View Schedule", "Export Schedule" };
+                                    "Add Camp Session Week", "Edit Schedule", "View Schedule", "Export Schedule" };
                         } else {
                             options = new String[] { "Search Campers", "Search Counselors", "Add Activity",
-                                    "Add Week" };
+                                    "Add Camp Session Week" };
                         }
                         switch (options(options)) {
                             case 1:
@@ -179,8 +179,16 @@ public class UI {
     }
 
     private static void addWeek() {
+        LocalDate date = getStartDate();
         title("Add a Week");
+        if (f.addRandomizedWeek(date, input("Please enter the theme of the camp session week:"))) {
+            print("Camp session week sucessfully added.");
+        } else {
+            title("ERROR");
+            print("Something went wrong. Please try again.");
 
+        }
+        enterToExit();
     }
 
     private static void editSchedule() {
@@ -377,6 +385,44 @@ public class UI {
         }
     }
 
+    private static LocalDate getStartDate() {
+        while (true) {
+            title("Start of Camp Session Week");
+            int day, month, year;
+            try {
+                month = Integer.parseInt(
+                        input("Please enter number of the month of the start of the camp session week to add:"));
+                if (month < 1 || month > 12) {
+                    title("ERROR");
+                    print("You did not enter an integer in the appropriate range (1-12).");
+                    enterToExit();
+                    continue;
+                }
+                day = Integer.parseInt(
+                        input("Please enter the day of the month of the start of the camp session week to add:"));
+                if (day < 1 || day > 31) {
+                    title("ERROR");
+                    print("You did not enter an integer in the appropriate range (1-31).");
+                    enterToExit();
+                    continue;
+                }
+                year = Integer.parseInt(input("Please enter the number of the month of your camper's birth:"));
+                if (f.isFutureDate(LocalDate.of(year, month, day))) {
+                    title("ERROR");
+                    print("You did not enter an integer in the appropriate range for a minor.");
+                    enterToExit();
+                    continue;
+                }
+                return LocalDate.of(year, month, day);
+            } catch (Exception e) {
+                title("ERROR");
+                print("You did not enter an integer.");
+                input("Enter anything to continue.");
+                continue;
+            }
+        }
+    }
+
     private static Contact getCustomerConctact() {
         String phoneNumber = input("Please enter your phone number:");
         String relationship = "Self";
@@ -488,8 +534,8 @@ public class UI {
     private static void createCustomerAccount() {
         title("Create Your Account");
         f.setUser(f.signUpCustomer(input("Please enter your first name:"),
-                input("Please enter your last name:"), 
-                input("Please enter your email:"), 
+                input("Please enter your last name:"),
+                input("Please enter your email:"),
                 input("Please enter your password:"),
                 getCustomerConctact()));
         if (f.getUser() == null) {

@@ -9,7 +9,7 @@ public class Group {
     private int groupSize;
     private ArrayList<DaySchedule> schedule;
     private Counselor counselor;
-    private static final int MAX_CAMPERS = 6;
+    public static final int MAX_CAMPERS = 8;
 
     public Group(UUID id, ArrayList<Camper> campers, int groupSize,
             ArrayList<DaySchedule> schedule, Counselor counselor) {

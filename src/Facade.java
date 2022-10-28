@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.UUID;
 import java.io.FileWriter;
 import java.time.LocalDate;
@@ -33,7 +34,8 @@ public class Facade {
     public User signUpCustomer(String firstName, String lastName, String email, String password, Contact self) {
         if (!UserList.emailAvailable(email))
             return null;
-        User user = new Customer(email, firstName, lastName, password, getCampLocation(), new ArrayList<Camper>(), self);
+        User user = new Customer(email, firstName, lastName, password, getCampLocation(), new ArrayList<Camper>(),
+                self);
         UserList.addUser(user);
         setUser(user);
         return user;
@@ -44,8 +46,9 @@ public class Facade {
             Contact secondaryEmergencyContact, Contact primaryCarePhysician) {
         if (!UserList.emailAvailable(email))
             return null;
-        User user = new Counselor(allergies, birthday, email, firstName, lastName, password, getCampLocation(), primaryEmergencyContact,
-        secondaryEmergencyContact,
+        User user = new Counselor(allergies, birthday, email, firstName, lastName, password, getCampLocation(),
+                primaryEmergencyContact,
+                secondaryEmergencyContact,
                 primaryCarePhysician);
         UserList.addUser(user);
         setUser(user);
@@ -90,15 +93,15 @@ public class Facade {
         return new ArrayList<Activity>(DataReader.getActivities().values());
     }
 
-    public Group getFirstGroup(User user){
-        for(Group group : WeekList.getCurrentWeek().getGroups()){
-            if(group.getCounselor().getId().equals(user.getId())){
+    public Group getFirstGroup(User user) {
+        for (Group group : WeekList.getCurrentWeek().getGroups()) {
+            if (group.getCounselor().getId().equals(user.getId())) {
                 return group;
             }
         }
-        for(Week week : WeekList.getFutureWeeks()){
-            for(Group group : week.getGroups()){
-                if(group.getCounselor().getId().equals(user.getId())){
+        for (Week week : WeekList.getFutureWeeks()) {
+            for (Group group : week.getGroups()) {
+                if (group.getCounselor().getId().equals(user.getId())) {
                     return group;
                 }
             }
@@ -214,7 +217,7 @@ public class Facade {
                 foundCamper = camper;
             }
         }
-        if(week.canRegisterCamper(foundCamper)){
+        if (week.canRegisterCamper(foundCamper)) {
             week.registerCamper(foundCamper);
             return true;
         }
@@ -248,7 +251,7 @@ public class Facade {
         return rtn;
     }
 
-    public Week getNextScheduledWeek(){
+    public Week getNextScheduledWeek() {
         return null;
     }
 
@@ -284,5 +287,13 @@ public class Facade {
 
         }
     }
+
+    public boolean addRandomizedWeek(LocalDate start, String theme) {
+        return false;
+    }
+
+    public boolean isFutureDate(LocalDate date){
+        return false;
+    }   
 
 }
