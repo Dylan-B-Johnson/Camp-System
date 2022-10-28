@@ -63,7 +63,11 @@ public class Week {
     }
 
     public int getMaxCampers() {
-        return this.maxCampers;
+        int totalCampers = 0;
+        for(Group group : this.groups){
+            totalCampers+=6;
+        }
+        return totalCampers;
     }
 
     public void setCurrentCampers(int currentCampers) {
@@ -75,7 +79,15 @@ public class Week {
     }
 
     public int getCurrentCampers() {
-        return this.currentCampers;
+        int totalCampers = 0;
+        for(Group group : this.groups){
+            for(Camper camper : group.getCampers()){
+                if(camper != null){
+                    totalCampers++;
+                }
+            }
+        }
+        return totalCampers;
     }
 
     public void setStartOfWeek(LocalDate startOfWeek) {
