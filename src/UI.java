@@ -1,10 +1,7 @@
-import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Scanner;
-
-import javax.lang.model.type.NullType;
 
 public class UI {
     private static Facade f = new Facade();
@@ -36,15 +33,20 @@ public class UI {
                 String[] options;
                 switch (f.getUser().getTypeOfUser()) {
                     case COUNSELOR:
-                        switch (options(new String[] { "View Schedule", "View Group", "Export Schedule" })) {
+                        switch (options(new String[] { "View Schedule", "View Group", "Export Schedule",
+                                "Export Week Vital Info" })) {
                             case 1:
+                                // TODO: Update to allow viewing of current or next scheduled week
                                 viewSchedule();
                                 break;
                             case 2:
                                 viewGroup();
                                 break;
                             case 3:
-                                exportSchedule();
+                                exportSchedule(false);
+                                break;
+                            case 4:
+                                exportSchedule(true);
                         }
                         break;
                     case CUSTOMER:
@@ -268,7 +270,7 @@ public class UI {
 
     }
 
-    private static void exportSchedule() {
+    private static void exportSchedule(boolean vitalInfo) {
         ArrayList<Week> nextWeek = f.getNextScheduledWeek();
         Week selectedWeek = null;
         switch (nextWeek.size()) {
@@ -278,7 +280,7 @@ public class UI {
                 enterToExit();
                 return;
             case 1:
-                selectedWeek=nextWeek.get(0);
+                selectedWeek = nextWeek.get(0);
                 break;
             case 2:
                 while (true) {
@@ -288,30 +290,45 @@ public class UI {
                     options[1] = nextWeek.get(1).toString();
                     int answer = options(options);
                     if (answer != -1) {
-                        selectedWeek=nextWeek.get(answer-1);
+                        selectedWeek = nextWeek.get(answer - 1);
                         break;
                     }
                 }
         }
-        if (selectedWeek==null){
-            //if this occurs then there is a bug (probably in f.getNextScheduledWeek())
+        if (selectedWeek == null) {
+            // if this occurs then there is a bug (probably in f.getNextScheduledWeek())
             actionFailed();
             return;
         }
-        title("Export Schedule");
-        String filename = input("Please enter the name of the file to export your schedule as (do not include a file extension):");
+        if (vitalInfo) {
+            title("Export Week Vital Info");
+        } else {
+            title("Export Schedule");
+        }
+        String filename;
+        if (vitalInfo) {
+            filename = input(
+                    "Please enter the name of the file to export your week's vital info as (do not include a file extension):");
+        } else {
+            filename = input(
+                    "Please enter the name of the file to export your schedule as (do not include a file extension):");
+        }
         Group group = null;
-        for (Group i : selectedWeek.getGroups()){
-            if (i.getCounselor().getFirstName().equals(f.getUser().getFirstName()) && 
-            i.getCounselor().getLastName().equals(f.getUser().getLastName())){
+        for (Group i : selectedWeek.getGroups()) {
+            if (i.getCounselor().getFirstName().equals(f.getUser().getFirstName()) &&
+                    i.getCounselor().getLastName().equals(f.getUser().getLastName())) {
                 group = i;
             }
         }
-        if (group==null || !(f.exportSchedule(group, filename))){
+        if (group == null || !(f.exportSchedule(group, filename))) {
             actionFailed();
             return;
         }
-        print("Sucessfully exported the schedule.");
+        if (vitalInfo) {
+            print("Sucessfully exported the week's vital info.");
+        } else {
+            print("Sucessfully exported the schedule.");
+        }
         enterToExit();
     }
 
