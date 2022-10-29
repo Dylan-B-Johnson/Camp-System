@@ -91,10 +91,10 @@ public class UI {
                                 editSchedule();
                                 break;
                             case 6:
-                                viewScheduleDirector();
+                                viewScheduleDirector(false);
                                 break;
                             case 7:
-                                exportScheduleDirector();
+                                viewScheduleDirector(false);
                         }
 
                 }
@@ -270,11 +270,15 @@ public class UI {
         }
     }
 
-    private static void viewScheduleDirector() {
+    private static void viewScheduleDirector(boolean exportInstead) {
         ArrayList<Week> weeks = f.getFutureOrCurrentWeeks();
         if (weeks.size() == 0) {
             title("ERROR");
-            print("There are no future or current camp week session to view the schedules for.");
+            if (exportInstead) {
+                print("There are no future or current camp week sessions to export the schedule for.");
+            } else {
+                print("There are no future or current camp week sessions to view the schedules for.");
+            }
             enterToExit();
             return;
         }
@@ -284,7 +288,11 @@ public class UI {
         }
         int answerWeek;
         while (true) {
-            title("Select Week to View");
+            if (exportInstead) {
+                title("Select Week to Export");
+            } else {
+                title("Select Week to View");
+            }
             answerWeek = options(options);
             if (answerWeek != -1) {
                 break;
@@ -293,27 +301,38 @@ public class UI {
         Week week = weeks.get(answerWeek - 1);
         int answerCounselor;
         while (true) {
-            title("Select Group to View");
+            if (exportInstead) {
+                title("Select Group to Export");
+            } else {
+                title("Select Group to View");
+            }
             answerCounselor = options(week.counselorsToString());
             if (answerCounselor != -1) {
                 break;
             }
         }
-        int answerDay;
-        while (true) {
-            title("Select Day to View");
-            answerDay = options(f.weekDays(week));
-            if (answerDay != -1) {
-                break;
+        if (exportInstead) {
+            title("Export Group Schedule");
+            String filename = input(
+                    "Please enter the name of the file to export the schedule as (do not include a file extension):");
+            if (f.exportSchedule(week.getGroups().get(answerCounselor - 1), filename)) {
+                print("Schedule sucessfully exported.");
+            } else {
+                actionFailed();
             }
+        } else {
+            int answerDay;
+            while (true) {
+                title("Select Day to View");
+                answerDay = options(f.weekDays(week));
+                if (answerDay != -1) {
+                    break;
+                }
+            }
+            title("View Schedule");
+            print(week.getGroups().get(answerCounselor - 1).getSchedule().get(answerDay).toString());
         }
-        title("View Schedule");
-        print(week.getGroups().get(answerCounselor - 1).getSchedule().get(answerDay).toString());
         enterToExit();
-    }
-
-    private static void exportScheduleDirector() {
-
     }
 
     private static void exportSchedule(boolean vitalInfo) {
