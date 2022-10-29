@@ -40,8 +40,8 @@ public class Group {
     }
 
     public boolean setCounselor(Counselor counselor, Week week) {
-        for(Group group : week.getGroups()){
-            if(group.getCounselor().id.equals(counselor.getId())){
+        for (Group group : week.getGroups()) {
+            if (group.getCounselor().id.equals(counselor.getId())) {
                 return false;
             }
         }
@@ -76,7 +76,7 @@ public class Group {
         }
     }
 
-    public boolean canRegisterCamper(){
+    public boolean canRegisterCamper() {
         if (groupSize < MAX_CAMPERS) {
             return true;
         } else {
@@ -113,7 +113,8 @@ public class Group {
     }
 
     public String toString() {
-        return "\nMinimum age: " + this.minAge() +
+        return "Counselor: " + counselor.getFirstName() + " " + counselor.getLastName() +
+                "\nMinimum age: " + this.minAge() +
                 "\nMaximum age: " + this.maxAge() +
                 "\nCampers: " + this.campers.toString() +
                 "\nGroup size: " + groupSize +

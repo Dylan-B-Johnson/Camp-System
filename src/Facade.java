@@ -81,14 +81,6 @@ public class Facade {
         return rtn;
     }
 
-    public double getCostOfRegistration() {
-        return -404;
-    }
-
-    public double getDiscoutOnRegistration() {
-        return -404;
-    }
-
     public ArrayList<Activity> getActivities() {
         return new ArrayList<Activity>(DataReader.getActivities().values());
     }
@@ -251,8 +243,14 @@ public class Facade {
         return rtn;
     }
 
-    public Week getNextScheduledWeek() {
-        return null;
+    public String[] weekDays(Week week) {
+        String[] rtn = new String[7];
+        LocalDate date = week.getStartOfWeek();
+        for (int i = 0; i < rtn.length; i++) {
+            LocalDate plusDays = date.plusDays(i);
+            rtn[i] = (plusDays.format(DateTimeFormatter.ofPattern("E, LLL d, uuuu")));
+        }
+        return rtn;
     }
 
     public ArrayList<Week> getFutureOrCurrentWeeks() {
@@ -288,12 +286,77 @@ public class Facade {
         }
     }
 
+
+
+    public double getCostOfRegistration() {
+        return -404;
+    }
+
+    public double getDiscoutOnRegistration() {
+        return -404;
+    }
+
     public boolean addRandomizedWeek(LocalDate start, String theme) {
         return false;
     }
 
-    public boolean isFutureDate(LocalDate date){
+    public boolean isFutureOrCurrentDate(LocalDate date) {
         return false;
-    }   
+    }
+
+    public Week getAssociatedWeek(LocalDate dateContainedInWeek) {
+        return null;
+    }
+
+    public Week getNextScheduledWeek() {
+        // returns the next week that the user is scheduled for
+        // (only called if user is a Counselor)
+        return null;
+    }
+
+    /**
+     * A method that returns a list of legal activities that could be added to the
+     * current DaySchedule at the specified time, ensuring multiple of the same
+     * activity will not be assigned to multiple groups at the same time or assigned
+     * twice in the current DaySchedule. Ignores group.getSchedule().get(day), as
+     * this will be overwritten with current.
+     * 
+     * @param group    The group whose schedule is being edited.
+     * @param current  The DaySchedule object that will be assigned to the group and
+     *                 day once it is filled with 6 valid activities. THIS IS NOT
+     *                 THE SAME as group.getSchedule().get(day).
+     * @param day      The day in question (0-6) from the start of the week
+     * @param activity The timeslot to get the legal sctivities for (0-5)
+     * @return A list of legal activities for day number day, group group, activity
+     *         number activity, and currently scheduled.
+     */
+    public ArrayList<Activity> getAvailableActivities(Group group, DaySchedule current, int day, int activity) {
+
+        return null;
+    }
+
+    public boolean replaceDaySchedule(DaySchedule newSchedule, Group group, int day) {
+        // replaces the specified group's day-th DaySchedule with newSchedule and
+        // ensures it is saved properly
+        return false;
+    }
+
+    public void clearSchedules(Week week, int day) {
+        // reinitializes all schedules for the specified day and week with an empty
+        // DaySchedule arrayList
+        // ensures that everything is saved properly
+    }
+
+    public boolean exportSchedule(Group group, String filename){
+        //saves the group's week schedule as a well-formatted text file with the specified name
+        //"showing a grid of what they will be doing at each day and time.  For each activity it also indicates where it is located."
+        return false;
+    }
+
+    public boolean exportVitalInfo(Group group, String filename){
+        //saves the group's vital info as a well-formatted text file with the specified name
+        //" list of next weeks vital information, this will generate a beautifully formatted report of all his campers allergies, emergency contacts, and medical information.  Make sure this is a good sized list."
+        return false;
+    }
 
 }

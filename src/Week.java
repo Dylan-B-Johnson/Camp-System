@@ -14,7 +14,7 @@ public class Week {
     private LocalDate startOfWeek;
     private ArrayList<Group> groups;
     private CampLocation campLocation;
-    public static final int NUM_GROUPS=6;
+    public static final int NUM_GROUPS = 6;
     private String theme;
     private int[] ageRange;
 
@@ -26,7 +26,7 @@ public class Week {
         this.currentCampers = currentCampers;
         this.groups = groups;
         this.campLocation = campLocation;
-        int[] ageRange = {8, 10, 12, 14, 16, 18};
+        int[] ageRange = { 8, 10, 12, 14, 16, 18 };
         this.ageRange = ageRange;
     }
 
@@ -37,7 +37,7 @@ public class Week {
         this.maxCampers = maxCampers;
         this.currentCampers = currentCampers;
         this.campLocation = campLocation;
-        int[] ageRange = {8, 10, 12, 14, 16, 18};
+        int[] ageRange = { 8, 10, 12, 14, 16, 18 };
         this.ageRange = ageRange;
     }
 
@@ -64,7 +64,7 @@ public class Week {
     }
 
     public int getMaxCampers() {
-        return NUM_GROUPS*Group.MAX_CAMPERS;
+        return NUM_GROUPS * Group.MAX_CAMPERS;
     }
 
     public void setCurrentCampers(int currentCampers) {
@@ -77,9 +77,9 @@ public class Week {
 
     public int getCurrentCampers() {
         int totalCampers = 0;
-        for(Group group : this.groups){
-            for(Camper camper : group.getCampers()){
-                if(camper != null){
+        for (Group group : this.groups) {
+            for (Camper camper : group.getCampers()) {
+                if (camper != null) {
                     totalCampers++;
                 }
             }
@@ -116,8 +116,8 @@ public class Week {
     }
 
     public boolean canRegisterCamper(Camper camper) {
-        for(Group group : this.groups){
-            if(camper.getAge(this) <= this.ageRange[groups.indexOf(group)] && group.canRegisterCamper()){
+        for (Group group : this.groups) {
+            if (camper.getAge(this) <= this.ageRange[groups.indexOf(group)] && group.canRegisterCamper()) {
                 return true;
             }
         }
@@ -126,8 +126,9 @@ public class Week {
 
     public void registerCamper(Camper camper) {
         boolean registered = false;
-        for(Group group : this.groups){
-            if(camper.getAge(this) <= this.ageRange[groups.indexOf(group)] && group.canRegisterCamper() && !registered){
+        for (Group group : this.groups) {
+            if (camper.getAge(this) <= this.ageRange[groups.indexOf(group)] && group.canRegisterCamper()
+                    && !registered) {
                 group.addCamper(camper);
                 registered = true;
             }
@@ -162,14 +163,15 @@ public class Week {
         return false;
     }
 
-    public ArrayList<Group> setUpGroups(){
+    public ArrayList<Group> setUpGroups() {
         Random rand = new Random();
         ArrayList<Group> groups = new ArrayList<Group>();
-        for(int i=0; i<6; i++){
+        for (int i = 0; i < 6; i++) {
             groups.add(new Group(new ArrayList<Camper>(), 8, new ArrayList<DaySchedule>(), null));
             boolean set = false;
-            while(!set){
-                set = groups.get(i).setCounselor(UserList.getCounselors().get(rand.nextInt(UserList.getCounselors().size())), this);
+            while (!set) {
+                set = groups.get(i).setCounselor(
+                        UserList.getCounselors().get(rand.nextInt(UserList.getCounselors().size())), this);
             }
         }
         return groups;
@@ -179,5 +181,13 @@ public class Week {
         return "\tStart of Week: " + this.startOfWeek.format(DateTimeFormatter.ofPattern("E, LLL d, uuuu"))
                 + "\n\tEnd of Week: "
                 + this.startOfWeek.plusDays(6).format(DateTimeFormatter.ofPattern("E, LLL d, uuuu"));
+    }
+
+    public String[] counselorsToString() {
+        String[] rtn = new String[groups.size()];
+        for (int i = 0; i < groups.size(); i++) {
+            rtn[i] = groups.get(i).getCounselor().getFirstName() + " " + groups.get(i).getCounselor().getLastName();
+        }
+        return rtn;
     }
 }

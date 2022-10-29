@@ -171,11 +171,11 @@ public class UI {
                 input("Please enter the location that the activity is performed:"),
                 input("Please enter a description for the activity:"))) {
             print("Activity sucessfully added.");
+            enterToExit();
         } else {
-            title("ERROR");
-            print("Something went wrong. Please try again.");
+            enterToExit();
         }
-        enterToExit();
+
     }
 
     private static void addWeek() {
@@ -183,15 +183,52 @@ public class UI {
         title("Add a Week");
         if (f.addRandomizedWeek(date, input("Please enter the theme of the camp session week:"))) {
             print("Camp session week sucessfully added.");
+            enterToExit();
         } else {
-            title("ERROR");
-            print("Something went wrong. Please try again.");
-
+            actionFailed();
         }
-        enterToExit();
+
     }
 
     private static void editSchedule() {
+        Week week = f.getAssociatedWeek(getScheduleDate());
+        if (week != null) {
+            title("Select Day To Edit");
+            int answerDay = options(f.weekDays(week));
+            if (answerDay == -1) {
+                return;
+            }
+            title("Select Group to Edit");
+            int answerCounselor = options(week.counselorsToString());
+            if (answerCounselor == -1) {
+                return;
+            }
+            title("Edit Schedule");
+            print("You cannot schedule an activity for more than one group at the same time.\n" +
+                    "You also cannot schedule the same activity twice in one day.\n" +
+                    "If you would like to not face these restrictions, you can clear the schedules for this day now.");
+            int answer = options(new String[] { "Delete all schedules for this day", "Delete no schedules" });
+            if (answer == -1) {
+                return;
+            }
+            if (answer == 1) {
+                f.clearSchedules(week, answerDay - 1);
+            }
+            Group group = week.getGroups().get(answerCounselor - 1);
+            DaySchedule oldSchedule = f.getDaySchedule(answerDay - 1,
+                    group.getCounselor());
+            DaySchedule current = new DaySchedule(new ArrayList<Activity>(), week, oldSchedule.getDay());
+            int activity = 1;
+            while (true) {
+                title("Select the "+activity+f.ordinal(activity)+" Activity");
+                ArrayList<Activity> legal = f.getAvailableActivities(group, current, answerDay - 1, activity - 1);
+                //TODO: FINISH
+                activity++;
+            }
+
+        } else {
+            actionFailed();
+        }
 
     }
 
@@ -205,6 +242,12 @@ public class UI {
 
     private static void exportSchedule() {
 
+    }
+
+    private static void actionFailed() {
+        title("ERROR");
+        print("Something went wrong. Please try again.");
+        enterToExit();
     }
 
     private static void registerACamper() {
@@ -267,9 +310,7 @@ public class UI {
                         enterToExit();
                         return;
                     } else {
-                        title("ERROR");
-                        print("Something went wrong. Please try again.");
-                        enterToExit();
+                        actionFailed();
                         return;
                     }
                 }
@@ -367,11 +408,49 @@ public class UI {
                     enterToExit();
                     continue;
                 }
-                year = Integer.parseInt(input("Please enter the number of the month of your camper's birth:"));
+                year = Integer.parseInt(input("Please enter the year of your camper's birth:"));
                 if (year < Calendar.getInstance().get(Calendar.YEAR) - 19
                         || year >= Calendar.getInstance().get(Calendar.YEAR)) {
                     title("ERROR");
                     print("You did not enter an integer in the appropriate range for a minor.");
+                    enterToExit();
+                    continue;
+                }
+                return LocalDate.of(year, month, day);
+            } catch (Exception e) {
+                title("ERROR");
+                print("You did not enter an integer.");
+                input("Enter anything to continue.");
+                continue;
+            }
+        }
+    }
+
+    private static LocalDate getScheduleDate() {
+        while (true) {
+            title("Day Schedule to Edit");
+            int day, month, year;
+            try {
+                month = Integer.parseInt(
+                        input("Please enter number of the month of the day schedule to edit:"));
+                if (month < 1 || month > 12) {
+                    title("ERROR");
+                    print("You did not enter an integer in the appropriate range (1-12).");
+                    enterToExit();
+                    continue;
+                }
+                day = Integer.parseInt(
+                        input("Please enter the day of the month of the day schedule to edit:"));
+                if (day < 1 || day > 31) {
+                    title("ERROR");
+                    print("You did not enter an integer in the appropriate range (1-31).");
+                    enterToExit();
+                    continue;
+                }
+                year = Integer.parseInt(input("Please enter the year of the day schedule to edit:"));
+                if (!f.isFutureOrCurrentDate(LocalDate.of(year, month, day))) {
+                    title("ERROR");
+                    print("You entered a date in the past.");
                     enterToExit();
                     continue;
                 }
@@ -406,10 +485,10 @@ public class UI {
                     enterToExit();
                     continue;
                 }
-                year = Integer.parseInt(input("Please enter the number of the month of your camper's birth:"));
-                if (f.isFutureDate(LocalDate.of(year, month, day))) {
+                year = Integer.parseInt(input("Please enter the year of the camp session week to add:"));
+                if (!f.isFutureOrCurrentDate(LocalDate.of(year, month, day))) {
                     title("ERROR");
-                    print("You did not enter an integer in the appropriate range for a minor.");
+                    print("You entered a date in the past.");
                     enterToExit();
                     continue;
                 }
@@ -478,11 +557,10 @@ public class UI {
                 getEmergencyContact("primary emergency contact"),
                 getEmergencyContact("secondary emergency contact"), getEmergencyContact(PCP))) {
             print("Your camper has sucessfully been added!");
+            enterToExit();
         } else {
-            title("ERROR");
-            print("Something went wrong. Please try again.");
+            actionFailed();
         }
-        enterToExit();
     }
 
     private static void viewSchedule() {
@@ -490,7 +568,7 @@ public class UI {
             title("View Schedule");
             int answer = options(f.nextWeek());
             if (answer != -1) {
-                String schedule = f.getDaySchedule(answer, f.getUser()).toString();
+                String schedule = f.getDaySchedule(answer - 1, f.getUser()).toString();
                 if (schedule != null) {
                     print(schedule);
                 } else {
