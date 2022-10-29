@@ -11,7 +11,7 @@ public class DaySchedule {
     private ArrayList<Activity> currentActivities;
     private Week week;
     private LocalDate day;
-    private final int MAX_ACTIVITY = 6;
+    public static final int MAX_ACTIVITY = 6;
 
     public DaySchedule(ArrayList<Activity> currentActivities, Week week, LocalDate day) {
         this.id = UUID.randomUUID();
@@ -103,6 +103,16 @@ public class DaySchedule {
             }
         }
         return true;
+    }
+
+    public void setActivities(ArrayList<Activity> activities){
+        if (activities!=null){
+            this.currentActivities=activities;
+        }
+    }
+
+    public ArrayList<Activity> getActivities(){
+        return this.currentActivities;
     }
 
     public String toString() {

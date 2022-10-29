@@ -286,8 +286,6 @@ public class Facade {
         }
     }
 
-
-
     public double getCostOfRegistration() {
         return -404;
     }
@@ -308,8 +306,12 @@ public class Facade {
         return null;
     }
 
-    public Week getNextScheduledWeek() {
+    public ArrayList<Week> getNextScheduledWeek() {
         // returns the next week that the user is scheduled for
+        // returns only the next scheduled week if user is not scheduled for the current
+        // week
+        // returns both the current week, followed by the next scheduled week if the
+        // counseler is scheduled for the current week
         // (only called if user is a Counselor)
         return null;
     }
@@ -331,7 +333,6 @@ public class Facade {
      *         number activity, and currently scheduled.
      */
     public ArrayList<Activity> getAvailableActivities(Group group, DaySchedule current, int day, int activity) {
-
         return null;
     }
 
@@ -347,15 +348,20 @@ public class Facade {
         // ensures that everything is saved properly
     }
 
-    public boolean exportSchedule(Group group, String filename){
-        //saves the group's week schedule as a well-formatted text file with the specified name
-        //"showing a grid of what they will be doing at each day and time.  For each activity it also indicates where it is located."
+    public boolean exportSchedule(Group group, String filename) {
+        // saves the group's week schedule as a well-formatted text file with the
+        // specified name
+        // "showing a grid of what they will be doing at each day and time. For each
+        // activity it also indicates where it is located."
         return false;
     }
 
-    public boolean exportVitalInfo(Group group, String filename){
-        //saves the group's vital info as a well-formatted text file with the specified name
-        //" list of next weeks vital information, this will generate a beautifully formatted report of all his campers allergies, emergency contacts, and medical information.  Make sure this is a good sized list."
+    public boolean exportVitalInfo(Group group, String filename) {
+        // saves the group's vital info as a well-formatted text file with the specified
+        // name
+        // " list of next weeks vital information, this will generate a beautifully
+        // formatted report of all his campers allergies, emergency contacts, and
+        // medical information. Make sure this is a good sized list."
         return false;
     }
 

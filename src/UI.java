@@ -1,3 +1,4 @@
+import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -207,6 +208,7 @@ public class UI {
             print("You cannot schedule an activity for more than one group at the same time.\n" +
                     "You also cannot schedule the same activity twice in one day.\n" +
                     "If you would like to not face these restrictions, you can clear the schedules for this day now.");
+            print("(If you do, remember to go back and fill in the other group's schedules).");
             int answer = options(new String[] { "Delete all schedules for this day", "Delete no schedules" });
             if (answer == -1) {
                 return;
@@ -219,13 +221,38 @@ public class UI {
                     group.getCounselor());
             DaySchedule current = new DaySchedule(new ArrayList<Activity>(), week, oldSchedule.getDay());
             int activity = 1;
-            while (true) {
-                title("Select the "+activity+f.ordinal(activity)+" Activity");
+            while (activity < DaySchedule.MAX_ACTIVITY) {
+                title("Select the " + activity + f.ordinal(activity) + " Activity");
                 ArrayList<Activity> legal = f.getAvailableActivities(group, current, answerDay - 1, activity - 1);
-                //TODO: FINISH
+                if (legal.size() == 0) {
+                    title("ERROR");
+                    print("There are no activities that are valid to be added as the " + activity + f.ordinal(activity)
+                            + " activity.");
+                    print("Try again, try clearing this day's schedule, or try adding more activities.");
+                    print("The schedule will be kept as it was.");
+                    enterToExit();
+                    return;
+                }
+                String[] legalString = new String[legal.size()];
+                for (int i = 0; i < legal.size(); i++) {
+                    legalString[i] = legal.get(i).getName();
+                }
+                int activityAnswer = options(legalString);
+                if (activityAnswer == -1) {
+                    continue;
+                }
+                ArrayList<Activity> tmp = current.getActivities();
+                tmp.add(legal.get(activityAnswer - 1));
+                current.setActivities(tmp);
                 activity++;
             }
-
+            if (f.replaceDaySchedule(current, group, answerDay - 1)) {
+                title("Sucessfully Created New Schedule");
+                print(current.toString());
+                enterToExit();
+            } else {
+                actionFailed();
+            }
         } else {
             actionFailed();
         }
