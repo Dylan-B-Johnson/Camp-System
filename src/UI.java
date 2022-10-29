@@ -36,7 +36,6 @@ public class UI {
                         switch (options(new String[] { "View Schedule", "View Group", "Export Schedule",
                                 "Export Week Vital Info" })) {
                             case 1:
-                                // TODO: Update to allow viewing of current or next scheduled week
                                 viewSchedule();
                                 break;
                             case 2:
@@ -652,22 +651,52 @@ public class UI {
     }
 
     private static void viewSchedule() {
-        while (true) {
-            title("View Schedule");
-            int answer = options(f.nextWeek());
-            if (answer != -1) {
-                String schedule = f.getDaySchedule(answer - 1, f.getUser()).toString();
-                if (schedule != null) {
-                    print(schedule);
-                } else {
+            ArrayList<Week> nextWeek = f.getNextScheduledWeek();
+            Week selectedWeek = null;
+            switch (nextWeek.size()) {
+                case 0:
                     title("ERROR");
-                    print("You are not scheduled for this week.");
-                }
-                enterToExit();
-                break;
-
+                    print("You are not scheduled for any future weeks.");
+                    enterToExit();
+                    return;
+                case 1:
+                    selectedWeek = nextWeek.get(0);
+                    break;
+                case 2:
+                    while (true) {
+                        title("Select Week to View");
+                        String[] options = new String[2];
+                        options[0] = nextWeek.get(0).toString();
+                        options[1] = nextWeek.get(1).toString();
+                        int answer = options(options);
+                        if (answer != -1) {
+                            selectedWeek = nextWeek.get(answer - 1);
+                            break;
+                        }
+                    }
             }
-        }
+            if (selectedWeek == null) {
+                // if this occurs then there is a bug (probably in f.getNextScheduledWeek())
+                actionFailed();
+                return;
+            }
+            int answer = options(f.weekDays(selectedWeek));
+            Group group = null;
+            for (Group i : selectedWeek.getGroups()) {
+                if (i.getCounselor().getFirstName().equals(f.getUser().getFirstName()) &&
+                        i.getCounselor().getLastName().equals(f.getUser().getLastName())) {
+                    group = i;
+                }
+            }
+            if(group==null){
+                actionFailed();
+                return;
+            }
+            if (answer != -1) {
+                title("View Schedule");
+                print(group.getSchedule().get(answer-1).toString());
+                enterToExit();
+            }
     }
 
     private static void viewGroup() {

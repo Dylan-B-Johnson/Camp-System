@@ -101,10 +101,6 @@ public class Facade {
         return null;
     }
 
-    public void quitAndSave() {
-
-    }
-
     public void exportSchedule(DaySchedule daySchedule) {
         ArrayList<String> output = new ArrayList<>();
 
@@ -370,6 +366,11 @@ public class Facade {
         // medical information. Make sure this is a good sized list."
         // we need to discuss where to save the file
         return false;
+    }
+
+    public void saveAndQuit() {
+        //Save all objects to their appropriate JSONs
+        System.exit(0);
     }
 
 }
