@@ -311,6 +311,8 @@ public class Facade {
         // returns only the next scheduled week if user is not scheduled for the current
         // week
         // returns both the current week, followed by the next scheduled week if the
+        // returns an empty ArrayList<Week> if the counselor is not scheduled for a future or current week
+        // (does not return null)
         // counseler is scheduled for the current week
         // (only called if user is a Counselor)
         return null;
@@ -349,19 +351,23 @@ public class Facade {
     }
 
     public boolean exportSchedule(Group group, String filename) {
+        //filename param has no extension 
         // saves the group's week schedule as a well-formatted text file with the
         // specified name
         // "showing a grid of what they will be doing at each day and time. For each
         // activity it also indicates where it is located."
+        // we need to discuss where to save the file
         return false;
     }
 
     public boolean exportVitalInfo(Group group, String filename) {
+        //filename param has no extension 
         // saves the group's vital info as a well-formatted text file with the specified
         // name
         // " list of next weeks vital information, this will generate a beautifully
         // formatted report of all his campers allergies, emergency contacts, and
         // medical information. Make sure this is a good sized list."
+        // we need to discuss where to save the file
         return false;
     }
 

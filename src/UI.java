@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Scanner;
 
+import javax.lang.model.type.NullType;
+
 public class UI {
     private static Facade f = new Facade();
     private static final String PCP = "primary care physician";
@@ -256,7 +258,6 @@ public class UI {
         } else {
             actionFailed();
         }
-
     }
 
     private static void viewScheduleDirector() {
@@ -268,7 +269,50 @@ public class UI {
     }
 
     private static void exportSchedule() {
-
+        ArrayList<Week> nextWeek = f.getNextScheduledWeek();
+        Week selectedWeek = null;
+        switch (nextWeek.size()) {
+            case 0:
+                title("ERROR");
+                print("You are not scheduled for any future weeks.");
+                enterToExit();
+                return;
+            case 1:
+                selectedWeek=nextWeek.get(0);
+                break;
+            case 2:
+                while (true) {
+                    title("Select Week to Export");
+                    String[] options = new String[2];
+                    options[0] = nextWeek.get(0).toString();
+                    options[1] = nextWeek.get(1).toString();
+                    int answer = options(options);
+                    if (answer != -1) {
+                        selectedWeek=nextWeek.get(answer-1);
+                        break;
+                    }
+                }
+        }
+        if (selectedWeek==null){
+            //if this occurs then there is a bug (probably in f.getNextScheduledWeek())
+            actionFailed();
+            return;
+        }
+        title("Export Schedule");
+        String filename = input("Please enter the name of the file to export your schedule as (do not include a file extension):");
+        Group group = null;
+        for (Group i : selectedWeek.getGroups()){
+            if (i.getCounselor().getFirstName().equals(f.getUser().getFirstName()) && 
+            i.getCounselor().getLastName().equals(f.getUser().getLastName())){
+                group = i;
+            }
+        }
+        if (group==null || !(f.exportSchedule(group, filename))){
+            actionFailed();
+            return;
+        }
+        print("Sucessfully exported the schedule.");
+        enterToExit();
     }
 
     private static void actionFailed() {
@@ -282,7 +326,7 @@ public class UI {
         String[] weeks = f.getStringWeeksAvailableForRegistration();
         int answerWeek = options(weeks);
         if (answerWeek != -1) {
-            String[] camperOptions = f.getCamperStrings(f.getWeeksAvailableForRegistration().get(answerWeek));
+            String[] camperOptions = f.getCamperStrings(f.getWeeksAvailableForRegistration().get(answerWeek - 1));
             if (camperOptions.length == 0) {
                 title("ERROR");
                 print("You have not added any campers that will be in the appropriate age range for the selected week.\n"
@@ -293,13 +337,13 @@ public class UI {
                 return;
             } else if (camperOptions.length == 1) {
                 Camper camper = f
-                        .getCampersElligableForRegistration(f.getWeeksAvailableForRegistration().get(answerWeek))
+                        .getCampersElligableForRegistration(f.getWeeksAvailableForRegistration().get(answerWeek - 1))
                         .get(0);
-                if (f.registerCamper(camper.getId(), f.getWeeksAvailableForRegistration().get(answerWeek))) {
+                if (f.registerCamper(camper.getId(), f.getWeeksAvailableForRegistration().get(answerWeek - 1))) {
                     title("Registration Complete");
                     System.out.printf("Registering "
                             + camper.getFirstName()
-                            + "\nFor the week:\n" + weeks[answerWeek] + "\nWill cost $%2f",
+                            + "\nFor the week:\n" + weeks[answerWeek - 1] + "\nWill cost $%2f",
 
                             f.getCostOfRegistration());
                     double discount = f.getDiscoutOnRegistration();
@@ -310,7 +354,7 @@ public class UI {
                     return;
                 } else {
                     title("ERROR");
-                    print("We could not register " + camper.getFirstName() + " for the week " + weeks[answerWeek]
+                    print("We could not register " + camper.getFirstName() + " for the week " + weeks[answerWeek - 1]
                             + ".\n(" + camper.getFirstName()
                             + " is your only camper elligable for registration).\nPlease try again.");
                     enterToExit();
@@ -322,12 +366,12 @@ public class UI {
                 int answerCamper = options(camperOptions);
                 if (answerCamper != -1) {
                     Camper camper = f.getCampersElligableForRegistration(
-                            f.getWeeksAvailableForRegistration().get(answerWeek)).get(answerCamper - 1);
-                    if (f.registerCamper(camper.getId(), f.getWeeksAvailableForRegistration().get(answerWeek))) {
+                            f.getWeeksAvailableForRegistration().get(answerWeek - 1)).get(answerCamper - 1);
+                    if (f.registerCamper(camper.getId(), f.getWeeksAvailableForRegistration().get(answerWeek - 1))) {
                         title("Registration Complete");
                         System.out.printf("Registering "
                                 + camper.getFirstName()
-                                + "\nFor the week:\n" + weeks[answerWeek] + "\nWill cost $%2f",
+                                + "\nFor the week:\n" + weeks[answerWeek - 1] + "\nWill cost $%2f",
 
                                 f.getCostOfRegistration());
                         double discount = f.getDiscoutOnRegistration();
