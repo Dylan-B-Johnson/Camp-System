@@ -197,24 +197,33 @@ public class UI {
     private static void editSchedule() {
         Week week = f.getAssociatedWeek(getScheduleDate());
         if (week != null) {
-            title("Select Day To Edit");
-            int answerDay = options(f.weekDays(week));
-            if (answerDay == -1) {
-                return;
+            int answerDay;
+            while (true) {
+                title("Select Day To Edit");
+                answerDay = options(f.weekDays(week));
+                if (answerDay != -1) {
+                    break;
+                }
             }
-            title("Select Group to Edit");
-            int answerCounselor = options(week.counselorsToString());
-            if (answerCounselor == -1) {
-                return;
+            int answerCounselor;
+            while (true) {
+                title("Select Group to Edit");
+                answerCounselor = options(week.counselorsToString());
+                if (answerCounselor != -1) {
+                    break;
+                }
             }
-            title("Edit Schedule");
-            print("You cannot schedule an activity for more than one group at the same time.\n" +
-                    "You also cannot schedule the same activity twice in one day.\n" +
-                    "If you would like to not face these restrictions, you can clear the schedules for this day now.");
-            print("(If you do, remember to go back and fill in the other group's schedules).");
-            int answer = options(new String[] { "Delete all schedules for this day", "Delete no schedules" });
-            if (answer == -1) {
-                return;
+            int answer;
+            while (true) {
+                title("Edit Schedule");
+                print("You cannot schedule an activity for more than one group at the same time.\n" +
+                        "You also cannot schedule the same activity twice in one day.\n" +
+                        "If you would like to not face these restrictions, you can clear the schedules for this day now.");
+                print("(If you do, remember to go back and fill in the other group's schedules).");
+                answer = options(new String[] { "Delete all schedules for this day", "Delete no schedules" });
+                if (answer != -1) {
+                    break;
+                }
             }
             if (answer == 1) {
                 f.clearSchedules(week, answerDay - 1);
@@ -262,7 +271,45 @@ public class UI {
     }
 
     private static void viewScheduleDirector() {
-
+        ArrayList<Week> weeks = f.getFutureOrCurrentWeeks();
+        if (weeks.size() == 0) {
+            title("ERROR");
+            print("There are no future or current camp week session to view the schedules for.");
+            enterToExit();
+            return;
+        }
+        String[] options = new String[weeks.size()];
+        for (int i = 0; i < weeks.size(); i++) {
+            options[i] = weeks.get(i).toString();
+        }
+        int answerWeek;
+        while (true) {
+            title("Select Week to View");
+            answerWeek = options(options);
+            if (answerWeek != -1) {
+                break;
+            }
+        }
+        Week week = weeks.get(answerWeek - 1);
+        int answerCounselor;
+        while (true) {
+            title("Select Group to View");
+            answerCounselor = options(week.counselorsToString());
+            if (answerCounselor != -1) {
+                break;
+            }
+        }
+        int answerDay;
+        while (true) {
+            title("Select Day to View");
+            answerDay = options(f.weekDays(week));
+            if (answerDay != -1) {
+                break;
+            }
+        }
+        title("View Schedule");
+        print(week.getGroups().get(answerCounselor - 1).getSchedule().get(answerDay).toString());
+        enterToExit();
     }
 
     private static void exportScheduleDirector() {
@@ -651,52 +698,52 @@ public class UI {
     }
 
     private static void viewSchedule() {
-            ArrayList<Week> nextWeek = f.getNextScheduledWeek();
-            Week selectedWeek = null;
-            switch (nextWeek.size()) {
-                case 0:
-                    title("ERROR");
-                    print("You are not scheduled for any future weeks.");
-                    enterToExit();
-                    return;
-                case 1:
-                    selectedWeek = nextWeek.get(0);
-                    break;
-                case 2:
-                    while (true) {
-                        title("Select Week to View");
-                        String[] options = new String[2];
-                        options[0] = nextWeek.get(0).toString();
-                        options[1] = nextWeek.get(1).toString();
-                        int answer = options(options);
-                        if (answer != -1) {
-                            selectedWeek = nextWeek.get(answer - 1);
-                            break;
-                        }
-                    }
-            }
-            if (selectedWeek == null) {
-                // if this occurs then there is a bug (probably in f.getNextScheduledWeek())
-                actionFailed();
-                return;
-            }
-            int answer = options(f.weekDays(selectedWeek));
-            Group group = null;
-            for (Group i : selectedWeek.getGroups()) {
-                if (i.getCounselor().getFirstName().equals(f.getUser().getFirstName()) &&
-                        i.getCounselor().getLastName().equals(f.getUser().getLastName())) {
-                    group = i;
-                }
-            }
-            if(group==null){
-                actionFailed();
-                return;
-            }
-            if (answer != -1) {
-                title("View Schedule");
-                print(group.getSchedule().get(answer-1).toString());
+        ArrayList<Week> nextWeek = f.getNextScheduledWeek();
+        Week selectedWeek = null;
+        switch (nextWeek.size()) {
+            case 0:
+                title("ERROR");
+                print("You are not scheduled for any future weeks.");
                 enterToExit();
+                return;
+            case 1:
+                selectedWeek = nextWeek.get(0);
+                break;
+            case 2:
+                while (true) {
+                    title("Select Week to View");
+                    String[] options = new String[2];
+                    options[0] = nextWeek.get(0).toString();
+                    options[1] = nextWeek.get(1).toString();
+                    int answer = options(options);
+                    if (answer != -1) {
+                        selectedWeek = nextWeek.get(answer - 1);
+                        break;
+                    }
+                }
+        }
+        if (selectedWeek == null) {
+            // if this occurs then there is a bug (probably in f.getNextScheduledWeek())
+            actionFailed();
+            return;
+        }
+        int answer = options(f.weekDays(selectedWeek));
+        Group group = null;
+        for (Group i : selectedWeek.getGroups()) {
+            if (i.getCounselor().getFirstName().equals(f.getUser().getFirstName()) &&
+                    i.getCounselor().getLastName().equals(f.getUser().getLastName())) {
+                group = i;
             }
+        }
+        if (group == null) {
+            actionFailed();
+            return;
+        }
+        if (answer != -1) {
+            title("View Schedule");
+            print(group.getSchedule().get(answer - 1).toString());
+            enterToExit();
+        }
     }
 
     private static void viewGroup() {
