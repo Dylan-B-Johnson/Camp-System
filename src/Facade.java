@@ -337,13 +337,24 @@ public class Facade {
     public boolean replaceDaySchedule(DaySchedule newSchedule, Group group, int day) {
         // replaces the specified group's day-th DaySchedule with newSchedule and
         // ensures it is saved properly
-        return false;
+        if (!DataWriter.createDaySchedule(newSchedule))
+            return false;
+        ArrayList<DaySchedule> schedules = group.getSchedule();
+        schedules.set(day, newSchedule);
+        group.setSchedule(schedules);
+        return DataWriter.updateGroup(group.getId(), group);
     }
 
     public void clearSchedules(Week week, int day) {
         // reinitializes all schedules for the specified day and week with an empty
         // DaySchedule arrayList
         // ensures that everything is saved properly
+        for (Group group : week.getGroups()) {
+            ArrayList<DaySchedule> updatedSchedule = group.getSchedule();
+            updatedSchedule.set(day, null);
+            group.setSchedule(updatedSchedule); // new ArrayList<DaySchedule>());
+            DataWriter.updateGroup(group.getId(), group);
+        }
     }
 
     public boolean exportSchedule(Group group, String filename) {
@@ -368,7 +379,7 @@ public class Facade {
     }
 
     public void saveAndQuit() {
-        //Save all objects to their appropriate JSONs
+        // Save all objects to their appropriate JSONs
         System.exit(0);
     }
 

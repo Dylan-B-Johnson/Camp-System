@@ -197,7 +197,6 @@ public class DataWriter {
                 counselorJsonObject.put(DataConstants.LASTNAME, counselor.getLastName());
                 counselorJsonObject.put(DataConstants.PASSWORD, counselor.getPassword());
                 counselorJsonObject.put(DataConstants.TYPEOFUSER, counselor.getTypeOfUser().toString());
-                counselorJsonObject.put(DataConstants.GROUP, counselor.getGroup().getId().toString());
                 counselorJsonObject.put(DataConstants.BIRTHDAY, counselor.getBirthday().toString());
                 JSONArray allergyJsonArray = new JSONArray();
                 for (String allergyString : counselor.getAllergies()) {

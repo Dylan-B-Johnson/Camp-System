@@ -231,7 +231,8 @@ public class DataReader {
                 for (Object scheduleObject : scheduleJsonArray) {
                     schedule.add(getDaySchedule(UUID.fromString((String) scheduleObject)));
                 }
-                groupList.put(id, new Group(id, campers, groupSize, schedule));
+                Counselor counselor = getCounselor(UUID.fromString((String) group.get(DataConstants.COUNSELOR)));
+                groupList.put(id, new Group(id, campers, groupSize, schedule, counselor));
             }
         } catch (Exception exception) {
             System.out.println(exception);
@@ -287,7 +288,7 @@ public class DataReader {
                         (String) pcp.get(DataConstants.RELATIONSHIP), (String) pcp.get(DataConstants.ADDRESS));
                 CampLocation campLocation = getCampLocation();
                 counselorList.put(id,
-                        new Counselor(group, allergies, birthday, email, firstName, lastName, password,
+                        new Counselor(allergies, birthday, email, firstName, lastName, password,
                                 campLocation, primaryEmergencyContact, secondaryEmergencyContact,
                                 primaryCarePhysician));
             }
