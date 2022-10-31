@@ -38,4 +38,10 @@ public class Director extends User {
         }
     }
 
+    public void giveWeekRandomSchedule(Week week){
+        for(Group group : week.getGroups()){
+            group.getRandomSchedule(week);;
+        }
+    }
+
 }

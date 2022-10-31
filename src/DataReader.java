@@ -96,11 +96,17 @@ public class DataReader {
                     Camper camper = getCamper(UUID.fromString(camperId));
                     campers.add(camper);
                 }
+                JSONObject contactInfo = (JSONObject) user.get(DataConstants.CONTACTINFO);
+                Contact contact = new Contact((String) contactInfo.get(DataConstants.FIRSTNAME),
+                        (String) contactInfo.get(DataConstants.LASTNAME), (String) contactInfo.get(DataConstants.EMAIL),
+                        (String) contactInfo.get(DataConstants.PHONENUMBER),
+                        (String) contactInfo.get(DataConstants.RELATIONSHIP),
+                        (String) contactInfo.get(DataConstants.ADDRESS));
                 customerList
                         .put(UUID.fromString(id),
                                 new Customer(UUID.fromString(id), email, firstName, lastName, password,
                                         getCampLocation(),
-                                        campers));
+                                        campers, contact));
             }
         } catch (Exception exception) {
             System.out.println(exception);
@@ -225,7 +231,8 @@ public class DataReader {
                 for (Object scheduleObject : scheduleJsonArray) {
                     schedule.add(getDaySchedule(UUID.fromString((String) scheduleObject)));
                 }
-                groupList.put(id, new Group(id, campers, groupSize, schedule));
+                Counselor counselor = getCounselor(UUID.fromString((String) group.get(DataConstants.COUNSELOR)));
+                groupList.put(id, new Group(id, campers, groupSize, schedule, counselor));
             }
         } catch (Exception exception) {
             System.out.println(exception);
@@ -263,7 +270,6 @@ public class DataReader {
                     allergies.add((String) allergy);
                 }
                 LocalDate birthday = LocalDate.parse((String) counselor.get(DataConstants.BIRTHDAY));
-                Group group = getGroup(UUID.fromString((String) counselor.get(DataConstants.GROUP)));
                 JSONObject pec = (JSONObject) counselor.get(DataConstants.PRIMARYEMERGENCYCONTACT);
                 Contact primaryEmergencyContact = new Contact((String) pec.get(DataConstants.FIRSTNAME),
                         (String) pec.get(DataConstants.LASTNAME), (String) pec.get(DataConstants.EMAIL),
@@ -281,7 +287,7 @@ public class DataReader {
                         (String) pcp.get(DataConstants.RELATIONSHIP), (String) pcp.get(DataConstants.ADDRESS));
                 CampLocation campLocation = getCampLocation();
                 counselorList.put(id,
-                        new Counselor(group, allergies, birthday, email, firstName, lastName, password,
+                        new Counselor(allergies, birthday, email, firstName, lastName, password,
                                 campLocation, primaryEmergencyContact, secondaryEmergencyContact,
                                 primaryCarePhysician));
             }
@@ -356,11 +362,12 @@ public class DataReader {
                 LocalDate startOfWeek = LocalDate.parse((String) weekJsonObject.get(DataConstants.STARTOFWEEK));
                 ArrayList<Group> groups = new ArrayList<>();
                 JSONArray groupArray = (JSONArray) weekJsonObject.get(DataConstants.GROUPS);
+                String theme = (String) weekJsonObject.get(DataConstants.THEME);
                 for (Object groupObject : groupArray) {
                     groups.add(getGroup(UUID.fromString((String) groupObject)));
                 }
                 CampLocation campLocation = getCampLocation();
-                weeksList.put(id, new Week(id, maxCampers, currentCampers, startOfWeek, groups, campLocation));
+                weeksList.put(id, new Week(id, maxCampers, currentCampers, startOfWeek, groups, campLocation, theme));
             }
         } catch (Exception exception) {
             System.out.println(exception);

@@ -8,11 +8,20 @@ public class Group {
     private ArrayList<Camper> campers;
     private int groupSize;
     private ArrayList<DaySchedule> schedule;
-    private static final int MAX_CAMPERS = 6;
+    private Counselor counselor;
+    public static final int MAX_CAMPERS = 8;
 
     public Group(UUID id, ArrayList<Camper> campers, int groupSize,
-            ArrayList<DaySchedule> schedule) {
+            ArrayList<DaySchedule> schedule, Counselor counselor) {
         this.id = id;
+        setCampers(campers);
+        setGroupSize(groupSize);
+        setSchedule(schedule);
+    }
+
+    public Group(ArrayList<Camper> campers, int groupSize,
+            ArrayList<DaySchedule> schedule, Counselor counselor) {
+        this.id = UUID.randomUUID();
         setCampers(campers);
         setGroupSize(groupSize);
         setSchedule(schedule);
@@ -27,12 +36,17 @@ public class Group {
     }
 
     public Counselor getCounselor() {
-        for (Counselor counselor : UserList.getCounselors()) {
-            if (counselor.getGroup().getId().compareTo(this.id) == 0) {
-                return counselor;
+        return this.counselor;
+    }
+
+    public boolean setCounselor(Counselor counselor, Week week) {
+        for (Group group : week.getGroups()) {
+            if (group.getCounselor().id.equals(counselor.getId())) {
+                return false;
             }
         }
-        return null;
+        this.counselor = counselor;
+        return true;
     }
 
     public void setSchedule(ArrayList<DaySchedule> schedule) {
@@ -62,6 +76,19 @@ public class Group {
         }
     }
 
+    public boolean canRegisterCamper() {
+        if (groupSize < MAX_CAMPERS) {
+            return true;
+        } else {
+            for (Camper aCamper : this.campers) {
+                if (aCamper == null) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     public void addCamper(Camper camper) {
         if (groupSize < MAX_CAMPERS) {
             campers.add(camper);
@@ -86,7 +113,8 @@ public class Group {
     }
 
     public String toString() {
-        return "\nMinimum age: " + this.minAge() +
+        return "Counselor: " + counselor.getFirstName() + " " + counselor.getLastName() +
+                "\nMinimum age: " + this.minAge() +
                 "\nMaximum age: " + this.maxAge() +
                 "\nCampers: " + this.campers.toString() +
                 "\nGroup size: " + groupSize +

@@ -5,19 +5,17 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 public class Counselor extends User {
-    private Group group;
     private ArrayList<String> allergies;
     private LocalDate birthday;
     private Contact primaryEmergencyContact;
     private Contact secondaryEmergencyContact;
     private Contact primaryCarePhysician;
 
-    public Counselor(Group group, ArrayList<String> allergies, LocalDate birthday, String email, String firstName,
+    public Counselor(ArrayList<String> allergies, LocalDate birthday, String email, String firstName,
             String lastName, String password,
             CampLocation campLocation, Contact primaryEmergencyContact, Contact secondaryEmergencyContact,
             Contact primaryCarePhysician) {
         super(email, firstName, lastName, password, campLocation, TypeOfUser.COUNSELOR);
-        this.group = group;
         this.allergies = allergies;
         this.birthday = birthday;
         this.primaryEmergencyContact = primaryEmergencyContact;
@@ -25,27 +23,16 @@ public class Counselor extends User {
         this.primaryCarePhysician = primaryCarePhysician;
     }
 
-    public Counselor(UUID id, Group group, ArrayList<String> allergies, LocalDate birthday, String email,
+    public Counselor(UUID id, ArrayList<String> allergies, LocalDate birthday, String email,
             String firstName, String lastName, String password,
             CampLocation campLocation, Contact primaryEmergencyContact, Contact secondaryEmergencyContact,
             Contact primaryCarePhysician) {
         super(id, email, firstName, lastName, password, campLocation, TypeOfUser.COUNSELOR);
-        this.group = group;
         this.allergies = allergies;
         this.birthday = birthday;
         this.primaryEmergencyContact = primaryEmergencyContact;
         this.secondaryEmergencyContact = secondaryEmergencyContact;
         this.primaryCarePhysician = primaryCarePhysician;
-    }
-
-    public void setGroup(Group group) {
-        if (group != null) {
-            this.group = group;
-        }
-    }
-
-    public Group getGroup() {
-        return this.group;
     }
 
     public void setAllergies(ArrayList<String> allergies) {

@@ -9,10 +9,6 @@ import org.json.simple.JSONObject;
 
 public class DataWriter {
 
-    public static void main(String[] args) {
-        saveGroups(DataReader.getGroups());
-    }
-
     public static boolean saveCustomers(HashMap<UUID, Customer> customers) {
         DataReader.setDirtyFlag(DataReader.CUSTOMERSDIRTY);
         try {
@@ -32,6 +28,14 @@ public class DataWriter {
                     campersJsonArray.add(camper.getId().toString());
                 }
                 customerJsonObject.put(DataConstants.CAMPERS, campersJsonArray);
+                JSONObject contact = new JSONObject();
+                contact.put(DataConstants.EMAIL, customer.getContactInfo().getEmail());
+                contact.put(DataConstants.FIRSTNAME, customer.getContactInfo().getFirstName());
+                contact.put(DataConstants.LASTNAME, customer.getContactInfo().getLastName());
+                contact.put(DataConstants.PHONENUMBER, customer.getContactInfo().getPhoneNum());
+                contact.put(DataConstants.RELATIONSHIP, customer.getContactInfo().getRelationship());
+                contact.put(DataConstants.ADDRESS, customer.getContactInfo().getAddress());
+                customerJsonObject.put(DataConstants.PRIMARYEMERGENCYCONTACT, contact);
                 customersJsonArray.add(customerJsonObject);
             }
             file.write(customersJsonArray.toJSONString());
@@ -124,6 +128,7 @@ public class DataWriter {
                     groupJsonArray.add(group.getId().toString());
                 }
                 weekJsonObject.put(DataConstants.GROUPS, groupJsonArray);
+                weekJsonObject.put(DataConstants.THEME, week.getTheme());
                 weeksJsonArray.add(weekJsonObject);
             }
             file.write(weeksJsonArray.toJSONString());
@@ -192,7 +197,6 @@ public class DataWriter {
                 counselorJsonObject.put(DataConstants.LASTNAME, counselor.getLastName());
                 counselorJsonObject.put(DataConstants.PASSWORD, counselor.getPassword());
                 counselorJsonObject.put(DataConstants.TYPEOFUSER, counselor.getTypeOfUser().toString());
-                counselorJsonObject.put(DataConstants.GROUP, counselor.getGroup().getId().toString());
                 counselorJsonObject.put(DataConstants.BIRTHDAY, counselor.getBirthday().toString());
                 JSONArray allergyJsonArray = new JSONArray();
                 for (String allergyString : counselor.getAllergies()) {

@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.UUID;
+import java.io.FileWriter;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -9,6 +10,11 @@ public class Facade {
 
     public Facade() {
 
+    }
+
+    public static void main(String[] args) {
+        Facade facade = new Facade();
+        facade.exportSchedule((Group) DataReader.getGroups().values().toArray()[0], "test");
     }
 
     public User getDirector() {
@@ -29,21 +35,27 @@ public class Facade {
         return null;
     }
 
-    public User signUpCustomer(String email, String password) {
-        if (UserList.emailAvailable(email)) {
-            User user = new Customer(email, null, null, password, getCampLocation(), null);
-            UserList.addUser(user);
-            setUser(user);
-        }
+    public User signUpCustomer(String firstName, String lastName, String email, String password, Contact self) {
+        if (!UserList.emailAvailable(email))
+            return null;
+        User user = new Customer(email, firstName, lastName, password, getCampLocation(), new ArrayList<Camper>(),
+                self);
+        UserList.addUser(user);
+        setUser(user);
         return user;
     }
 
-    public User signUpCounselor(String email, String password) {
-        if (UserList.emailAvailable(email)) {
-            User user = new Counselor(null, null, null, email, null, null, password, getCampLocation(), null, null, null);
-            UserList.addUser(user);
-            setUser(user);
-        }
+    public User signUpCounselor(String firstName, String lastName, String email, String password,
+            ArrayList<String> allergies, LocalDate birthday, Contact primaryEmergencyContact,
+            Contact secondaryEmergencyContact, Contact primaryCarePhysician) {
+        if (!UserList.emailAvailable(email))
+            return null;
+        User user = new Counselor(allergies, birthday, email, firstName, lastName, password, getCampLocation(),
+                primaryEmergencyContact,
+                secondaryEmergencyContact,
+                primaryCarePhysician);
+        UserList.addUser(user);
+        setUser(user);
         return user;
     }
 
@@ -73,20 +85,42 @@ public class Facade {
         return rtn;
     }
 
-    public double getCostOfRegistration() {
-        return -404;
-    }
-
-    public double getDiscoutOnRegistration() {
-        return -404;
-    }
-
     public ArrayList<Activity> getActivities() {
         return new ArrayList<Activity>(DataReader.getActivities().values());
     }
 
-    public void quitAndSave() {
+    public Group getFirstGroup(User user) {
+        for (Group group : WeekList.getCurrentWeek().getGroups()) {
+            if (group.getCounselor().getId().equals(user.getId())) {
+                return group;
+            }
+        }
+        for (Week week : WeekList.getFutureWeeks()) {
+            for (Group group : week.getGroups()) {
+                if (group.getCounselor().getId().equals(user.getId())) {
+                    return group;
+                }
+            }
+        }
+        return null;
+    }
 
+    public void exportSchedule(DaySchedule daySchedule) {
+        ArrayList<String> output = new ArrayList<>();
+
+        for (Activity activity : daySchedule.getCurrentAcitivities()) {
+            output.add(activity.toString());
+        }
+
+        try {
+            FileWriter file = new FileWriter(String.format("schedule_of_%s.txt", daySchedule.getDay().toString()));
+            for (String activityString : output) {
+                file.append(activityString);
+            }
+            file.close();
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
     }
 
     public ArrayList<Camper> getCamper(String firstName) {
@@ -136,9 +170,9 @@ public class Facade {
         return user;
     }
 
-    public boolean activityExists(String name){
-        for (Activity i : ActivitiesList.getInstance().getActivities()){
-            if (i.getName().equalsIgnoreCase(name)){
+    public boolean activityExists(String name) {
+        for (Activity i : ActivitiesList.getInstance().getActivities()) {
+            if (i.getName().equalsIgnoreCase(name)) {
                 return true;
             }
         }
@@ -169,13 +203,13 @@ public class Facade {
     }
 
     public boolean registerCamper(UUID id, Week week) {
-        if (week.canRegisterCamper()) {
-            Camper foundCamper = null;
-            for (Camper camper : UserList.getCampers()) {
-                if (camper.getId().equals(id)) {
-                    foundCamper = camper;
-                }
+        Camper foundCamper = null;
+        for (Camper camper : UserList.getCampers()) {
+            if (camper.getId().equals(id)) {
+                foundCamper = camper;
             }
+        }
+        if (week.canRegisterCamper(foundCamper)) {
             week.registerCamper(foundCamper);
             return true;
         }
@@ -209,6 +243,16 @@ public class Facade {
         return rtn;
     }
 
+    public String[] weekDays(Week week) {
+        String[] rtn = new String[7];
+        LocalDate date = week.getStartOfWeek();
+        for (int i = 0; i < rtn.length; i++) {
+            LocalDate plusDays = date.plusDays(i);
+            rtn[i] = (plusDays.format(DateTimeFormatter.ofPattern("E, LLL d, uuuu")));
+        }
+        return rtn;
+    }
+
     public ArrayList<Week> getFutureOrCurrentWeeks() {
         ArrayList<Week> futureOrCurrentWeeks = WeekList.getFutureWeeks();
         Week current = getCurrentWeek();
@@ -216,10 +260,6 @@ public class Facade {
             futureOrCurrentWeeks.add(current);
         }
         return futureOrCurrentWeeks;
-    }
-
-    public Group getGroup(User counselor) {
-        return ((Counselor) counselor).getGroup();
     }
 
     /**
@@ -244,6 +284,123 @@ public class Facade {
                 return i + suffixes[i % 10];
 
         }
+    }
+
+    public double getCostOfRegistration() {
+        return -404;
+    }
+
+    public double getDiscoutOnRegistration() {
+        return -404;
+    }
+
+    public boolean addRandomizedWeek(LocalDate start, String theme) {
+        return false;
+    }
+
+    public boolean isFutureOrCurrentDate(LocalDate date) {
+        return false;
+    }
+
+    public Week getAssociatedWeek(LocalDate dateContainedInWeek) {
+        return null;
+    }
+
+    public ArrayList<Week> getNextScheduledWeek() {
+        // returns the next week that the user is scheduled for
+        // returns only the next scheduled week if user is not scheduled for the current
+        // week
+        // returns both the current week, followed by the next scheduled week if the
+        // returns an empty ArrayList<Week> if the counselor is not scheduled for a
+        // future or current week
+        // (does not return null)
+        // counseler is scheduled for the current week
+        // (only called if user is a Counselor)
+        return null;
+    }
+
+    /**
+     * A method that returns a list of legal activities that could be added to the
+     * current DaySchedule at the specified time, ensuring multiple of the same
+     * activity will not be assigned to multiple groups at the same time or assigned
+     * twice in the current DaySchedule. Ignores group.getSchedule().get(day), as
+     * this will be overwritten with current.
+     * 
+     * @param group    The group whose schedule is being edited.
+     * @param current  The DaySchedule object that will be assigned to the group and
+     *                 day once it is filled with 6 valid activities. THIS IS NOT
+     *                 THE SAME as group.getSchedule().get(day).
+     * @param day      The day in question (0-6) from the start of the week
+     * @param activity The timeslot to get the legal sctivities for (0-5)
+     * @return A list of legal activities for day number day, group group, activity
+     *         number activity, and currently scheduled.
+     */
+    public ArrayList<Activity> getAvailableActivities(Group group, DaySchedule current, int day, int activity) {
+        return null;
+    }
+
+    public boolean replaceDaySchedule(DaySchedule newSchedule, Group group, int day) {
+        // replaces the specified group's day-th DaySchedule with newSchedule and
+        // ensures it is saved properly
+        if (!DataWriter.createDaySchedule(newSchedule))
+            return false;
+        ArrayList<DaySchedule> schedules = group.getSchedule();
+        schedules.set(day, newSchedule);
+        group.setSchedule(schedules);
+        return DataWriter.updateGroup(group.getId(), group);
+    }
+
+    public void clearSchedules(Week week, int day) {
+        // reinitializes all schedules for the specified day and week with an empty
+        // DaySchedule arrayList
+        // ensures that everything is saved properly
+        for (Group group : week.getGroups()) {
+            ArrayList<DaySchedule> updatedSchedule = group.getSchedule();
+            updatedSchedule.set(day, null);
+            group.setSchedule(updatedSchedule); // new ArrayList<DaySchedule>());
+            DataWriter.updateGroup(group.getId(), group);
+        }
+    }
+
+    public boolean exportSchedule(Group group, String filename) {
+        // filename param has no extension
+        // saves the group's week schedule as a well-formatted text file with the
+        // specified name
+        // "showing a grid of what they will be doing at each day and time. For each
+        // activity it also indicates where it is located."
+        // we need to discuss where to save the file
+        try {
+            FileWriter fileWriter = new FileWriter(filename);
+            int day = 1;
+            for (DaySchedule daySchedule : group.getSchedule()) {
+                fileWriter.append(String.format("Day %d\n", day++));
+                for (Activity activity : daySchedule.getActivities()) {
+                    fileWriter.append(String.format("%s\t|\t%s\t|\t%s\n", activity.getName(), activity.getLocation(),
+                            activity.getDescription()));
+                }
+                fileWriter.append("\n");
+            }
+            fileWriter.close();
+        } catch (Exception exception) {
+            System.out.println(exception);
+        }
+        return false;
+    }
+
+    public boolean exportVitalInfo(Group group, String filename) {
+        // filename param has no extension
+        // saves the group's vital info as a well-formatted text file with the specified
+        // name
+        // " list of next weeks vital information, this will generate a beautifully
+        // formatted report of all his campers allergies, emergency contacts, and
+        // medical information. Make sure this is a good sized list."
+        // we need to discuss where to save the file
+        return false;
+    }
+
+    public void saveAndQuit() {
+        // Save all objects to their appropriate JSONs
+        System.exit(0);
     }
 
 }

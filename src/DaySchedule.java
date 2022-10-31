@@ -11,7 +11,7 @@ public class DaySchedule {
     private ArrayList<Activity> currentActivities;
     private Week week;
     private LocalDate day;
-    private final int MAX_ACTIVITY = 6;
+    public static final int MAX_ACTIVITY = 6;
 
     public DaySchedule(ArrayList<Activity> currentActivities, Week week, LocalDate day) {
         this.id = UUID.randomUUID();
@@ -33,7 +33,7 @@ public class DaySchedule {
         Random random = new Random();
         for (int i = 0; i < 6; i++) {
             Activity nextActivity = activities.get(random.nextInt(activities.size()));
-            while (!verifyActivityAvailablility(nextActivity.getName(), i)) {
+            while (!verifyActivityAvailablility(nextActivity.getName(), i) || curActivities.contains(nextActivity)) {
                 nextActivity = activities.get(random.nextInt(activities.size()));
             }
             curActivities.set(i, nextActivity);
@@ -105,15 +105,35 @@ public class DaySchedule {
         return true;
     }
 
+    public void setActivities(ArrayList<Activity> activities){
+        if (activities!=null){
+            this.currentActivities=activities;
+        }
+    }
+
+    public ArrayList<Activity> getActivities(){
+        return this.currentActivities;
+    }
+
     public String toString() {
         return "Breakfast (6:00-6:30)" +
-                "\nActivity 1 (6:45-8:15): \n" + currentActivities.get(0) +
-                "\nActivity 2 (8:30-10:00): \n" + currentActivities.get(1) +
-                "\nActivity 3 (10:15-11:45): \n" + currentActivities.get(2) +
+                "\nActivity 1 (6:45-8:15): \n" + activitiesSafeGet(0) +
+                "\nActivity 2 (8:30-10:00): \n" + activitiesSafeGet(1) +
+                "\nActivity 3 (10:15-11:45): \n" + activitiesSafeGet(2) +
                 "\nLunch (12:00-12:30)" +
-                "\nActivity 4 (12:45-2:15): \n" + currentActivities.get(3) +
-                "\nActivity 5 (2:30-4:00): \n" + currentActivities.get(4) +
-                "\nActivity 6 (4:15-5:45): \n" + currentActivities.get(5) +
+                "\nActivity 4 (12:45-2:15): \n" + activitiesSafeGet(3) +
+                "\nActivity 5 (2:30-4:00): \n" + activitiesSafeGet(4) +
+                "\nActivity 6 (4:15-5:45): \n" + activitiesSafeGet(5) +
                 "\nDinner (6:00-6:30)";
+    }
+
+    public String activitiesSafeGet(int i) {
+        String rtn;
+        try {
+            rtn = "" + currentActivities.get(i);
+        } catch (Exception e) {
+            rtn = "None Scheduled";
+        }
+        return rtn;
     }
 }

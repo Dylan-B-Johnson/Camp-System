@@ -32,6 +32,8 @@ public class DataConstants {
     public static final String GROUP = "group";
     public static final String BIRTHDAY = "birthday";
     public static final String SCHEDULE = "schedule";
+    public static final String THEME = "theme";
+    public static final String CONTACTINFO = "contactInfo";
     public static final String CUSTOMERPATH = "data/customers.json";
     public static final String ACTIVITYPATH = "data/customers.json";
     public static final String WEEKPATH = "data/weeks.json";

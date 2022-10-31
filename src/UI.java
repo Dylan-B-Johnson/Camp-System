@@ -18,10 +18,15 @@ public class UI {
     private static void run() {
         while (true) {
             if (f.getUser() == null) {
-                if (welcomeScreen()) {
-                    login();
-                } else {
-                    createAccount();
+                switch (welcomeScreen()) {
+                    case 1:
+                        login();
+                        break;
+                    case 2:
+                        createCustomerAccount();
+                        break;
+                    case 3:
+                        createCounselorAccount();
                 }
             }
             if (f.getUser() != null) {
@@ -29,7 +34,8 @@ public class UI {
                 String[] options;
                 switch (f.getUser().getTypeOfUser()) {
                     case COUNSELOR:
-                        switch (options(new String[] { "View Schedule", "View Group", "Export Schedule" })) {
+                        switch (options(new String[] { "View Schedule", "View Group", "Export Schedule",
+                                "Export Week Vital Info" })) {
                             case 1:
                                 viewSchedule();
                                 break;
@@ -37,7 +43,10 @@ public class UI {
                                 viewGroup();
                                 break;
                             case 3:
-                                exportSchedule();
+                                exportSchedule(false);
+                                break;
+                            case 4:
+                                exportSchedule(true);
                         }
                         break;
                     case CUSTOMER:
@@ -61,10 +70,10 @@ public class UI {
                     case DIRECTOR:
                         if (currentOrFutureWeeks.size() == 0) {
                             options = new String[] { "Search Campers", "Search Counselors", "Add Activity",
-                                    "Add Week", "Edit Schedule", "View Schedule", "Export Schedule" };
+                                    "Add Camp Session Week", "Edit Schedule", "View Schedule", "Export Schedule" };
                         } else {
                             options = new String[] { "Search Campers", "Search Counselors", "Add Activity",
-                                    "Add Week" };
+                                    "Add Camp Session Week" };
                         }
                         switch (options(options)) {
                             case 1:
@@ -83,10 +92,10 @@ public class UI {
                                 editSchedule();
                                 break;
                             case 6:
-                                viewScheduleDirector();
+                                viewScheduleDirector(false);
                                 break;
                             case 7:
-                                exportScheduleDirector();
+                                viewScheduleDirector(false);
                         }
 
                 }
@@ -94,6 +103,28 @@ public class UI {
 
         }
 
+    }
+
+    private static void createCounselorAccount() {
+        title("Create Your Account");
+        String firstname = input("Please enter your first name: ");
+        String lastname = input("Please enter your last name: ");
+        ArrayList<String> allergies = getAllergiesCounselor();
+        LocalDate bday = getBirthdayCounselor();
+        title("Create Your Account");
+        print("Please enter your first name: ");
+        print(firstname);
+        print("Please enter your last name: ");
+        print(lastname);
+        Contact pec = getEmergencyContactCounselor("primary emergency contact");
+        Contact sec = getEmergencyContactCounselor("secondary emergency contact");
+        Contact pcp = getEmergencyContactCounselor(PCP);
+        f.setUser(f.signUpCounselor(firstname, lastname, input("Please enter your email address:"),
+                input("Please enter a password for your account:"), allergies, bday, pec, sec, pcp));
+        if (f.getUser() == null) {
+            title("ERROR");
+            input("Your email or password were invalid. Please try again.\n(Press enter to continue).");
+        }
     }
 
     private static void searchCampers() {
@@ -145,35 +176,232 @@ public class UI {
                 input("Please enter the location that the activity is performed:"),
                 input("Please enter a description for the activity:"))) {
             print("Activity sucessfully added.");
+            enterToExit();
         } else {
-            title("ERROR");
-            print("Something went wrong. Please try again.");
+            enterToExit();
         }
-        enterToExit();
+
     }
 
     private static void addWeek() {
-        title("Adding a Week");
-        String str = input("Please enter the week you would like to add [dd, MM, yyyy]");
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd, MM, yyyy");
-        LocalDate week = LocalDate.parse(str, dtf);
+        LocalDate date = getStartDate();
+        title("Add a Week");
+        if (f.addRandomizedWeek(date, input("Please enter the theme of the camp session week:"))) {
+            print("Camp session week sucessfully added.");
+            enterToExit();
+        } else {
+            actionFailed();
+        }
 
     }
 
     private static void editSchedule() {
-
+        Week week = f.getAssociatedWeek(getScheduleDate());
+        if (week != null) {
+            int answerDay;
+            while (true) {
+                title("Select Day To Edit");
+                answerDay = options(f.weekDays(week));
+                if (answerDay != -1) {
+                    break;
+                }
+            }
+            int answerCounselor;
+            while (true) {
+                title("Select Group to Edit");
+                answerCounselor = options(week.counselorsToString());
+                if (answerCounselor != -1) {
+                    break;
+                }
+            }
+            int answer;
+            while (true) {
+                title("Edit Schedule");
+                print("You cannot schedule an activity for more than one group at the same time.\n" +
+                        "You also cannot schedule the same activity twice in one day.\n" +
+                        "If you would like to not face these restrictions, you can clear the schedules for this day now.");
+                print("(If you do, remember to go back and fill in the other group's schedules).");
+                answer = options(new String[] { "Delete all schedules for this day", "Delete no schedules" });
+                if (answer != -1) {
+                    break;
+                }
+            }
+            if (answer == 1) {
+                f.clearSchedules(week, answerDay - 1);
+            }
+            Group group = week.getGroups().get(answerCounselor - 1);
+            DaySchedule oldSchedule = f.getDaySchedule(answerDay - 1,
+                    group.getCounselor());
+            DaySchedule current = new DaySchedule(new ArrayList<Activity>(), week, oldSchedule.getDay());
+            int activity = 1;
+            while (activity < DaySchedule.MAX_ACTIVITY) {
+                title("Select the " + activity + f.ordinal(activity) + " Activity");
+                ArrayList<Activity> legal = f.getAvailableActivities(group, current, answerDay - 1, activity - 1);
+                if (legal.size() == 0) {
+                    title("ERROR");
+                    print("There are no activities that are valid to be added as the " + activity + f.ordinal(activity)
+                            + " activity.");
+                    print("Try again, try clearing this day's schedule, or try adding more activities.");
+                    print("The schedule will be kept as it was.");
+                    enterToExit();
+                    return;
+                }
+                String[] legalString = new String[legal.size()];
+                for (int i = 0; i < legal.size(); i++) {
+                    legalString[i] = legal.get(i).getName();
+                }
+                int activityAnswer = options(legalString);
+                if (activityAnswer == -1) {
+                    continue;
+                }
+                ArrayList<Activity> tmp = current.getActivities();
+                tmp.add(legal.get(activityAnswer - 1));
+                current.setActivities(tmp);
+                activity++;
+            }
+            if (f.replaceDaySchedule(current, group, answerDay - 1)) {
+                title("Sucessfully Created New Schedule");
+                print(current.toString());
+                enterToExit();
+            } else {
+                actionFailed();
+            }
+        } else {
+            actionFailed();
+        }
     }
 
-    private static void viewScheduleDirector() {
-
+    private static void viewScheduleDirector(boolean exportInstead) {
+        ArrayList<Week> weeks = f.getFutureOrCurrentWeeks();
+        if (weeks.size() == 0) {
+            title("ERROR");
+            if (exportInstead) {
+                print("There are no future or current camp week sessions to export the schedule for.");
+            } else {
+                print("There are no future or current camp week sessions to view the schedules for.");
+            }
+            enterToExit();
+            return;
+        }
+        String[] options = new String[weeks.size()];
+        for (int i = 0; i < weeks.size(); i++) {
+            options[i] = weeks.get(i).toString();
+        }
+        int answerWeek;
+        while (true) {
+            if (exportInstead) {
+                title("Select Week to Export");
+            } else {
+                title("Select Week to View");
+            }
+            answerWeek = options(options);
+            if (answerWeek != -1) {
+                break;
+            }
+        }
+        Week week = weeks.get(answerWeek - 1);
+        int answerCounselor;
+        while (true) {
+            if (exportInstead) {
+                title("Select Group to Export");
+            } else {
+                title("Select Group to View");
+            }
+            answerCounselor = options(week.counselorsToString());
+            if (answerCounselor != -1) {
+                break;
+            }
+        }
+        if (exportInstead) {
+            title("Export Group Schedule");
+            String filename = input(
+                    "Please enter the name of the file to export the schedule as (do not include a file extension):");
+            if (f.exportSchedule(week.getGroups().get(answerCounselor - 1), filename)) {
+                print("Schedule sucessfully exported.");
+            } else {
+                actionFailed();
+            }
+        } else {
+            int answerDay;
+            while (true) {
+                title("Select Day to View");
+                answerDay = options(f.weekDays(week));
+                if (answerDay != -1) {
+                    break;
+                }
+            }
+            title("View Schedule");
+            print(week.getGroups().get(answerCounselor - 1).getSchedule().get(answerDay).toString());
+        }
+        enterToExit();
     }
 
-    private static void exportScheduleDirector() {
-
+    private static void exportSchedule(boolean vitalInfo) {
+        ArrayList<Week> nextWeek = f.getNextScheduledWeek();
+        Week selectedWeek = null;
+        switch (nextWeek.size()) {
+            case 0:
+                title("ERROR");
+                print("You are not scheduled for any future weeks.");
+                enterToExit();
+                return;
+            case 1:
+                selectedWeek = nextWeek.get(0);
+                break;
+            case 2:
+                while (true) {
+                    title("Select Week to Export");
+                    String[] options = new String[2];
+                    options[0] = nextWeek.get(0).toString();
+                    options[1] = nextWeek.get(1).toString();
+                    int answer = options(options);
+                    if (answer != -1) {
+                        selectedWeek = nextWeek.get(answer - 1);
+                        break;
+                    }
+                }
+        }
+        if (selectedWeek == null) {
+            // if this occurs then there is a bug (probably in f.getNextScheduledWeek())
+            actionFailed();
+            return;
+        }
+        if (vitalInfo) {
+            title("Export Week Vital Info");
+        } else {
+            title("Export Schedule");
+        }
+        String filename;
+        if (vitalInfo) {
+            filename = input(
+                    "Please enter the name of the file to export your week's vital info as (do not include a file extension):");
+        } else {
+            filename = input(
+                    "Please enter the name of the file to export your schedule as (do not include a file extension):");
+        }
+        Group group = null;
+        for (Group i : selectedWeek.getGroups()) {
+            if (i.getCounselor().getFirstName().equals(f.getUser().getFirstName()) &&
+                    i.getCounselor().getLastName().equals(f.getUser().getLastName())) {
+                group = i;
+            }
+        }
+        if (group == null || !(f.exportSchedule(group, filename))) {
+            actionFailed();
+            return;
+        }
+        if (vitalInfo) {
+            print("Sucessfully exported the week's vital info.");
+        } else {
+            print("Sucessfully exported the schedule.");
+        }
+        enterToExit();
     }
 
-    private static void exportSchedule() {
-
+    private static void actionFailed() {
+        title("ERROR");
+        print("Something went wrong. Please try again.");
+        enterToExit();
     }
 
     private static void registerACamper() {
@@ -181,7 +409,7 @@ public class UI {
         String[] weeks = f.getStringWeeksAvailableForRegistration();
         int answerWeek = options(weeks);
         if (answerWeek != -1) {
-            String[] camperOptions = f.getCamperStrings(f.getWeeksAvailableForRegistration().get(answerWeek));
+            String[] camperOptions = f.getCamperStrings(f.getWeeksAvailableForRegistration().get(answerWeek - 1));
             if (camperOptions.length == 0) {
                 title("ERROR");
                 print("You have not added any campers that will be in the appropriate age range for the selected week.\n"
@@ -192,13 +420,13 @@ public class UI {
                 return;
             } else if (camperOptions.length == 1) {
                 Camper camper = f
-                        .getCampersElligableForRegistration(f.getWeeksAvailableForRegistration().get(answerWeek))
+                        .getCampersElligableForRegistration(f.getWeeksAvailableForRegistration().get(answerWeek - 1))
                         .get(0);
-                if (f.registerCamper(camper.getId(), f.getWeeksAvailableForRegistration().get(answerWeek))) {
+                if (f.registerCamper(camper.getId(), f.getWeeksAvailableForRegistration().get(answerWeek - 1))) {
                     title("Registration Complete");
                     System.out.printf("Registering "
                             + camper.getFirstName()
-                            + "\nFor the week:\n" + weeks[answerWeek] + "\nWill cost $%2f",
+                            + "\nFor the week:\n" + weeks[answerWeek - 1] + "\nWill cost $%2f",
 
                             f.getCostOfRegistration());
                     double discount = f.getDiscoutOnRegistration();
@@ -209,7 +437,7 @@ public class UI {
                     return;
                 } else {
                     title("ERROR");
-                    print("We could not register " + camper.getFirstName() + " for the week " + weeks[answerWeek]
+                    print("We could not register " + camper.getFirstName() + " for the week " + weeks[answerWeek - 1]
                             + ".\n(" + camper.getFirstName()
                             + " is your only camper elligable for registration).\nPlease try again.");
                     enterToExit();
@@ -221,12 +449,12 @@ public class UI {
                 int answerCamper = options(camperOptions);
                 if (answerCamper != -1) {
                     Camper camper = f.getCampersElligableForRegistration(
-                            f.getWeeksAvailableForRegistration().get(answerWeek)).get(answerCamper - 1);
-                    if (f.registerCamper(camper.getId(), f.getWeeksAvailableForRegistration().get(answerWeek))) {
+                            f.getWeeksAvailableForRegistration().get(answerWeek - 1)).get(answerCamper - 1);
+                    if (f.registerCamper(camper.getId(), f.getWeeksAvailableForRegistration().get(answerWeek - 1))) {
                         title("Registration Complete");
                         System.out.printf("Registering "
                                 + camper.getFirstName()
-                                + "\nFor the week:\n" + weeks[answerWeek] + "\nWill cost $%2f",
+                                + "\nFor the week:\n" + weeks[answerWeek - 1] + "\nWill cost $%2f",
 
                                 f.getCostOfRegistration());
                         double discount = f.getDiscoutOnRegistration();
@@ -236,9 +464,7 @@ public class UI {
                         enterToExit();
                         return;
                     } else {
-                        title("ERROR");
-                        print("Something went wrong. Please try again.");
-                        enterToExit();
+                        actionFailed();
                         return;
                     }
                 }
@@ -272,6 +498,51 @@ public class UI {
         }
     }
 
+    private static ArrayList<String> getAllergiesCounselor() {
+        ArrayList<String> rtn = new ArrayList<String>();
+        int i = 1;
+        while (true) {
+            title("Allergies");
+            String answer = input("Please enter your " + f.ordinal(i)
+                    + " allergy:\n(To quit adding allergies enter \"q\").");
+            if (answer.equals("q") || answer.equals("quit")) {
+                return rtn;
+            }
+            rtn.add(answer);
+            i++;
+        }
+    }
+
+    private static LocalDate getBirthdayCounselor() {
+        while (true) {
+            title("Birthday");
+            int day, month, year;
+            try {
+                month = Integer.parseInt(input("Please enter the month of your birth:"));
+                if (month < 1 || month > 12) {
+                    title("ERROR");
+                    print("You did not enter an integer in the appropriate range (1-12).");
+                    enterToExit();
+                    continue;
+                }
+                day = Integer.parseInt(input("Please enter day of the month of your birth:"));
+                if (day < 1 || day > 31) {
+                    title("ERROR");
+                    print("You did not enter an integer in the appropriate range (1-31).");
+                    enterToExit();
+                    continue;
+                }
+                year = Integer.parseInt(input("Please enter the number of the month of your birth:"));
+                return LocalDate.of(year, month, day);
+            } catch (Exception e) {
+                title("ERROR");
+                print("You did not enter an integer.");
+                input("Enter anything to continue.");
+                continue;
+            }
+        }
+    }
+
     private static LocalDate getBirthday() {
         while (true) {
             title("Camper Birthday");
@@ -291,7 +562,7 @@ public class UI {
                     enterToExit();
                     continue;
                 }
-                year = Integer.parseInt(input("Please enter number of the month of your camper's birth:"));
+                year = Integer.parseInt(input("Please enter the year of your camper's birth:"));
                 if (year < Calendar.getInstance().get(Calendar.YEAR) - 19
                         || year >= Calendar.getInstance().get(Calendar.YEAR)) {
                     title("ERROR");
@@ -303,10 +574,109 @@ public class UI {
             } catch (Exception e) {
                 title("ERROR");
                 print("You did not enter an integer.");
-                enterToExit();
+                input("Enter anything to continue.");
                 continue;
             }
         }
+    }
+
+    private static LocalDate getScheduleDate() {
+        while (true) {
+            title("Day Schedule to Edit");
+            int day, month, year;
+            try {
+                month = Integer.parseInt(
+                        input("Please enter number of the month of the day schedule to edit:"));
+                if (month < 1 || month > 12) {
+                    title("ERROR");
+                    print("You did not enter an integer in the appropriate range (1-12).");
+                    enterToExit();
+                    continue;
+                }
+                day = Integer.parseInt(
+                        input("Please enter the day of the month of the day schedule to edit:"));
+                if (day < 1 || day > 31) {
+                    title("ERROR");
+                    print("You did not enter an integer in the appropriate range (1-31).");
+                    enterToExit();
+                    continue;
+                }
+                year = Integer.parseInt(input("Please enter the year of the day schedule to edit:"));
+                if (!f.isFutureOrCurrentDate(LocalDate.of(year, month, day))) {
+                    title("ERROR");
+                    print("You entered a date in the past.");
+                    enterToExit();
+                    continue;
+                }
+                return LocalDate.of(year, month, day);
+            } catch (Exception e) {
+                title("ERROR");
+                print("You did not enter an integer.");
+                input("Enter anything to continue.");
+                continue;
+            }
+        }
+    }
+
+    private static LocalDate getStartDate() {
+        while (true) {
+            title("Start of Camp Session Week");
+            int day, month, year;
+            try {
+                month = Integer.parseInt(
+                        input("Please enter number of the month of the start of the camp session week to add:"));
+                if (month < 1 || month > 12) {
+                    title("ERROR");
+                    print("You did not enter an integer in the appropriate range (1-12).");
+                    enterToExit();
+                    continue;
+                }
+                day = Integer.parseInt(
+                        input("Please enter the day of the month of the start of the camp session week to add:"));
+                if (day < 1 || day > 31) {
+                    title("ERROR");
+                    print("You did not enter an integer in the appropriate range (1-31).");
+                    enterToExit();
+                    continue;
+                }
+                year = Integer.parseInt(input("Please enter the year of the camp session week to add:"));
+                if (!f.isFutureOrCurrentDate(LocalDate.of(year, month, day))) {
+                    title("ERROR");
+                    print("You entered a date in the past.");
+                    enterToExit();
+                    continue;
+                }
+                return LocalDate.of(year, month, day);
+            } catch (Exception e) {
+                title("ERROR");
+                print("You did not enter an integer.");
+                input("Enter anything to continue.");
+                continue;
+            }
+        }
+    }
+
+    private static Contact getCustomerConctact() {
+        String phoneNumber = input("Please enter your phone number:");
+        String relationship = "Self";
+        String address = input("Please enter your address:");
+        return f.makeContact(f.getUser().getFirstName(), f.getUser().getLastName(), f.getUser().getEmail(), phoneNumber,
+                relationship, address);
+    }
+
+    private static Contact getEmergencyContactCounselor(String typeOfContact) {
+        String firstname = input("Please enter the first name of your " + typeOfContact + ":");
+        String lastname = input("Please enter the last name of your " + typeOfContact + ":");
+        String email = input("Please enter the email of your " + typeOfContact + ":");
+        String phoneNumber = input("Please enter the phone number of your " + typeOfContact + ":");
+        String relationship;
+        if (!typeOfContact.equals(PCP)) {
+            relationship = input("Please enter the relationship between you and your " + typeOfContact + ":");
+        } else {
+            relationship = "Primary Care Physician";
+        }
+        String address = input("Please enter the address of your " + typeOfContact + ":");
+        return f.makeContact(firstname, lastname, email, phoneNumber, relationship, address);
     }
 
     private static Contact getEmergencyContact(String typeOfContact) {
@@ -341,36 +711,65 @@ public class UI {
                 getEmergencyContact("primary emergency contact"),
                 getEmergencyContact("secondary emergency contact"), getEmergencyContact(PCP))) {
             print("Your camper has sucessfully been added!");
+            enterToExit();
         } else {
-            title("ERROR");
-            print("Something went wrong. Please try again.");
+            actionFailed();
         }
-        enterToExit();
     }
 
     private static void viewSchedule() {
-        while (true) {
-            title("View Schedule");
-            int answer = options(f.nextWeek());
-            if (answer != -1) {
-                String schedule = f.getDaySchedule(answer, f.getUser()).toString();
-                if (schedule != null) {
-                    print(schedule);
-                } else {
-                    title("ERROR");
-                    print("You are not scheduled for this week.");
-                }
+        ArrayList<Week> nextWeek = f.getNextScheduledWeek();
+        Week selectedWeek = null;
+        switch (nextWeek.size()) {
+            case 0:
+                title("ERROR");
+                print("You are not scheduled for any future weeks.");
                 enterToExit();
+                return;
+            case 1:
+                selectedWeek = nextWeek.get(0);
                 break;
-
+            case 2:
+                while (true) {
+                    title("Select Week to View");
+                    String[] options = new String[2];
+                    options[0] = nextWeek.get(0).toString();
+                    options[1] = nextWeek.get(1).toString();
+                    int answer = options(options);
+                    if (answer != -1) {
+                        selectedWeek = nextWeek.get(answer - 1);
+                        break;
+                    }
+                }
+        }
+        if (selectedWeek == null) {
+            // if this occurs then there is a bug (probably in f.getNextScheduledWeek())
+            actionFailed();
+            return;
+        }
+        int answer = options(f.weekDays(selectedWeek));
+        Group group = null;
+        for (Group i : selectedWeek.getGroups()) {
+            if (i.getCounselor().getFirstName().equals(f.getUser().getFirstName()) &&
+                    i.getCounselor().getLastName().equals(f.getUser().getLastName())) {
+                group = i;
             }
+        }
+        if (group == null) {
+            actionFailed();
+            return;
+        }
+        if (answer != -1) {
+            title("View Schedule");
+            print(group.getSchedule().get(answer - 1).toString());
+            enterToExit();
         }
     }
 
     private static void viewGroup() {
         title("View Group");
         int i = 1;
-        for (Camper camper : f.getGroup(f.getUser()).getCampers()) {
+        for (Camper camper : f.getFirstGroup(f.getUser()).getCampers()) {
             print("\nCamper " + i + ":");
             print(camper.toString());
             i++;
@@ -378,7 +777,7 @@ public class UI {
         enterToExit();
     }
 
-    private static boolean welcomeScreen() {
+    private static int welcomeScreen() {
         while (true) {
             title("Welcome to " + f.getCampLocation().getName());
             print("Located at " + f.getCampLocation().getLocation() + ", and managed by "
@@ -389,24 +788,25 @@ public class UI {
                 print("- " + i.getName());
             }
             print("");
-            switch (options(new String[] { "Login", "Create Account" })) {
-                case 1:
-                    return true;
-                case 2:
-                    return false;
-            }
-
+            return options(new String[] { "Login", "Create Customer Account", "Create Counselor Account" });
         }
 
     }
 
-    private static void createAccount() {
+    private static void createCustomerAccount() {
         title("Create Your Account");
-        f.setUser(f.signUp(input("Please enter your email address:"),
-                input("Please enter a password for your account:")));
+        f.setUser(f.signUpCustomer(input("Please enter your first name:"),
+                input("Please enter your last name:"),
+                input("Please enter your email:"),
+                input("Please enter your password:"),
+                getCustomerConctact()));
         if (f.getUser() == null) {
             title("ERROR");
             input("Your email or password were invalid. Please try again.\n(Press enter to continue).");
+        } else {
+            f.getUser().setFirstName(input("Please enter your first name:"));
+            f.getUser().setLastName(input("Please enter your last name:"));
+            ((Customer) f.getUser()).setContact(getCustomerConctact());
         }
     }
 

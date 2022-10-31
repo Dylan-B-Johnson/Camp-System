@@ -3,6 +3,7 @@
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.UUID;
 
 public class Week {
@@ -13,16 +14,31 @@ public class Week {
     private LocalDate startOfWeek;
     private ArrayList<Group> groups;
     private CampLocation campLocation;
+    public static final int NUM_GROUPS = 6;
     private String theme;
+    private int[] ageRange;
 
     public Week(UUID id, int maxCampers, int currentCampers, LocalDate startOfWeek, ArrayList<Group> groups,
-            CampLocation campLocation) {
+            CampLocation campLocation, String theme) {
         this.id = id;
         this.startOfWeek = startOfWeek;
         this.maxCampers = maxCampers;
         this.currentCampers = currentCampers;
         this.groups = groups;
         this.campLocation = campLocation;
+        int[] ageRange = { 8, 10, 12, 14, 16, 18 };
+        this.ageRange = ageRange;
+    }
+
+    public Week(int maxCampers, int currentCampers, LocalDate startOfWeek,
+            CampLocation campLocation, String theme) {
+        this.id = UUID.randomUUID();
+        this.startOfWeek = startOfWeek;
+        this.maxCampers = maxCampers;
+        this.currentCampers = currentCampers;
+        this.campLocation = campLocation;
+        int[] ageRange = { 8, 10, 12, 14, 16, 18 };
+        this.ageRange = ageRange;
     }
 
     public void setMaxCampers(int maxCampers) {
@@ -48,7 +64,7 @@ public class Week {
     }
 
     public int getMaxCampers() {
-        return this.maxCampers;
+        return NUM_GROUPS * Group.MAX_CAMPERS;
     }
 
     public void setCurrentCampers(int currentCampers) {
@@ -60,7 +76,15 @@ public class Week {
     }
 
     public int getCurrentCampers() {
-        return this.currentCampers;
+        int totalCampers = 0;
+        for (Group group : this.groups) {
+            for (Camper camper : group.getCampers()) {
+                if (camper != null) {
+                    totalCampers++;
+                }
+            }
+        }
+        return totalCampers;
     }
 
     public void setStartOfWeek(LocalDate startOfWeek) {
@@ -91,16 +115,24 @@ public class Week {
         return this.campLocation;
     }
 
-    public boolean canRegisterCamper() {
-        if (currentCampers < maxCampers) {
-            return true;
-        } else {
-            return false;
+    public boolean canRegisterCamper(Camper camper) {
+        for (Group group : this.groups) {
+            if (camper.getAge(this) <= this.ageRange[groups.indexOf(group)] && group.canRegisterCamper()) {
+                return true;
+            }
         }
+        return false;
     }
 
     public void registerCamper(Camper camper) {
-        currentCampers += 1;
+        boolean registered = false;
+        for (Group group : this.groups) {
+            if (camper.getAge(this) <= this.ageRange[groups.indexOf(group)] && group.canRegisterCamper()
+                    && !registered) {
+                group.addCamper(camper);
+                registered = true;
+            }
+        }
     }
 
     public boolean currentWeek() {
@@ -131,9 +163,31 @@ public class Week {
         return false;
     }
 
+    public ArrayList<Group> setUpGroups() {
+        Random rand = new Random();
+        ArrayList<Group> groups = new ArrayList<Group>();
+        for (int i = 0; i < 6; i++) {
+            groups.add(new Group(new ArrayList<Camper>(), 8, new ArrayList<DaySchedule>(), null));
+            boolean set = false;
+            while (!set) {
+                set = groups.get(i).setCounselor(
+                        UserList.getCounselors().get(rand.nextInt(UserList.getCounselors().size())), this);
+            }
+        }
+        return groups;
+    }
+
     public String toString() {
         return "\tStart of Week: " + this.startOfWeek.format(DateTimeFormatter.ofPattern("E, LLL d, uuuu"))
                 + "\n\tEnd of Week: "
                 + this.startOfWeek.plusDays(6).format(DateTimeFormatter.ofPattern("E, LLL d, uuuu"));
+    }
+
+    public String[] counselorsToString() {
+        String[] rtn = new String[groups.size()];
+        for (int i = 0; i < groups.size(); i++) {
+            rtn[i] = groups.get(i).getCounselor().getFirstName() + " " + groups.get(i).getCounselor().getLastName();
+        }
+        return rtn;
     }
 }
