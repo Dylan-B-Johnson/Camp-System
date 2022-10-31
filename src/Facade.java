@@ -307,8 +307,15 @@ public class Facade {
         return false;
     }
 
+    /**
+     * Checks if a date is in the past or not
+     * 
+     * @param date The date to determine if it's in the past or not
+     * @return True if the passed in date is the current date or a future date,
+     *         false otherwise
+     */
     public boolean isFutureOrCurrentDate(LocalDate date) {
-        return false;
+        return date.isAfter(LocalDate.now()) || date.isEqual(LocalDate.now());
     }
 
     public Week getAssociatedWeek(LocalDate dateContainedInWeek) {
