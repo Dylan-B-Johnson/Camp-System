@@ -251,6 +251,23 @@ public class Facade {
     }
 
     /**
+     * Gets the group from a week that the user (a counselor) belongs to
+     * 
+     * @param selectedWeek The week to search through
+     * @return The group the counselor is in
+     */
+    public Group getAssociatedGroup(Week selectedWeek) {
+        Group group = null;
+        for (Group i : selectedWeek.getGroups()) {
+            if (i.getCounselor().getFirstName().equals(getUser().getFirstName()) &&
+                    i.getCounselor().getLastName().equals(getUser().getLastName())) {
+                group = i;
+            }
+        }
+        return group;
+    }
+
+    /**
      * Gets all the future or current weeks
      * 
      * @return A list of all future or current weeks
