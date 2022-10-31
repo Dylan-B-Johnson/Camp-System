@@ -1,11 +1,14 @@
-// Copyright 2022 Row 3
-
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.UUID;
 
+/**
+ * A camper
+ * 
+ * @author Row 3
+ */
 public class Camper {
     private UUID id;
     private String firstName;
@@ -19,6 +22,21 @@ public class Camper {
     private String swimTestResult;
     private String relationshipToCustomer;
 
+    /**
+     * Creates a Camper given the following parameters, including ID
+     * 
+     * @param id
+     * @param firstName
+     * @param lastName
+     * @param allergies
+     * @param birthday
+     * @param primaryEmergencyContact
+     * @param secondaryEmergencyContact
+     * @param primaryCarePhysician
+     * @param pastEnrollment
+     * @param swimTestResult
+     * @param relationshipToCustomer
+     */
     public Camper(UUID id, String firstName, String lastName, ArrayList<String> allergies, LocalDate birthday,
             Contact primaryEmergencyContact, Contact secondaryEmergencyContact, Contact primaryCarePhysician,
             int pastEnrollment, String swimTestResult, String relationshipToCustomer) {
@@ -35,6 +53,20 @@ public class Camper {
         setRelationshipToCustomer(relationshipToCustomer);
     }
 
+    /**
+     * Creates a camper given the following parameters
+     * 
+     * @param firstName
+     * @param lastName
+     * @param allergies
+     * @param birthday
+     * @param primaryEmergencyContact
+     * @param secondaryEmergencyContact
+     * @param primaryCarePhysician
+     * @param pastEnrollment
+     * @param swimTestResult
+     * @param relationshipToCustomer
+     */
     public Camper(String firstName, String lastName, ArrayList<String> allergies, LocalDate birthday,
             Contact primaryEmergencyContact, Contact secondaryEmergencyContact, Contact primaryCarePhysician,
             int pastEnrollment, String swimTestResult, String relationshipToCustomer) {
@@ -51,121 +83,248 @@ public class Camper {
         setRelationshipToCustomer(relationshipToCustomer);
     }
 
+    /**
+     * Passes through a UUID and if it is not empty, sets the ID to Camper
+     * 
+     * @param id
+     */
     public void setID(UUID id) {
         if (id != null) {
             this.id = id;
         }
     }
 
+    /**
+     * Gets the ID of the camper
+     * 
+     * @return ID of Camper
+     */
     public UUID getId() {
         return this.id;
     }
 
+    /**
+     * Gets the age of camper by finding the difference between their birthday and
+     * the start of the current week
+     * 
+     * @param week
+     * @return The age of the camper
+     */
     public int getAge(Week week) {
         Period diffPeriod = Period.between(birthday, week.getStartOfWeek());
         return diffPeriod.getYears();
     }
 
+    /**
+     * Passes through a String and if it is not empty, sets it as the Campers first
+     * name
+     * 
+     * @param firstName
+     */
     public void setFirstName(String firstName) {
         if (firstName != null) {
             this.firstName = firstName;
         }
     }
 
+    /**
+     * Gets the first name of the specified camper
+     * 
+     * @return First name of camper
+     */
     public String getFirstName() {
         return firstName;
     }
 
+    /**
+     * Passes through a String and if it is not empty, sets it as the Campers last
+     * name
+     * 
+     * @param lastName
+     */
     public void setLastName(String lastName) {
         if (lastName != null) {
             this.lastName = lastName;
         }
     }
 
+    /**
+     * Gets the last name of the specified camper
+     * 
+     * @return Last name of camper
+     */
     public String getLastName() {
         return lastName;
     }
 
+    /**
+     * Passes through a String ArrayList and if not empty, sets it to campers
+     * allergies
+     * 
+     * @param allergies
+     */
     public void setAllergies(ArrayList<String> allergies) {
         if (allergies != null) {
             this.allergies = allergies;
         }
     }
 
+    /**
+     * Gets the allergies for the specified camper
+     * 
+     * @return String ArrayList for camper
+     */
     public ArrayList<String> getAllergies() {
         return this.allergies;
     }
 
+    /**
+     * Passes through a LocalDate and if not empty, sets it as the Campers birthday
+     * 
+     * @param birthday
+     */
     public void setBirthday(LocalDate birthday) {
         if (birthday != null) {
             this.birthday = birthday;
         }
     }
 
+    /**
+     * Gets the birthday of the specified camper
+     * 
+     * @return Campers birthday
+     */
     public LocalDate getBirthday() {
         return this.birthday;
     }
 
+    /**
+     * Passes through a contact, if not empty sets it as campers primary emergency
+     * contact
+     * 
+     * @param primaryEmergencyContact
+     */
     public void setPrimaryEmergencyContact(Contact primaryEmergencyContact) {
         if (primaryEmergencyContact != null) {
             this.primaryEmergencyContact = primaryEmergencyContact;
         }
     }
 
+    /**
+     * Gets the specified campers primary emergency contact
+     * 
+     * @return Campers primary emergency contact
+     */
     public Contact getPrimaryEmergencyContact() {
         return this.primaryEmergencyContact;
     }
 
+    /**
+     * Passes a contact, if not empty sets as campers second emergency contact
+     * 
+     * @param secondaryEmergencyContact
+     */
     public void setSecondaryEmergencyContact(Contact secondaryEmergencyContact) {
         if (secondaryEmergencyContact != null) {
             this.secondaryEmergencyContact = secondaryEmergencyContact;
         }
     }
 
+    /**
+     * Gets the specified campers second emergency contact
+     * 
+     * @return Campers secondary emergency contact
+     */
     public Contact getSecondaryEmergencyContact() {
         return this.secondaryEmergencyContact;
     }
 
+    /**
+     * Passes through Contact, if not empty sets as campers PCP
+     * 
+     * @param primaryCarePhysician
+     */
     public void setPrimaryCarePhysician(Contact primaryCarePhysician) {
         if (primaryCarePhysician != null) {
             this.primaryCarePhysician = primaryCarePhysician;
         }
     }
 
+    /**
+     * Returns specified campers PCP
+     * 
+     * @return Campers PCP
+     */
     public Contact getPrimaryCarePhysician() {
         return this.primaryCarePhysician;
     }
 
+    /**
+     * Passes through an int, if greater than 0 sets as campers past enrollment
+     * 
+     * @param pastEnrollment
+     */
     public void setPastEnrollment(int pastEnrollment) {
         if (pastEnrollment >= 0) {
             this.pastEnrollment = pastEnrollment;
         }
     }
 
+    /**
+     * Gets specified campers past enrollment
+     * 
+     * @return Campers past enrollment
+     */
     public int getPastEnrollment() {
         return this.pastEnrollment;
     }
 
+    /**
+     * Passes through a String, if not empty sets as Campers swim test result
+     * 
+     * @param swimTestResult
+     */
     public void setSwimTestResult(String swimTestResult) {
         if (swimTestResult != null) {
             this.swimTestResult = swimTestResult;
         }
     }
 
+    /**
+     * Gets campers swim test result
+     * 
+     * @return Campers swim test result
+     */
     public String getSwimTestResult() {
         return this.swimTestResult;
     }
 
+    /**
+     * Passes through a string, if not empty sets the relationship to customer
+     * 
+     * @param relationshipToCustomer
+     */
     public void setRelationshipToCustomer(String relationshipToCustomer) {
         if (relationshipToCustomer != null) {
             this.relationshipToCustomer = relationshipToCustomer;
         }
     }
 
+    /**
+     * Gets the specified campers relationship to customer
+     * 
+     * @return Campers relationship to customer
+     */
     public String getRelationshipToCustomer() {
         return relationshipToCustomer;
     }
 
+    /**
+     * Creates a String representation of campers name, allergies, birthday, EC,
+     * PCP, and swim test
+     * 
+     * @return String representation of campers attributes
+     */
     public String toString() {
         String allergiesString = "";
         if (allergies.size() == 0) {
@@ -184,6 +343,11 @@ public class Camper {
                 "\nSwim Test Status: " + this.swimTestResult;
     }
 
+    /**
+     * Finds the specified campers parent and returns it
+     * 
+     * @return Campers parent
+     */
     public Customer getParent() {
         for (Customer customer : UserList.getCustomers()) {
             for (Camper camper : customer.getCampers()) {
