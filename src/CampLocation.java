@@ -7,8 +7,8 @@ public class CampLocation {
     private UUID id;
     private String name;
     private String location;
-    private final int MIN_CAMPER_AGE = 8;
-    private final int MAX_CAMPER_AGE = 13;
+    private final int MIN_CAMPER_AGE = 7;
+    private final int MAX_CAMPER_AGE = 18;
 
     public CampLocation(UUID id, String name, String location, double pricePerCamper) {
         this.id = id;

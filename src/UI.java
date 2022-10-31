@@ -14,6 +14,9 @@ public class UI {
         scan.close();
     }
 
+    /**
+     * The method containing the complete flow of UI screens for the program
+     */
     private static void run() {
         while (true) {
             if (f.getUser() == null) {
@@ -104,6 +107,9 @@ public class UI {
 
     }
 
+    /**
+     * The screen that allows a counselor (not logged in) to create their account
+     */
     private static void createCounselorAccount() {
         title("Create Your Account");
         String firstname = input("Please enter your first name: ");
@@ -126,6 +132,9 @@ public class UI {
         }
     }
 
+    /**
+     * The screen that allows the director to search for a camper
+     */
     private static void searchCampers() {
         title("Search for a Camper");
         ArrayList<Camper> results = f.getCamper(input("Please enter the first name of the camper:"));
@@ -146,6 +155,9 @@ public class UI {
         return;
     }
 
+    /**
+     * The screen that allows the director to search for a counselor
+     */
     private static void searchCounselors() {
         title("Search for a Counselor");
         ArrayList<User> results = f.getCounselor(input("Please enter the first name of the counselor:"));
@@ -165,6 +177,9 @@ public class UI {
         enterToExit();
     }
 
+    /**
+     * The screen that allows the director to add a new activity
+     */
     private static void addActivity() {
         title("Adding an Activity");
         String name = input("Please enter the name of the activity to add:");
@@ -182,6 +197,9 @@ public class UI {
 
     }
 
+    /**
+     * The screen that allows the director to edit add a camp week session
+     */
     private static void addWeek() {
         LocalDate date = getStartDate();
         title("Add a Week");
@@ -194,94 +212,140 @@ public class UI {
 
     }
 
-    private static void editSchedule() {
-        Week week = f.getAssociatedWeek(getScheduleDate());
-        if (week != null) {
-            int answerDay;
-            while (true) {
-                title("Select Day To Edit");
-                answerDay = options(f.weekDays(week));
-                if (answerDay != -1) {
-                    break;
-                }
+    /**
+     * Gives the director the option of clearing the schedule for a specific day
+     * 
+     * @param week      The week to clear the schedules for
+     * @param answerDay The day of the week to offer schedule-clearing for
+     */
+    private static void allowScheduleClearing(Week week, int answerDay) {
+        int answer;
+        while (true) {
+            title("Edit Schedule");
+            print("You cannot schedule an activity for more than one group at the same time.\n" +
+                    "You also cannot schedule the same activity twice in one day.\n" +
+                    "If you would like to not face these restrictions, you can clear the schedules for this day now.");
+            print("(If you do, remember to go back and fill in the other group's schedules).");
+            answer = options(new String[] { "Delete all schedules for this day", "Delete no schedules" });
+            if (answer != -1) {
+                break;
             }
-            int answerCounselor;
-            while (true) {
-                title("Select Group to Edit");
-                answerCounselor = options(week.counselorsToString());
-                if (answerCounselor != -1) {
-                    break;
-                }
+        }
+        if (answer == 1) {
+            f.clearSchedules(week, answerDay - 1);
+        }
+    }
+
+    /**
+     * Gets the director to select a day to edit the schedule for
+     * 
+     * @param week The week the director will edit the schedules for
+     * @return The index of the day of the week that the director will edit the
+     *         schedule for
+     */
+    private static int selectDayToEdit(Week week) {
+        int answerDay;
+        while (true) {
+            title("Select Day To Edit");
+            answerDay = options(f.weekDays(week));
+            if (answerDay != -1) {
+                break;
             }
-            int answer;
-            while (true) {
-                title("Edit Schedule");
-                print("You cannot schedule an activity for more than one group at the same time.\n" +
-                        "You also cannot schedule the same activity twice in one day.\n" +
-                        "If you would like to not face these restrictions, you can clear the schedules for this day now.");
-                print("(If you do, remember to go back and fill in the other group's schedules).");
-                answer = options(new String[] { "Delete all schedules for this day", "Delete no schedules" });
-                if (answer != -1) {
-                    break;
-                }
+        }
+        return answerDay;
+    }
+
+    /**
+     * Gets the director to select a group to edit their schedule
+     * 
+     * @param week The week the director would like to select a group from
+     * @return The index of the group the director would like to edit the schedule
+     *         for
+     */
+    private static int selectGroupToEdit(Week week) {
+        int answerCounselor;
+        while (true) {
+            title("Select Group to Edit");
+            answerCounselor = options(week.counselorsToString());
+            if (answerCounselor != -1) {
+                break;
             }
-            if (answer == 1) {
-                f.clearSchedules(week, answerDay - 1);
-            }
-            Group group = week.getGroups().get(answerCounselor - 1);
-            DaySchedule oldSchedule = f.getDaySchedule(answerDay - 1,
-                    group.getCounselor());
-            DaySchedule current = new DaySchedule(new ArrayList<Activity>(), week, oldSchedule.getDay());
-            int activity = 1;
-            while (activity < DaySchedule.MAX_ACTIVITY) {
-                title("Select the " + activity + f.ordinal(activity) + " Activity");
-                ArrayList<Activity> legal = f.getAvailableActivities(group, current, answerDay - 1, activity - 1);
-                if (legal.size() == 0) {
-                    title("ERROR");
-                    print("There are no activities that are valid to be added as the " + activity + f.ordinal(activity)
-                            + " activity.");
-                    print("Try again, try clearing this day's schedule, or try adding more activities.");
-                    print("The schedule will be kept as it was.");
-                    enterToExit();
-                    return;
-                }
-                String[] legalString = new String[legal.size()];
-                for (int i = 0; i < legal.size(); i++) {
-                    legalString[i] = legal.get(i).getName();
-                }
-                int activityAnswer = options(legalString);
-                if (activityAnswer == -1) {
-                    continue;
-                }
-                ArrayList<Activity> tmp = current.getActivities();
-                tmp.add(legal.get(activityAnswer - 1));
-                current.setActivities(tmp);
-                activity++;
-            }
-            if (f.replaceDaySchedule(current, group, answerDay - 1)) {
-                title("Sucessfully Created New Schedule");
-                print(current.toString());
+        }
+        return answerCounselor;
+    }
+
+    /**
+     * The loop that gets the director to add in all 6 activities to the selected
+     * day schedule
+     * 
+     * @param week      The week what the group belongs to
+     * @param group     The group whose schedule is being edited
+     * @param answerDay The day of the week that the director is editing
+     */
+    private static void addActivities(Week week, Group group, int answerDay) {
+        DaySchedule oldSchedule = f.getDaySchedule(answerDay - 1,
+                group.getCounselor());
+        DaySchedule current = new DaySchedule(new ArrayList<Activity>(), week, oldSchedule.getDay());
+        int activity = 1;
+        while (activity < DaySchedule.MAX_ACTIVITY) {
+            title("Select the " + activity + f.ordinal(activity) + " Activity");
+            ArrayList<Activity> legal = f.getAvailableActivities(group, current, answerDay - 1, activity - 1);
+            if (legal.size() == 0) {
+                title("ERROR");
+                print("There are no activities that are valid to be added as the " + activity + f.ordinal(activity)
+                        + " activity.");
+                print("Try again, try clearing this day's schedule, or try adding more activities.");
+                print("The schedule will be kept as it was.");
                 enterToExit();
-            } else {
-                actionFailed();
+                return;
             }
+            String[] legalString = new String[legal.size()];
+            for (int i = 0; i < legal.size(); i++) {
+                legalString[i] = legal.get(i).getName();
+            }
+            int activityAnswer = options(legalString);
+            if (activityAnswer == -1) {
+                continue;
+            }
+            ArrayList<Activity> tmp = current.getActivities();
+            tmp.add(legal.get(activityAnswer - 1));
+            current.setActivities(tmp);
+            activity++;
+        }
+        if (f.replaceDaySchedule(current, group, answerDay - 1)) {
+            title("Sucessfully Created New Schedule");
+            print(current.toString());
+            enterToExit();
         } else {
             actionFailed();
         }
     }
 
-    private static void viewScheduleDirector(boolean exportInstead) {
-        ArrayList<Week> weeks = f.getFutureOrCurrentWeeks();
-        if (weeks.size() == 0) {
-            title("ERROR");
-            if (exportInstead) {
-                print("There are no future or current camp week sessions to export the schedule for.");
-            } else {
-                print("There are no future or current camp week sessions to view the schedules for.");
-            }
-            enterToExit();
-            return;
+    /**
+     * The screen that lets the director edit a specific schedule
+     */
+    private static void editSchedule() {
+        Week week = f.getAssociatedWeek(getScheduleDate());
+        if (week != null) {
+            int answerCounselor = selectGroupToEdit(week);
+            int answerDay = selectDayToEdit(week);
+            allowScheduleClearing(week, answerDay);
+            Group group = week.getGroups().get(answerCounselor - 1);
+            addActivities(week, group, answerDay);
+        } else {
+            actionFailed();
         }
+    }
+
+    /**
+     * Gets the director to choose a week to view/export the schedule for
+     * 
+     * @param weeks         All future or current week
+     * @param exportInstead Whether or not to export the schedule instead of viewing
+     *                      it
+     * @return The week to view/export the schedule for
+     */
+    private static Week getWeekToViewDirector(ArrayList<Week> weeks, boolean exportInstead) {
         String[] options = new String[weeks.size()];
         for (int i = 0; i < weeks.size(); i++) {
             options[i] = weeks.get(i).toString();
@@ -298,7 +362,19 @@ public class UI {
                 break;
             }
         }
-        Week week = weeks.get(answerWeek - 1);
+        return weeks.get(answerWeek - 1);
+    }
+
+    /**
+     * Gets the director to select a group to view/export the schedule for from a
+     * specific week
+     * 
+     * @param week          The week to pick a group from
+     * @param exportInstead Whether or not to export the schedule instead of viewing
+     *                      it
+     * @return The index of the group to export/view the schedule for
+     */
+    private static int getGroupToView(Week week, boolean exportInstead) {
         int answerCounselor;
         while (true) {
             if (exportInstead) {
@@ -311,6 +387,47 @@ public class UI {
                 break;
             }
         }
+        return answerCounselor;
+    }
+
+    /**
+     * Gets the director to pick a day of the week to view the schedule for
+     * 
+     * @param week The week to view a schedule from,
+     * @return The number of day of the week the director will view the schedule for
+     */
+    private static int getViewScheduleDayDirector(Week week) {
+        int answerDay;
+        while (true) {
+            title("Select Day to View");
+            answerDay = options(f.weekDays(week));
+            if (answerDay != -1) {
+                break;
+            }
+        }
+        return answerDay;
+    }
+
+    /**
+     * The screen that lets the director view or export a schedule
+     * 
+     * @param exportInstead Whether or not to export the schedule instead of viewing
+     *                      it
+     */
+    private static void viewScheduleDirector(boolean exportInstead) {
+        ArrayList<Week> weeks = f.getFutureOrCurrentWeeks();
+        if (weeks.size() == 0) {
+            title("ERROR");
+            if (exportInstead) {
+                print("There are no future or current camp week sessions to export the schedule for.");
+            } else {
+                print("There are no future or current camp week sessions to view the schedules for.");
+            }
+            enterToExit();
+            return;
+        }
+        Week week = getWeekToViewDirector(weeks, exportInstead);
+        int answerCounselor = getGroupToView(week, exportInstead);
         if (exportInstead) {
             title("Export Group Schedule");
             String filename = input(
@@ -321,29 +438,24 @@ public class UI {
                 actionFailed();
             }
         } else {
-            int answerDay;
-            while (true) {
-                title("Select Day to View");
-                answerDay = options(f.weekDays(week));
-                if (answerDay != -1) {
-                    break;
-                }
-            }
+            int answerDay = getViewScheduleDayDirector(week);
             title("View Schedule");
             print(week.getGroups().get(answerCounselor - 1).getSchedule().get(answerDay).toString());
         }
         enterToExit();
     }
 
-    private static void exportSchedule(boolean vitalInfo) {
-        ArrayList<Week> nextWeek = f.getNextScheduledWeek();
+    /**
+     * Gets the counselor to select an upcomming schedule week for them to export
+     * the schedule or vital info for
+     * 
+     * @param nextWeek An arraylist of the current and/or next week the counselor is
+     *                 scheduled for
+     * @return The week that the counselor choose
+     */
+    private static Week getExportWeek(ArrayList<Week> nextWeek) {
         Week selectedWeek = null;
         switch (nextWeek.size()) {
-            case 0:
-                title("ERROR");
-                print("You are not scheduled for any future weeks.");
-                enterToExit();
-                return;
             case 1:
                 selectedWeek = nextWeek.get(0);
                 break;
@@ -360,6 +472,44 @@ public class UI {
                     }
                 }
         }
+        return selectedWeek;
+    }
+
+    /**
+     * Gets a counselor to enter in the filename for the schedule or week vital info
+     * they would like to export
+     * 
+     * @param vitalInfo
+     * @return The filename the couneslor entered
+     */
+    private static String getCounselorExportFilename(boolean vitalInfo) {
+        String filename;
+        if (vitalInfo) {
+            filename = input(
+                    "Please enter the name of the file to export your week's vital info as (do not include a file extension):");
+        } else {
+            filename = input(
+                    "Please enter the name of the file to export your schedule as (do not include a file extension):");
+        }
+        return filename;
+    }
+
+    /**
+     * The screen that allows a counselor to export a specific week's schedule they
+     * are scheduled for or to export the vital info for that week
+     * 
+     * @param vitalInfo Whether or not to export the week's schedule, or the week's
+     *                  vital info
+     */
+    private static void exportSchedule(boolean vitalInfo) {
+        ArrayList<Week> nextWeek = f.getNextScheduledWeek();
+        if (nextWeek.size() == 0) {
+            title("ERROR");
+            print("You are not scheduled for any future weeks.");
+            enterToExit();
+            return;
+        }
+        Week selectedWeek = getExportWeek(nextWeek);
         if (selectedWeek == null) {
             // if this occurs then there is a bug (probably in f.getNextScheduledWeek())
             actionFailed();
@@ -370,21 +520,8 @@ public class UI {
         } else {
             title("Export Schedule");
         }
-        String filename;
-        if (vitalInfo) {
-            filename = input(
-                    "Please enter the name of the file to export your week's vital info as (do not include a file extension):");
-        } else {
-            filename = input(
-                    "Please enter the name of the file to export your schedule as (do not include a file extension):");
-        }
-        Group group = null;
-        for (Group i : selectedWeek.getGroups()) {
-            if (i.getCounselor().getFirstName().equals(f.getUser().getFirstName()) &&
-                    i.getCounselor().getLastName().equals(f.getUser().getLastName())) {
-                group = i;
-            }
-        }
+        String filename = getCounselorExportFilename(vitalInfo);
+        Group group = f.getAssociatedGroup(selectedWeek);
         if (group == null || !(f.exportSchedule(group, filename))) {
             actionFailed();
             return;
@@ -397,30 +534,55 @@ public class UI {
         enterToExit();
     }
 
+    /**
+     * Informs the user that there was an error and their action failed
+     */
     private static void actionFailed() {
         title("ERROR");
         print("Something went wrong. Please try again.");
         enterToExit();
     }
 
-    private static void registerACamper() {
-        title("Select the Week to Register For");
-        String[] weeks = f.getStringWeeksAvailableForRegistration();
-        int answerWeek = options(weeks);
-        if (answerWeek != -1) {
-            String[] camperOptions = f.getCamperStrings(f.getWeeksAvailableForRegistration().get(answerWeek - 1));
-            if (camperOptions.length == 0) {
-                title("ERROR");
-                print("You have not added any campers that will be in the appropriate age range for the selected week.\n"
-                        +
-                        "(Between " + f.getCampLocation().getMinCamperAge() + " and "
-                        + f.getCampLocation().getMaxCamperAge() + " years old).");
-                enterToExit();
-                return;
-            } else if (camperOptions.length == 1) {
-                Camper camper = f
-                        .getCampersElligableForRegistration(f.getWeeksAvailableForRegistration().get(answerWeek - 1))
-                        .get(0);
+    /**
+     * Gets the customer to pick a week to register for
+     * 
+     * @param weeks The string representation of the weeks available for
+     *              registration
+     * @return The index of the week to register for (-2 if there are no weeks to
+     *         register for)
+     */
+    private static int pickRegistrationWeek(String[] weeks) {
+        int answerWeek = -1;
+        if (weeks.length == 0) {
+            title("ERROR");
+            print("There are no open weeks for registration. Please try again later or contact the camp.");
+            enterToExit();
+            answerWeek = -2;
+        }
+        while (answerWeek != -1) {
+            title("Select the Week to Register For");
+            answerWeek = options(weeks);
+        }
+        return answerWeek;
+    }
+
+    /**
+     * Gets the customer to finish the registration process
+     * 
+     * @param camperOptions A string prepresentation of the list of campers that the
+     *                      customer can register
+     * @param weeks         The string representation of the weeks available for
+     *                      registration
+     * @param answerWeek    The index of the week that the customer choose to
+     *                      register for
+     */
+    private static void pickCamperToRegister(String[] camperOptions, String[] weeks, int answerWeek) {
+        while (true) {
+            title("Select the Camper to Register");
+            int answerCamper = options(camperOptions);
+            if (answerCamper != -1) {
+                Camper camper = f.getCampersElligableForRegistration(
+                        f.getWeeksAvailableForRegistration().get(answerWeek - 1)).get(answerCamper - 1);
                 if (f.registerCamper(camper.getId(), f.getWeeksAvailableForRegistration().get(answerWeek - 1))) {
                     title("Registration Complete");
                     System.out.printf("Registering "
@@ -435,42 +597,63 @@ public class UI {
                     enterToExit();
                     return;
                 } else {
-                    title("ERROR");
-                    print("We could not register " + camper.getFirstName() + " for the week " + weeks[answerWeek - 1]
-                            + ".\n(" + camper.getFirstName()
-                            + " is your only camper elligable for registration).\nPlease try again.");
-                    enterToExit();
+                    actionFailed();
                     return;
-                }
-            }
-            while (true) {
-                title("Select the Camper to Register");
-                int answerCamper = options(camperOptions);
-                if (answerCamper != -1) {
-                    Camper camper = f.getCampersElligableForRegistration(
-                            f.getWeeksAvailableForRegistration().get(answerWeek - 1)).get(answerCamper - 1);
-                    if (f.registerCamper(camper.getId(), f.getWeeksAvailableForRegistration().get(answerWeek - 1))) {
-                        title("Registration Complete");
-                        System.out.printf("Registering "
-                                + camper.getFirstName()
-                                + "\nFor the week:\n" + weeks[answerWeek - 1] + "\nWill cost $%2f",
-
-                                f.getCostOfRegistration());
-                        double discount = f.getDiscoutOnRegistration();
-                        if (discount != 0) {
-                            System.out.printf("(Having applied a discount of $%2f).", discount);
-                        }
-                        enterToExit();
-                        return;
-                    } else {
-                        actionFailed();
-                        return;
-                    }
                 }
             }
         }
     }
 
+    /**
+     * The screen that allows a customer to register one of their campers
+     */
+    private static void registerACamper() {
+        String[] weeks = f.getStringWeeksAvailableForRegistration();
+        int answerWeek = pickRegistrationWeek(weeks);
+        if (answerWeek == -2) {
+            return;
+        }
+        String[] camperOptions = f.getCamperStrings(f.getWeeksAvailableForRegistration().get(answerWeek - 1));
+        if (camperOptions.length == 0) {
+            title("ERROR");
+            print("You have not added any campers that will be in the appropriate age range for the selected week.\n"
+                    +
+                    "(Between " + f.getCampLocation().getMinCamperAge() + " and "
+                    + f.getCampLocation().getMaxCamperAge() + " years old).");
+            enterToExit();
+            return;
+        } else if (camperOptions.length == 1) {
+            Camper camper = f
+                    .getCampersElligableForRegistration(f.getWeeksAvailableForRegistration().get(answerWeek - 1))
+                    .get(0);
+            if (f.registerCamper(camper.getId(), f.getWeeksAvailableForRegistration().get(answerWeek - 1))) {
+                title("Registration Complete");
+                System.out.printf("Registering "
+                        + camper.getFirstName()
+                        + "\nFor the week:\n" + weeks[answerWeek - 1] + "\nWill cost $%2f",
+
+                        f.getCostOfRegistration());
+                double discount = f.getDiscoutOnRegistration();
+                if (discount != 0) {
+                    System.out.printf("(Having applied a discount of $%2f).", discount);
+                }
+                enterToExit();
+                return;
+            } else {
+                title("ERROR");
+                print("We could not register " + camper.getFirstName() + " for the week " + weeks[answerWeek - 1]
+                        + ".\n(" + camper.getFirstName()
+                        + " is your only camper elligable for registration).\nPlease try again.");
+                enterToExit();
+                return;
+            }
+        }
+        pickCamperToRegister(camperOptions, weeks, answerWeek);
+    }
+
+    /**
+     * The screen that allows a customer to view their campers
+     */
     private static void viewYourCampers() {
         title("View Your Campers");
         int i = 1;
@@ -482,6 +665,11 @@ public class UI {
         enterToExit();
     }
 
+    /**
+     * Gets the customer to enter in the allergies of their camper
+     * 
+     * @return The list of allergies the customer entered
+     */
     private static ArrayList<String> getAllergies() {
         ArrayList<String> rtn = new ArrayList<String>();
         int i = 1;
@@ -497,6 +685,11 @@ public class UI {
         }
     }
 
+    /**
+     * Gets the counselor to enter in their allergies
+     * 
+     * @return The list of allergies the counselor entered
+     */
     private static ArrayList<String> getAllergiesCounselor() {
         ArrayList<String> rtn = new ArrayList<String>();
         int i = 1;
@@ -512,6 +705,10 @@ public class UI {
         }
     }
 
+    /**
+     * 
+     * @return
+     */
     private static LocalDate getBirthdayCounselor() {
         while (true) {
             title("Birthday");
@@ -542,6 +739,11 @@ public class UI {
         }
     }
 
+    /**
+     * Gets the date for a customer's camper's birthday
+     * 
+     * @return The date a customer's camper was born
+     */
     private static LocalDate getBirthday() {
         while (true) {
             title("Camper Birthday");
@@ -579,6 +781,11 @@ public class UI {
         }
     }
 
+    /**
+     * Gets the date for the schedule the director will edit
+     * 
+     * @return The date the director will edit the schedule for
+     */
     private static LocalDate getScheduleDate() {
         while (true) {
             title("Day Schedule to Edit");
@@ -617,6 +824,11 @@ public class UI {
         }
     }
 
+    /**
+     * Gets the director to pick a date for a new camp session week to add
+     * 
+     * @return The start date of adding a new camp session week
+     */
     private static LocalDate getStartDate() {
         while (true) {
             title("Start of Camp Session Week");
@@ -655,6 +867,11 @@ public class UI {
         }
     }
 
+    /**
+     * Gets the customer to enter in their contact info
+     * 
+     * @return The Contact object representing the customer
+     */
     private static Contact getCustomerConctact() {
         String phoneNumber = input("Please enter your phone number:");
         String relationship = "Self";
@@ -663,6 +880,13 @@ public class UI {
                 relationship, address);
     }
 
+    /**
+     * Get the counselor to enter in the contact info for one of their emergency
+     * contacts
+     * 
+     * @param typeOfContact The type of contact that the emergency contact is
+     * @return The Contact object representing the counselor's emergency contact
+     */
     private static Contact getEmergencyContactCounselor(String typeOfContact) {
         String firstname = input("Please enter the first name of your " + typeOfContact + ":");
         String lastname = input("Please enter the last name of your " + typeOfContact + ":");
@@ -678,6 +902,13 @@ public class UI {
         return f.makeContact(firstname, lastname, email, phoneNumber, relationship, address);
     }
 
+    /**
+     * Get the customer to enter in the contact info for one of their camper's
+     * emergency contacts
+     * 
+     * @param typeOfContact The type of contact that the emergency contact is
+     * @return The Contact object representing the camper's emergency contact
+     */
     private static Contact getEmergencyContact(String typeOfContact) {
         String firstname = input("Please enter the first name of your camper's " + typeOfContact + ":");
         String lastname = input("Please enter the last name of your camper's " + typeOfContact + ":");
@@ -693,6 +924,9 @@ public class UI {
         return f.makeContact(firstname, lastname, email, phoneNumber, relationship, address);
     }
 
+    /**
+     * The screen allowing a customer to add a camper to the system
+     */
     private static void addACamper() {
         title("Add a Camper");
         String firstname = input("Please enter your camper's first name: ");
@@ -716,7 +950,12 @@ public class UI {
         }
     }
 
-    private static void viewSchedule() {
+    /**
+     * Gets the counselor to select a week to view their schedule for
+     * 
+     * @return The week the counselor will view their schedule for
+     */
+    private static Week getSelectedWeekViewSchedule() {
         ArrayList<Week> nextWeek = f.getNextScheduledWeek();
         Week selectedWeek = null;
         switch (nextWeek.size()) {
@@ -724,7 +963,7 @@ public class UI {
                 title("ERROR");
                 print("You are not scheduled for any future weeks.");
                 enterToExit();
-                return;
+                return null;
             case 1:
                 selectedWeek = nextWeek.get(0);
                 break;
@@ -741,9 +980,15 @@ public class UI {
                     }
                 }
         }
+        return selectedWeek;
+    }
+
+    /**
+     * The screen that allows a counselor to view their schedule on a specific day
+     */
+    private static void viewSchedule() {
+        Week selectedWeek = getSelectedWeekViewSchedule();
         if (selectedWeek == null) {
-            // if this occurs then there is a bug (probably in f.getNextScheduledWeek())
-            actionFailed();
             return;
         }
         int answer = options(f.weekDays(selectedWeek));
@@ -765,6 +1010,9 @@ public class UI {
         }
     }
 
+    /**
+     * The screen that allow a counselor to view their group
+     */
     private static void viewGroup() {
         title("View Group");
         int i = 1;
@@ -776,6 +1024,14 @@ public class UI {
         enterToExit();
     }
 
+    /**
+     * The landing screen that allows any user to choose whether to login or create
+     * an account
+     * 
+     * @return 1 if the user would like to login, 2 if the user would like to
+     *         create a customer account, and 3 if the user would like to create a
+     *         counselor account
+     */
     private static int welcomeScreen() {
         while (true) {
             title("Welcome to " + f.getCampLocation().getName());
@@ -792,6 +1048,9 @@ public class UI {
 
     }
 
+    /**
+     * The screen that allows a user to create a customer account
+     */
     private static void createCustomerAccount() {
         title("Create Your Account");
         f.setUser(f.signUpCustomer(input("Please enter your first name:"),
@@ -809,6 +1068,9 @@ public class UI {
         }
     }
 
+    /**
+     * The screen that allows a user to login
+     */
     private static void login() {
         title("Login");
         f.setUser(f.login(input("Please enter your email address:"),
@@ -819,10 +1081,21 @@ public class UI {
         }
     }
 
+    /**
+     * A shorthand for printing to standard out
+     * 
+     * @param string The string to print
+     */
     private static void print(String string) {
         System.out.println(string);
     }
 
+    /**
+     * A shorthand for prompting user input to standard in
+     * 
+     * @param prompt The string to print to standard out to prompt the suer
+     * @return The next line from standard in after the output of the prompt
+     */
     private static String input(String prompt) {
         print(prompt);
         scan = new Scanner(System.in);
@@ -831,6 +1104,8 @@ public class UI {
     }
 
     /**
+     * A method to clear the console
+     * 
      * @author Code snipped derived from:
      *         https://www.javatpoint.com/how-to-clear-screen-in-java#Platform-Specific-Command
      *         Row 3 Claims no copywrite or authorship over this method
@@ -850,17 +1125,34 @@ public class UI {
 
     }
 
+    /**
+     * Informs the user that their response was not a vlaid option
+     * 
+     * @param answer The response the user gave
+     */
     private static void basicError(String answer) {
         title("ERROR");
         input("\"" + answer + "\" is not a valid option, please try again.\n(Press enter to continue).");
         cls();
     }
 
+    /**
+     * Titles a screen
+     * 
+     * @param title The title to give the screen
+     */
     private static void title(String title) {
         cls();
         print("***** " + title + " *****");
     }
 
+    /**
+     * A method that gets a user to choose one of a list of options
+     * 
+     * @param options The list of options the user can choose from
+     * @return -1 if the user did not provide a valid response. Otherwise, the index
+     *         + 1 of the option the user choose
+     */
     private static int options(String[] options) {
         String optionsString = "";
         for (int i = 0; i < options.length; i++) {
@@ -895,6 +1187,9 @@ public class UI {
         return optionNum;
     }
 
+    /**
+     * A short hand to stall the program until the user enters something
+     */
     public static void enterToExit() {
         input("Press enter to exit.");
     }

@@ -1,8 +1,10 @@
 import java.util.ArrayList;
 import java.util.UUID;
 import java.io.FileWriter;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAdjusters;
 
 public class Facade {
 
@@ -255,6 +257,23 @@ public class Facade {
     }
 
     /**
+     * Gets the group from a week that the user (a counselor) belongs to
+     * 
+     * @param selectedWeek The week to search through
+     * @return The group the counselor is in
+     */
+    public Group getAssociatedGroup(Week selectedWeek) {
+        Group group = null;
+        for (Group i : selectedWeek.getGroups()) {
+            if (i.getCounselor().getFirstName().equals(getUser().getFirstName()) &&
+                    i.getCounselor().getLastName().equals(getUser().getLastName())) {
+                group = i;
+            }
+        }
+        return group;
+    }
+
+    /**
      * Gets all the future or current weeks
      * 
      * @return A list of all future or current weeks
@@ -324,53 +343,22 @@ public class Facade {
         return date.isAfter(LocalDate.now()) || date.isEqual(LocalDate.now());
     }
 
-    public Week getAssociatedWeek(LocalDate dateContainedInWeek) {
-        return null;
-    }
-
-    public ArrayList<Week> getNextScheduledWeek() {
-        // returns the next week that the user is scheduled for
-        // returns only the next scheduled week if user is not scheduled for the current
-        // week
-        // returns both the current week, followed by the next scheduled week if the
-        // returns an empty ArrayList<Week> if the counselor is not scheduled for a
-        // future or current week
-        // (does not return null)
-        // counseler is scheduled for the current week
-        // (only called if user is a Counselor)
-        return null;
-    }
-
     /**
-     * A method that returns a list of legal activities that could be added to the
-     * current DaySchedule at the specified time, ensuring multiple of the same
-     * activity will not be assigned to multiple groups at the same time or assigned
-     * twice in the current DaySchedule. Ignores group.getSchedule().get(day), as
-     * this will be overwritten with current.
+     * Gets the camp week session that contains the provided date
      * 
-     * @param group    The group whose schedule is being edited.
-     * @param current  The DaySchedule object that will be assigned to the group and
-     *                 day once it is filled with 6 valid activities. THIS IS NOT
-     *                 THE SAME as group.getSchedule().get(day).
-     * @param day      The day in question (0-6) from the start of the week
-     * @param activity The timeslot to get the legal sctivities for (0-5)
-     * @return A list of legal activities for day number day, group group, activity
-     *         number activity, and currently scheduled.
+     * @param dateContainedInWeek The date to find the associated week for
+     * @return Null if there is no future or current week containing the provided
+     *         date, the week containing the provided date otherwise
      */
-    public ArrayList<Activity> getAvailableActivities(Group group, DaySchedule current, int day, int activity) {
-        ArrayList<Activity> availableActivities = new ArrayList<Activity>();
-        for(Activity potActivity : ActivitiesList.getActivities()){
-            boolean available = true;
-            for(Group othGroup : getWeek(group).getGroups()){
-                if(othGroup.getSchedule().get(day).getActivities().get(activity).getId().equals(potActivity.getId())){
-                    available = false;
-                }
+    public Week getAssociatedWeek(LocalDate dateContainedInWeek) {
+        LocalDate prevSunday = LocalDate.now().with(TemporalAdjusters.previous(DayOfWeek.SUNDAY));
+        for (Week week : WeekList.getFutureOrCurrentWeeks()) {
+            if (week.getStartOfWeek().equals(prevSunday)) {
+                return week;
             }
-            if(available){
-                availableActivities.add(potActivity);
-            }
+            
         }
-        return availableActivities;
+        return null;
     }
 
     public boolean replaceDaySchedule(DaySchedule newSchedule, Group group, int day) {
@@ -435,6 +423,51 @@ public class Facade {
     public void saveAndQuit() {
         // Save all objects to their appropriate JSONs
         System.exit(0);
+    }
+
+    /**
+     * A method that returns a list of legal activities that could be added to the
+     * current DaySchedule at the specified time, ensuring multiple of the same
+     * activity will not be assigned to multiple groups at the same time or assigned
+     * twice in the current DaySchedule. Ignores group.getSchedule().get(day), as
+     * this will be overwritten with current.
+     * 
+     * @param group    The group whose schedule is being edited.
+     * @param current  The DaySchedule object that will be assigned to the group and
+     *                 day once it is filled with 6 valid activities. THIS IS NOT
+     *                 THE SAME as group.getSchedule().get(day).
+     * @param day      The day in question (0-6) from the start of the week
+     * @param activity The timeslot to get the legal sctivities for (0-5)
+     * @return A list of legal activities for day number day, group group, activity
+     *         number activity, and currently scheduled.
+     */
+    public ArrayList<Activity> getAvailableActivities(Group group, DaySchedule current, int day, int activity) {
+        ArrayList<Activity> availableActivities = new ArrayList<Activity>();
+        for(Activity potActivity : ActivitiesList.getActivities()){
+            boolean available = true;
+            for(Group othGroup : getWeek(group).getGroups()){
+                if(othGroup.getSchedule().get(day).getActivities().get(activity).getId().equals(potActivity.getId())){
+                    available = false;
+                }
+            }
+            if(available){
+                availableActivities.add(potActivity);
+            }
+        }
+        return availableActivities;
+    }
+
+    public ArrayList<Week> getNextScheduledWeek() {
+        // returns the next week that the user is scheduled for
+        // returns only the next scheduled week if user is not scheduled for the current
+        // week
+        // returns both the current week, followed by the next scheduled week if the
+        // returns an empty ArrayList<Week> if the counselor is not scheduled for a
+        // future or current week
+        // (does not return null)
+        // counseler is scheduled for the current week
+        // (only called if user is a Counselor)
+        return null;
     }
 
 }
