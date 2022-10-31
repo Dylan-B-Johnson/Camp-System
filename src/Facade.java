@@ -91,16 +91,20 @@ public class Facade {
     }
 
     public Group getFirstGroup(User user) {
-        for (Group group : WeekList.getCurrentWeek().getGroups()) {
-            if (group.getCounselor().getId().equals(user.getId())) {
-                return group;
-            }
-        }
-        for (Week week : WeekList.getFutureWeeks()) {
+        for (Week week : WeekList.getFutureOrCurrentWeeks()) {
             for (Group group : week.getGroups()) {
                 if (group.getCounselor().getId().equals(user.getId())) {
                     return group;
                 }
+            }
+        }
+        return null;
+    }
+
+    public Week getWeek(Group group){
+        for(Week week : WeekList.getFutureOrCurrentWeeks()){
+            if(week.getGroups().contains(group)){
+                return week;
             }
         }
         return null;
@@ -168,7 +172,7 @@ public class Facade {
     }
 
     public boolean activityExists(String name) {
-        for (Activity i : ActivitiesList.getInstance().getActivities()) {
+        for (Activity i : ActivitiesList.getActivities()) {
             if (i.getName().equalsIgnoreCase(name)) {
                 return true;
             }
@@ -223,7 +227,7 @@ public class Facade {
     }
 
     public boolean addActivity(String name, String location, String description) {
-        return ActivitiesList.getInstance().addActivity(new Activity(name, location, description));
+        return ActivitiesList.addActivity(new Activity(name, location, description));
     }
 
     public DaySchedule getDaySchedule(int daysFromNow, User counselor) {
@@ -304,7 +308,9 @@ public class Facade {
     }
 
     public boolean addRandomizedWeek(LocalDate start, String theme) {
-        return false;
+        Week week = new Week(0, 0, start, getCampLocation(), theme);
+        week.setGroups(week.setUpGroups());
+        return WeekList.addWeek(week);
     }
 
     /**
@@ -352,7 +358,19 @@ public class Facade {
      *         number activity, and currently scheduled.
      */
     public ArrayList<Activity> getAvailableActivities(Group group, DaySchedule current, int day, int activity) {
-        return null;
+        ArrayList<Activity> availableActivities = new ArrayList<Activity>();
+        for(Activity potActivity : ActivitiesList.getActivities()){
+            boolean available = true;
+            for(Group othGroup : getWeek(group).getGroups()){
+                if(othGroup.getSchedule().get(day).getActivities().get(activity).getId().equals(potActivity.getId())){
+                    available = false;
+                }
+            }
+            if(available){
+                availableActivities.add(potActivity);
+            }
+        }
+        return availableActivities;
     }
 
     public boolean replaceDaySchedule(DaySchedule newSchedule, Group group, int day) {

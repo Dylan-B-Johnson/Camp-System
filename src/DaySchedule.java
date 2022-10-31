@@ -28,7 +28,7 @@ public class DaySchedule {
     }
 
     public DaySchedule getRandomDaySchedule(Week week, LocalDate day) {
-        ArrayList<Activity> activities = ActivitiesList.getInstance().getActivities();
+        ArrayList<Activity> activities = ActivitiesList.getActivities();
         ArrayList<Activity> curActivities = new ArrayList<Activity>();
         Random random = new Random();
         for (int i = 0; i < 6; i++) {
@@ -59,7 +59,7 @@ public class DaySchedule {
 
     public boolean addToSchedule(String nameOfActivity) {
         if (currentActivities.size() <= MAX_ACTIVITY) {
-            ArrayList<Activity> activities = ActivitiesList.getInstance().getActivities();
+            ArrayList<Activity> activities = ActivitiesList.getActivities();
             for (Activity activity : activities) {
                 if (activity.getName().equals(nameOfActivity)
                         && verifyActivityAvailablility(nameOfActivity, currentActivities.size())) {
@@ -72,7 +72,7 @@ public class DaySchedule {
     }
 
     public boolean replaceActivity(int timeSLot, String nameOfNewActivity) {
-        ArrayList<Activity> activities = ActivitiesList.getInstance().getActivities();
+        ArrayList<Activity> activities = ActivitiesList.getActivities();
         for (Activity activity : activities) {
             if (activity.getName().equals(nameOfNewActivity)
                     && verifyActivityAvailablility(nameOfNewActivity, timeSLot)) {
@@ -85,7 +85,7 @@ public class DaySchedule {
 
     private boolean verifyActivityAvailablility(String nameOfActivity, int timeSlot) {
         Activity foundActivity = new Activity(null, null, null);
-        ArrayList<Activity> activities = ActivitiesList.getInstance().getActivities();
+        ArrayList<Activity> activities = ActivitiesList.getActivities();
         for (Activity activity : activities) {
             if (activity.getName().equals(nameOfActivity)) {
                 foundActivity = activity;
