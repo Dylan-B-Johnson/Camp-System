@@ -1,10 +1,14 @@
-
-//Copyright Row 3
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.UUID;
+
+/**
+ * A Week
+ * 
+ * @author Row 3
+ */
 
 public class Week {
 
@@ -18,6 +22,17 @@ public class Week {
     private String theme;
     private int[] ageRange;
 
+    /**
+     * Creates a Week with the following parameters, including ID
+     * 
+     * @param id
+     * @param maxCampers
+     * @param currentCampers
+     * @param startOfWeek
+     * @param groups
+     * @param campLocation
+     * @param theme
+     */
     public Week(UUID id, int maxCampers, int currentCampers, LocalDate startOfWeek, ArrayList<Group> groups,
             CampLocation campLocation, String theme) {
         this.id = id;
@@ -30,6 +45,15 @@ public class Week {
         this.ageRange = ageRange;
     }
 
+    /**
+     * Creates a week with the following parameters
+     * 
+     * @param maxCampers
+     * @param currentCampers
+     * @param startOfWeek
+     * @param campLocation
+     * @param theme
+     */
     public Week(int maxCampers, int currentCampers, LocalDate startOfWeek,
             CampLocation campLocation, String theme) {
         this.id = UUID.randomUUID();
@@ -41,6 +65,11 @@ public class Week {
         this.ageRange = ageRange;
     }
 
+    /**
+     * Checks if the int passed is greater than 0, and if so sets maxCampers
+     * 
+     * @param maxCampers
+     */
     public void setMaxCampers(int maxCampers) {
         if (maxCampers > 0) {
             this.maxCampers = maxCampers;
@@ -49,24 +78,49 @@ public class Week {
         }
     }
 
+    /**
+     * Gets the UUID for the week
+     * 
+     * @return UUID for week
+     */
     public UUID getId() {
         return this.id;
     }
 
+    /**
+     * Gets the theme for the week
+     * 
+     * @return theme for week
+     */
     public String getTheme() {
         return theme;
     }
 
+    /**
+     * Sets the theme for the week
+     * 
+     * @param theme
+     */
     public void setTheme(String theme) {
         if (theme != null) {
             this.theme = theme;
         }
     }
 
+    /**
+     * Gets the max amount of campers for a week
+     * 
+     * @return Max amount of campers for week
+     */
     public int getMaxCampers() {
         return NUM_GROUPS * Group.MAX_CAMPERS;
     }
 
+    /**
+     * Passes through an int, if greater than 0, sets the current amount of campers
+     * 
+     * @param currentCampers
+     */
     public void setCurrentCampers(int currentCampers) {
         if (currentCampers > 0) {
             this.currentCampers = currentCampers;
@@ -75,6 +129,12 @@ public class Week {
         }
     }
 
+    /**
+     * Gets the current amount of campers by going through each group and counting
+     * each camper in each group
+     * 
+     * @return The total amount of campers currently enrolled in the specific week
+     */
     public int getCurrentCampers() {
         int totalCampers = 0;
         for (Group group : this.groups) {
@@ -87,6 +147,12 @@ public class Week {
         return totalCampers;
     }
 
+    /**
+     * Passes through a LocalDate, if it isn't empty, then sets the start date of
+     * the week
+     * 
+     * @param startOfWeek
+     */
     public void setStartOfWeek(LocalDate startOfWeek) {
         if (startOfWeek != null) {
             this.startOfWeek = startOfWeek;
@@ -95,26 +161,58 @@ public class Week {
         }
     }
 
+    /**
+     * Gets the starting date of this week
+     * 
+     * @return LocalDate containing starting date of week
+     */
     public LocalDate getStartOfWeek() {
         return this.startOfWeek;
     }
 
+    /**
+     * Passes through a Group ArrayList and sets it to groups
+     * 
+     * @param groups
+     */
     public void setGroups(ArrayList<Group> groups) {
         this.groups = groups;
     }
 
+    /**
+     * Returns a Group ArrayList of the current groups
+     * 
+     * @return Group ArrayList of current groups
+     */
     public ArrayList<Group> getGroups() {
         return this.groups;
     }
 
+    /**
+     * Sets the current campLocation
+     * 
+     * @param campLocation
+     */
     public void setCampLocation(CampLocation campLocation) {
         this.campLocation = campLocation;
     }
 
+    /**
+     * Gets the specified campLocation
+     * 
+     * @return The specified campLocation
+     */
     public CampLocation getCampLocation() {
         return this.campLocation;
     }
 
+    /**
+     * Passes through a camper and makes sure they are in the correct age range for
+     * the camp
+     * 
+     * @param camper
+     * @return True if the camper is in the correct age range, false if not
+     */
     public boolean canRegisterCamper(Camper camper) {
         for (Group group : this.groups) {
             if (camper.getAge(this) <= this.ageRange[groups.indexOf(group)] && group.canRegisterCamper()) {
@@ -124,6 +222,12 @@ public class Week {
         return false;
     }
 
+    /**
+     * Passes through a camper and makes sure they are in the correct age range, if
+     * so, they are added to their specific group
+     * 
+     * @param camper
+     */
     public void registerCamper(Camper camper) {
         boolean registered = false;
         for (Group group : this.groups) {
@@ -135,6 +239,11 @@ public class Week {
         }
     }
 
+    /**
+     * Tests if a specified week is the current week
+     * 
+     * @return True if current week, false if not
+     */
     public boolean currentWeek() {
         for (Week week : DataReader.getWeeks().values()) {
             if (week.getStartOfWeek().until(LocalDate.now()).getDays() < 7
@@ -145,6 +254,11 @@ public class Week {
         return false;
     }
 
+    /**
+     * Tests if a week is a future week
+     * 
+     * @return True if future week, false if not
+     */
     public boolean futureWeek() {
         for (Week week : DataReader.getWeeks().values()) {
             if (week.getStartOfWeek().until(LocalDate.now()).getDays() > 7) {
@@ -154,6 +268,11 @@ public class Week {
         return false;
     }
 
+    /**
+     * Tests if a week is a past week
+     * 
+     * @return True if past week, false if not
+     */
     public boolean pastWeek() {
         for (Week week : DataReader.getWeeks().values()) {
             if (week.getStartOfWeek().until(LocalDate.now()).getDays() < 0) {
@@ -163,6 +282,12 @@ public class Week {
         return false;
     }
 
+    /**
+     * Creates an ArrayList of groups and assigns a counselor and day schedule for
+     * each group
+     * 
+     * @return ArrayList of all of the groups for the week
+     */
     public ArrayList<Group> setUpGroups() {
         Random rand = new Random();
         ArrayList<Group> groups = new ArrayList<Group>();
@@ -177,12 +302,23 @@ public class Week {
         return groups;
     }
 
+    /**
+     * Creates a string that represents the start and end of the week
+     * 
+     * @return String that displays the start and end of the week
+     */
     public String toString() {
         return "\tStart of Week: " + this.startOfWeek.format(DateTimeFormatter.ofPattern("E, LLL d, uuuu"))
                 + "\n\tEnd of Week: "
                 + this.startOfWeek.plusDays(6).format(DateTimeFormatter.ofPattern("E, LLL d, uuuu"));
     }
 
+    /**
+     * Creates a string representing the names of all counselors for the week
+     * 
+     * @return String showing the first and last names of all counselors for the
+     *         week
+     */
     public String[] counselorsToString() {
         String[] rtn = new String[groups.size()];
         for (int i = 0; i < groups.size(); i++) {
