@@ -35,13 +35,14 @@ public class DataWriter {
                 contact.put(DataConstants.PHONENUMBER, customer.getContactInfo().getPhoneNum());
                 contact.put(DataConstants.RELATIONSHIP, customer.getContactInfo().getRelationship());
                 contact.put(DataConstants.ADDRESS, customer.getContactInfo().getAddress());
-                customerJsonObject.put(DataConstants.PRIMARYEMERGENCYCONTACT, contact);
+                customerJsonObject.put(DataConstants.CONTACTINFO, contact);
                 customersJsonArray.add(customerJsonObject);
             }
             file.write(customersJsonArray.toJSONString());
             file.close();
         } catch (Exception exception) {
             System.out.println(exception);
+            System.out.println("bruh");
             return false;
         }
         return true;

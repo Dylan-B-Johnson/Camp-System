@@ -39,6 +39,8 @@ public class UserList {
             case CUSTOMER:
                 DataWriter.createCustomer((Customer) user);
                 break;
+            default:
+                System.out.println("bruh");
         }
     }
 
