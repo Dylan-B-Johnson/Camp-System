@@ -31,8 +31,8 @@ public class Customer extends User {
         return this.contactInfo;
     }
 
-    public void setContact(Contact self){
-        this.contactInfo=self;
+    public void setContact(Contact self) {
+        this.contactInfo = self;
     }
 
     public String getName() {
@@ -61,6 +61,11 @@ public class Customer extends User {
         }
     }
 
+    /**
+     * Gets the discount as a percentage
+     * 
+     * @return The discount as a percentage off of the price of enrollment
+     */
     public double getDiscount() {
         for (Camper camper : this.campers) {
             if (camper.getPastEnrollment() != 0) {

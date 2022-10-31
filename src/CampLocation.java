@@ -9,7 +9,6 @@ public class CampLocation {
     private String location;
     private final int MIN_CAMPER_AGE = 8;
     private final int MAX_CAMPER_AGE = 13;
-    //TODO: Should really be added to JSON and be a normal variable 
 
     public CampLocation(UUID id, String name, String location, double pricePerCamper) {
         this.id = id;

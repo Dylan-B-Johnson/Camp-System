@@ -163,10 +163,6 @@ public class Facade {
         return rtn;
     }
 
-    public double getTotalPrice() {
-        return 100 - ((Customer) this.user).getDiscount();
-    }
-
     public User getUser() {
         return user;
     }
@@ -287,12 +283,24 @@ public class Facade {
         }
     }
 
+    /**
+     * Gets the total price for registration for the current user (only run when
+     * the current user is a Customer)
+     * 
+     * @return The price of registration for the current user (a customer) in USD
+     */
     public double getCostOfRegistration() {
-        return -404;
+        return getCampLocation().getPricePerCamper() - getDiscoutOnRegistration();
     }
 
+    /**
+     * Gets the discount in USD on registration for the current user (only run when
+     * the current user is a Customer)
+     * 
+     * @return The discount on registration for the current user (a customer) in USD
+     */
     public double getDiscoutOnRegistration() {
-        return -404;
+        return ((Customer) getUser()).getDiscount() / 100.0 * getCampLocation().getPricePerCamper();
     }
 
     public boolean addRandomizedWeek(LocalDate start, String theme) {
