@@ -12,6 +12,11 @@ public class Facade {
 
     }
 
+    public static void main(String[] args) {
+        Facade facade = new Facade();
+        facade.exportSchedule((Group) DataReader.getGroups().values().toArray()[0], "test");
+    }
+
     public User getDirector() {
         return DataReader.getDirector();
     }
@@ -364,6 +369,21 @@ public class Facade {
         // "showing a grid of what they will be doing at each day and time. For each
         // activity it also indicates where it is located."
         // we need to discuss where to save the file
+        try {
+            FileWriter fileWriter = new FileWriter(filename);
+            int day = 1;
+            for (DaySchedule daySchedule : group.getSchedule()) {
+                fileWriter.append(String.format("Day %d\n", day++));
+                for (Activity activity : daySchedule.getActivities()) {
+                    fileWriter.append(String.format("%s\t|\t%s\t|\t%s\n", activity.getName(), activity.getLocation(),
+                            activity.getDescription()));
+                }
+                fileWriter.append("\n");
+            }
+            fileWriter.close();
+        } catch (Exception exception) {
+            System.out.println(exception);
+        }
         return false;
     }
 

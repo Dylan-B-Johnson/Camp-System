@@ -270,7 +270,6 @@ public class DataReader {
                     allergies.add((String) allergy);
                 }
                 LocalDate birthday = LocalDate.parse((String) counselor.get(DataConstants.BIRTHDAY));
-                Group group = getGroup(UUID.fromString((String) counselor.get(DataConstants.GROUP)));
                 JSONObject pec = (JSONObject) counselor.get(DataConstants.PRIMARYEMERGENCYCONTACT);
                 Contact primaryEmergencyContact = new Contact((String) pec.get(DataConstants.FIRSTNAME),
                         (String) pec.get(DataConstants.LASTNAME), (String) pec.get(DataConstants.EMAIL),
