@@ -366,17 +366,17 @@ public class Camper {
      */
     public ArrayList<Week> getEnrolledWeeks() {
         ArrayList<Week> rtn = new ArrayList<Week>();
-        for (Week week: WeekList.getFutureOrCurrentWeeks()){
+        for (Week week : WeekList.getFutureOrCurrentWeeks()) {
             boolean fullBreak = false;
-            for (Group group : week.getGroups()){
-                for (Camper camper : group.getCampers()){
-                    if (camper.getId().equals(getId())){
+            for (Group group : week.getGroups()) {
+                for (Camper camper : group.getCampers()) {
+                    if (camper.getId().equals(getId())) {
                         rtn.add(week);
-                        fullBreak=true;
+                        fullBreak = true;
                         break;
                     }
                 }
-                if (fullBreak){
+                if (fullBreak) {
                     break;
                 }
             }
@@ -384,13 +384,20 @@ public class Camper {
         return rtn;
     }
 
-    private String getEnrolledWeeksString(){
-        String rtn = ""; 
+    /**
+     * Increases pastEnrollment by 1
+     */
+    public void incrementPastEnrollments() {
+        pastEnrollment++;
+    }
+
+    private String getEnrolledWeeksString() {
+        String rtn = "";
         ArrayList<Week> weeks = getEnrolledWeeks();
-        for (int i=0;i<weeks.size();i++){
-            rtn+=weeks.get(i).toString();
-            if (i!=weeks.size()-1){
-                rtn+="\n";
+        for (int i = 0; i < weeks.size(); i++) {
+            rtn += weeks.get(i).toString();
+            if (i != weeks.size() - 1) {
+                rtn += "\n";
             }
         }
         return rtn;

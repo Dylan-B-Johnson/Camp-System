@@ -233,6 +233,7 @@ public class Week {
         for (Group group : this.groups) {
             if (camper.getAge(this) <= this.ageRange[groups.indexOf(group)] && group.canRegisterCamper()
                     && !registered) {
+                camper.incrementPastEnrollments();
                 group.addCamper(camper);
                 registered = true;
             }
