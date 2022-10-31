@@ -79,6 +79,14 @@ public class Facade {
         return rtn;
     }
 
+    public String[] representWeeks(ArrayList<Week> weeks) {
+        String[] rtn = new String[weeks.size()];
+        for (int i = 0; i < rtn.length; i++) {
+            rtn[i] = weeks.get(i).toString();
+        }
+        return rtn;
+    }
+
     public String[] getCamperStrings(Week weekOfRegistration) {
         ArrayList<Camper> campers = getCampersElligableForRegistration(weekOfRegistration);
         String[] rtn = new String[campers.size()];
@@ -103,9 +111,9 @@ public class Facade {
         return null;
     }
 
-    public Week getWeek(Group group){
-        for(Week week : WeekList.getFutureOrCurrentWeeks()){
-            if(week.getGroups().contains(group)){
+    public Week getWeek(Group group) {
+        for (Week week : WeekList.getFutureOrCurrentWeeks()) {
+            if (week.getGroups().contains(group)) {
                 return week;
             }
         }
@@ -236,16 +244,13 @@ public class Facade {
         return WeekList.getDaySchedule(LocalDate.now().plusDays(daysFromNow), counselor);
     }
 
-    public String[] nextWeek() {
-        String[] rtn = new String[7];
-        LocalDate date = LocalDate.now();
-        for (int i = 0; i < rtn.length; i++) {
-            LocalDate plusDays = date.plusDays(i);
-            rtn[i] = (plusDays.format(DateTimeFormatter.ofPattern("E, LLL d, uuuu")));
-        }
-        return rtn;
-    }
-
+    /**
+     * Creates a string representation for each day of a week
+     * 
+     * @param week The week to get the day strings for
+     * @return An array of the string representations for each constituent day of
+     *         the week
+     */
     public String[] weekDays(Week week) {
         String[] rtn = new String[7];
         LocalDate date = week.getStartOfWeek();
@@ -326,6 +331,14 @@ public class Facade {
         return ((Customer) getUser()).getDiscount() / 100.0 * getCampLocation().getPricePerCamper();
     }
 
+    /**
+     * Creates a new camp week session
+     * 
+     * @param start The start of the new camp session week to add
+     * @param theme The theme for the new camp session week
+     * @return Whether or not the creation of the new camp week session was
+     *         sucessful
+     */
     public boolean addRandomizedWeek(LocalDate start, String theme) {
         Week week = new Week(0, 0, start, getCampLocation(), theme);
         week.setGroups(week.setUpGroups());
@@ -356,7 +369,7 @@ public class Facade {
             if (week.getStartOfWeek().equals(prevSunday)) {
                 return week;
             }
-            
+
         }
         return null;
     }
@@ -420,8 +433,10 @@ public class Facade {
         return false;
     }
 
+    /**
+     * Save all objects to their appropriate JSONs and exits the program
+     */
     public void saveAndQuit() {
-        // Save all objects to their appropriate JSONs
         System.exit(0);
     }
 
@@ -443,31 +458,38 @@ public class Facade {
      */
     public ArrayList<Activity> getAvailableActivities(Group group, DaySchedule current, int day, int activity) {
         ArrayList<Activity> availableActivities = new ArrayList<Activity>();
-        for(Activity potActivity : ActivitiesList.getActivities()){
+        for (Activity potActivity : ActivitiesList.getActivities()) {
             boolean available = true;
-            for(Group othGroup : getWeek(group).getGroups()){
-                if(othGroup.getSchedule().get(day).getActivities().get(activity).getId().equals(potActivity.getId())){
+            for (Group othGroup : getWeek(group).getGroups()) {
+                if (othGroup.getSchedule().get(day).getActivities().get(activity).getId().equals(potActivity.getId())) {
                     available = false;
                 }
             }
-            if(available){
+            if (available) {
                 availableActivities.add(potActivity);
             }
         }
         return availableActivities;
     }
 
-    public ArrayList<Week> getNextScheduledWeek() {
-        // returns the next week that the user is scheduled for
-        // returns only the next scheduled week if user is not scheduled for the current
-        // week
-        // returns both the current week, followed by the next scheduled week if the
-        // returns an empty ArrayList<Week> if the counselor is not scheduled for a
-        // future or current week
-        // (does not return null)
-        // counseler is scheduled for the current week
-        // (only called if user is a Counselor)
-        return null;
+    /**
+     * Gets a list of current or future weeks that the user (a counselor) is
+     * scheduled for
+     * 
+     * @return A list of current or future weeks that the user (a counselor) is
+     *         scheduled for
+     */
+    public ArrayList<Week> getCurrentOrFutureScheduledWeeks() {
+        ArrayList<Week> rtn = new ArrayList<Week>();
+        for (Week week : WeekList.getFutureOrCurrentWeeks()) {
+            for (Group group : week.getGroups()) {
+                if (group.getCounselor().getId().equals(getUser().getId())) {
+                    rtn.add(week);
+                    break; // assumes one Counselor isn't assigned to multiple groups in the same week
+                }
+            }
+        }
+        return rtn;
     }
 
 }

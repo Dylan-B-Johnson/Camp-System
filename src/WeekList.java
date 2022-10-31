@@ -26,9 +26,9 @@ public class WeekList {
     }
 
     /**
-     * Gets the current week by making sure the start of the week is less than 7
+     * Gets the current camp week session if there is one
      * 
-     * @return The current week if it is the correct date, nothing if it is not
+     * @return The current week if camp is in, null if it is not
      */
     public static Week getCurrentWeek() {
         for (Week week : DataReader.getWeeks().values()) {

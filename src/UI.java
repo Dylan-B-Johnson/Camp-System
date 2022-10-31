@@ -3,12 +3,20 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Scanner;
 
+/**
+ * The entry point of the camp system, which starts up the user-interface
+ */
 public class UI {
     private static Facade f = new Facade();
     private static final String PCP = "primary care physician";
     private static Scanner scan = new Scanner(System.in);
     private static ArrayList<Week> currentOrFutureWeeks = f.getFutureOrCurrentWeeks();
 
+    /**
+     * Application entry point
+     * 
+     * @param args Command line arguments (not used)
+     */
     public static void main(String args[]) {
         run();
         scan.close();
@@ -29,6 +37,9 @@ public class UI {
                         break;
                     case 3:
                         createCounselorAccount();
+                        break;
+                    case 4:
+                        f.saveAndQuit();
                 }
             }
             if (f.getUser() != null) {
@@ -37,7 +48,7 @@ public class UI {
                 switch (f.getUser().getTypeOfUser()) {
                     case COUNSELOR:
                         switch (options(new String[] { "View Schedule", "View Group", "Export Schedule",
-                                "Export Week Vital Info" })) {
+                                "Export Week Vital Info", "Quit" })) {
                             case 1:
                                 viewSchedule();
                                 break;
@@ -53,51 +64,84 @@ public class UI {
                         break;
                     case CUSTOMER:
                         if (((Customer) f.getUser()).getCampers().size() < 1) {
-                            options = new String[] { "View Your Campers", "Add a Camper" };
+                            options = new String[] { "View Your Campers", "Add a Camper", "Quit" };
+                            switch (options(options)) {
+                                case 1:
+                                    viewYourCampers();
+                                    break;
+                                case 2:
+                                    addACamper();
+                                    break;
+                                case 3:
+                                    f.saveAndQuit();
+                            }
                         } else {
                             options = new String[] { "View Your Campers", "Add a Camper",
-                                    "Register a Camper" };
-                        }
-                        switch (options(options)) {
-                            case 1:
-                                viewYourCampers();
-                                break;
-                            case 2:
-                                addACamper();
-                                break;
-                            case 3:
-                                registerACamper();
+                                    "Register a Camper", "Quit" };
+                            switch (options(options)) {
+                                case 1:
+                                    viewYourCampers();
+                                    break;
+                                case 2:
+                                    addACamper();
+                                    break;
+                                case 3:
+                                    registerACamper();
+                                    break;
+                                case 4:
+                                    f.saveAndQuit();
+                            }
                         }
                         break;
                     case DIRECTOR:
                         if (currentOrFutureWeeks.size() == 0) {
                             options = new String[] { "Search Campers", "Search Counselors", "Add Activity",
-                                    "Add Camp Session Week", "Edit Schedule", "View Schedule", "Export Schedule" };
+                                    "Add Camp Session Week", "Edit Schedule", "View Schedule", "Export Schedule",
+                                    "Quit" };
+                            switch (options(options)) {
+                                case 1:
+                                    searchCampers();
+                                    break;
+                                case 2:
+                                    searchCounselors();
+                                    break;
+                                case 3:
+                                    addActivity();
+                                    break;
+                                case 4:
+                                    addWeek();
+                                    break;
+                                case 5:
+                                    editSchedule();
+                                    break;
+                                case 6:
+                                    viewScheduleDirector(false);
+                                    break;
+                                case 7:
+                                    viewScheduleDirector(false);
+                                    break;
+                                case 8:
+                                    f.saveAndQuit();
+                            }
                         } else {
                             options = new String[] { "Search Campers", "Search Counselors", "Add Activity",
-                                    "Add Camp Session Week" };
-                        }
-                        switch (options(options)) {
-                            case 1:
-                                searchCampers();
-                                break;
-                            case 2:
-                                searchCounselors();
-                                break;
-                            case 3:
-                                addActivity();
-                                break;
-                            case 4:
-                                addWeek();
-                                break;
-                            case 5:
-                                editSchedule();
-                                break;
-                            case 6:
-                                viewScheduleDirector(false);
-                                break;
-                            case 7:
-                                viewScheduleDirector(false);
+                                    "Add Camp Session Week", "Quit" };
+                            switch (options(options)) {
+                                case 1:
+                                    searchCampers();
+                                    break;
+                                case 2:
+                                    searchCounselors();
+                                    break;
+                                case 3:
+                                    addActivity();
+                                    break;
+                                case 4:
+                                    addWeek();
+                                    break;
+                                case 5:
+                                    f.saveAndQuit();
+                            }
                         }
 
                 }
@@ -446,33 +490,20 @@ public class UI {
     }
 
     /**
-     * Gets the counselor to select an upcomming schedule week for them to export
+     * Gets the counselor to select an upcomming scheduled week for them to export
      * the schedule or vital info for
      * 
-     * @param nextWeek An arraylist of the current and/or next week the counselor is
-     *                 scheduled for
+     * @param scheduledWeeks An arraylist of the weeks the counselor is scheduled
+     *                       for
      * @return The week that the counselor choose
      */
-    private static Week getExportWeek(ArrayList<Week> nextWeek) {
-        Week selectedWeek = null;
-        switch (nextWeek.size()) {
-            case 1:
-                selectedWeek = nextWeek.get(0);
-                break;
-            case 2:
-                while (true) {
-                    title("Select Week to Export");
-                    String[] options = new String[2];
-                    options[0] = nextWeek.get(0).toString();
-                    options[1] = nextWeek.get(1).toString();
-                    int answer = options(options);
-                    if (answer != -1) {
-                        selectedWeek = nextWeek.get(answer - 1);
-                        break;
-                    }
-                }
+    private static Week getExportWeek(ArrayList<Week> scheduledWeeks) {
+        int answer = -1;
+        while (answer == -1) {
+            title("Select Week to Export");
+            answer = options(f.representWeeks(scheduledWeeks));
         }
-        return selectedWeek;
+        return scheduledWeeks.get(answer);
     }
 
     /**
@@ -502,14 +533,14 @@ public class UI {
      *                  vital info
      */
     private static void exportSchedule(boolean vitalInfo) {
-        ArrayList<Week> nextWeek = f.getNextScheduledWeek();
-        if (nextWeek.size() == 0) {
+        ArrayList<Week> nextWeeks = f.getCurrentOrFutureScheduledWeeks();
+        if (nextWeeks.size() == 0) {
             title("ERROR");
             print("You are not scheduled for any future weeks.");
             enterToExit();
             return;
         }
-        Week selectedWeek = getExportWeek(nextWeek);
+        Week selectedWeek = getExportWeek(nextWeeks);
         if (selectedWeek == null) {
             // if this occurs then there is a bug (probably in f.getNextScheduledWeek())
             actionFailed();
@@ -956,31 +987,19 @@ public class UI {
      * @return The week the counselor will view their schedule for
      */
     private static Week getSelectedWeekViewSchedule() {
-        ArrayList<Week> nextWeek = f.getNextScheduledWeek();
-        Week selectedWeek = null;
-        switch (nextWeek.size()) {
-            case 0:
-                title("ERROR");
-                print("You are not scheduled for any future weeks.");
-                enterToExit();
-                return null;
-            case 1:
-                selectedWeek = nextWeek.get(0);
-                break;
-            case 2:
-                while (true) {
-                    title("Select Week to View");
-                    String[] options = new String[2];
-                    options[0] = nextWeek.get(0).toString();
-                    options[1] = nextWeek.get(1).toString();
-                    int answer = options(options);
-                    if (answer != -1) {
-                        selectedWeek = nextWeek.get(answer - 1);
-                        break;
-                    }
-                }
+        ArrayList<Week> scheduledWeeks = f.getCurrentOrFutureScheduledWeeks();
+        if (scheduledWeeks.size() == 0) {
+            title("ERROR");
+            print("You are not scheduled for any future weeks.");
+            enterToExit();
+            return null;
         }
-        return selectedWeek;
+        int answer = -1;
+        while (answer == -1) {
+            title("Select Week to View");
+            answer = options(f.representWeeks(scheduledWeeks));
+        }
+        return scheduledWeeks.get(answer);
     }
 
     /**
@@ -994,8 +1013,7 @@ public class UI {
         int answer = options(f.weekDays(selectedWeek));
         Group group = null;
         for (Group i : selectedWeek.getGroups()) {
-            if (i.getCounselor().getFirstName().equals(f.getUser().getFirstName()) &&
-                    i.getCounselor().getLastName().equals(f.getUser().getLastName())) {
+            if (i.getCounselor().getId().equals(f.getUser().getId())) {
                 group = i;
             }
         }
@@ -1043,7 +1061,7 @@ public class UI {
                 print("- " + i.getName());
             }
             print("");
-            return options(new String[] { "Login", "Create Customer Account", "Create Counselor Account" });
+            return options(new String[] { "Login", "Create Customer Account", "Create Counselor Account", "Quit" });
         }
 
     }
