@@ -253,13 +253,13 @@ public class Facade {
         return rtn;
     }
 
+    /**
+     * Gets all the future or current weeks
+     * 
+     * @return A list of all future or current weeks
+     */
     public ArrayList<Week> getFutureOrCurrentWeeks() {
-        ArrayList<Week> futureOrCurrentWeeks = WeekList.getFutureWeeks();
-        Week current = getCurrentWeek();
-        if (current != null) {
-            futureOrCurrentWeeks.add(current);
-        }
-        return futureOrCurrentWeeks;
+        return WeekList.getFutureOrCurrentWeeks();
     }
 
     /**

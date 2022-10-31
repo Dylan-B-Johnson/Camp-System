@@ -320,7 +320,7 @@ public class Camper {
     }
 
     /**
-     * Creates a String representation of campers name, allergies, birthday, EC,
+     * Creates a String representation of campers name, allergies, birthday, etc,
      * PCP, and swim test
      * 
      * @return String representation of campers attributes
@@ -340,13 +340,14 @@ public class Camper {
                 "\nEmergency Contact One:\n" + this.primaryEmergencyContact.toString() +
                 "\nEmergency Contact Two:\n" + this.secondaryEmergencyContact.toString() +
                 "\nPrimary Care Physician:\n" + this.primaryCarePhysician.toString() +
-                "\nSwim Test Status: " + this.swimTestResult;
+                "\nSwim Test Status: " + this.swimTestResult +
+                "\nFuture or Current Enrollments:\n" + getEnrolledWeeksString();
     }
 
     /**
-     * Finds the specified campers parent and returns it
+     * Finds the user that registered the camper
      * 
-     * @return Campers parent
+     * @return The user that registered the camper
      */
     public Customer getParent() {
         for (Customer customer : UserList.getCustomers()) {
@@ -356,5 +357,42 @@ public class Camper {
             }
         }
         return null;
+    }
+
+    /**
+     * Gets all future or current weeks that the camper is enrolled in
+     * 
+     * @return All future or current groups that contain the camper
+     */
+    public ArrayList<Week> getEnrolledWeeks() {
+        ArrayList<Week> rtn = new ArrayList<Week>();
+        for (Week week: WeekList.getFutureOrCurrentWeeks()){
+            boolean fullBreak = false;
+            for (Group group : week.getGroups()){
+                for (Camper camper : group.getCampers()){
+                    if (camper.getId().equals(getId())){
+                        rtn.add(week);
+                        fullBreak=true;
+                        break;
+                    }
+                }
+                if (fullBreak){
+                    break;
+                }
+            }
+        }
+        return rtn;
+    }
+
+    private String getEnrolledWeeksString(){
+        String rtn = ""; 
+        ArrayList<Week> weeks = getEnrolledWeeks();
+        for (int i=0;i<weeks.size();i++){
+            rtn+=weeks.get(i).toString();
+            if (i!=weeks.size()-1){
+                rtn+="\n";
+            }
+        }
+        return rtn;
     }
 }

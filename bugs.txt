@@ -1,0 +1,1 @@
+1) Adding an activity does not automatically save it to JSON
