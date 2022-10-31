@@ -13,8 +13,9 @@ public class Facade {
     }
 
     public static void main(String[] args) {
-        Facade facade = new Facade();
-        facade.exportSchedule((Group) DataReader.getGroups().values().toArray()[0], "test");
+        Facade f = new Facade();
+        f.signUpCustomer("test", "test", "test@gmail.com", "test",
+                new Contact("null", "null", "null", "null", "null", "null"));
     }
 
     public User getDirector() {
