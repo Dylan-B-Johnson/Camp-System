@@ -1,23 +1,5 @@
 [
     {
-        "firstName": "test",
-        "lastName": "test",
-        "typeOfUser": "CUSTOMER",
-        "password": "test",
-        "contactInfo": {
-            "firstName": "null",
-            "lastName": "null",
-            "phoneNumber": "null",
-            "address": "null",
-            "relationship": "null",
-            "email": "null"
-        },
-        "campers": [],
-        "id": "317a05e5-7c2e-486f-a58f-9319518045cb",
-        "campLocation": "2abbae6f-07eb-4e30-ba07-ec8fc05a503b",
-        "email": "test@gmail.com"
-    },
-    {
         "firstName": "Bob",
         "lastName": "Damien",
         "typeOfUser": "CUSTOMER",
