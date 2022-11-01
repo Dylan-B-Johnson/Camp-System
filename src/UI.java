@@ -1103,7 +1103,8 @@ public class UI {
                 input("Please enter your last name:"),
                 input("Please enter your email:"),
                 input("Please enter your password:"),
-                getCustomerConctact()));
+                null));
+        ((Customer)f.getUser()).setContact(getCustomerConctact());
         if (f.getUser() == null) {
             title("ERROR");
             input("Your email or password were invalid. Please try again.\n(Press enter to continue).");
