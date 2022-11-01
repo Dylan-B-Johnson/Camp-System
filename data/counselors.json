@@ -1,76 +1,249 @@
 [
-  {
-    "id": "e7eb756c-8703-4ab4-a744-df0513f82a96",
-    "email": "jamesh1997@gmail.com",
-    "firstName": "James",
-    "lastName": "Henderson",
-    "password": "secure",
-    "typeOfUser": "COUNSELOR",
-    "group": "64790bc1-c498-47e6-97c4-6804d557d94a",
-    "allergies": [
-      "none"
-    ],
-    "birthday": "1997-02-27",
-    "primaryEmergencyContact": {
-      "email": "bob@hotmail.com",
-      "firstName": "Bob",
-      "lastName": "Damien",
-      "phoneNumber": "654-234-1262",
-      "relationship": "father",
-      "address": "62 Hoback St, Helena, MT 27909"
+    {
+        "birthday": "1997-02-27",
+        "allergies": [
+            "none"
+        ],
+        "firstName": "James",
+        "lastName": "Henderson",
+        "typeOfUser": "COUNSELOR",
+        "password": "secure",
+        "primaryEmergencyContact": {
+            "firstName": "Ron",
+            "lastName": "Rhymer",
+            "phoneNumber": "865-399-5462",
+            "address": "823 Lyons View Rd, Columbia, SC 37909",
+            "relationship": "primary-care physician",
+            "email": "ron@columbiaPediatrics.com"
+        },
+        "primaryCarePhysician": {
+            "firstName": "Ron",
+            "lastName": "Rhymer",
+            "phoneNumber": "865-399-5462",
+            "address": "823 Lyons View Rd, Columbia, SC 37909",
+            "relationship": "primary-care physician",
+            "email": "ron@columbiaPediatrics.com"
+        },
+        "secondaryEmergencyContact": {
+            "firstName": "Virla",
+            "lastName": "Chapman",
+            "phoneNumber": "123-456-5262",
+            "address": "62 Hoback St, Helena, MT 27909",
+            "relationship": "mother",
+            "email": "virla2@utk.edu"
+        },
+        "id": "9f34cc65-4740-44b1-b5c7-b65d47206ae7",
+        "email": "jamesh1997@gmail.com"
     },
-    "secondaryEmergencyContact": {
-      "email": "virla2@utk.edu",
-      "firstName": "Virla",
-      "lastName": "Chapman",
-      "phoneNumber": "123-456-5262",
-      "relationship": "mother",
-      "address": "62 Hoback St, Helena, MT 27909"
+    {
+        "birthday": "2000-07-30",
+        "allergies": [
+            "none"
+        ],
+        "firstName": "Harrison",
+        "lastName": "Rubin",
+        "typeOfUser": "COUNSELOR",
+        "password": "takeaguess",
+        "primaryEmergencyContact": {
+            "firstName": "Ron",
+            "lastName": "Rhymer",
+            "phoneNumber": "865-399-5462",
+            "address": "823 Lyons View Rd, Columbia, SC 37909",
+            "relationship": "primary-care physician",
+            "email": "ron@columbiaPediatrics.com"
+        },
+        "primaryCarePhysician": {
+            "firstName": "Ron",
+            "lastName": "Rhymer",
+            "phoneNumber": "865-399-5462",
+            "address": "823 Lyons View Rd, Columbia, SC 37909",
+            "relationship": "primary-care physician",
+            "email": "ron@columbiaPediatrics.com"
+        },
+        "secondaryEmergencyContact": {
+            "firstName": "Virla",
+            "lastName": "Chapman",
+            "phoneNumber": "123-456-5262",
+            "address": "62 Hoback St, Helena, MT 27909",
+            "relationship": "mother",
+            "email": "virla2@utk.edu"
+        },
+        "id": "08c9186d-e5d9-4d3e-adaa-6960fa8e9a1b",
+        "email": "hrh2000@gmail.com"
     },
-    "primaryCarePhysician": {
-      "email": "ron@columbiaPediatrics.com",
-      "firstName": "Ron",
-      "lastName": "Rhymer",
-      "phoneNumber": "865-399-5462",
-      "relationship": "primary-care physician",
-      "address": "823 Lyons View Rd, Columbia, SC 37909"
+    {
+        "birthday": "2002-11-12",
+        "allergies": [],
+        "firstName": "Jacob",
+        "lastName": "Ladder",
+        "typeOfUser": "COUNSELOR",
+        "password": "pasword",
+        "primaryEmergencyContact": {
+            "firstName": "as",
+            "lastName": "as",
+            "phoneNumber": "as",
+            "address": "as",
+            "relationship": "Primary Care Physician",
+            "email": "as"
+        },
+        "primaryCarePhysician": {
+            "firstName": "as",
+            "lastName": "as",
+            "phoneNumber": "as",
+            "address": "as",
+            "relationship": "Primary Care Physician",
+            "email": "as"
+        },
+        "secondaryEmergencyContact": {
+            "firstName": "s",
+            "lastName": "s",
+            "phoneNumber": "as",
+            "address": "sa",
+            "relationship": "as",
+            "email": "s"
+        },
+        "id": "1135be62-5742-4ef7-9ce3-06f3407d946b",
+        "email": "jacob@gmail.co.uk"
+    },
+    {
+        "birthday": "2002-11-23",
+        "allergies": [
+            "a",
+            "a"
+        ],
+        "firstName": "Fred",
+        "lastName": "May",
+        "typeOfUser": "COUNSELOR",
+        "password": "password",
+        "primaryEmergencyContact": {
+            "firstName": "a",
+            "lastName": "a",
+            "phoneNumber": "a",
+            "address": "a",
+            "relationship": "Primary Care Physician",
+            "email": "a"
+        },
+        "primaryCarePhysician": {
+            "firstName": "a",
+            "lastName": "a",
+            "phoneNumber": "a",
+            "address": "a",
+            "relationship": "Primary Care Physician",
+            "email": "a"
+        },
+        "secondaryEmergencyContact": {
+            "firstName": "a",
+            "lastName": "a",
+            "phoneNumber": "a",
+            "address": "a",
+            "relationship": "a",
+            "email": "a"
+        },
+        "id": "da942473-72cf-470b-a263-eed5b35b15df",
+        "email": "a"
+    },
+    {
+        "birthday": "2002-11-12",
+        "allergies": [],
+        "firstName": "Jack",
+        "lastName": "Hyatt",
+        "typeOfUser": "COUNSELOR",
+        "password": "password",
+        "primaryEmergencyContact": {
+            "firstName": "s",
+            "lastName": "s",
+            "phoneNumber": "s",
+            "address": "s",
+            "relationship": "Primary Care Physician",
+            "email": "s"
+        },
+        "primaryCarePhysician": {
+            "firstName": "s",
+            "lastName": "s",
+            "phoneNumber": "s",
+            "address": "s",
+            "relationship": "Primary Care Physician",
+            "email": "s"
+        },
+        "secondaryEmergencyContact": {
+            "firstName": "s",
+            "lastName": "s",
+            "phoneNumber": "s",
+            "address": "s",
+            "relationship": "s",
+            "email": "s"
+        },
+        "id": "d62445be-37f2-4abc-8763-a2bcc526881d",
+        "email": "jackh@gmail.com"
+    },
+    {
+        "birthday": "2002-11-23",
+        "allergies": [
+            "1"
+        ],
+        "firstName": "Billy",
+        "lastName": "Bob",
+        "typeOfUser": "COUNSELOR",
+        "password": "pass",
+        "primaryEmergencyContact": {
+            "firstName": "s",
+            "lastName": "s",
+            "phoneNumber": "s",
+            "address": "s",
+            "relationship": "Primary Care Physician",
+            "email": "s"
+        },
+        "primaryCarePhysician": {
+            "firstName": "s",
+            "lastName": "s",
+            "phoneNumber": "s",
+            "address": "s",
+            "relationship": "Primary Care Physician",
+            "email": "s"
+        },
+        "secondaryEmergencyContact": {
+            "firstName": "s",
+            "lastName": "s",
+            "phoneNumber": "s",
+            "address": "s",
+            "relationship": "s",
+            "email": "s"
+        },
+        "id": "d7553746-f593-47a4-b662-2d1f73189703",
+        "email": "s"
+    },
+    {
+        "birthday": "2002-11-23",
+        "allergies": [],
+        "firstName": "Jacob",
+        "lastName": "Brogden",
+        "typeOfUser": "COUNSELOR",
+        "password": "password",
+        "primaryEmergencyContact": {
+            "firstName": "d",
+            "lastName": "d",
+            "phoneNumber": "d",
+            "address": "d",
+            "relationship": "Primary Care Physician",
+            "email": "d"
+        },
+        "primaryCarePhysician": {
+            "firstName": "d",
+            "lastName": "d",
+            "phoneNumber": "d",
+            "address": "d",
+            "relationship": "Primary Care Physician",
+            "email": "d"
+        },
+        "secondaryEmergencyContact": {
+            "firstName": "d",
+            "lastName": "d",
+            "phoneNumber": "d",
+            "address": "d",
+            "relationship": "d",
+            "email": "d"
+        },
+        "id": "d99bbea9-f559-45e8-ba58-40e87be1f066",
+        "email": "d"
     }
-  },
-  {
-    "id": "9946fa93-68c1-461c-819b-c157a945ad74",
-    "email": "hrh2000@gmail.com",
-    "firstName": "Harrison",
-    "lastName": "Rubin",
-    "password": "takeaguess",
-    "typeOfUser": "COUNSELOR",
-    "group": "5253cfe4-ea9b-4693-87ec-7d62b083c4a9",
-    "allergies": [
-      "none"
-    ],
-    "birthday": "2000-07-30",
-    "primaryEmergencyContact": {
-      "email": "bob@hotmail.com",
-      "firstName": "Bob",
-      "lastName": "Damien",
-      "phoneNumber": "654-234-1262",
-      "relationship": "father",
-      "address": "62 Hoback St, Helena, MT 27909"
-    },
-    "secondaryEmergencyContact": {
-      "email": "virla2@utk.edu",
-      "firstName": "Virla",
-      "lastName": "Chapman",
-      "phoneNumber": "123-456-5262",
-      "relationship": "mother",
-      "address": "62 Hoback St, Helena, MT 27909"
-    },
-    "primaryCarePhysician": {
-      "email": "ron@columbiaPediatrics.com",
-      "firstName": "Ron",
-      "lastName": "Rhymer",
-      "phoneNumber": "865-399-5462",
-      "relationship": "primary-care physician",
-      "address": "823 Lyons View Rd, Columbia, SC 37909"
-    }
-  }
 ]

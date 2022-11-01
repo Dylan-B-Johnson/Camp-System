@@ -248,6 +248,14 @@ public class UI {
      */
     private static void addWeek() {
         LocalDate date = getStartDate();
+        if (f.getCounselors().size() < 6) {
+            title("ERROR");
+            print("There are less than " + Week.NUM_GROUPS
+                    + " (the number of groups per week) counslesors in the system.\nPlease have" +
+                    " more counselors register their accounts before creating a new week.");
+            enterToExit();
+            return;
+        }
         title("Add a Week");
         if (f.addRandomizedWeek(date, input("Please enter the theme of the camp session week:"))) {
             print("Camp session week sucessfully added.");

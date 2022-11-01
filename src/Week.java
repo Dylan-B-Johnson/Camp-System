@@ -310,6 +310,9 @@ public class Week {
                         UserList.getCounselors().get(rand.nextInt(UserList.getCounselors().size())), this);
             }
         }
+        for (Group i : groups){
+            DataWriter.createGroup(i);
+        }
         return groups;
     }
 
