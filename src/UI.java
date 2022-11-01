@@ -98,8 +98,8 @@ public class UI {
                                 case 4:
                                     f.saveAndQuit();
                             }
-                        }
-                        break;
+                        }             
+                        break;                                                                    
                     case DIRECTOR:
                         if (f.getFutureOrCurrentWeeks().size() > 0) {
                             options = new String[] { "Search Campers", "Search Counselors", "Add Activity",
@@ -260,7 +260,7 @@ public class UI {
      */
     private static void addWeek() {
         LocalDate date = getStartDate();
-        if (f.getCounselors().size() < 6) {
+        if (f.getCounselors().size() < Week.NUM_GROUPS) {
             title("ERROR");
             print("There are less than " + Week.NUM_GROUPS
                     + " (the number of groups per week) counslesors in the system.\nPlease have" +
