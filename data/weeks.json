@@ -1,5 +1,17 @@
-<<<<<<< HEAD
-[{"startOfWeek":"2049-12-26","currentCampers":0,"groups":["2b9e5097-ec4b-437c-97b5-e906b6856302","170cb827-61e4-43b0-a057-38661c33dd0f","5abf5179-0335-46f1-9e39-e8929ff4aed0","814525f3-f4b5-42a9-89bc-8012cfff65f0","8630dcf0-921d-421d-a3a7-563eb2182033","8efa6465-9cfd-4b06-b5db-f1c53d13d74f"],"theme":null,"id":"4dc42b54-6569-42f1-a9b2-0e308cb88440","maxCampers":48}]
-=======
-[{"startOfWeek":"2022-11-06","currentCampers":0,"groups":["c9a8589a-271e-4331-8d13-40181d9da0ca","1f2c033e-e121-442e-a682-838356ac74f5","16b4fbcc-df93-4938-8482-5d242fa76ec9","012dd85c-7169-491c-a362-91d913336aa8","2016d3f0-00f1-47f8-b92d-4b9a56543d37","b2dcbf95-978c-4fec-830c-0f4ad60fe2e7"],"theme":null,"id":"d0154fc3-4c82-422d-8fd1-4c09dc449b33","maxCampers":48}]
->>>>>>> bd007e02d5a89c209ed78125d0d78bbe7c380e77
+[
+    {
+        "startOfWeek": "2049-12-26",
+        "currentCampers": 0,
+        "groups": [
+            "2b9e5097-ec4b-437c-97b5-e906b6856302",
+            "170cb827-61e4-43b0-a057-38661c33dd0f",
+            "5abf5179-0335-46f1-9e39-e8929ff4aed0",
+            "814525f3-f4b5-42a9-89bc-8012cfff65f0",
+            "8630dcf0-921d-421d-a3a7-563eb2182033",
+            "8efa6465-9cfd-4b06-b5db-f1c53d13d74f"
+        ],
+        "theme": null,
+        "id": "4dc42b54-6569-42f1-a9b2-0e308cb88440",
+        "maxCampers": 48
+    }
+]
