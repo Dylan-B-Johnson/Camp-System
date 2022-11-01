@@ -62,7 +62,7 @@ public class DaySchedule {
             while (!verifyActivityAvailablility(nextActivity.getName(), i) || curActivities.contains(nextActivity)) {
                 nextActivity = activities.get(random.nextInt(activities.size()));
             }
-            curActivities.set(i, nextActivity);
+            curActivities.add(nextActivity);
         }
         return new DaySchedule(curActivities, week, day);
     }
