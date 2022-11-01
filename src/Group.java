@@ -2,7 +2,8 @@ import java.util.UUID;
 import java.util.ArrayList;
 
 /**
- * A group which holds a counselor, eight campers, and their schedule for each day
+ * A group which holds a counselor, eight campers, and their schedule for each
+ * day
  * 
  * @author Row 3
  */
@@ -17,34 +18,34 @@ public class Group {
     /**
      * Creates an instance of Group, setting it's id to the supplied parameter
      * 
-     * @param id The id of the new group
-     * @param campers The campers enrolled in that group
+     * @param id        The id of the new group
+     * @param campers   The campers enrolled in that group
      * @param groupSize The current number of campers in the group
-     * @param schedule The list of schedules for the group
+     * @param schedule  The list of schedules for the group
      * @param counselor The counselor assigned to the group
      */
     public Group(UUID id, ArrayList<Camper> campers, int groupSize,
             ArrayList<DaySchedule> schedule, Counselor counselor) {
         this.id = id;
-        setCampers(campers);
-        setGroupSize(groupSize);
-        setSchedule(schedule);
+        this.campers = campers;
+        this.groupSize = groupSize;
+        this.schedule = schedule;
     }
 
     /**
      * Creates an instance of Group, setting it's id to a random UUID
      * 
-     * @param campers The campers enrolled in that group
+     * @param campers   The campers enrolled in that group
      * @param groupSize The current number of campers in the group
-     * @param schedule The list of schedules for the group
+     * @param schedule  The list of schedules for the group
      * @param counselor The counselor assigned to the group
      */
     public Group(ArrayList<Camper> campers, int groupSize,
             ArrayList<DaySchedule> schedule, Counselor counselor) {
         this.id = UUID.randomUUID();
-        setCampers(campers);
-        setGroupSize(groupSize);
-        setSchedule(schedule);
+        this.campers = campers;
+        this.groupSize = groupSize;
+        this.schedule = schedule;
     }
 
     /**
@@ -75,11 +76,13 @@ public class Group {
     }
 
     /**
-     * Sets the Counselor for this group to the supplied counselor as long as they are not already in a group
+     * Sets the Counselor for this group to the supplied counselor as long as they
+     * are not already in a group
      * 
      * @param counselor The counselor that is to be assigned to the group
-     * @param week The week the group is located in
-     * @return True if the operation was succesfully performed False if the operation failed
+     * @param week      The week the group is located in
+     * @return True if the operation was succesfully performed False if the
+     *         operation failed
      */
     public boolean setCounselor(Counselor counselor, Week week) {
         for (Group group : week.getGroups()) {
@@ -205,7 +208,5 @@ public class Group {
                 "\nGroup size: " + groupSize +
                 "\nSchedule: " + this.schedule.toString();
     }
-
-    
 
 }

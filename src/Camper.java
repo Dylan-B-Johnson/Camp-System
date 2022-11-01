@@ -41,17 +41,17 @@ public class Camper {
     public Camper(UUID id, String firstName, String lastName, ArrayList<String> allergies, LocalDate birthday,
             Contact primaryEmergencyContact, Contact secondaryEmergencyContact, Contact primaryCarePhysician,
             int pastEnrollment, String swimTestResult, String relationshipToCustomer) {
-        setID(id);
-        setFirstName(firstName);
-        setLastName(lastName);
-        setAllergies(allergies);
-        setBirthday(birthday);
-        setPrimaryEmergencyContact(primaryEmergencyContact);
-        setSecondaryEmergencyContact(secondaryEmergencyContact);
-        setPrimaryCarePhysician(primaryCarePhysician);
-        setPastEnrollment(pastEnrollment);
-        setSwimTestResult(swimTestResult);
-        setRelationshipToCustomer(relationshipToCustomer);
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.allergies = allergies;
+        this.birthday = birthday;
+        this.primaryEmergencyContact = primaryEmergencyContact;
+        this.secondaryEmergencyContact = secondaryEmergencyContact;
+        this.primaryCarePhysician = primaryCarePhysician;
+        this.pastEnrollment = pastEnrollment;
+        this.swimTestResult = swimTestResult;
+        this.relationshipToCustomer = relationshipToCustomer;
     }
 
     /**
@@ -72,29 +72,17 @@ public class Camper {
     public Camper(String firstName, String lastName, ArrayList<String> allergies, LocalDate birthday,
             Contact primaryEmergencyContact, Contact secondaryEmergencyContact, Contact primaryCarePhysician,
             int pastEnrollment, String swimTestResult, String relationshipToCustomer) {
-        setID(UUID.randomUUID());
-        setFirstName(firstName);
-        setLastName(lastName);
-        setAllergies(allergies);
-        setBirthday(birthday);
-        setPrimaryEmergencyContact(primaryEmergencyContact);
-        setSecondaryEmergencyContact(secondaryEmergencyContact);
-        setPrimaryCarePhysician(primaryCarePhysician);
-        setPastEnrollment(pastEnrollment);
-        setSwimTestResult(swimTestResult);
-        setRelationshipToCustomer(relationshipToCustomer);
-    }
-
-    /**
-     * Passes through a UUID and if it is not empty, sets the ID to Camper
-     * 
-     * @param id ID of camper
-     */
-    public void setID(UUID id) {
-        if (id != null) {
-            this.id = id;
-            DataWriter.updateCamper(this.id, this);
-        }
+        this.id = UUID.randomUUID();
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.allergies = allergies;
+        this.birthday = birthday;
+        this.primaryEmergencyContact = primaryEmergencyContact;
+        this.secondaryEmergencyContact = secondaryEmergencyContact;
+        this.primaryCarePhysician = primaryCarePhysician;
+        this.pastEnrollment = pastEnrollment;
+        this.swimTestResult = swimTestResult;
+        this.relationshipToCustomer = relationshipToCustomer;
     }
 
     /**

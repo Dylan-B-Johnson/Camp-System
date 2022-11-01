@@ -16,30 +16,31 @@ public class Activity {
     /**
      * Creates an instance of Activity, setting it's id equal to a random UUID
      * 
-     * @param name The name of the activity
-     * @param location The location of the activity
+     * @param name        The name of the activity
+     * @param location    The location of the activity
      * @param description The description of the activity
      */
     public Activity(String name, String location, String description) {
         this.id = UUID.randomUUID();
-        setName(name);
-        setLocation(location);
-        setDescription(description);
+        this.name = name;
+        this.location = location;
+        this.description = description;
     }
 
-/**
-     * Creates an instance of Activity, setting it's id equal to the supplied parameter
+    /**
+     * Creates an instance of Activity, setting it's id equal to the supplied
+     * parameter
      * 
-     * @param id The id of the activity
-     * @param name The name of the activity
-     * @param location The location of the activity
+     * @param id          The id of the activity
+     * @param name        The name of the activity
+     * @param location    The location of the activity
      * @param description The description of the activity
      */
     public Activity(UUID id, String name, String location, String description) {
         this.id = id;
-        setName(name);
-        setLocation(location);
-        setDescription(description);
+        this.name = name;
+        this.location = location;
+        this.description = description;
     }
 
     /**
@@ -66,7 +67,7 @@ public class Activity {
      * @param name The name of the activity
      */
     public void setName(String name) {
-        if(name != null){
+        if (name != null) {
             this.name = name;
             DataWriter.updateActivity(this.id, this);
         }
@@ -87,7 +88,7 @@ public class Activity {
      * @param location The location of the activity
      */
     public void setLocation(String location) {
-        if(location != null){
+        if (location != null) {
             this.location = location;
             DataWriter.updateActivity(this.id, this);
         }
@@ -108,7 +109,7 @@ public class Activity {
      * @param description The description of the activity
      */
     public void setDescription(String description) {
-        if(description != null){
+        if (description != null) {
             this.description = description;
             DataWriter.updateActivity(this.id, this);
         }
@@ -119,9 +120,9 @@ public class Activity {
      * 
      * @return A string representation of the activity
      */
-    public String toString(){
+    public String toString() {
         return "Activity name: " + this.name +
-        "\nActivity location: " + this.location +
-        "\nActivity description: " + this.description;
+                "\nActivity location: " + this.location +
+                "\nActivity description: " + this.description;
     }
 }
