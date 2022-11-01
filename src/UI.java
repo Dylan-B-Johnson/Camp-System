@@ -49,7 +49,7 @@ public class UI {
                 switch (f.getUser().getTypeOfUser()) {
                     case COUNSELOR:
                         switch (options(new String[] { "View Schedule", "View Group", "Export Schedule",
-                                "Export Week Vital Info", "Quit" })) {
+                                "Export Week Vital Info","Export Group Roster", "Quit" })) {
                             case 1:
                                 viewSchedule();
                                 break;
@@ -61,6 +61,12 @@ public class UI {
                                 break;
                             case 4:
                                 exportSchedule(true);
+                                break;
+                            case 5:
+                                exportRoster();
+                                break;
+                            case 6:
+                                f.saveAndQuit();
                         }
                         break;
                     case CUSTOMER:
@@ -149,6 +155,13 @@ public class UI {
             }
 
         }
+
+    }
+
+    /**
+     * The screen that allows a counselor to export their groups's roster to a file
+     */
+    private static void exportRoster(){
 
     }
 
