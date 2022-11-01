@@ -373,7 +373,6 @@ public class Facade {
             if (week.getStartOfWeek().equals(prevSunday)) {
                 return week;
             }
-
         }
         return null;
     }
