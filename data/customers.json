@@ -39,5 +39,23 @@
         "id": "de162b09-ab98-4ec5-9bf2-1a5fdc86c7e7",
         "campLocation": "2abbae6f-07eb-4e30-ba07-ec8fc05a503b",
         "email": "SallyBrogden@hotmail.com"
+    },
+    {
+        "firstName": "test",
+        "lastName": "test",
+        "typeOfUser": "CUSTOMER",
+        "password": "test",
+        "contactInfo": {
+            "firstName": "null",
+            "lastName": "null",
+            "phoneNumber": "null",
+            "address": "null",
+            "relationship": "null",
+            "email": "null"
+        },
+        "campers": [],
+        "id": "dedd2146-7813-46e6-9b43-5746cc0c8cb8",
+        "campLocation": "2abbae6f-07eb-4e30-ba07-ec8fc05a503b",
+        "email": "test@gmail.com"
     }
 ]
