@@ -235,7 +235,7 @@ public class Facade {
             LocalDate birthday, String relationToCustomer, Contact primaryEmergencyContact,
             Contact secondaryEmergencyContact, Contact primaryCarePhysician) {
         Camper camper = new Camper(firstName, lastName, allergies, birthday, primaryEmergencyContact,
-                secondaryEmergencyContact, primaryCarePhysician, 0, lastName, relationToCustomer);
+                secondaryEmergencyContact, primaryCarePhysician, 0, "", relationToCustomer);
         DataWriter.createCamper(camper);
         ((Customer) getUser()).addCamper(camper);
         return true;
