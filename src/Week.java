@@ -1,5 +1,7 @@
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.UUID;
@@ -252,46 +254,30 @@ public class Week {
     }
 
     /**
-     * Tests if a specified week is the current week
+     * Tests if a this week is the current week
      * 
      * @return True if current week, false if not
      */
     public boolean currentWeek() {
-        for (Week week : DataReader.getWeeks().values()) {
-            if (week.getStartOfWeek().until(LocalDate.now()).getDays() < 7
-                    && week.getStartOfWeek().until(LocalDate.now()).getDays() > 0) {
-                return true;
-            }
-        }
-        return false;
+        return startOfWeek.isEqual(LocalDate.now().with(TemporalAdjusters.previous(DayOfWeek.SUNDAY)));
     }
 
     /**
-     * Tests if a week is a future week
+     * Tests if this week is a future week
      * 
      * @return True if future week, false if not
      */
     public boolean futureWeek() {
-        for (Week week : DataReader.getWeeks().values()) {
-            if (week.getStartOfWeek().until(LocalDate.now()).getDays() > 7) {
-                return true;
-            }
-        }
-        return false;
+        return startOfWeek.isAfter(LocalDate.now());
     }
 
     /**
-     * Tests if a week is a past week
+     * Tests if this week is a past week
      * 
      * @return True if past week, false if not
      */
     public boolean pastWeek() {
-        for (Week week : DataReader.getWeeks().values()) {
-            if (week.getStartOfWeek().until(LocalDate.now()).getDays() < 0) {
-                return true;
-            }
-        }
-        return false;
+        return startOfWeek.isBefore(LocalDate.now().with(TemporalAdjusters.previous(DayOfWeek.SUNDAY)));
     }
 
     /**
