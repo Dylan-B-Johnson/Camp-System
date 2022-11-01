@@ -369,8 +369,8 @@ public class Facade {
      *         date, the week containing the provided date otherwise
      */
     public Week getAssociatedWeek(LocalDate dateContainedInWeek) {
-        LocalDate prevSunday = LocalDate.now().with(TemporalAdjusters.previous(DayOfWeek.SUNDAY));
-        for (Week week : WeekList.getFutureOrCurrentWeeks()) {
+        LocalDate prevSunday = dateContainedInWeek.with(TemporalAdjusters.previous(DayOfWeek.SUNDAY));
+        for (Week week : WeekList.getWeeks()) {
             if (week.getStartOfWeek().equals(prevSunday)) {
                 return week;
             }

@@ -19,6 +19,11 @@ public class WeekList {
         return true;
     }
 
+    /**
+     * Gets all the weeks that exist
+     * 
+     * @return All weeks
+     */
     public static ArrayList<Week> getWeeks() {
         return new ArrayList<Week>(DataReader.getWeeks().values());
     }
