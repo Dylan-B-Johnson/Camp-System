@@ -16,7 +16,9 @@ public class Facade {
 
     public static void main(String[] args) {
         Facade f = new Facade();
-        f.signUpCustomer("test", "test", "test@gmail.com", "test",
+        f.addCamperToUser("null", "null", new ArrayList<String>(), LocalDate.of(2011, 1, 1), "null",
+                new Contact("null", "null", "null", "null", "null", "null"),
+                new Contact("null", "null", "null", "null", "null", "null"),
                 new Contact("null", "null", "null", "null", "null", "null"));
     }
 
@@ -222,6 +224,7 @@ public class Facade {
         }
         if (week.canRegisterCamper(foundCamper)) {
             week.registerCamper(foundCamper);
+            DataWriter.updateWeek(week.getId(), week);
             return true;
         }
         return false;
@@ -232,6 +235,7 @@ public class Facade {
             Contact secondaryEmergencyContact, Contact primaryCarePhysician) {
         Camper camper = new Camper(firstName, lastName, allergies, birthday, primaryEmergencyContact,
                 secondaryEmergencyContact, primaryCarePhysician, 0, lastName, relationToCustomer);
+        DataWriter.createCamper(camper);
         ((Customer) getUser()).addCamper(camper);
         return true;
     }

@@ -12,7 +12,7 @@ public class WeekList {
      * Passes through a week and checks if it is available for registration, then
      * creates the week
      * 
-     * @param week
+     * @param week The week being added to week list
      * @return False if the week is not available for registration, true if it is
      */
     public static boolean addWeek(Week week) {
@@ -79,8 +79,8 @@ public class WeekList {
     /**
      * Passes through a date and counselor, and uses that to find their day schedule
      * 
-     * @param date
-     * @param counselor
+     * @param date      The date of the schedule being found
+     * @param counselor The counselor whos schedule is being found
      * @return The day schedule for the counselor if their ID matches, nothing if
      *         not
      */

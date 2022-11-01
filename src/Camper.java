@@ -25,17 +25,18 @@ public class Camper {
     /**
      * Creates a Camper given the following parameters, including ID
      * 
-     * @param id
-     * @param firstName
-     * @param lastName
-     * @param allergies
-     * @param birthday
-     * @param primaryEmergencyContact
-     * @param secondaryEmergencyContact
-     * @param primaryCarePhysician
-     * @param pastEnrollment
-     * @param swimTestResult
-     * @param relationshipToCustomer
+     * @param id                        ID of Camper
+     * @param firstName                 First name of Camper
+     * @param lastName                  Last name of Camper
+     * @param allergies                 Allergies of Camper
+     * @param birthday                  Campers birthday
+     * @param primaryEmergencyContact   Campers Primary emergency contact
+     * @param secondaryEmergencyContact Campers Secondary emergency contact
+     * @param primaryCarePhysician      Campers PCP
+     * @param pastEnrollment            Campers past enrollment
+     * @param swimTestResult            Campers Swim Test Result
+     * @param relationshipToCustomer    Campers relationship to the customer
+     *                                  associated with them
      */
     public Camper(UUID id, String firstName, String lastName, ArrayList<String> allergies, LocalDate birthday,
             Contact primaryEmergencyContact, Contact secondaryEmergencyContact, Contact primaryCarePhysician,
@@ -56,16 +57,17 @@ public class Camper {
     /**
      * Creates a camper given the following parameters
      * 
-     * @param firstName
-     * @param lastName
-     * @param allergies
-     * @param birthday
-     * @param primaryEmergencyContact
-     * @param secondaryEmergencyContact
-     * @param primaryCarePhysician
-     * @param pastEnrollment
-     * @param swimTestResult
-     * @param relationshipToCustomer
+     * @param firstName                 Campers first name
+     * @param lastName                  Campers last name
+     * @param allergies                 Campers allergies
+     * @param birthday                  Campers birthday
+     * @param primaryEmergencyContact   Campers primary emergency contact
+     * @param secondaryEmergencyContact Campers secondary emergency contact
+     * @param primaryCarePhysician      Campers PCP
+     * @param pastEnrollment            Campers past enrollment status
+     * @param swimTestResult            Campers swim test result
+     * @param relationshipToCustomer    Campers relationship to customer associated
+     *                                  with them
      */
     public Camper(String firstName, String lastName, ArrayList<String> allergies, LocalDate birthday,
             Contact primaryEmergencyContact, Contact secondaryEmergencyContact, Contact primaryCarePhysician,
@@ -86,7 +88,7 @@ public class Camper {
     /**
      * Passes through a UUID and if it is not empty, sets the ID to Camper
      * 
-     * @param id
+     * @param id ID of camper
      */
     public void setID(UUID id) {
         if (id != null) {
@@ -107,7 +109,7 @@ public class Camper {
      * Gets the age of camper by finding the difference between their birthday and
      * the start of the current week
      * 
-     * @param week
+     * @param week The current week for the camp
      * @return The age of the camper
      */
     public int getAge(Week week) {
@@ -119,7 +121,7 @@ public class Camper {
      * Passes through a String and if it is not empty, sets it as the Campers first
      * name
      * 
-     * @param firstName
+     * @param firstName Campers first name
      */
     public void setFirstName(String firstName) {
         if (firstName != null) {
@@ -140,7 +142,7 @@ public class Camper {
      * Passes through a String and if it is not empty, sets it as the Campers last
      * name
      * 
-     * @param lastName
+     * @param lastName Campers last name
      */
     public void setLastName(String lastName) {
         if (lastName != null) {
@@ -161,7 +163,7 @@ public class Camper {
      * Passes through a String ArrayList and if not empty, sets it to campers
      * allergies
      * 
-     * @param allergies
+     * @param allergies Campers allergies
      */
     public void setAllergies(ArrayList<String> allergies) {
         if (allergies != null) {
@@ -181,7 +183,7 @@ public class Camper {
     /**
      * Passes through a LocalDate and if not empty, sets it as the Campers birthday
      * 
-     * @param birthday
+     * @param birthday Campers birthday
      */
     public void setBirthday(LocalDate birthday) {
         if (birthday != null) {
@@ -202,7 +204,7 @@ public class Camper {
      * Passes through a contact, if not empty sets it as campers primary emergency
      * contact
      * 
-     * @param primaryEmergencyContact
+     * @param primaryEmergencyContact Campers primary emergency contact
      */
     public void setPrimaryEmergencyContact(Contact primaryEmergencyContact) {
         if (primaryEmergencyContact != null) {
@@ -222,7 +224,7 @@ public class Camper {
     /**
      * Passes a contact, if not empty sets as campers second emergency contact
      * 
-     * @param secondaryEmergencyContact
+     * @param secondaryEmergencyContact Campers secondary emergency contact
      */
     public void setSecondaryEmergencyContact(Contact secondaryEmergencyContact) {
         if (secondaryEmergencyContact != null) {
@@ -242,7 +244,7 @@ public class Camper {
     /**
      * Passes through Contact, if not empty sets as campers PCP
      * 
-     * @param primaryCarePhysician
+     * @param primaryCarePhysician Campers PCP
      */
     public void setPrimaryCarePhysician(Contact primaryCarePhysician) {
         if (primaryCarePhysician != null) {
@@ -262,7 +264,7 @@ public class Camper {
     /**
      * Passes through an int, if greater than 0 sets as campers past enrollment
      * 
-     * @param pastEnrollment
+     * @param pastEnrollment Campers past enrollment status
      */
     public void setPastEnrollment(int pastEnrollment) {
         if (pastEnrollment >= 0) {
@@ -282,7 +284,7 @@ public class Camper {
     /**
      * Passes through a String, if not empty sets as Campers swim test result
      * 
-     * @param swimTestResult
+     * @param swimTestResult Campers swim test result
      */
     public void setSwimTestResult(String swimTestResult) {
         if (swimTestResult != null) {
@@ -302,7 +304,8 @@ public class Camper {
     /**
      * Passes through a string, if not empty sets the relationship to customer
      * 
-     * @param relationshipToCustomer
+     * @param relationshipToCustomer Campers relationship to customer associated
+     *                               with them
      */
     public void setRelationshipToCustomer(String relationshipToCustomer) {
         if (relationshipToCustomer != null) {
