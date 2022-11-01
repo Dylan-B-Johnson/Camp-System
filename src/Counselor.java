@@ -17,16 +17,16 @@ public class Counselor extends User {
     /**
      * Creates a counselor given the following parameters
      * 
-     * @param allergies
-     * @param birthday
-     * @param email
-     * @param firstName
-     * @param lastName
-     * @param password
-     * @param campLocation
-     * @param primaryEmergencyContact
-     * @param secondaryEmergencyContact
-     * @param primaryCarePhysician
+     * @param allergies                 List of Counselors allergies
+     * @param birthday                  Counselors birthday
+     * @param email                     Counselors email
+     * @param firstName                 Conselors first name
+     * @param lastName                  Counselors last name
+     * @param password                  Counselors password
+     * @param campLocation              Counselors camp location
+     * @param primaryEmergencyContact   Counselors primary emergency contact
+     * @param secondaryEmergencyContact Counselors secondary emergency contact
+     * @param primaryCarePhysician      Counselors PCP
      */
     public Counselor(ArrayList<String> allergies, LocalDate birthday, String email, String firstName,
             String lastName, String password,
@@ -43,17 +43,17 @@ public class Counselor extends User {
     /**
      * Creates a counselor given the following parameters, including ID
      * 
-     * @param id
-     * @param allergies
-     * @param birthday
-     * @param email
-     * @param firstName
-     * @param lastName
-     * @param password
-     * @param campLocation
-     * @param primaryEmergencyContact
-     * @param secondaryEmergencyContact
-     * @param primaryCarePhysician
+     * @param id                        Counselors ID
+     * @param allergies                 Counselors allergies
+     * @param birthday                  Counselors birthday
+     * @param email                     Counselors email
+     * @param firstName                 Counselors first name
+     * @param lastName                  Counselors last name
+     * @param password                  Counselors password
+     * @param campLocation              Counselors camp location
+     * @param primaryEmergencyContact   Counselors primary emergency contact
+     * @param secondaryEmergencyContact Counselors secondary emergency contact
+     * @param primaryCarePhysician      Counselors PCP
      */
     public Counselor(UUID id, ArrayList<String> allergies, LocalDate birthday, String email,
             String firstName, String lastName, String password,
@@ -70,7 +70,7 @@ public class Counselor extends User {
     /**
      * Passes a String ArrayList, if not empty, sets as Counselors allergies
      * 
-     * @param allergies
+     * @param allergies Counselors allergies
      */
     public void setAllergies(ArrayList<String> allergies) {
         if (allergies != null) {
@@ -111,7 +111,7 @@ public class Counselor extends User {
      * Passes through a Contact, if not empty, sets as counselors primary emergency
      * contact
      * 
-     * @param primaryEmergencyContact
+     * @param primaryEmergencyContact Counselors primary emergency contact
      */
     public void setPrimaryEmergencyContact(Contact primaryEmergencyContact) {
         if (primaryEmergencyContact != null) {
@@ -133,7 +133,7 @@ public class Counselor extends User {
      * Passes through a contact, if not empty, sets as counselors second emergency
      * contact
      * 
-     * @param secondaryEmergencyContact
+     * @param secondaryEmergencyContact Counselors secondary emergenc contact
      */
     public void setSecondaryEmergencyContact(Contact secondaryEmergencyContact) {
         if (secondaryEmergencyContact != null) {
@@ -154,7 +154,7 @@ public class Counselor extends User {
     /**
      * Passes through a Contact, if not empty, sets as Counselors PCP
      * 
-     * @param primaryCarePhysician
+     * @param primaryCarePhysician Counselors PCP
      */
     public void setPrimaryCarePhysician(Contact primaryCarePhysician) {
         if (primaryCarePhysician != null) {
