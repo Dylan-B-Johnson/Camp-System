@@ -14,7 +14,6 @@ public class Group {
     private ArrayList<DaySchedule> schedule;
     private Counselor counselor;
     public static final int MAX_CAMPERS = 8;
-    public static final int WEEK_LENGTH = 6;
 
     /**
      * Creates an instance of Group, setting it's id to the supplied parameter
@@ -152,7 +151,7 @@ public class Group {
      * @param week The week the group is in
      */
     public void getRandomSchedule(Week week) {
-        for (int i = 0; i < WEEK_LENGTH; i++) {
+        for (int i = 0; i < Week.WEEK_LENGTH; i++) {
             DaySchedule schedule = new DaySchedule(null, null, null);
             this.schedule.add(schedule.getRandomDaySchedule(week, week.getStartOfWeek().plusDays(i)));
             DataWriter.createDaySchedule(this.schedule.get(i));
