@@ -9,18 +9,12 @@ import java.util.ArrayList;
 public class WeekList {
 
     /**
-     * Passes through a week and checks if it is available for registration, then
-     * creates the week
+     * Adds a week if it doesn't already exist
      * 
      * @param week The week being added to week list
-     * @return False if the week is not available for registration, true if it is
+     * @return False if it failed to add, true otherwise
      */
     public static boolean addWeek(Week week) {
-        for (Week weekFound : getWeeksAvailableForRegistration()) {
-            if (weekFound.getId().equals(week.getId())) {
-                return false;
-            }
-        }
         DataWriter.createWeek(week);
         return true;
     }
