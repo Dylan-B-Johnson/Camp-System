@@ -12,7 +12,7 @@ public class DataWriter {
     public static boolean saveCustomers(HashMap<UUID, Customer> customers) {
         DataReader.setDirtyFlag(DataReader.CUSTOMERSDIRTY);
         try {
-            FileWriter file = new FileWriter(DataConstants.CUSTOMERPATH);
+            FileWriter file = new FileWriter("data/customers.json");
             JSONArray customersJsonArray = new JSONArray();
             for (Customer customer : customers.values()) {
                 JSONObject customerJsonObject = new JSONObject();
@@ -73,7 +73,7 @@ public class DataWriter {
     public static boolean saveActivities(HashMap<UUID, Activity> activites) {
         DataReader.setDirtyFlag(DataReader.ACTIVITIESDIRTY);
         try {
-            FileWriter file = new FileWriter(DataConstants.ACTIVITYPATH);
+            FileWriter file = new FileWriter("data/activities.json");
             JSONArray activitiesJsonArray = new JSONArray();
             for (Activity activity : activites.values()) {
                 JSONObject activityJsonObject = new JSONObject();
@@ -86,6 +86,7 @@ public class DataWriter {
             file.write(activitiesJsonArray.toJSONString());
             file.close();
         } catch (Exception exception) {
+            System.out.println(exception);
             return false;
         }
         return true;
@@ -116,7 +117,7 @@ public class DataWriter {
     public static boolean saveWeeks(HashMap<UUID, Week> weeks) {
         DataReader.setDirtyFlag(DataReader.WEEKSDIRTY);
         try {
-            FileWriter file = new FileWriter(DataConstants.WEEKPATH);
+            FileWriter file = new FileWriter("data/weeks.json");
             JSONArray weeksJsonArray = new JSONArray();
             for (Week week : weeks.values()) {
                 JSONObject weekJsonObject = new JSONObject();
@@ -166,7 +167,7 @@ public class DataWriter {
     private static boolean saveCampLocation(CampLocation campLocation) {
         DataReader.setDirtyFlag(DataReader.CAMPLOCATIONDIRTY);
         try {
-            FileWriter file = new FileWriter(DataConstants.CAMPLOCATIONPATH);
+            FileWriter file = new FileWriter("data/campLocation.json");
             JSONObject campLocationJsonObject = new JSONObject();
             campLocationJsonObject.put(DataConstants.ID, campLocation.getId().toString());
             campLocationJsonObject.put(DataConstants.NAME, campLocation.getName());
@@ -188,7 +189,7 @@ public class DataWriter {
     private static boolean saveCounselors(HashMap<UUID, Counselor> counselors) {
         DataReader.setDirtyFlag(DataReader.COUNSELORDIRTY);
         try {
-            FileWriter file = new FileWriter(DataConstants.COUNSELORPATH);
+            FileWriter file = new FileWriter("data/counselors.json");
             JSONArray counselorsJsonArray = new JSONArray();
             for (Counselor counselor : counselors.values()) {
                 JSONObject counselorJsonObject = new JSONObject();
@@ -264,7 +265,7 @@ public class DataWriter {
     public static boolean saveDirector(Director director) {
         DataReader.setDirtyFlag(DataReader.DIRECTORDIRTY);
         try {
-            FileWriter file = new FileWriter(DataConstants.DIRECTORPATH);
+            FileWriter file = new FileWriter("data/director.json");
             JSONObject directorJsonObject = new JSONObject();
             directorJsonObject.put(DataConstants.ID, director.getId().toString());
             directorJsonObject.put(DataConstants.EMAIL, director.getEmail());
@@ -288,7 +289,7 @@ public class DataWriter {
     private static boolean saveCampers(HashMap<UUID, Camper> campers) {
         DataReader.setDirtyFlag(DataReader.CAMPERSDIRTY);
         try {
-            FileWriter file = new FileWriter(DataConstants.CAMPERPATH);
+            FileWriter file = new FileWriter("data/campers.json");
             JSONArray campersJsonArray = new JSONArray();
             for (Camper camper : campers.values()) {
                 JSONObject camperJsonObject = new JSONObject();
@@ -364,7 +365,7 @@ public class DataWriter {
     private static boolean saveDaySchedules(HashMap<UUID, DaySchedule> daySchedules) {
         DataReader.setDirtyFlag(DataReader.DAYSCHEDULESDIRTY);
         try {
-            FileWriter file = new FileWriter(DataConstants.DAYSCHEDULEPATH);
+            FileWriter file = new FileWriter("data/daySchedules.json");
             JSONArray dayScheduleJsonArray = new JSONArray();
             for (DaySchedule daySchedule : daySchedules.values()) {
                 JSONObject dayScheduleJsonObject = new JSONObject();
@@ -412,7 +413,7 @@ public class DataWriter {
         DataReader.setDirtyFlag(DataReader.GROUPSDIRTY);
 
         try {
-            FileWriter file = new FileWriter(DataConstants.GROUPPATH);
+            FileWriter file = new FileWriter("data/groups.json");
 
             JSONArray groupsJsonArray = new JSONArray();
             for (Group group : groups.values()) {
