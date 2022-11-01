@@ -429,10 +429,7 @@ public class Facade {
     public boolean exportRoster(Group group, String filename) {
         // filename param has no extension
         // saves the group's week schedule as a well-formatted text file with the
-        // specified name
-        // "showing a grid of what they will be doing at each day and time. For each
-        // activity it also indicates where it is located."
-        // we need to discuss where to save the file
+        // specified name and age of each camper
         try {
             FileWriter fileWriter = new FileWriter(filename);
             for(Camper camper : group.getCampers()){
@@ -457,7 +454,7 @@ public class Facade {
             FileWriter fileWriter = new FileWriter(filename);
             for(Camper camper : group.getCampers()){
                 fileWriter.append(camper.toString());
-                fileWriter.append("\n");
+                fileWriter.append("\n*******************************************\n");
             }
             fileWriter.close();
         } catch (Exception exception) {
