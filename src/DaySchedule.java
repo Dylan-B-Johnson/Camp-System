@@ -64,6 +64,7 @@ public class DaySchedule {
                 if (activity.getName().equals(nameOfActivity)
                         && verifyActivityAvailablility(nameOfActivity, currentActivities.size())) {
                     currentActivities.add(activity);
+                    DataWriter.updateDaySchedule(this.id, this);
                     return true;
                 }
             }
@@ -77,6 +78,7 @@ public class DaySchedule {
             if (activity.getName().equals(nameOfNewActivity)
                     && verifyActivityAvailablility(nameOfNewActivity, timeSLot)) {
                 currentActivities.set(timeSLot, activity);
+                DataWriter.updateDaySchedule(this.id, this);
                 return true;
             }
         }
@@ -105,13 +107,14 @@ public class DaySchedule {
         return true;
     }
 
-    public void setActivities(ArrayList<Activity> activities){
-        if (activities!=null){
-            this.currentActivities=activities;
+    public void setActivities(ArrayList<Activity> activities) {
+        if (activities != null) {
+            this.currentActivities = activities;
+            DataWriter.updateDaySchedule(this.id, this);
         }
     }
 
-    public ArrayList<Activity> getActivities(){
+    public ArrayList<Activity> getActivities() {
         return this.currentActivities;
     }
 

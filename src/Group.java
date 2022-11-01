@@ -88,6 +88,7 @@ public class Group {
             }
         }
         this.counselor = counselor;
+        DataWriter.updateGroup(this.id, this);
         return true;
     }
 
@@ -98,6 +99,7 @@ public class Group {
      */
     public void setSchedule(ArrayList<DaySchedule> schedule) {
         this.schedule = schedule;
+        DataWriter.updateGroup(this.id, this);
     }
 
     /**
@@ -116,6 +118,7 @@ public class Group {
      */
     public void setGroupSize(int groupSize) {
         this.groupSize = groupSize;
+        DataWriter.updateGroup(this.id, this);
     }
 
     /**
@@ -134,6 +137,7 @@ public class Group {
      */
     public void setCampers(ArrayList<Camper> campers) {
         this.campers = campers;
+        DataWriter.updateGroup(this.id, this);
     }
 
     /**
@@ -169,6 +173,7 @@ public class Group {
         if (groupSize < MAX_CAMPERS) {
             campers.add(camper);
             groupSize++;
+            DataWriter.updateGroup(this.id, this);
         }
     }
 
@@ -182,6 +187,7 @@ public class Group {
         for (Camper foundCamper : this.campers) {
             if (foundCamper.getId().equals(camper.getId())) {
                 this.campers.remove(foundCamper);
+                DataWriter.updateGroup(this.id, this);
                 return true;
             }
         }

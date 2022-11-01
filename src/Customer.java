@@ -33,6 +33,7 @@ public class Customer extends User {
 
     public void setContact(Contact self) {
         this.contactInfo = self;
+        DataWriter.updateCustomer(this.id, this);
     }
 
     public String getName() {
@@ -42,6 +43,7 @@ public class Customer extends User {
     public void addCamper(Camper camper) {
         if (camper != null) {
             this.campers.add(camper);
+            DataWriter.updateCustomer(this.id, this);
         }
     }
 
@@ -49,6 +51,7 @@ public class Customer extends User {
         for (Camper camper : this.campers) {
             if (camper.getId().equals(id)) {
                 this.campers.remove(camper);
+                DataWriter.updateCustomer(this.id, this);
             }
         }
     }
@@ -57,6 +60,7 @@ public class Customer extends User {
         for (Camper campers : this.campers) {
             if (campers.getId().equals(id)) {
                 this.campers.set(this.campers.indexOf(camper), camper);
+                DataWriter.updateCustomer(this.id, this);
             }
         }
     }

@@ -68,6 +68,7 @@ public class Activity {
     public void setName(String name) {
         if(name != null){
             this.name = name;
+            DataWriter.updateActivity(this.id, this);
         }
     }
 
@@ -88,6 +89,7 @@ public class Activity {
     public void setLocation(String location) {
         if(location != null){
             this.location = location;
+            DataWriter.updateActivity(this.id, this);
         }
     }
 
@@ -108,6 +110,7 @@ public class Activity {
     public void setDescription(String description) {
         if(description != null){
             this.description = description;
+            DataWriter.updateActivity(this.id, this);
         }
     }
 

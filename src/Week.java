@@ -77,6 +77,7 @@ public class Week {
         } else {
             this.maxCampers = 0;
         }
+        DataWriter.updateWeek(this.id, this);
     }
 
     /**
@@ -105,6 +106,7 @@ public class Week {
     public void setTheme(String theme) {
         if (theme != null) {
             this.theme = theme;
+            DataWriter.updateWeek(this.id, this);
         }
     }
 
@@ -128,6 +130,7 @@ public class Week {
         } else {
             this.currentCampers = 0;
         }
+        DataWriter.updateWeek(this.id, this);
     }
 
     /**
@@ -157,8 +160,7 @@ public class Week {
     public void setStartOfWeek(LocalDate startOfWeek) {
         if (startOfWeek != null) {
             this.startOfWeek = startOfWeek;
-        } else {
-            this.startOfWeek = null;
+            DataWriter.updateWeek(this.id, this);
         }
     }
 
@@ -177,7 +179,10 @@ public class Week {
      * @param groups A list of groups for the week
      */
     public void setGroups(ArrayList<Group> groups) {
-        this.groups = groups;
+        if (groups != null) {
+            this.groups = groups;
+            DataWriter.updateWeek(this.id, this);
+        }
     }
 
     /**
@@ -196,6 +201,7 @@ public class Week {
      */
     public void setCampLocation(CampLocation campLocation) {
         this.campLocation = campLocation;
+        DataWriter.updateWeek(this.id, this);
     }
 
     /**
@@ -237,6 +243,7 @@ public class Week {
                 camper.incrementPastEnrollments();
                 group.addCamper(camper);
                 registered = true;
+                DataWriter.updateWeek(this.id, this);
             }
         }
     }
