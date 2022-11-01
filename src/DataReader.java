@@ -110,6 +110,7 @@ public class DataReader {
             }
         } catch (Exception exception) {
             System.out.println(exception);
+            System.out.println("reader/customer");
         }
         customerCache = customerList;
         return customerList;
@@ -140,7 +141,8 @@ public class DataReader {
                 activities.put(UUID.fromString(id), new Activity(UUID.fromString(id), name, location, description));
             }
         } catch (Exception exception) {
-
+            System.out.println(exception);
+            System.out.println("reader/activity");
         }
         activityCache = activities;
         return activities;
@@ -196,6 +198,7 @@ public class DataReader {
             }
         } catch (Exception e) {
             System.out.println(e);
+            System.out.println("reader/camper");
         }
         camperCache = camperList;
         return camperList;
@@ -235,6 +238,7 @@ public class DataReader {
             }
         } catch (Exception exception) {
             System.out.println(exception);
+            System.out.println("reader/group");
         }
         groupCache = groupList;
         return groupList;
@@ -286,12 +290,13 @@ public class DataReader {
                         (String) pcp.get(DataConstants.RELATIONSHIP), (String) pcp.get(DataConstants.ADDRESS));
                 CampLocation campLocation = getCampLocation();
                 counselorList.put(id,
-                        new Counselor(allergies, birthday, email, firstName, lastName, password,
+                        new Counselor(id, allergies, birthday, email, firstName, lastName, password,
                                 campLocation, primaryEmergencyContact, secondaryEmergencyContact,
                                 primaryCarePhysician));
             }
         } catch (Exception exception) {
             System.out.println(exception);
+            System.out.println("reader/counselor");
         }
         counselorCache = counselorList;
         return counselorList;
@@ -333,7 +338,8 @@ public class DataReader {
             CampLocation campLocationObject = new CampLocation(id, name, location, pricePerCamper);
             return campLocationObject;
         } catch (Exception exception) {
-
+            System.out.println(exception);
+            System.out.println("reader/campLocation");
         }
         return null;
     }
@@ -370,6 +376,7 @@ public class DataReader {
             }
         } catch (Exception exception) {
             System.out.println(exception);
+            System.out.println("reader/week");
         }
         weeksCache = weeksList;
         return weeksList;
@@ -404,6 +411,7 @@ public class DataReader {
             }
         } catch (Exception exception) {
             System.out.println(exception);
+            System.out.println("reader/daySchedule");
         }
         daySchedulesCache = dayScheduleList;
         return dayScheduleList;

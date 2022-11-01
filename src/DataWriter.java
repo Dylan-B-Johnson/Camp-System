@@ -42,7 +42,7 @@ public class DataWriter {
             file.close();
         } catch (Exception exception) {
             System.out.println(exception);
-            System.out.println("bruh");
+            System.out.println("writer/customer");
             return false;
         }
         return true;
@@ -87,6 +87,7 @@ public class DataWriter {
             file.close();
         } catch (Exception exception) {
             System.out.println(exception);
+            System.out.println("writer/activity");
             return false;
         }
         return true;
@@ -137,6 +138,7 @@ public class DataWriter {
             file.close();
         } catch (Exception e) {
             System.out.print(e);
+            System.out.println("writer/week");
             return false;
         }
         return true;
@@ -177,6 +179,7 @@ public class DataWriter {
             file.close();
         } catch (Exception e) {
             System.out.println(e);
+            System.out.println("writer/campLocation");
             return false;
         }
         return true;
@@ -235,6 +238,7 @@ public class DataWriter {
             file.close();
         } catch (Exception exception) {
             System.out.println(exception);
+            System.out.println("writer/counselor");
             return false;
         }
         return true;
@@ -335,6 +339,7 @@ public class DataWriter {
             file.close();
         } catch (Exception e) {
             System.out.println(e);
+            System.out.println("writer/camper");
             return false;
         }
         return true;
@@ -382,6 +387,7 @@ public class DataWriter {
             file.close();
         } catch (Exception e) {
             System.out.println(e);
+            System.out.println("writer/daySchedule");
             return false;
         }
         return true;
@@ -430,12 +436,14 @@ public class DataWriter {
                     scheduleJsonArray.add(daySchedule.getId().toString());
                 }
                 groupJsonObject.put(DataConstants.SCHEDULE, scheduleJsonArray);
+                groupJsonObject.put(DataConstants.COUNSELOR, group.getCounselor().getId().toString());
                 groupsJsonArray.add(groupJsonObject);
             }
             file.write(groupsJsonArray.toJSONString());
             file.close();
         } catch (Exception e) {
             System.out.println(e);
+            System.out.println("writer/group");
             return false;
         }
         return true;

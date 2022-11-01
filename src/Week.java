@@ -299,18 +299,21 @@ public class Week {
      * 
      * @return ArrayList of all of the groups for the week
      */
-    public ArrayList<Group> setUpGroups() {
+    public void setUpGroups() {
         Random rand = new Random();
         ArrayList<Group> groups = new ArrayList<Group>();
         for (int i = 0; i < 6; i++) {
-            groups.add(new Group(new ArrayList<Camper>(), 8, new ArrayList<DaySchedule>(), null));
+            groups.add(new Group(new ArrayList<Camper>(), 8, new ArrayList<DaySchedule>(),
+                    null));
             boolean set = false;
             while (!set) {
                 set = groups.get(i).setCounselor(
-                        UserList.getCounselors().get(rand.nextInt(UserList.getCounselors().size())), this);
+                        UserList.getCounselors().get(rand.nextInt(UserList.getCounselors().size())),
+                        this);
             }
+            DataWriter.createGroup(groups.get(i));
         }
-        return groups;
+        this.groups = groups;
     }
 
     /**

@@ -1,1 +1,32 @@
-[{"startOfWeek":"2023-06-25","currentCampers":0,"groups":["11e76888-0fa2-49d5-9230-a8d662f0a372","8b04ff39-bded-4883-a3ee-d5b69fcf1988","5ed6b5af-9713-4f70-8df7-996fa6b48955","737a71ad-7238-4dba-8628-f0820ee74200","473b472b-4b35-42c7-8e31-63ffdf0448cd","c29792f6-54b5-4dbb-a533-82c46a87b85d"],"theme":"Pirates","id":"ce903d1e-b1ec-49cc-afeb-501cf6bb932a","maxCampers":48}]
+[
+    {
+        "startOfWeek": "2023-01-01",
+        "currentCampers": 0,
+        "groups": [
+            "99d859d5-af38-4485-9055-f4bcb2a966f8",
+            "24837847-9376-4608-9522-9666778a7a6e",
+            "c2a7e006-7b52-4850-a833-1e0240925e86",
+            "45834cd1-3122-48b9-b711-b1e57ff8e0b9",
+            "02e1f38b-f089-487b-9713-de27d47d4447",
+            "8ae8a7f8-5d8e-4afc-bfd9-ac5241e25dc6"
+        ],
+        "theme": "theme",
+        "id": "6e648f87-803e-4944-8170-d3d3b824446e",
+        "maxCampers": 48
+    },
+    {
+        "startOfWeek": "2023-01-08",
+        "currentCampers": 0,
+        "groups": [
+            "e1718eb9-51a9-4d0a-a62e-de788304f792",
+            "3ba44d55-5e39-4f30-9089-09274e9c08d6",
+            "3549ad57-f9bf-42ff-ad02-7e92c13645a5",
+            "6461d078-d71f-45a7-9cf0-f4db4bce8275",
+            "b764c42e-c28d-423a-9b05-f61fb20bcd07",
+            "119544c3-0361-46ae-b395-9d1ed1c18811"
+        ],
+        "theme": "theme2",
+        "id": "8337103b-22e3-4828-8c02-95ca0d003f88",
+        "maxCampers": 48
+    }
+]
