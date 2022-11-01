@@ -41,17 +41,17 @@ public class Camper {
     public Camper(UUID id, String firstName, String lastName, ArrayList<String> allergies, LocalDate birthday,
             Contact primaryEmergencyContact, Contact secondaryEmergencyContact, Contact primaryCarePhysician,
             int pastEnrollment, String swimTestResult, String relationshipToCustomer) {
-        setID(id);
-        setFirstName(firstName);
-        setLastName(lastName);
-        setAllergies(allergies);
-        setBirthday(birthday);
-        setPrimaryEmergencyContact(primaryEmergencyContact);
-        setSecondaryEmergencyContact(secondaryEmergencyContact);
-        setPrimaryCarePhysician(primaryCarePhysician);
-        setPastEnrollment(pastEnrollment);
-        setSwimTestResult(swimTestResult);
-        setRelationshipToCustomer(relationshipToCustomer);
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.allergies = allergies;
+        this.birthday = birthday;
+        this.primaryEmergencyContact = primaryEmergencyContact;
+        this.secondaryEmergencyContact = secondaryEmergencyContact;
+        this.primaryCarePhysician = primaryCarePhysician;
+        this.pastEnrollment = pastEnrollment;
+        this.swimTestResult = swimTestResult;
+        this.relationshipToCustomer = relationshipToCustomer;
     }
 
     /**
@@ -72,28 +72,17 @@ public class Camper {
     public Camper(String firstName, String lastName, ArrayList<String> allergies, LocalDate birthday,
             Contact primaryEmergencyContact, Contact secondaryEmergencyContact, Contact primaryCarePhysician,
             int pastEnrollment, String swimTestResult, String relationshipToCustomer) {
-        setID(UUID.randomUUID());
-        setFirstName(firstName);
-        setLastName(lastName);
-        setAllergies(allergies);
-        setBirthday(birthday);
-        setPrimaryEmergencyContact(primaryEmergencyContact);
-        setSecondaryEmergencyContact(secondaryEmergencyContact);
-        setPrimaryCarePhysician(primaryCarePhysician);
-        setPastEnrollment(pastEnrollment);
-        setSwimTestResult(swimTestResult);
-        setRelationshipToCustomer(relationshipToCustomer);
-    }
-
-    /**
-     * Passes through a UUID and if it is not empty, sets the ID to Camper
-     * 
-     * @param id ID of camper
-     */
-    public void setID(UUID id) {
-        if (id != null) {
-            this.id = id;
-        }
+        this.id = UUID.randomUUID();
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.allergies = allergies;
+        this.birthday = birthday;
+        this.primaryEmergencyContact = primaryEmergencyContact;
+        this.secondaryEmergencyContact = secondaryEmergencyContact;
+        this.primaryCarePhysician = primaryCarePhysician;
+        this.pastEnrollment = pastEnrollment;
+        this.swimTestResult = swimTestResult;
+        this.relationshipToCustomer = relationshipToCustomer;
     }
 
     /**
@@ -126,6 +115,7 @@ public class Camper {
     public void setFirstName(String firstName) {
         if (firstName != null) {
             this.firstName = firstName;
+            DataWriter.updateCamper(this.id, this);
         }
     }
 
@@ -147,6 +137,7 @@ public class Camper {
     public void setLastName(String lastName) {
         if (lastName != null) {
             this.lastName = lastName;
+            DataWriter.updateCamper(this.id, this);
         }
     }
 
@@ -168,6 +159,7 @@ public class Camper {
     public void setAllergies(ArrayList<String> allergies) {
         if (allergies != null) {
             this.allergies = allergies;
+            DataWriter.updateCamper(this.id, this);
         }
     }
 
@@ -188,6 +180,7 @@ public class Camper {
     public void setBirthday(LocalDate birthday) {
         if (birthday != null) {
             this.birthday = birthday;
+            DataWriter.updateCamper(this.id, this);
         }
     }
 
@@ -209,6 +202,7 @@ public class Camper {
     public void setPrimaryEmergencyContact(Contact primaryEmergencyContact) {
         if (primaryEmergencyContact != null) {
             this.primaryEmergencyContact = primaryEmergencyContact;
+            DataWriter.updateCamper(this.id, this);
         }
     }
 
@@ -229,6 +223,7 @@ public class Camper {
     public void setSecondaryEmergencyContact(Contact secondaryEmergencyContact) {
         if (secondaryEmergencyContact != null) {
             this.secondaryEmergencyContact = secondaryEmergencyContact;
+            DataWriter.updateCamper(this.id, this);
         }
     }
 
@@ -249,6 +244,7 @@ public class Camper {
     public void setPrimaryCarePhysician(Contact primaryCarePhysician) {
         if (primaryCarePhysician != null) {
             this.primaryCarePhysician = primaryCarePhysician;
+            DataWriter.updateCamper(this.id, this);
         }
     }
 
@@ -269,6 +265,7 @@ public class Camper {
     public void setPastEnrollment(int pastEnrollment) {
         if (pastEnrollment >= 0) {
             this.pastEnrollment = pastEnrollment;
+            DataWriter.updateCamper(this.id, this);
         }
     }
 
@@ -289,6 +286,7 @@ public class Camper {
     public void setSwimTestResult(String swimTestResult) {
         if (swimTestResult != null) {
             this.swimTestResult = swimTestResult;
+            DataWriter.updateCamper(this.id, this);
         }
     }
 
@@ -310,6 +308,7 @@ public class Camper {
     public void setRelationshipToCustomer(String relationshipToCustomer) {
         if (relationshipToCustomer != null) {
             this.relationshipToCustomer = relationshipToCustomer;
+            DataWriter.updateCamper(this.id, this);
         }
     }
 
@@ -392,6 +391,7 @@ public class Camper {
      */
     public void incrementPastEnrollments() {
         pastEnrollment++;
+        DataWriter.updateCamper(this.id, this);
     }
 
     private String getEnrolledWeeksString() {

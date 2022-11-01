@@ -68,6 +68,7 @@ public class CampLocation {
      */
     public void setPricePerCamper(double pricePerCamper) {
         this.pricePerCamper = pricePerCamper;
+        DataWriter.updateCampLocation(this);
     }
 
     /**
@@ -86,6 +87,7 @@ public class CampLocation {
      */
     public void setId(UUID id) {
         this.id = id;
+        DataWriter.updateCampLocation(this);
     }
 
     /**
@@ -104,6 +106,7 @@ public class CampLocation {
      */
     public void setName(String name) {
         this.name = name;
+        DataWriter.updateCampLocation(this);
     }
 
     /**
@@ -122,6 +125,7 @@ public class CampLocation {
      */
     public void setLocation(String location) {
         this.location = location;
+        DataWriter.updateCampLocation(this);
     }
 
     /**

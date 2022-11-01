@@ -75,6 +75,7 @@ public class Counselor extends User {
     public void setAllergies(ArrayList<String> allergies) {
         if (allergies != null) {
             this.allergies = allergies;
+            DataWriter.updateCounselor(this.id, this);
         }
     }
 
@@ -93,6 +94,7 @@ public class Counselor extends User {
     public void setBirthday(LocalDate birthday) {
         if (birthday != null) {
             this.birthday = birthday;
+            DataWriter.updateCounselor(this.id, this);
         }
     }
 
@@ -114,6 +116,7 @@ public class Counselor extends User {
     public void setPrimaryEmergencyContact(Contact primaryEmergencyContact) {
         if (primaryEmergencyContact != null) {
             this.primaryEmergencyContact = primaryEmergencyContact;
+            DataWriter.updateCounselor(this.id, this);
         }
     }
 
@@ -135,6 +138,7 @@ public class Counselor extends User {
     public void setSecondaryEmergencyContact(Contact secondaryEmergencyContact) {
         if (secondaryEmergencyContact != null) {
             this.secondaryEmergencyContact = secondaryEmergencyContact;
+            DataWriter.updateCounselor(this.id, this);
         }
     }
 
@@ -155,6 +159,7 @@ public class Counselor extends User {
     public void setPrimaryCarePhysician(Contact primaryCarePhysician) {
         if (primaryCarePhysician != null) {
             this.primaryCarePhysician = primaryCarePhysician;
+            DataWriter.updateCounselor(this.id, this);
         }
     }
 

@@ -302,12 +302,12 @@ public class DataWriter {
                 }
                 camperJsonObject.put(DataConstants.ALLERGIES, allergyJsonArray);
                 JSONObject pec = new JSONObject();
-                pec.put(DataConstants.EMAIL, camper.getPrimaryCarePhysician().getEmail());
-                pec.put(DataConstants.FIRSTNAME, camper.getPrimaryCarePhysician().getFirstName());
-                pec.put(DataConstants.LASTNAME, camper.getPrimaryCarePhysician().getLastName());
-                pec.put(DataConstants.PHONENUMBER, camper.getPrimaryCarePhysician().getPhoneNum());
-                pec.put(DataConstants.RELATIONSHIP, camper.getPrimaryCarePhysician().getRelationship());
-                pec.put(DataConstants.ADDRESS, camper.getPrimaryCarePhysician().getAddress());
+                pec.put(DataConstants.EMAIL, camper.getPrimaryEmergencyContact().getEmail());
+                pec.put(DataConstants.FIRSTNAME, camper.getPrimaryEmergencyContact().getFirstName());
+                pec.put(DataConstants.LASTNAME, camper.getPrimaryEmergencyContact().getLastName());
+                pec.put(DataConstants.PHONENUMBER, camper.getPrimaryEmergencyContact().getPhoneNum());
+                pec.put(DataConstants.RELATIONSHIP, camper.getPrimaryEmergencyContact().getRelationship());
+                pec.put(DataConstants.ADDRESS, camper.getPrimaryEmergencyContact().getAddress());
                 camperJsonObject.put(DataConstants.PRIMARYEMERGENCYCONTACT, pec);
                 JSONObject sec = new JSONObject();
                 sec.put(DataConstants.EMAIL, camper.getSecondaryEmergencyContact().getEmail());
