@@ -88,6 +88,7 @@ public class Group {
      */
     public boolean setCounselor(Counselor counselor, Week week) {
         this.counselor = counselor;
+        DataWriter.updateGroup(this.id, this);
         return true;
     }
 

@@ -49,7 +49,7 @@ public class UI {
                 switch (f.getUser().getTypeOfUser()) {
                     case COUNSELOR:
                         switch (options(new String[] { "View Schedule", "View Group", "Export Schedule",
-                                "Export Week Vital Info","Export Group Roster", "Quit" })) {
+                                "Export Week Vital Info", "Export Group Roster", "Quit" })) {
                             case 1:
                                 viewSchedule();
                                 break;
@@ -98,8 +98,8 @@ public class UI {
                                 case 4:
                                     f.saveAndQuit();
                             }
-                        }             
-                        break;                                                                    
+                        }
+                        break;
                     case DIRECTOR:
                         if (f.getFutureOrCurrentWeeks().size() > 0) {
                             options = new String[] { "Search Campers", "Search Counselors", "Add Activity",
@@ -161,7 +161,7 @@ public class UI {
     /**
      * The screen that allows a counselor to export their groups's roster to a file
      */
-    private static void exportRoster(){
+    private static void exportRoster() {
 
     }
 
@@ -471,7 +471,7 @@ public class UI {
                 break;
             }
         }
-        return answerDay;
+        return answerDay-1;
     }
 
     /**
@@ -650,7 +650,10 @@ public class UI {
                     enterToExit();
                     return;
                 } else {
-                    actionFailed();
+                    title("ERROR");
+                    print("We could not register " + camper.getFirstName() + " for the week " + weeks[answerWeek - 1]
+                    + " because their age group is at capacity.\n");
+                    enterToExit();
                     return;
                 }
             }
@@ -670,8 +673,7 @@ public class UI {
         if (camperOptions.length == 0) {
             title("ERROR");
             print("You have not added any campers that will be in the appropriate age range for the selected week.\n"
-                    +
-                    "(Between " + f.getCampLocation().getMinCamperAge() + " and "
+                    + "(Between " + f.getCampLocation().getMinCamperAge() + " and "
                     + f.getCampLocation().getMaxCamperAge() + " years old).");
             enterToExit();
             return;
@@ -681,10 +683,13 @@ public class UI {
                     .get(0);
             if (f.registerCamper(camper.getId(), f.getWeeksAvailableForRegistration().get(answerWeek - 1))) {
                 title("Registration Complete");
+                print(camper.getFirstName() + " " + camper.getLastName()
+                        + " is your only camper in the appropriate age range for the selected week.\n"
+                        + "(Between " + f.getCampLocation().getMinCamperAge() + " and "
+                        + f.getCampLocation().getMaxCamperAge() + " years old).");
                 System.out.printf("Registering "
                         + camper.getFirstName()
                         + "\nFor the week:\n" + weeks[answerWeek - 1] + "\nWill cost $%2f",
-
                         f.getCostOfRegistration());
                 double discount = f.getDiscoutOnRegistration();
                 if (discount != 0) {
@@ -695,8 +700,8 @@ public class UI {
             } else {
                 title("ERROR");
                 print("We could not register " + camper.getFirstName() + " for the week " + weeks[answerWeek - 1]
-                        + ".\n(" + camper.getFirstName()
-                        + " is your only camper elligable for registration).\nPlease try again.");
+                        + " because their age group is at capacity.\n(" + camper.getFirstName()
+                        + " is your only camper elligable for registration).");
                 enterToExit();
                 return;
             }

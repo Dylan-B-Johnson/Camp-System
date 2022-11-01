@@ -227,7 +227,8 @@ public class Week {
      */
     public boolean canRegisterCamper(Camper camper) {
         for (Group group : this.groups) {
-            if (camper.getAge(this) <= this.ageRange[groups.indexOf(group)] && group.canRegisterCamper()) {
+            if (camper.getAge(this) <= this.ageRange[groups.indexOf(group)]
+                    && camper.getAge(this) >= this.ageRange[groups.indexOf(group)] - 1 && group.canRegisterCamper()) {
                 return true;
             }
         }
@@ -289,7 +290,7 @@ public class Week {
     public void setUpGroups() {
         ArrayList<Group> groups = new ArrayList<Group>();
         for (int i = 0; i < NUM_GROUPS; i++) {
-            groups.add(new Group(new ArrayList<Camper>(), 8, new ArrayList<DaySchedule>(), null));
+            groups.add(new Group(new ArrayList<Camper>(), Group.MAX_CAMPERS, new ArrayList<DaySchedule>(), null));
             setUniqueCounselor(groups.get(i));
             groups.get(i).getRandomSchedule(this);
             DataWriter.createGroup(groups.get(i));
