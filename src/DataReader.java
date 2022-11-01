@@ -205,7 +205,6 @@ public class DataReader {
         HashMap<UUID, Group> groups = getGroups();
         if (groups.containsKey(id))
             return groups.get(id);
-        System.out.println(groups.toString());
         return null;
     }
 
