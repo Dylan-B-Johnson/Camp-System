@@ -931,11 +931,11 @@ public class UI {
      * 
      * @return The Contact object representing the customer
      */
-    private static Contact getCustomerConctact() {
+    private static Contact getCustomerConctact(String firstname, String lastname, String email) {
         String phoneNumber = input("Please enter your phone number:");
         String relationship = "Self";
         String address = input("Please enter your address:");
-        return f.makeContact(f.getUser().getFirstName(), f.getUser().getLastName(), f.getUser().getEmail(), phoneNumber,
+        return f.makeContact(firstname, lastname, email, phoneNumber,
                 relationship, address);
     }
 
@@ -1099,19 +1099,15 @@ public class UI {
      */
     private static void createCustomerAccount() {
         title("Create Your Account");
-        f.setUser(f.signUpCustomer(input("Please enter your first name:"),
-                input("Please enter your last name:"),
-                input("Please enter your email:"),
-                input("Please enter your password:"),
-                null));
-        ((Customer)f.getUser()).setContact(getCustomerConctact());
+        String firstname = input("Please enter your first name:");
+        String lastname = input("Please enter your last name:");
+        String email = input("Please enter your email:");
+        String password = input("Please enter your password:");
+        Contact self = getCustomerConctact(firstname, lastname, email);
+        f.setUser(f.signUpCustomer(firstname, lastname, email, password, self));
         if (f.getUser() == null) {
             title("ERROR");
             input("Your email or password were invalid. Please try again.\n(Press enter to continue).");
-        } else {
-            f.getUser().setFirstName(input("Please enter your first name:"));
-            f.getUser().setLastName(input("Please enter your last name:"));
-            ((Customer) f.getUser()).setContact(getCustomerConctact());
         }
     }
 
