@@ -61,6 +61,8 @@ public class UI {
                                 break;
                             case 4:
                                 exportSchedule(true);
+                            case 5:
+                                f.saveAndQuit();
                         }
                         break;
                     case CUSTOMER:
