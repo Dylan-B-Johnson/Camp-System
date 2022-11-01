@@ -1,4 +1,6 @@
+import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Scanner;
@@ -588,7 +590,7 @@ public class UI {
             title("ERROR");
             print("There are no open weeks for registration. Please try again later or contact the camp.");
             enterToExit();
-            answerWeek = -2;
+            return -2;
         }
         while (answerWeek != -1) {
             title("Select the Week to Register For");
@@ -856,6 +858,32 @@ public class UI {
     }
 
     /**
+     * Selects an alternative week start day that is valid if the provided one is
+     * invalid
+     * 
+     * @param startDay The startDay that the director would like to add a camp
+     *                 session week for
+     * @return A valid start date for a new week
+     */
+    private static LocalDate makeStartDateValid(LocalDate startDay) {
+        LocalDate rtn = startDay;
+        if (startDay.getDayOfWeek() != DayOfWeek.SUNDAY) {
+            title("ERROR");
+            print("You did not enter a Sunday.");
+            LocalDate prevSunday = startDay.with(TemporalAdjusters.previous(DayOfWeek.SUNDAY));
+            if (f.isFutureOrCurrentDate(prevSunday)) {
+                print("The previous Sunday has been selected as the start of this week instead.");
+                rtn = prevSunday;
+            } else {
+                print("The previous Sunday has passed, as such, the next Sunday has been selected as the start of this week instead.");
+                rtn = startDay.with(TemporalAdjusters.next(DayOfWeek.SUNDAY));
+            }
+            enterToExit();
+        }
+        return rtn;
+    }
+
+    /**
      * Gets the director to pick a date for a new camp session week to add
      * 
      * @return The start date of adding a new camp session week
@@ -888,7 +916,7 @@ public class UI {
                     enterToExit();
                     continue;
                 }
-                return LocalDate.of(year, month, day);
+                return makeStartDateValid(LocalDate.of(year, month, day));
             } catch (Exception e) {
                 title("ERROR");
                 print("You did not enter an integer.");

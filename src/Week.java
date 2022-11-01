@@ -63,6 +63,7 @@ public class Week {
         this.campLocation = campLocation;
         int[] ageRange = { 8, 10, 12, 14, 16, 18 };
         this.ageRange = ageRange;
+        this.groups = new ArrayList<Group>();
     }
 
     /**
