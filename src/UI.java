@@ -1038,6 +1038,27 @@ public class UI {
     }
 
     /**
+     * Gets the counselor to select a week to view their group for
+     * 
+     * @return The week the counselor will view their group for
+     */
+    private static Week getSelectedWeekViewGroup() {
+        ArrayList<Week> scheduledWeeks = f.getCurrentOrFutureScheduledWeeks();
+        if (scheduledWeeks.size() == 0) {
+            title("ERROR");
+            print("You are not scheduled for any future weeks.");
+            enterToExit();
+            return null;
+        }
+        int answer = -1;
+        while (answer == -1) {
+            title("Select Week to View Group for");
+            answer = options(f.representWeeks(scheduledWeeks));
+        }
+        return scheduledWeeks.get(answer);
+    }
+
+    /**
      * The screen that allows a counselor to view their schedule on a specific day
      */
     private static void viewSchedule() {
@@ -1067,9 +1088,23 @@ public class UI {
      * The screen that allow a counselor to view their group
      */
     private static void viewGroup() {
+        Week selectedWeek = getSelectedWeekViewGroup();
+        if (selectedWeek == null) {
+            return;
+        }
+        Group group = null;
+        for (Group i : selectedWeek.getGroups()) {
+            if (i.getCounselor().getId().equals(f.getUser().getId())) {
+                group = i;
+            }
+        }
+        if (group == null) {
+            actionFailed();
+            return;
+        }
         title("View Group");
         int i = 1;
-        for (Camper camper : f.getFirstGroup(f.getUser()).getCampers()) {
+        for (Camper camper : group.getCampers()) {
             print("\nCamper " + i + ":");
             print(camper.toString());
             i++;
