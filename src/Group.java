@@ -30,6 +30,7 @@ public class Group {
         this.campers = campers;
         this.groupSize = groupSize;
         this.schedule = schedule;
+        this.counselor=counselor;
     }
 
     /**
@@ -46,6 +47,7 @@ public class Group {
         this.campers = campers;
         this.groupSize = groupSize;
         this.schedule = schedule;
+        this.counselor=counselor;
     }
 
     /**
