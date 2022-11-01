@@ -1,10 +1,14 @@
-// Copyright 2022 Row 3
-
 import java.util.UUID;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.time.LocalDate;
 import java.util.Random;
+
+/**
+ * A Day Schedule
+ * 
+ * @author Row 3
+ */
 
 public class DaySchedule {
     private UUID id;
@@ -13,6 +17,13 @@ public class DaySchedule {
     private LocalDate day;
     public static final int MAX_ACTIVITY = 6;
 
+    /**
+     * Creates a Day Schedule given the following parameters
+     * 
+     * @param currentActivities Activities for the current day
+     * @param week              Week that the Day Schedule falls under
+     * @param day               Day of the schedule
+     */
     public DaySchedule(ArrayList<Activity> currentActivities, Week week, LocalDate day) {
         this.id = UUID.randomUUID();
         this.currentActivities = currentActivities;
@@ -20,6 +31,14 @@ public class DaySchedule {
         this.day = day;
     }
 
+    /**
+     * Creates a Day Schedule given the following parameters, including ID
+     * 
+     * @param id                DaySchedules UUID
+     * @param currentActivities Activities for the current day
+     * @param week              Week that the day schedule falls under
+     * @param day               Day of the schedule
+     */
     public DaySchedule(UUID id, ArrayList<Activity> currentActivities, Week week, LocalDate day) {
         this.id = id;
         this.currentActivities = currentActivities;
@@ -27,6 +46,13 @@ public class DaySchedule {
         this.day = day;
     }
 
+    /**
+     * Sets the activities for a day schedule randomly, then returns it
+     * 
+     * @param week Week that the day schedule falls under
+     * @param day  Day of the schedule
+     * @return A Day Schedule with random activities
+     */
     public DaySchedule getRandomDaySchedule(Week week, LocalDate day) {
         ArrayList<Activity> activities = ActivitiesList.getActivities();
         ArrayList<Activity> curActivities = new ArrayList<Activity>();
@@ -41,22 +67,48 @@ public class DaySchedule {
         return new DaySchedule(curActivities, week, day);
     }
 
+    /**
+     * Gets the UUID of a day schedule
+     * 
+     * @return Day Schedules UUID
+     */
     public UUID getId() {
         return this.id;
     }
 
+    /**
+     * Gets a list of the activities for the day schedule
+     * 
+     * @return Activities for day schedule
+     */
     public ArrayList<Activity> getCurrentAcitivities() {
         return this.currentActivities;
     }
 
+    /**
+     * Gets the day of a day schedule
+     * 
+     * @return Day of day schedule
+     */
     public LocalDate getDay() {
         return this.day;
     }
 
+    /**
+     * Gets the week the day schedule falls under
+     * 
+     * @return Week of day schedule
+     */
     public Week getWeek() {
         return this.week;
     }
 
+    /**
+     * Adds an activity to a day schedule
+     * 
+     * @param nameOfActivity Activity being added to the day schedule
+     * @return True if activity is successfully added, false if not
+     */
     public boolean addToSchedule(String nameOfActivity) {
         if (currentActivities.size() <= MAX_ACTIVITY) {
             ArrayList<Activity> activities = ActivitiesList.getActivities();
@@ -72,6 +124,13 @@ public class DaySchedule {
         return false;
     }
 
+    /**
+     * Replaces an old activity with a new activity
+     * 
+     * @param timeSLot          Time of the activity that wants replaced
+     * @param nameOfNewActivity The new activity replacing the old one
+     * @return True if successful, false if not
+     */
     public boolean replaceActivity(int timeSLot, String nameOfNewActivity) {
         ArrayList<Activity> activities = ActivitiesList.getActivities();
         for (Activity activity : activities) {
@@ -85,6 +144,13 @@ public class DaySchedule {
         return false;
     }
 
+    /**
+     * Verifies whether an activity is currently available or not
+     * 
+     * @param nameOfActivity Name of the activity being checked
+     * @param timeSlot       The time that the activity is checked
+     * @return True if the activity is available, false if not
+     */
     private boolean verifyActivityAvailablility(String nameOfActivity, int timeSlot) {
         Activity foundActivity = new Activity(null, null, null);
         ArrayList<Activity> activities = ActivitiesList.getActivities();
@@ -107,6 +173,9 @@ public class DaySchedule {
         return true;
     }
 
+    /**
+     * Sets a list of activities for a new day schedule
+     */
     public void setActivities(ArrayList<Activity> activities) {
         if (activities != null) {
             this.currentActivities = activities;
@@ -114,10 +183,19 @@ public class DaySchedule {
         }
     }
 
+    /**
+     * Gets a list of the activity on a day schedule
+     * 
+     * @return Day Schedules activities
+     */
     public ArrayList<Activity> getActivities() {
         return this.currentActivities;
     }
 
+    /**
+     * Creates a String representation of a Day schedule, including all meal times
+     * and activities
+     */
     public String toString() {
         return "Breakfast (6:00-6:30)" +
                 "\nActivity 1 (6:45-8:15): \n" + activitiesSafeGet(0) +
@@ -130,6 +208,12 @@ public class DaySchedule {
                 "\nDinner (6:00-6:30)";
     }
 
+    /**
+     * Checks to see if an activity is set
+     * 
+     * @param i Index of activity
+     * @return Name of activity if scheduled, None Scheduled if not
+     */
     public String activitiesSafeGet(int i) {
         String rtn;
         try {
