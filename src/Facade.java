@@ -346,7 +346,7 @@ public class Facade {
      */
     public boolean addRandomizedWeek(LocalDate start, String theme) {
         Week week = new Week(0, 0, start, getCampLocation(), theme);
-        week.setGroups(week.setUpGroups());
+        week.setUpGroups();
         return WeekList.addWeek(week);
     }
 

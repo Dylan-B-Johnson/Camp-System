@@ -154,6 +154,7 @@ public class Group {
         for (int i = 0; i < 5; i++) {
             DaySchedule schedule = new DaySchedule(null, null, null);
             this.schedule.add(schedule.getRandomDaySchedule(week, week.getStartOfWeek().plusDays(i)));
+            DataWriter.createDaySchedule(this.schedule.get(i));
         }
     }
 
