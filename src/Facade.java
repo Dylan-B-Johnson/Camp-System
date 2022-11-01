@@ -212,7 +212,8 @@ public class Facade {
 
     public Contact makeContact(String firstName, String lastName, String email,
             String phoneNum, String relationship, String address) {
-        return null;
+        return new Contact(firstName, lastName, email,
+                phoneNum, relationship, address);
     }
 
     public boolean registerCamper(UUID id, Week week) {
