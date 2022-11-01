@@ -119,7 +119,7 @@ public class UI {
                                     viewScheduleDirector(false);
                                     break;
                                 case 7:
-                                    viewScheduleDirector(false);
+                                    viewScheduleDirector(true);
                                     break;
                                 case 8:
                                     f.saveAndQuit();
