@@ -15,11 +15,6 @@ public class WeekList {
      * @return False if it failed to add, true otherwise
      */
     public static boolean addWeek(Week week) {
-        for (Week weekFound : DataReader.getWeeks().values()) {
-            if (weekFound.getId().equals(week.getId())) {
-                return false;
-            }
-        }
         DataWriter.createWeek(week);
         return true;
     }
