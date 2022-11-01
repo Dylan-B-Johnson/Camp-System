@@ -16,11 +16,6 @@ public class WeekList {
      * @return False if the week is not available for registration, true if it is
      */
     public static boolean addWeek(Week week) {
-        for (Week weekFound : getWeeksAvailableForRegistration()) {
-            if (weekFound.getId().equals(week.getId())) {
-                return false;
-            }
-        }
         DataWriter.createWeek(week);
         return true;
     }
