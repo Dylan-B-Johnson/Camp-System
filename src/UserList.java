@@ -11,7 +11,7 @@ public class UserList {
     /**
      * Checks to see if the email entered is available for use
      * 
-     * @param email
+     * @param email Email being tested for availability
      * @return True if email is available, false if it is not
      */
     public static boolean emailAvailable(String email) {
@@ -26,7 +26,7 @@ public class UserList {
     /**
      * Checks which type of user it is, then adds them to the system
      * 
-     * @param user
+     * @param user User being added to the User List
      */
     public static void addUser(User user) {
         switch (user.getTypeOfUser()) {
@@ -93,7 +93,7 @@ public class UserList {
      * Checks to see if the ID entered is valid, then gets a specific user based on
      * the ID entered
      * 
-     * @param id
+     * @param id ID of the User being found
      * @return User associated with the ID
      */
     public static User getUser(UUID id) {

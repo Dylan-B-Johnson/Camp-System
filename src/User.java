@@ -17,12 +17,12 @@ public abstract class User {
     /**
      * Creates a User given the following parameters
      * 
-     * @param email
-     * @param firstName
-     * @param lastName
-     * @param password
-     * @param campLocation
-     * @param typeOfUser
+     * @param email        The email associated with User
+     * @param firstName    The Users first name
+     * @param lastName     The Users last name
+     * @param password     The password associated with User
+     * @param campLocation The camp location associated with User
+     * @param typeOfUser   The type of User(Customer, Counselor, Director)
      */
     public User(String email, String firstName, String lastName, String password, CampLocation campLocation,
             TypeOfUser typeOfUser) {
@@ -38,13 +38,13 @@ public abstract class User {
     /**
      * Creates a User given the following parameters, which includes ID
      * 
-     * @param id
-     * @param email
-     * @param firstName
-     * @param lastName
-     * @param password
-     * @param campLocation
-     * @param typeOfUser
+     * @param id           ID of the User
+     * @param email        email of the User
+     * @param firstName    the Users first name
+     * @param lastName     the Users last name
+     * @param password     password of the User
+     * @param campLocation Camp location associated with the User
+     * @param typeOfUser   The type of User(Customer, Counselor, Director)
      */
     public User(UUID id, String email, String firstName, String lastName, String password, CampLocation campLocation,
             TypeOfUser typeOfUser) {
@@ -89,7 +89,7 @@ public abstract class User {
     /**
      * Checks to make sure the email being entered has a valid format
      * 
-     * @param email
+     * @param email Email that is being tested
      * @return true if email is valid, false if it is not
      */
     public static boolean emailIsValid(String email) {
@@ -100,7 +100,7 @@ public abstract class User {
     /**
      * If email is valid, sets the email for user
      * 
-     * @param email
+     * @param email Email that is being set to the new User
      */
     public void setEmail(String email) {
         if (email != null && email.contains("@") && email.contains(".") && email.length() >= 3
@@ -120,7 +120,7 @@ public abstract class User {
     /**
      * Takes in a String and sets it to users firstName
      * 
-     * @param firstName
+     * @param firstName First name being set to new User
      */
     public void setFirstName(String firstName) {
         if (firstName != null)
@@ -139,7 +139,7 @@ public abstract class User {
     /**
      * takes in a String and sets it to users lastName
      * 
-     * @param lastName
+     * @param lastName Last name being set to new User
      */
     public void setLastName(String lastName) {
         if (lastName != null)
@@ -158,7 +158,7 @@ public abstract class User {
     /**
      * Takes in a String and sets it to the users password
      * 
-     * @param password
+     * @param password New Users password
      */
     public void setPassword(String password) {
         if (password != null)
@@ -177,7 +177,7 @@ public abstract class User {
     /**
      * If campLocation is not empty, sets it to the user
      * 
-     * @param campLocation
+     * @param campLocation Camp location being set for new User
      */
     public void setCampLocation(CampLocation campLocation) {
         if (campLocation != null)
@@ -196,7 +196,7 @@ public abstract class User {
     /**
      * Sets the type of user
      * 
-     * @param typeOfUser
+     * @param typeOfUser Type of user being set for new User
      */
     public void setTypeOfUser(TypeOfUser typeOfUser) {
         this.typeOfUser = typeOfUser;

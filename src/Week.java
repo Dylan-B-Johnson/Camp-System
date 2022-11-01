@@ -25,13 +25,13 @@ public class Week {
     /**
      * Creates a Week with the following parameters, including ID
      * 
-     * @param id
-     * @param maxCampers
-     * @param currentCampers
-     * @param startOfWeek
-     * @param groups
-     * @param campLocation
-     * @param theme
+     * @param id             ID for the week
+     * @param maxCampers     Max number of campers for the week
+     * @param currentCampers Current amount of campers for the week
+     * @param startOfWeek    Start date of the week
+     * @param groups         A list of all the groups for the week
+     * @param campLocation   The campLocation of the week
+     * @param theme          The theme for the week
      */
     public Week(UUID id, int maxCampers, int currentCampers, LocalDate startOfWeek, ArrayList<Group> groups,
             CampLocation campLocation, String theme) {
@@ -48,11 +48,11 @@ public class Week {
     /**
      * Creates a week with the following parameters
      * 
-     * @param maxCampers
-     * @param currentCampers
-     * @param startOfWeek
-     * @param campLocation
-     * @param theme
+     * @param maxCampers     The max number of campers for the week
+     * @param currentCampers The current amount of campers for the week
+     * @param startOfWeek    The starting date of the week
+     * @param campLocation   The campLocation associated with the week
+     * @param theme          The theme for the week
      */
     public Week(int maxCampers, int currentCampers, LocalDate startOfWeek,
             CampLocation campLocation, String theme) {
@@ -63,12 +63,13 @@ public class Week {
         this.campLocation = campLocation;
         int[] ageRange = { 8, 10, 12, 14, 16, 18 };
         this.ageRange = ageRange;
+        this.groups = new ArrayList<Group>();
     }
 
     /**
      * Checks if the int passed is greater than 0, and if so sets maxCampers
      * 
-     * @param maxCampers
+     * @param maxCampers The max amount of campers for the week
      */
     public void setMaxCampers(int maxCampers) {
         if (maxCampers > 0) {
@@ -99,7 +100,7 @@ public class Week {
     /**
      * Sets the theme for the week
      * 
-     * @param theme
+     * @param theme The theme for the week
      */
     public void setTheme(String theme) {
         if (theme != null) {
@@ -119,7 +120,7 @@ public class Week {
     /**
      * Passes through an int, if greater than 0, sets the current amount of campers
      * 
-     * @param currentCampers
+     * @param currentCampers Current number of campers for the week
      */
     public void setCurrentCampers(int currentCampers) {
         if (currentCampers > 0) {
@@ -151,7 +152,7 @@ public class Week {
      * Passes through a LocalDate, if it isn't empty, then sets the start date of
      * the week
      * 
-     * @param startOfWeek
+     * @param startOfWeek Starting date for the week
      */
     public void setStartOfWeek(LocalDate startOfWeek) {
         if (startOfWeek != null) {
@@ -173,7 +174,7 @@ public class Week {
     /**
      * Passes through a Group ArrayList and sets it to groups
      * 
-     * @param groups
+     * @param groups A list of groups for the week
      */
     public void setGroups(ArrayList<Group> groups) {
         this.groups = groups;
@@ -191,7 +192,7 @@ public class Week {
     /**
      * Sets the current campLocation
      * 
-     * @param campLocation
+     * @param campLocation The camp location for the week
      */
     public void setCampLocation(CampLocation campLocation) {
         this.campLocation = campLocation;
@@ -210,7 +211,7 @@ public class Week {
      * Passes through a camper and makes sure they are in the correct age range for
      * the camp
      * 
-     * @param camper
+     * @param camper The camper being checked for registration
      * @return True if the camper is in the correct age range, false if not
      */
     public boolean canRegisterCamper(Camper camper) {
@@ -226,7 +227,7 @@ public class Week {
      * Passes through a camper and makes sure they are in the correct age range, if
      * so, they are added to their specific group
      * 
-     * @param camper
+     * @param camper The camper being registered for the week
      */
     public void registerCamper(Camper camper) {
         boolean registered = false;

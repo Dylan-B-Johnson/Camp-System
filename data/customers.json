@@ -1,1 +1,61 @@
-[{"name":"hiking the crescent falls trail","description":"The campers will hike the Crescent Falls trail","location":"Crescent Falls","id":"49fa2e16-dcbb-4094-881e-be536104122b"},{"name":"test","description":"test","location":"test","id":"864bafed-d75d-4f79-b879-4e0a97674584"},{"name":"swimming","description":"The campers will go swimming at Crystal Lake","location":"Crystal Lake","id":"6f145e7d-e657-4112-ba7c-756b2264da3b"},{"name":"canoeing","description":"The campers will go canoeing at Crystal Lake","location":"Crystal Lake","id":"fb610fc1-b92a-409c-9d1a-0712d7b96733"},{"name":"hiking the blueberry trail","description":"The campers will hike the Blueberry trail","location":"Blueberry trail","id":"e3c449cc-8f8d-46c5-9cb2-7376b9f92769"},{"name":"soccer","description":"The campers will go play soccer","location":"Actvities Field","id":"031cfc41-7ee8-4de1-8993-b70289e2bb5e"},{"name":"archery","description":"The campers will go practice archery at the range","location":"Archery Range","id":"5eb92dfe-48b3-4dfb-baf6-cca89cfb0ab5"}]
+[
+    {
+        "firstName": "Bob",
+        "lastName": "Damien",
+        "typeOfUser": "CUSTOMER",
+        "password": "passworten1234",
+        "contactInfo": {
+            "firstName": "Bob",
+            "lastName": "Damien",
+            "phoneNumber": "654-234-1262",
+            "address": "62 Hoback St, Helena, MT 27909",
+            "relationship": "father",
+            "email": "bob@hotmail.com"
+        },
+        "campers": [
+            "35f810c6-ed26-42ec-a423-1db01478251f",
+            "ec38d029-570d-43d8-9227-a55408674b96"
+        ],
+        "id": "535652b3-32c1-41ec-8765-921d2e5a650d",
+        "campLocation": "2abbae6f-07eb-4e30-ba07-ec8fc05a503b",
+        "email": "bob@hotmail.com"
+    },
+    {
+        "firstName": "Sally",
+        "lastName": "Kaufman",
+        "typeOfUser": "CUSTOMER",
+        "password": "explative63",
+        "contactInfo": {
+            "firstName": "Bob",
+            "lastName": "Damien",
+            "phoneNumber": "654-234-1262",
+            "address": "62 Hoback St, Helena, MT 27909",
+            "relationship": "father",
+            "email": "bob@hotmail.com"
+        },
+        "campers": [
+            "7e7b8f07-e89f-4e26-a0fb-3ba36f8ba1b0"
+        ],
+        "id": "de162b09-ab98-4ec5-9bf2-1a5fdc86c7e7",
+        "campLocation": "2abbae6f-07eb-4e30-ba07-ec8fc05a503b",
+        "email": "SallyBrogden@hotmail.com"
+    },
+    {
+        "firstName": "test",
+        "lastName": "test",
+        "typeOfUser": "CUSTOMER",
+        "password": "test",
+        "contactInfo": {
+            "firstName": "null",
+            "lastName": "null",
+            "phoneNumber": "null",
+            "address": "null",
+            "relationship": "null",
+            "email": "null"
+        },
+        "campers": [],
+        "id": "dedd2146-7813-46e6-9b43-5746cc0c8cb8",
+        "campLocation": "2abbae6f-07eb-4e30-ba07-ec8fc05a503b",
+        "email": "test@gmail.com"
+    }
+]
