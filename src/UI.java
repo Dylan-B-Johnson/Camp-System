@@ -95,7 +95,7 @@ public class UI {
                         }
                         break;
                     case DIRECTOR:
-                        if (f.getFutureOrCurrentWeeks().size() == 0) {
+                        if (f.getFutureOrCurrentWeeks().size() > 0) {
                             options = new String[] { "Search Campers", "Search Counselors", "Add Activity",
                                     "Add Camp Session Week", "Edit Schedule", "View Schedule", "Export Schedule",
                                     "Quit" };
