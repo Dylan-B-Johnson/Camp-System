@@ -12,7 +12,6 @@ public class UI {
     private static Facade f = new Facade();
     private static final String PCP = "primary care physician";
     private static Scanner scan = new Scanner(System.in);
-    private static ArrayList<Week> currentOrFutureWeeks = f.getFutureOrCurrentWeeks();
 
     /**
      * Application entry point
@@ -50,7 +49,7 @@ public class UI {
                 switch (f.getUser().getTypeOfUser()) {
                     case COUNSELOR:
                         switch (options(new String[] { "View Schedule", "View Group", "Export Schedule",
-                                "Export Week Vital Info", "Quit" })) {
+                                "Export Week Vital Info","Export Group Roster", "Quit" })) {
                             case 1:
                                 viewSchedule();
                                 break;
@@ -62,6 +61,12 @@ public class UI {
                                 break;
                             case 4:
                                 exportSchedule(true);
+                                break;
+                            case 5:
+                                exportRoster();
+                                break;
+                            case 6:
+                                f.saveAndQuit();
                         }
                         break;
                     case CUSTOMER:
@@ -96,7 +101,7 @@ public class UI {
                         }
                         break;
                     case DIRECTOR:
-                        if (currentOrFutureWeeks.size() == 0) {
+                        if (f.getFutureOrCurrentWeeks().size() > 0) {
                             options = new String[] { "Search Campers", "Search Counselors", "Add Activity",
                                     "Add Camp Session Week", "Edit Schedule", "View Schedule", "Export Schedule",
                                     "Quit" };
@@ -120,7 +125,7 @@ public class UI {
                                     viewScheduleDirector(false);
                                     break;
                                 case 7:
-                                    viewScheduleDirector(false);
+                                    viewScheduleDirector(true);
                                     break;
                                 case 8:
                                     f.saveAndQuit();
@@ -150,6 +155,13 @@ public class UI {
             }
 
         }
+
+    }
+
+    /**
+     * The screen that allows a counselor to export their groups's roster to a file
+     */
+    private static void exportRoster(){
 
     }
 
@@ -248,6 +260,14 @@ public class UI {
      */
     private static void addWeek() {
         LocalDate date = getStartDate();
+        if (f.getCounselors().size() < 6) {
+            title("ERROR");
+            print("There are less than " + Week.NUM_GROUPS
+                    + " (the number of groups per week) counslesors in the system.\nPlease have" +
+                    " more counselors register their accounts before creating a new week.");
+            enterToExit();
+            return;
+        }
         title("Add a Week");
         if (f.addRandomizedWeek(date, input("Please enter the theme of the camp session week:"))) {
             print("Camp session week sucessfully added.");
@@ -1031,6 +1051,27 @@ public class UI {
     }
 
     /**
+     * Gets the counselor to select a week to view their group for
+     * 
+     * @return The week the counselor will view their group for
+     */
+    private static Week getSelectedWeekViewGroup() {
+        ArrayList<Week> scheduledWeeks = f.getCurrentOrFutureScheduledWeeks();
+        if (scheduledWeeks.size() == 0) {
+            title("ERROR");
+            print("You are not scheduled for any future weeks.");
+            enterToExit();
+            return null;
+        }
+        int answer = -1;
+        while (answer == -1) {
+            title("Select Week to View Group for");
+            answer = options(f.representWeeks(scheduledWeeks));
+        }
+        return scheduledWeeks.get(answer);
+    }
+
+    /**
      * The screen that allows a counselor to view their schedule on a specific day
      */
     private static void viewSchedule() {
@@ -1060,9 +1101,23 @@ public class UI {
      * The screen that allow a counselor to view their group
      */
     private static void viewGroup() {
+        Week selectedWeek = getSelectedWeekViewGroup();
+        if (selectedWeek == null) {
+            return;
+        }
+        Group group = null;
+        for (Group i : selectedWeek.getGroups()) {
+            if (i.getCounselor().getId().equals(f.getUser().getId())) {
+                group = i;
+            }
+        }
+        if (group == null) {
+            actionFailed();
+            return;
+        }
         title("View Group");
         int i = 1;
-        for (Camper camper : f.getFirstGroup(f.getUser()).getCampers()) {
+        for (Camper camper : group.getCampers()) {
             print("\nCamper " + i + ":");
             print(camper.toString());
             i++;

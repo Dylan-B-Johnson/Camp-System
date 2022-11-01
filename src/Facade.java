@@ -235,7 +235,7 @@ public class Facade {
             LocalDate birthday, String relationToCustomer, Contact primaryEmergencyContact,
             Contact secondaryEmergencyContact, Contact primaryCarePhysician) {
         Camper camper = new Camper(firstName, lastName, allergies, birthday, primaryEmergencyContact,
-                secondaryEmergencyContact, primaryCarePhysician, 0, lastName, relationToCustomer);
+                secondaryEmergencyContact, primaryCarePhysician, 0, "", relationToCustomer);
         DataWriter.createCamper(camper);
         ((Customer) getUser()).addCamper(camper);
         return true;
@@ -426,6 +426,22 @@ public class Facade {
         return false;
     }
 
+    public boolean exportRoster(Group group, String filename) {
+        // filename param has no extension
+        // saves the group's week schedule as a well-formatted text file with the
+        // specified name and age of each camper
+        try {
+            FileWriter fileWriter = new FileWriter(filename);
+            for(Camper camper : group.getCampers()){
+                fileWriter.append("Name: " + camper.getFirstName() + " " + camper.getLastName() + " Age: "+camper.getAge(getWeek(group))+"\n");
+            }
+            fileWriter.close();
+        } catch (Exception exception) {
+            System.out.println(exception);
+        }
+        return false;
+    }
+
     public boolean exportVitalInfo(Group group, String filename) {
         // filename param has no extension
         // saves the group's vital info as a well-formatted text file with the specified
@@ -434,6 +450,16 @@ public class Facade {
         // formatted report of all his campers allergies, emergency contacts, and
         // medical information. Make sure this is a good sized list."
         // we need to discuss where to save the file
+        try {
+            FileWriter fileWriter = new FileWriter(filename);
+            for(Camper camper : group.getCampers()){
+                fileWriter.append(camper.toString());
+                fileWriter.append("\n*******************************************\n");
+            }
+            fileWriter.close();
+        } catch (Exception exception) {
+            System.out.println(exception);
+        }
         return false;
     }
 

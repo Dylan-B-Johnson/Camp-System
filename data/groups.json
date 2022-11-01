@@ -1,1 +1,121 @@
-[{"schedule":[],"counselor":"9f34cc65-4740-44b1-b5c7-b65d47206ae7","campers":[],"groupSize":8,"id":"fa12bb8f-1dce-4c38-8927-83c21f444b28"},{"schedule":[],"counselor":"9f34cc65-4740-44b1-b5c7-b65d47206ae7","campers":[],"groupSize":8,"id":"119544c3-0361-46ae-b395-9d1ed1c18811"},{"schedule":[],"counselor":"d62445be-37f2-4abc-8763-a2bcc526881d","campers":[],"groupSize":8,"id":"c2a7e006-7b52-4850-a833-1e0240925e86"},{"schedule":[],"counselor":"d99bbea9-f559-45e8-ba58-40e87be1f066","campers":[],"groupSize":8,"id":"99d859d5-af38-4485-9055-f4bcb2a966f8"},{"schedule":[],"counselor":"9f34cc65-4740-44b1-b5c7-b65d47206ae7","campers":[],"groupSize":8,"id":"50a83d02-065b-4298-af3b-34864e9d0680"},{"schedule":[],"counselor":"d7553746-f593-47a4-b662-2d1f73189703","campers":[],"groupSize":8,"id":"e1718eb9-51a9-4d0a-a62e-de788304f792"},{"schedule":[],"counselor":"9f34cc65-4740-44b1-b5c7-b65d47206ae7","campers":[],"groupSize":8,"id":"b764c42e-c28d-423a-9b05-f61fb20bcd07"},{"schedule":[],"counselor":"9f34cc65-4740-44b1-b5c7-b65d47206ae7","campers":[],"groupSize":8,"id":"c0d5ffd1-ab5e-44f2-8a68-7158abb63e43"},{"schedule":[],"counselor":"d62445be-37f2-4abc-8763-a2bcc526881d","campers":[],"groupSize":8,"id":"8ae8a7f8-5d8e-4afc-bfd9-ac5241e25dc6"},{"schedule":[],"counselor":"08c9186d-e5d9-4d3e-adaa-6960fa8e9a1b","campers":[],"groupSize":8,"id":"6461d078-d71f-45a7-9cf0-f4db4bce8275"},{"schedule":[],"counselor":"9f34cc65-4740-44b1-b5c7-b65d47206ae7","campers":[],"groupSize":8,"id":"02e1f38b-f089-487b-9713-de27d47d4447"},{"schedule":[],"counselor":"9f34cc65-4740-44b1-b5c7-b65d47206ae7","campers":[],"groupSize":8,"id":"52cf5563-a45e-40de-8ebf-15367131df8d"},{"schedule":[],"counselor":"1135be62-5742-4ef7-9ce3-06f3407d946b","campers":[],"groupSize":8,"id":"24837847-9376-4608-9522-9666778a7a6e"},{"schedule":[],"counselor":"9f34cc65-4740-44b1-b5c7-b65d47206ae7","campers":[],"groupSize":8,"id":"c7988e76-e64e-4abc-94f3-9539a311563b"},{"schedule":[],"counselor":"9f34cc65-4740-44b1-b5c7-b65d47206ae7","campers":[],"groupSize":8,"id":"45834cd1-3122-48b9-b711-b1e57ff8e0b9"},{"schedule":[],"counselor":"9f34cc65-4740-44b1-b5c7-b65d47206ae7","campers":[],"groupSize":8,"id":"3ba44d55-5e39-4f30-9089-09274e9c08d6"},{"schedule":[],"counselor":"d62445be-37f2-4abc-8763-a2bcc526881d","campers":[],"groupSize":8,"id":"3549ad57-f9bf-42ff-ad02-7e92c13645a5"}]
+[
+    {
+        "schedule": [],
+        "counselor": "9f34cc65-4740-44b1-b5c7-b65d47206ae7",
+        "campers": [],
+        "groupSize": 8,
+        "id": "fa12bb8f-1dce-4c38-8927-83c21f444b28"
+    },
+    {
+        "schedule": [],
+        "counselor": "9f34cc65-4740-44b1-b5c7-b65d47206ae7",
+        "campers": [],
+        "groupSize": 8,
+        "id": "119544c3-0361-46ae-b395-9d1ed1c18811"
+    },
+    {
+        "schedule": [],
+        "counselor": "d62445be-37f2-4abc-8763-a2bcc526881d",
+        "campers": [],
+        "groupSize": 8,
+        "id": "c2a7e006-7b52-4850-a833-1e0240925e86"
+    },
+    {
+        "schedule": [],
+        "counselor": "d99bbea9-f559-45e8-ba58-40e87be1f066",
+        "campers": [],
+        "groupSize": 8,
+        "id": "99d859d5-af38-4485-9055-f4bcb2a966f8"
+    },
+    {
+        "schedule": [],
+        "counselor": "9f34cc65-4740-44b1-b5c7-b65d47206ae7",
+        "campers": [],
+        "groupSize": 8,
+        "id": "50a83d02-065b-4298-af3b-34864e9d0680"
+    },
+    {
+        "schedule": [],
+        "counselor": "d7553746-f593-47a4-b662-2d1f73189703",
+        "campers": [],
+        "groupSize": 8,
+        "id": "e1718eb9-51a9-4d0a-a62e-de788304f792"
+    },
+    {
+        "schedule": [],
+        "counselor": "9f34cc65-4740-44b1-b5c7-b65d47206ae7",
+        "campers": [],
+        "groupSize": 8,
+        "id": "b764c42e-c28d-423a-9b05-f61fb20bcd07"
+    },
+    {
+        "schedule": [],
+        "counselor": "9f34cc65-4740-44b1-b5c7-b65d47206ae7",
+        "campers": [],
+        "groupSize": 8,
+        "id": "c0d5ffd1-ab5e-44f2-8a68-7158abb63e43"
+    },
+    {
+        "schedule": [],
+        "counselor": "d62445be-37f2-4abc-8763-a2bcc526881d",
+        "campers": [],
+        "groupSize": 8,
+        "id": "8ae8a7f8-5d8e-4afc-bfd9-ac5241e25dc6"
+    },
+    {
+        "schedule": [],
+        "counselor": "08c9186d-e5d9-4d3e-adaa-6960fa8e9a1b",
+        "campers": [],
+        "groupSize": 8,
+        "id": "6461d078-d71f-45a7-9cf0-f4db4bce8275"
+    },
+    {
+        "schedule": [],
+        "counselor": "9f34cc65-4740-44b1-b5c7-b65d47206ae7",
+        "campers": [],
+        "groupSize": 8,
+        "id": "02e1f38b-f089-487b-9713-de27d47d4447"
+    },
+    {
+        "schedule": [],
+        "counselor": "9f34cc65-4740-44b1-b5c7-b65d47206ae7",
+        "campers": [],
+        "groupSize": 8,
+        "id": "52cf5563-a45e-40de-8ebf-15367131df8d"
+    },
+    {
+        "schedule": [],
+        "counselor": "1135be62-5742-4ef7-9ce3-06f3407d946b",
+        "campers": [],
+        "groupSize": 8,
+        "id": "24837847-9376-4608-9522-9666778a7a6e"
+    },
+    {
+        "schedule": [],
+        "counselor": "9f34cc65-4740-44b1-b5c7-b65d47206ae7",
+        "campers": [],
+        "groupSize": 8,
+        "id": "c7988e76-e64e-4abc-94f3-9539a311563b"
+    },
+    {
+        "schedule": [],
+        "counselor": "9f34cc65-4740-44b1-b5c7-b65d47206ae7",
+        "campers": [],
+        "groupSize": 8,
+        "id": "45834cd1-3122-48b9-b711-b1e57ff8e0b9"
+    },
+    {
+        "schedule": [],
+        "counselor": "9f34cc65-4740-44b1-b5c7-b65d47206ae7",
+        "campers": [],
+        "groupSize": 8,
+        "id": "3ba44d55-5e39-4f30-9089-09274e9c08d6"
+    },
+    {
+        "schedule": [],
+        "counselor": "d62445be-37f2-4abc-8763-a2bcc526881d",
+        "campers": [],
+        "groupSize": 8,
+        "id": "3549ad57-f9bf-42ff-ad02-7e92c13645a5"
+    }
+]
