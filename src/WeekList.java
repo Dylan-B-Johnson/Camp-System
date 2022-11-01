@@ -19,6 +19,10 @@ public class WeekList {
         return true;
     }
 
+    public static ArrayList<Week> getWeeks() {
+        return new ArrayList<Week>(DataReader.getWeeks().values());
+    }
+
     /**
      * Gets the current camp week session if there is one
      * 
