@@ -12,6 +12,7 @@ public class UI {
     private static Facade f = new Facade();
     private static final String PCP = "primary care physician";
     private static Scanner scan = new Scanner(System.in);
+    private static int getCurrentOrFutureWeeksLength;
 
     /**
      * Application entry point
@@ -27,6 +28,7 @@ public class UI {
      * The method containing the complete flow of UI screens for the program
      */
     private static void run() {
+        getCurrentOrFutureWeeksLength=f.getFutureOrCurrentWeeks().size();
         while (true) {
             if (f.getUser() == null) {
                 switch (welcomeScreen()) {
@@ -101,7 +103,7 @@ public class UI {
                         }
                         break;
                     case DIRECTOR:
-                        if (f.getFutureOrCurrentWeeks().size() > 0) {
+                        if (getCurrentOrFutureWeeksLength > 0) {
                             options = new String[] { "Search Campers", "Search Counselors", "Add Activity",
                                     "Add Camp Session Week", "Edit Schedule", "View Schedule", "Export Schedule",
                                     "Quit" };
@@ -173,10 +175,11 @@ public class UI {
             return;
         }
         title("Export Your Group's Roster");
-        String filename = input("Please enter the name of the file to export your week's roster as (do not include a file extension):");
+        String filename = input(
+                "Please enter the name of the file to export your week's roster as (do not include a file extension):");
         Group group = f.getAssociatedGroup(selectedWeek);
 
-        //TODO: complete this + add .txt to all exports
+        // TODO: complete this + add .txt to all exports
     }
 
     /**
@@ -286,6 +289,7 @@ public class UI {
         title("Add a Week");
         if (f.addRandomizedWeek(date, input("Please enter the theme of the camp session week:"))) {
             print("Camp session week sucessfully added.");
+            getCurrentOrFutureWeeksLength++;
             enterToExit();
         } else {
             actionFailed();
