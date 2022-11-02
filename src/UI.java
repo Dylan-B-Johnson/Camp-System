@@ -204,6 +204,12 @@ public class UI {
             actionFailed();
             return;
         } else {
+            if (group.getCampers().size() == 0) {
+                title("ERROR");
+                print("No campers have registered and been assigned to your group.");
+                enterToExit();
+                return;
+            }
             print("Sucessfully exported your group's roster.");
             enterToExit();
         }
@@ -622,7 +628,28 @@ public class UI {
         }
         String filename = getCounselorExportFilename(vitalInfo);
         Group group = f.getAssociatedGroup(selectedWeek);
-        if (group == null || !(f.exportSchedule(group, filename, selectedWeek))) {
+        if (group==null){
+            actionFailed();
+            return;
+        }
+        handleExport(group, filename, selectedWeek, vitalInfo);
+    }
+
+    /**
+     * Handles the actual exporting for export schedule or vital info
+     */
+    private static void handleExport(Group group, String filename, Week selectedWeek, Boolean vitalInfo){
+        if (group.getCampers().size() == 0 && vitalInfo) {
+            title("ERROR");
+            print("No campers have registered and been assigned to your group.");
+            enterToExit();
+            return;
+        }
+        if (!vitalInfo && !(f.exportSchedule(group, filename, selectedWeek))) {
+            actionFailed();
+            return;
+        }
+        if (vitalInfo && !(f.exportVitalInfo(group, filename, selectedWeek))){
             actionFailed();
             return;
         }
@@ -1131,7 +1158,10 @@ public class UI {
         if (selectedWeek == null) {
             return;
         }
-        int answer = options(f.weekDays(selectedWeek));
+        int answer = -1;
+        while (answer == -1) {
+            answer = options(f.weekDays(selectedWeek));
+        }
         Group group = null;
         for (Group i : selectedWeek.getGroups()) {
             if (i.getCounselor().getId().equals(f.getUser().getId())) {
@@ -1142,11 +1172,9 @@ public class UI {
             actionFailed();
             return;
         }
-        if (answer != -1) {
-            title("View Schedule");
-            print(group.getSchedule().get(answer - 1).toString());
-            enterToExit();
-        }
+        title("View Schedule");
+        print(group.getSchedule().get(answer - 1).toString());
+        enterToExit();
     }
 
     /**
@@ -1165,6 +1193,12 @@ public class UI {
         }
         if (group == null) {
             actionFailed();
+            return;
+        }
+        if (group.getCampers().size() == 0) {
+            title("ERROR");
+            print("No campers have registered and been assigned to your group.");
+            enterToExit();
             return;
         }
         title("View Group");
