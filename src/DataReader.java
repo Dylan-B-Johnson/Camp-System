@@ -112,6 +112,7 @@ public class DataReader {
             System.out.println(exception);
             System.out.println("reader/customer");
         }
+        dirtyFlags.customersDirty = false;
         customerCache = customerList;
         return customerList;
     }
@@ -144,6 +145,7 @@ public class DataReader {
             System.out.println(exception);
             System.out.println("reader/activity");
         }
+        dirtyFlags.activitiesDirty = false;
         activityCache = activities;
         return activities;
     }
@@ -200,6 +202,7 @@ public class DataReader {
             System.out.println(e);
             System.out.println("reader/camper");
         }
+        dirtyFlags.campersDirty = false;
         camperCache = camperList;
         return camperList;
     }
@@ -240,6 +243,7 @@ public class DataReader {
             System.out.println(exception);
             System.out.println("reader/group");
         }
+        dirtyFlags.groupsDirty = false;
         groupCache = groupList;
         return groupList;
     }
@@ -298,6 +302,7 @@ public class DataReader {
             System.out.println(exception);
             System.out.println("reader/counselor");
         }
+        dirtyFlags.counselorDirty = false;
         counselorCache = counselorList;
         return counselorList;
     }
@@ -317,6 +322,7 @@ public class DataReader {
             CampLocation campLocation = getCampLocation();
             Director directorObject = new Director(id, email, firstName, lastName, password, campLocation);
             directorCache = directorObject;
+            dirtyFlags.directorDirty = false;
             return directorObject;
         } catch (Exception exception) {
 
@@ -336,6 +342,7 @@ public class DataReader {
             String location = (String) campLocation.get(DataConstants.LOCATION);
             double pricePerCamper = (double) campLocation.get(DataConstants.PRICEPERCAMPER);
             CampLocation campLocationObject = new CampLocation(id, name, location, pricePerCamper);
+            dirtyFlags.campLocationDirty = false;
             return campLocationObject;
         } catch (Exception exception) {
             System.out.println(exception);
@@ -378,6 +385,7 @@ public class DataReader {
             System.out.println(exception);
             System.out.println("reader/week");
         }
+        dirtyFlags.weeksDirty = false;
         weeksCache = weeksList;
         return weeksList;
     }
@@ -413,6 +421,7 @@ public class DataReader {
             System.out.println(exception);
             System.out.println("reader/daySchedule");
         }
+        dirtyFlags.daySchedulesDirty = false;
         daySchedulesCache = dayScheduleList;
         return dayScheduleList;
     }
