@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Scanner;
 import java.util.UUID;
 import java.io.FileWriter;
 import java.time.DayOfWeek;
@@ -7,6 +6,9 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAdjusters;
 
+/**
+ * A method that enables the UI to manage the program
+ */
 public class Facade {
 
     private User user;

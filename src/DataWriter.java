@@ -7,6 +7,9 @@ import java.util.UUID;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+/**
+ * A class that writes JSON files
+ */
 public class DataWriter {
 
     /**

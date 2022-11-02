@@ -10,6 +10,9 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
+/**
+ * A class to read in JSON files
+ */
 public class DataReader {
 
     public static final int CUSTOMERSDIRTY = 0;

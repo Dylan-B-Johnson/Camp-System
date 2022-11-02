@@ -1,3 +1,6 @@
+/**
+ * A class containing constants for JSON management
+ */
 public class DataConstants {
     public static final String ID = "id";
     public static final String EMAIL = "email";
