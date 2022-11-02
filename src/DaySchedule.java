@@ -54,6 +54,7 @@ public class DaySchedule {
      * @return A Day Schedule with random activities
      */
     public DaySchedule getRandomDaySchedule(Week week, LocalDate day) {
+        this.week=week;
         ArrayList<Activity> activities = ActivitiesList.getActivities();
         ArrayList<Activity> curActivities = new ArrayList<Activity>();
         Random random = new Random();
@@ -160,12 +161,12 @@ public class DaySchedule {
                 break;
             }
         }
-        Collection<Group> groups = DataReader.getGroups().values();
+        ArrayList<Group> groups = this.week.getGroups();
         for (Group group : groups) {
             for (DaySchedule schedule : group.getSchedule()) {
-                if (schedule.getCurrentAcitivities().get(timeSlot).equals(foundActivity)
-                        && schedule.getDay().equals(this.day)
-                        && schedule.getWeek().equals(this.week)) {
+                if (schedule.getCurrentAcitivities().size()>timeSlot
+                        && schedule.getCurrentAcitivities().get(timeSlot).equals(foundActivity)
+                        && schedule.getDay().equals(this.day)) {
                     return false;
                 }
             }
