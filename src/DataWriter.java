@@ -47,8 +47,7 @@ public class DataWriter {
             file.write(customersJsonArray.toJSONString());
             file.close();
         } catch (Exception exception) {
-            System.out.println(exception);
-            System.out.println("writer/customer");
+
             return false;
         }
         return true;
@@ -117,8 +116,7 @@ public class DataWriter {
             file.write(activitiesJsonArray.toJSONString());
             file.close();
         } catch (Exception exception) {
-            System.out.println(exception);
-            System.out.println("writer/activity");
+
             return false;
         }
         return true;
@@ -193,8 +191,7 @@ public class DataWriter {
             file.write(weeksJsonArray.toJSONString());
             file.close();
         } catch (Exception e) {
-            System.out.print(e);
-            System.out.println("writer/week");
+
             return false;
         }
         return true;
@@ -259,8 +256,7 @@ public class DataWriter {
             file.write(campLocationJsonObject.toJSONString());
             file.close();
         } catch (Exception e) {
-            System.out.println(e);
-            System.out.println("writer/campLocation");
+
             return false;
         }
         return true;
@@ -330,8 +326,7 @@ public class DataWriter {
             file.write(counselorsJsonArray.toJSONString());
             file.close();
         } catch (Exception exception) {
-            System.out.println(exception);
-            System.out.println("writer/counselor");
+
             return false;
         }
         return true;
@@ -468,8 +463,7 @@ public class DataWriter {
             file.write(campersJsonArray.toJSONString());
             file.close();
         } catch (Exception e) {
-            System.out.println(e);
-            System.out.println("writer/camper");
+
             return false;
         }
         return true;
@@ -541,8 +535,7 @@ public class DataWriter {
             file.write(dayScheduleJsonArray.toJSONString());
             file.close();
         } catch (Exception e) {
-            System.out.println(e);
-            System.out.println("writer/daySchedule");
+
             return false;
         }
         return true;
@@ -622,8 +615,7 @@ public class DataWriter {
             file.write(groupsJsonArray.toJSONString());
             file.close();
         } catch (Exception e) {
-            System.out.println(e);
-            System.out.println("writer/group");
+
             return false;
         }
         return true;

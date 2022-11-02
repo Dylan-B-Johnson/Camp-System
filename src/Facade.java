@@ -561,6 +561,15 @@ public class Facade {
         return null;
     }
 
+    /**
+     * Replaces specified group's schedule with the new schedule for the specific
+     * day
+     * 
+     * @param newSchedule The schedule to replace the old schedule with
+     * @param group       The group whose schedule you are changing
+     * @param day         The index of the day to replace (0-6)
+     * @return Whether or not it suceeded
+     */
     public boolean replaceDaySchedule(DaySchedule newSchedule, Group group, int day) {
         // replaces the specified group's day-th DaySchedule with newSchedule and
         // ensures it is saved properly
@@ -572,23 +581,29 @@ public class Facade {
         return DataWriter.updateGroup(group.getId(), group);
     }
 
+    /**
+     * Reinitializes all schedules for the specified day and week with an empty
+     * DaySchedule arrayList
+     * 
+     * @param week Week to empty all schedules for
+     * @param day  The index of the day to replace (0-6)
+     */
     public void clearSchedules(Week week, int day) {
-        // reinitializes all schedules for the specified day and week with an empty
-        // DaySchedule arrayList
-        // ensures that everything is saved properly
         for (Group group : week.getGroups()) {
             group.getSchedule().get(day).setActivities(new ArrayList<Activity>());
             DataWriter.updateGroup(group.getId(), group);
         }
     }
 
+    /**
+     * Exports a week schedule to a text file
+     * 
+     * @param group    The group whose schedule shall be exported
+     * @param filename The name of the exported file
+     * @param week     The week the group is in
+     * @return Wether or not it was successful
+     */
     public boolean exportSchedule(Group group, String filename, Week week) {
-        // filename param has no extension
-        // saves the group's week schedule as a well-formatted text file with the
-        // specified name
-        // "showing a grid of what they will be doing at each day and time. For each
-        // activity it also indicates where it is located."
-        // we need to discuss where to save the file
         filename += ".txt";
         try {
             FileWriter fileWriter = new FileWriter(filename);
@@ -604,16 +619,20 @@ public class Facade {
             }
             fileWriter.close();
         } catch (Exception exception) {
-            System.out.println(exception);
             return false;
         }
         return true;
     }
 
+    /**
+     * Exports the camper roster for a group
+     * 
+     * @param group    The group to export the roster for
+     * @param filename The name of the exported file
+     * @param week     The week the group is in
+     * @return Wether or not it was successful
+     */
     public boolean exportRoster(Group group, String filename, Week week) {
-        // filename param has no extension
-        // saves the group's week schedule as a well-formatted text file with the
-        // specified name and age of each camper
         filename += ".txt";
         try {
             FileWriter fileWriter = new FileWriter(filename);
@@ -629,14 +648,15 @@ public class Facade {
         return true;
     }
 
+    /**
+     * Exports the vital info for a group
+     * 
+     * @param group    The group to export the vital info for
+     * @param filename The name of the exported file
+     * @param week     The week the group is in
+     * @return Wether or not it was successful
+     */
     public boolean exportVitalInfo(Group group, String filename, Week week) {
-        // filename param has no extension
-        // saves the group's vital info as a well-formatted text file with the specified
-        // name
-        // " list of next weeks vital information, this will generate a beautifully
-        // formatted report of all his campers allergies, emergency contacts, and
-        // medical information. Make sure this is a good sized list."
-        // we need to discuss where to save the file
         filename += ".txt";
         try {
             FileWriter fileWriter = new FileWriter(filename);
@@ -647,17 +667,9 @@ public class Facade {
             }
             fileWriter.close();
         } catch (Exception exception) {
-            System.out.println(exception);
             return false;
         }
         return true;
-    }
-
-    /**
-     * Save all objects to their appropriate JSONs and exits the program
-     */
-    public void saveAndQuit() {
-        System.exit(0);
     }
 
     /**

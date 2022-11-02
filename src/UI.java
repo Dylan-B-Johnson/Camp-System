@@ -42,7 +42,7 @@ public class UI {
                         createCounselorAccount();
                         break;
                     case 4:
-                        f.saveAndQuit();
+                        System.exit(0);
                 }
             }
             if (f.getUser() != null) {
@@ -83,7 +83,7 @@ public class UI {
                 exportRoster();
                 break;
             case 6:
-                f.saveAndQuit();
+                System.exit(0);
         }
     }
 
@@ -102,7 +102,7 @@ public class UI {
                     addACamper();
                     break;
                 case 3:
-                    f.saveAndQuit();
+                    System.exit(0);
             }
         } else {
             options = new String[] { "View Your Campers", "Add a Camper",
@@ -118,7 +118,7 @@ public class UI {
                     registerACamper();
                     break;
                 case 4:
-                    f.saveAndQuit();
+                    System.exit(0);
             }
         }
     }
@@ -155,7 +155,7 @@ public class UI {
                     viewScheduleDirector(true);
                     break;
                 case 8:
-                    f.saveAndQuit();
+                    System.exit(0);
             }
         } else {
             options = new String[] { "Search Campers", "Search Counselors", "Add Activity",
@@ -174,7 +174,7 @@ public class UI {
                     addWeek();
                     break;
                 case 5:
-                    f.saveAndQuit();
+                    System.exit(0);
             }
         }
     }
@@ -628,7 +628,7 @@ public class UI {
         }
         String filename = getCounselorExportFilename(vitalInfo);
         Group group = f.getAssociatedGroup(selectedWeek);
-        if (group==null){
+        if (group == null) {
             actionFailed();
             return;
         }
@@ -638,7 +638,7 @@ public class UI {
     /**
      * Handles the actual exporting for export schedule or vital info
      */
-    private static void handleExport(Group group, String filename, Week selectedWeek, Boolean vitalInfo){
+    private static void handleExport(Group group, String filename, Week selectedWeek, Boolean vitalInfo) {
         if (group.getCampers().size() == 0 && vitalInfo) {
             title("ERROR");
             print("No campers have registered and been assigned to your group.");
@@ -649,7 +649,7 @@ public class UI {
             actionFailed();
             return;
         }
-        if (vitalInfo && !(f.exportVitalInfo(group, filename, selectedWeek))){
+        if (vitalInfo && !(f.exportVitalInfo(group, filename, selectedWeek))) {
             actionFailed();
             return;
         }
@@ -726,8 +726,8 @@ public class UI {
                 } else {
                     title("ERROR");
                     print("We could not register " + camper.getFirstName() + " for the week:\n" + weeks[answerWeek - 1]
-                    + "\nbecause their age group is at capacity.\n(" + camper.getFirstName()
-                    + " is your only camper elligable for registration).");
+                            + "\nbecause their age group is at capacity.\n(" + camper.getFirstName()
+                            + " is your only camper elligable for registration).");
                     enterToExit();
                     return;
                 }

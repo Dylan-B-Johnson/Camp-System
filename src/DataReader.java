@@ -125,8 +125,6 @@ public class DataReader {
                                         campers, contact));
             }
         } catch (Exception exception) {
-            System.out.println(exception);
-            System.out.println("reader/customer");
         }
         dirtyFlags.customersDirty = false;
         customerCache = customerList;
@@ -169,8 +167,6 @@ public class DataReader {
                 activities.put(UUID.fromString(id), new Activity(UUID.fromString(id), name, location, description));
             }
         } catch (Exception exception) {
-            System.out.println(exception);
-            System.out.println("reader/activity");
         }
         dirtyFlags.activitiesDirty = false;
         activityCache = activities;
@@ -237,8 +233,6 @@ public class DataReader {
                         relationToCustomer));
             }
         } catch (Exception e) {
-            System.out.println(e);
-            System.out.println("reader/camper");
         }
         dirtyFlags.campersDirty = false;
         camperCache = camperList;
@@ -289,8 +283,6 @@ public class DataReader {
                 groupList.put(id, new Group(id, campers, groupSize, schedule, counselor));
             }
         } catch (Exception exception) {
-            System.out.println(exception);
-            System.out.println("reader/group");
         }
         dirtyFlags.groupsDirty = false;
         groupCache = groupList;
@@ -359,8 +351,6 @@ public class DataReader {
                                 primaryCarePhysician));
             }
         } catch (Exception exception) {
-            System.out.println(exception);
-            System.out.println("reader/counselor");
         }
         dirtyFlags.counselorDirty = false;
         counselorCache = counselorList;
@@ -415,8 +405,6 @@ public class DataReader {
             dirtyFlags.campLocationDirty = false;
             return campLocationObject;
         } catch (Exception exception) {
-            System.out.println(exception);
-            System.out.println("reader/campLocation");
         }
         return null;
     }
@@ -463,8 +451,7 @@ public class DataReader {
                 weeksList.put(id, new Week(id, maxCampers, currentCampers, startOfWeek, groups, campLocation, theme));
             }
         } catch (Exception exception) {
-            System.out.println(exception);
-            System.out.println("reader/week");
+
         }
         dirtyFlags.weeksDirty = false;
         weeksCache = weeksList;
@@ -510,8 +497,6 @@ public class DataReader {
                 dayScheduleList.put(id, new DaySchedule(id, currentActivities, week, day));
             }
         } catch (Exception exception) {
-            System.out.println(exception);
-            System.out.println("reader/daySchedule");
         }
         dirtyFlags.daySchedulesDirty = false;
         daySchedulesCache = dayScheduleList;
