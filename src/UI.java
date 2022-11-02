@@ -61,15 +61,11 @@ public class UI {
                                 break;
                             case 4:
                                 exportSchedule(true);
-<<<<<<< HEAD
-                            case 5:
-=======
                                 break;
                             case 5:
                                 exportRoster();
                                 break;
                             case 6:
->>>>>>> ae3bd1691656d596d2713d9a4f77bb9f71368139
                                 f.saveAndQuit();
                         }
                         break;
