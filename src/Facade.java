@@ -598,6 +598,7 @@ public class Facade {
         // "showing a grid of what they will be doing at each day and time. For each
         // activity it also indicates where it is located."
         // we need to discuss where to save the file
+        filename +=".txt";
         try {
             FileWriter fileWriter = new FileWriter(filename);
             int day = 1;
@@ -622,6 +623,7 @@ public class Facade {
         // filename param has no extension
         // saves the group's week schedule as a well-formatted text file with the
         // specified name and age of each camper
+        filename +=".txt";
         try {
             FileWriter fileWriter = new FileWriter(filename);
             fileWriter.append(week.toString()+"\n");
@@ -645,6 +647,7 @@ public class Facade {
         // formatted report of all his campers allergies, emergency contacts, and
         // medical information. Make sure this is a good sized list."
         // we need to discuss where to save the file
+        filename +=".txt";
         try {
             FileWriter fileWriter = new FileWriter(filename);
             fileWriter.append(week.toString()+"\n");

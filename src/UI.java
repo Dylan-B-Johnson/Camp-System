@@ -178,8 +178,13 @@ public class UI {
         String filename = input(
                 "Please enter the name of the file to export your week's roster as (do not include a file extension):");
         Group group = f.getAssociatedGroup(selectedWeek);
-
-        // TODO: complete this + add .txt to all exports
+        if (group == null || !(f.exportRoster(group, filename, selectedWeek))) {
+            actionFailed();
+            return;
+        } else{
+            print("Sucessfully exported your group's roster.");
+            enterToExit();
+        }
     }
 
     /**
