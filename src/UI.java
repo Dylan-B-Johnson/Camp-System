@@ -714,12 +714,12 @@ public class UI {
                     title("Registration Complete");
                     System.out.printf("Registering "
                             + camper.getFirstName()
-                            + "\nFor the week:\n" + weeks[answerWeek - 1] + "\nWill cost $%2f",
+                            + "\nFor the week:\n" + weeks[answerWeek - 1] + "\nWill cost $%.2f\n",
 
                             f.getCostOfRegistration());
                     double discount = f.getDiscoutOnRegistration();
                     if (discount != 0) {
-                        System.out.printf("(Having applied a discount of $%2f).", discount);
+                        System.out.printf("(Having applied a discount of $%.2f).\n", discount);
                     }
                     enterToExit();
                     return;
@@ -764,11 +764,11 @@ public class UI {
                         + f.getCampLocation().getMaxCamperAge() + " years old).");
                 System.out.printf("Registering "
                         + camper.getFirstName()
-                        + "\nFor the week:\n" + weeks[answerWeek - 1] + "\nWill cost $%2f",
+                        + "\nFor the week:\n" + weeks[answerWeek - 1] + "\nWill cost $%.2f\n",
                         f.getCostOfRegistration());
                 double discount = f.getDiscoutOnRegistration();
                 if (discount != 0) {
-                    System.out.printf("(Having applied a discount of $%2f).", discount);
+                    System.out.printf("(Having applied a discount of $%.2f).\n", discount);
                 }
                 enterToExit();
                 return;
