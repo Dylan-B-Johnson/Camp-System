@@ -28,7 +28,7 @@ public class UI {
      * The method containing the complete flow of UI screens for the program
      */
     private static void run() {
-        getCurrentOrFutureWeeksLength=f.getFutureOrCurrentWeeks().size();
+        getCurrentOrFutureWeeksLength = f.getFutureOrCurrentWeeks().size();
         while (true) {
             if (f.getUser() == null) {
                 switch (welcomeScreen()) {
@@ -50,109 +50,132 @@ public class UI {
                 String[] options;
                 switch (f.getUser().getTypeOfUser()) {
                     case COUNSELOR:
-                        switch (options(new String[] { "View Schedule", "View Group", "Export Schedule",
-                                "Export Week Vital Info", "Export Group Roster", "Quit" })) {
-                            case 1:
-                                viewSchedule();
-                                break;
-                            case 2:
-                                viewGroup();
-                                break;
-                            case 3:
-                                exportSchedule(false);
-                                break;
-                            case 4:
-                                exportSchedule(true);
-                                break;
-                            case 5:
-                                exportRoster();
-                                break;
-                            case 6:
-                                f.saveAndQuit();
-                        }
+                        counselor();
                         break;
                     case CUSTOMER:
-                        if (((Customer) f.getUser()).getCampers().size() < 1) {
-                            options = new String[] { "View Your Campers", "Add a Camper", "Quit" };
-                            switch (options(options)) {
-                                case 1:
-                                    viewYourCampers();
-                                    break;
-                                case 2:
-                                    addACamper();
-                                    break;
-                                case 3:
-                                    f.saveAndQuit();
-                            }
-                        } else {
-                            options = new String[] { "View Your Campers", "Add a Camper",
-                                    "Register a Camper", "Quit" };
-                            switch (options(options)) {
-                                case 1:
-                                    viewYourCampers();
-                                    break;
-                                case 2:
-                                    addACamper();
-                                    break;
-                                case 3:
-                                    registerACamper();
-                                    break;
-                                case 4:
-                                    f.saveAndQuit();
-                            }
-                        }
+                        customer();
                         break;
                     case DIRECTOR:
-                        if (getCurrentOrFutureWeeksLength > 0) {
-                            options = new String[] { "Search Campers", "Search Counselors", "Add Activity",
-                                    "Add Camp Session Week", "Edit Schedule", "View Schedule", "Export Schedule",
-                                    "Quit" };
-                            switch (options(options)) {
-                                case 1:
-                                    searchCampers();
-                                    break;
-                                case 2:
-                                    searchCounselors();
-                                    break;
-                                case 3:
-                                    addActivity();
-                                    break;
-                                case 4:
-                                    addWeek();
-                                    break;
-                                case 5:
-                                    editSchedule();
-                                    break;
-                                case 6:
-                                    viewScheduleDirector(false);
-                                    break;
-                                case 7:
-                                    viewScheduleDirector(true);
-                                    break;
-                                case 8:
-                                    f.saveAndQuit();
-                            }
-                        } else {
-                            options = new String[] { "Search Campers", "Search Counselors", "Add Activity",
-                                    "Add Camp Session Week", "Quit" };
-                            switch (options(options)) {
-                                case 1:
-                                    searchCampers();
-                                    break;
-                                case 2:
-                                    searchCounselors();
-                                    break;
-                                case 3:
-                                    addActivity();
-                                    break;
-                                case 4:
-                                    addWeek();
-                                    break;
-                                case 5:
-                                    f.saveAndQuit();
-                            }
-                        }
+                        director();
                 }
+            }
+        }
+    }
+
+    /**
+     * Counselor Screen logic
+     */
+    private static void counselor() {
+        switch (options(new String[] { "View Schedule", "View Group", "Export Schedule",
+                "Export Week Vital Info", "Export Group Roster", "Quit" })) {
+            case 1:
+                viewSchedule();
+                break;
+            case 2:
+                viewGroup();
+                break;
+            case 3:
+                exportSchedule(false);
+                break;
+            case 4:
+                exportSchedule(true);
+                break;
+            case 5:
+                exportRoster();
+                break;
+            case 6:
+                f.saveAndQuit();
+        }
+    }
+
+    /**
+     * Customer screen logic
+     */
+    private static void customer() {
+        String[] options;
+        if (((Customer) f.getUser()).getCampers().size() < 1) {
+            options = new String[] { "View Your Campers", "Add a Camper", "Quit" };
+            switch (options(options)) {
+                case 1:
+                    viewYourCampers();
+                    break;
+                case 2:
+                    addACamper();
+                    break;
+                case 3:
+                    f.saveAndQuit();
+            }
+        } else {
+            options = new String[] { "View Your Campers", "Add a Camper",
+                    "Register a Camper", "Quit" };
+            switch (options(options)) {
+                case 1:
+                    viewYourCampers();
+                    break;
+                case 2:
+                    addACamper();
+                    break;
+                case 3:
+                    registerACamper();
+                    break;
+                case 4:
+                    f.saveAndQuit();
+            }
+        }
+    }
+
+    /**
+     * Director screen logic
+     */
+    private static void director() {
+        String[] options;
+        if (getCurrentOrFutureWeeksLength > 0) {
+            options = new String[] { "Search Campers", "Search Counselors", "Add Activity",
+                    "Add Camp Session Week", "Edit Schedule", "View Schedule", "Export Schedule",
+                    "Quit" };
+            switch (options(options)) {
+                case 1:
+                    searchCampers();
+                    break;
+                case 2:
+                    searchCounselors();
+                    break;
+                case 3:
+                    addActivity();
+                    break;
+                case 4:
+                    addWeek();
+                    break;
+                case 5:
+                    editSchedule();
+                    break;
+                case 6:
+                    viewScheduleDirector(false);
+                    break;
+                case 7:
+                    viewScheduleDirector(true);
+                    break;
+                case 8:
+                    f.saveAndQuit();
+            }
+        } else {
+            options = new String[] { "Search Campers", "Search Counselors", "Add Activity",
+                    "Add Camp Session Week", "Quit" };
+            switch (options(options)) {
+                case 1:
+                    searchCampers();
+                    break;
+                case 2:
+                    searchCounselors();
+                    break;
+                case 3:
+                    addActivity();
+                    break;
+                case 4:
+                    addWeek();
+                    break;
+                case 5:
+                    f.saveAndQuit();
             }
         }
     }
@@ -181,7 +204,7 @@ public class UI {
         if (group == null || !(f.exportRoster(group, filename, selectedWeek))) {
             actionFailed();
             return;
-        } else{
+        } else {
             print("Sucessfully exported your group's roster.");
             enterToExit();
         }
@@ -531,7 +554,7 @@ public class UI {
         } else {
             int answerDay = getViewScheduleDayDirector(week);
             title("View Schedule");
-            print(week.getGroups().get(answerCounselor - 1).getSchedule().get(answerDay-1).toString());
+            print(week.getGroups().get(answerCounselor - 1).getSchedule().get(answerDay - 1).toString());
         }
         enterToExit();
     }
