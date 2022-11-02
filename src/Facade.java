@@ -229,7 +229,6 @@ public class Facade {
             }
             file.close();
         } catch (Exception e) {
-            // TODO: handle exception
         }
     }
 
