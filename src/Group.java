@@ -170,7 +170,6 @@ public class Group {
     public void addCamper(Camper camper) {
         if (campers.size() < MAX_CAMPERS) {
             campers.add(camper);
-            groupSize++;
             DataWriter.updateGroup(this.id, this);
         }
     }
