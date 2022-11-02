@@ -449,7 +449,7 @@ public class Facade {
      *         the week
      */
     public String[] weekDays(Week week) {
-        String[] rtn = new String[7];
+        String[] rtn = new String[Week.WEEK_LENGTH];
         LocalDate date = week.getStartOfWeek();
         for (int i = 0; i < rtn.length; i++) {
             LocalDate plusDays = date.plusDays(i);

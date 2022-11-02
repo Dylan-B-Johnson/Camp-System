@@ -517,7 +517,7 @@ public class UI {
                 break;
             }
         }
-        return answerDay - 1;
+        return answerDay;
     }
 
     /**
