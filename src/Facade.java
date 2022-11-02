@@ -245,8 +245,8 @@ public class Facade {
         return ActivitiesList.addActivity(new Activity(name, location, description));
     }
 
-    public DaySchedule getDaySchedule(int daysFromNow, User counselor) {
-        return WeekList.getDaySchedule(LocalDate.now().plusDays(daysFromNow), counselor);
+    public DaySchedule getDaySchedule(int dayOfWeek, User counselor, Week week) {
+        return WeekList.getDaySchedule(week.getStartOfWeek().plusDays(dayOfWeek), counselor);
     }
 
     /**
@@ -493,6 +493,11 @@ public class Facade {
             for (Group othGroup : getWeek(group).getGroups()) {
                 if (othGroup.getSchedule().get(day).getActivities().get(activity).getId().equals(potActivity.getId())) {
                     available = false;
+                }
+            }
+            for (Activity i : current.getActivities()){
+                if (i.getId().equals(i.getId())){
+                    available=false;
                 }
             }
             if (available) {

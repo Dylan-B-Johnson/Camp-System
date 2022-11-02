@@ -350,15 +350,15 @@ public class UI {
      */
     private static void addActivities(Week week, Group group, int answerDay) {
         DaySchedule oldSchedule = f.getDaySchedule(answerDay - 1,
-                group.getCounselor());
+                group.getCounselor(), week);
         DaySchedule current = new DaySchedule(new ArrayList<Activity>(), week, oldSchedule.getDay());
         int activity = 1;
-        while (activity < DaySchedule.MAX_ACTIVITY) {
-            title("Select the " + activity + f.ordinal(activity) + " Activity");
+        while (activity <= DaySchedule.MAX_ACTIVITY) {
+            title("Select the " + f.ordinal(activity) + " Activity");
             ArrayList<Activity> legal = f.getAvailableActivities(group, current, answerDay - 1, activity - 1);
             if (legal.size() == 0) {
                 title("ERROR");
-                print("There are no activities that are valid to be added as the " + activity + f.ordinal(activity)
+                print("There are no activities that are valid to be added as the " + f.ordinal(activity)
                         + " activity.");
                 print("Try again, try clearing this day's schedule, or try adding more activities.");
                 print("The schedule will be kept as it was.");
