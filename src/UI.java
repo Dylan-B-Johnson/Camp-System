@@ -150,19 +150,33 @@ public class UI {
                                     f.saveAndQuit();
                             }
                         }
-
                 }
             }
-
         }
-
     }
 
     /**
      * The screen that allows a counselor to export their groups's roster to a file
      */
     private static void exportRoster() {
+        ArrayList<Week> nextWeeks = f.getCurrentOrFutureScheduledWeeks();
+        if (nextWeeks.size() == 0) {
+            title("ERROR");
+            print("You are not scheduled for any future weeks.");
+            enterToExit();
+            return;
+        }
+        Week selectedWeek = getExportWeek(nextWeeks);
+        if (selectedWeek == null) {
+            // if this occurs then there is a bug (probably in f.getNextScheduledWeek())
+            actionFailed();
+            return;
+        }
+        title("Export Your Group's Roster");
+        String filename = input("Please enter the name of the file to export your week's roster as (do not include a file extension):");
+        Group group = f.getAssociatedGroup(selectedWeek);
 
+        //TODO: complete this + add .txt to all exports
     }
 
     /**

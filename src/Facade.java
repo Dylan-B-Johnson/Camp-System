@@ -637,7 +637,7 @@ public class Facade {
         return true;
     }
 
-    public boolean exportVitalInfo(Group group, String filename) {
+    public boolean exportVitalInfo(Group group, String filename, Week week) {
         // filename param has no extension
         // saves the group's vital info as a well-formatted text file with the specified
         // name
@@ -647,6 +647,7 @@ public class Facade {
         // we need to discuss where to save the file
         try {
             FileWriter fileWriter = new FileWriter(filename);
+            fileWriter.append(week.toString()+"\n");
             for (Camper camper : group.getCampers()) {
                 fileWriter.append(camper.toString());
                 fileWriter.append("\n*******************************************\n");
@@ -654,8 +655,9 @@ public class Facade {
             fileWriter.close();
         } catch (Exception exception) {
             System.out.println(exception);
+            return false;
         }
-        return false;
+        return true;
     }
 
     /**
