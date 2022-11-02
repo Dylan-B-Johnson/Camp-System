@@ -168,9 +168,8 @@ public class Group {
      * @param camper The camper that is to be added
      */
     public void addCamper(Camper camper) {
-        if (groupSize < MAX_CAMPERS) {
+        if (campers.size() < MAX_CAMPERS) {
             campers.add(camper);
-            groupSize++;
             DataWriter.updateGroup(this.id, this);
         }
     }
