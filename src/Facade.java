@@ -289,8 +289,8 @@ public class Facade {
     public ArrayList<Camper> getCampersElligableForRegistration(Week weekOfRegistration) {
         ArrayList<Camper> rtn = new ArrayList<Camper>();
         for (Camper i : ((Customer) user).getCampers()) {
-            if (i.getAge(weekOfRegistration) >= getCampLocation().getMaxCamperAge()
-                    && i.getAge(weekOfRegistration) <= getCampLocation().getMinCamperAge()) {
+            if (i.getAge(weekOfRegistration) >= getCampLocation().getMinCamperAge()
+                    && i.getAge(weekOfRegistration) <= getCampLocation().getMaxCamperAge()) {
                 rtn.add(i);
             }
         }
@@ -380,12 +380,10 @@ public class Facade {
      * @return True if the operation was successful False if it was not
      */
     public boolean registerCamper(UUID id, Week week) {
-        Camper foundCamper = null;
-        for (Camper camper : UserList.getCampers()) {
-            if (camper.getId().equals(id)) {
-                foundCamper = camper;
-            }
-        }
+        Camper foundCamper = DataReader.getCamper(id);
+        if (foundCamper==null){
+            return false;
+        }        
         if (week.canRegisterCamper(foundCamper)) {
             week.registerCamper(foundCamper);
             DataWriter.updateWeek(week.getId(), week);

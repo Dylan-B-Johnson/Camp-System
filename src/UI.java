@@ -725,8 +725,9 @@ public class UI {
                     return;
                 } else {
                     title("ERROR");
-                    print("We could not register " + camper.getFirstName() + " for the week " + weeks[answerWeek - 1]
-                            + " because their age group is at capacity.\n");
+                    print("We could not register " + camper.getFirstName() + " for the week:\n" + weeks[answerWeek - 1]
+                    + "\nbecause their age group is at capacity.\n(" + camper.getFirstName()
+                    + " is your only camper elligable for registration).");
                     enterToExit();
                     return;
                 }
@@ -773,8 +774,8 @@ public class UI {
                 return;
             } else {
                 title("ERROR");
-                print("We could not register " + camper.getFirstName() + " for the week " + weeks[answerWeek - 1]
-                        + " because their age group is at capacity.\n(" + camper.getFirstName()
+                print("We could not register " + camper.getFirstName() + " for the week:\n" + weeks[answerWeek - 1]
+                        + "\nbecause their age group is at capacity.\n(" + camper.getFirstName()
                         + " is your only camper elligable for registration).");
                 enterToExit();
                 return;
