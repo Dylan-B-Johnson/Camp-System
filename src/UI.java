@@ -49,7 +49,7 @@ public class UI {
                 switch (f.getUser().getTypeOfUser()) {
                     case COUNSELOR:
                         switch (options(new String[] { "View Schedule", "View Group", "Export Schedule",
-                                "Export Week Vital Info", "Quit" })) {
+                                "Export Week Vital Info", "Export Group Roster", "Quit" })) {
                             case 1:
                                 viewSchedule();
                                 break;
@@ -61,7 +61,15 @@ public class UI {
                                 break;
                             case 4:
                                 exportSchedule(true);
+<<<<<<< HEAD
                             case 5:
+=======
+                                break;
+                            case 5:
+                                exportRoster();
+                                break;
+                            case 6:
+>>>>>>> ae3bd1691656d596d2713d9a4f77bb9f71368139
                                 f.saveAndQuit();
                         }
                         break;
@@ -155,6 +163,13 @@ public class UI {
     }
 
     /**
+     * The screen that allows a counselor to export their groups's roster to a file
+     */
+    private static void exportRoster() {
+
+    }
+
+    /**
      * The screen that allows a counselor (not logged in) to create their account
      */
     private static void createCounselorAccount() {
@@ -233,13 +248,14 @@ public class UI {
         if (f.activityExists(name)) {
             title("ERROR");
             print("An activity with that name already exists.");
+            enterToExit();
         } else if (f.addActivity(name,
                 input("Please enter the location that the activity is performed:"),
                 input("Please enter a description for the activity:"))) {
             print("Activity sucessfully added.");
             enterToExit();
         } else {
-            enterToExit();
+            actionFailed();
         }
 
     }
@@ -249,7 +265,7 @@ public class UI {
      */
     private static void addWeek() {
         LocalDate date = getStartDate();
-        if (f.getCounselors().size() < 6) {
+        if (f.getCounselors().size() < Week.NUM_GROUPS) {
             title("ERROR");
             print("There are less than " + Week.NUM_GROUPS
                     + " (the number of groups per week) counslesors in the system.\nPlease have" +
@@ -339,15 +355,15 @@ public class UI {
      */
     private static void addActivities(Week week, Group group, int answerDay) {
         DaySchedule oldSchedule = f.getDaySchedule(answerDay - 1,
-                group.getCounselor());
+                group.getCounselor(), week);
         DaySchedule current = new DaySchedule(new ArrayList<Activity>(), week, oldSchedule.getDay());
         int activity = 1;
-        while (activity < DaySchedule.MAX_ACTIVITY) {
-            title("Select the " + activity + f.ordinal(activity) + " Activity");
-            ArrayList<Activity> legal = f.getAvailableActivities(group, current, answerDay - 1, activity - 1);
+        while (activity <= DaySchedule.MAX_ACTIVITY) {
+            title("Select the " + f.ordinal(activity) + " Activity");
+            ArrayList<Activity> legal = f.getAvailableActivities(group, current, answerDay - 1, activity - 1, week);
             if (legal.size() == 0) {
                 title("ERROR");
-                print("There are no activities that are valid to be added as the " + activity + f.ordinal(activity)
+                print("There are no activities that are valid to be added as the " + f.ordinal(activity)
                         + " activity.");
                 print("Try again, try clearing this day's schedule, or try adding more activities.");
                 print("The schedule will be kept as it was.");
@@ -460,7 +476,7 @@ public class UI {
                 break;
             }
         }
-        return answerDay;
+        return answerDay - 1;
     }
 
     /**
@@ -487,10 +503,11 @@ public class UI {
             title("Export Group Schedule");
             String filename = input(
                     "Please enter the name of the file to export the schedule as (do not include a file extension):");
-            if (f.exportSchedule(week.getGroups().get(answerCounselor - 1), filename)) {
+            if (f.exportSchedule(week.getGroups().get(answerCounselor - 1), filename, week)) {
                 print("Schedule sucessfully exported.");
             } else {
-                actionFailed();
+                title("ERROR");
+                print("An error occured. You may have used an invalid character in your filename.");
             }
         } else {
             int answerDay = getViewScheduleDayDirector(week);
@@ -564,7 +581,7 @@ public class UI {
         }
         String filename = getCounselorExportFilename(vitalInfo);
         Group group = f.getAssociatedGroup(selectedWeek);
-        if (group == null || !(f.exportSchedule(group, filename))) {
+        if (group == null || !(f.exportSchedule(group, filename, selectedWeek))) {
             actionFailed();
             return;
         }
@@ -639,7 +656,10 @@ public class UI {
                     enterToExit();
                     return;
                 } else {
-                    actionFailed();
+                    title("ERROR");
+                    print("We could not register " + camper.getFirstName() + " for the week " + weeks[answerWeek - 1]
+                            + " because their age group is at capacity.\n");
+                    enterToExit();
                     return;
                 }
             }
@@ -659,8 +679,7 @@ public class UI {
         if (camperOptions.length == 0) {
             title("ERROR");
             print("You have not added any campers that will be in the appropriate age range for the selected week.\n"
-                    +
-                    "(Between " + f.getCampLocation().getMinCamperAge() + " and "
+                    + "(Between " + f.getCampLocation().getMinCamperAge() + " and "
                     + f.getCampLocation().getMaxCamperAge() + " years old).");
             enterToExit();
             return;
@@ -670,10 +689,13 @@ public class UI {
                     .get(0);
             if (f.registerCamper(camper.getId(), f.getWeeksAvailableForRegistration().get(answerWeek - 1))) {
                 title("Registration Complete");
+                print(camper.getFirstName() + " " + camper.getLastName()
+                        + " is your only camper in the appropriate age range for the selected week.\n"
+                        + "(Between " + f.getCampLocation().getMinCamperAge() + " and "
+                        + f.getCampLocation().getMaxCamperAge() + " years old).");
                 System.out.printf("Registering "
                         + camper.getFirstName()
                         + "\nFor the week:\n" + weeks[answerWeek - 1] + "\nWill cost $%2f",
-
                         f.getCostOfRegistration());
                 double discount = f.getDiscoutOnRegistration();
                 if (discount != 0) {
@@ -684,8 +706,8 @@ public class UI {
             } else {
                 title("ERROR");
                 print("We could not register " + camper.getFirstName() + " for the week " + weeks[answerWeek - 1]
-                        + ".\n(" + camper.getFirstName()
-                        + " is your only camper elligable for registration).\nPlease try again.");
+                        + " because their age group is at capacity.\n(" + camper.getFirstName()
+                        + " is your only camper elligable for registration).");
                 enterToExit();
                 return;
             }

@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Scanner;
 import java.util.UUID;
 import java.io.FileWriter;
 import java.time.DayOfWeek;
@@ -10,6 +11,9 @@ public class Facade {
 
     private User user;
 
+    /**
+     * Creates an instance of facade
+     */
     public Facade() {
 
     }
@@ -22,14 +26,31 @@ public class Facade {
                 new Contact("null", "null", "null", "null", "null", "null"));
     }
 
+    /**
+     * Gets the director of the camp
+     * 
+     * @return The director of the camp
+     */
     public User getDirector() {
         return DataReader.getDirector();
     }
 
+    /**
+     * Gets the camp location
+     * 
+     * @return The camp location instance
+     */
     public CampLocation getCampLocation() {
         return DataReader.getCampLocation();
     }
 
+    /**
+     * Logs in a user and sets them to the active user
+     * 
+     * @param email    The email of the user
+     * @param password The password of the user
+     * @return The user that logged in
+     */
     public User login(String email, String password) {
         for (User user : UserList.getUsers()) {
             if (user.getEmail().equals(email) && user.getPassword().equals(password)) {
@@ -40,6 +61,16 @@ public class Facade {
         return null;
     }
 
+    /**
+     * Creates a new customer and sets them to the active user
+     * 
+     * @param firstName The first name of the customer
+     * @param lastName  The last name of the customer
+     * @param email     The email of the customer
+     * @param password  The password of the customer
+     * @param self      The customer's own contact
+     * @return The user that created their account
+     */
     public User signUpCustomer(String firstName, String lastName, String email, String password, Contact self) {
         if (!UserList.emailAvailable(email))
             return null;
@@ -50,6 +81,22 @@ public class Facade {
         return user;
     }
 
+    /**
+     * Creates a new counselor and sets them to the active user
+     * 
+     * @param firstName                 The first name of the counselor
+     * @param lastName                  The last name of the counselor
+     * @param email                     The email of the counselor
+     * @param password                  The password of the counselor
+     * @param allergies                 The allergies of the counselor
+     * @param birthday                  The birthday of the counselor
+     * @param primaryEmergencyContact   The first emergency contact for the
+     *                                  counselor
+     * @param secondaryEmergencyContact The second emergency contact for the
+     *                                  counselor
+     * @param primaryCarePhysician      The primary care physician of the counselor
+     * @return The counselor that created their account
+     */
     public User signUpCounselor(String firstName, String lastName, String email, String password,
             ArrayList<String> allergies, LocalDate birthday, Contact primaryEmergencyContact,
             Contact secondaryEmergencyContact, Contact primaryCarePhysician) {
@@ -64,14 +111,29 @@ public class Facade {
         return user;
     }
 
+    /**
+     * Gets the current week instance
+     * 
+     * @return The current week
+     */
     public Week getCurrentWeek() {
         return WeekList.getCurrentWeek();
     }
 
+    /**
+     * The weeks that are capable of accepting more campers
+     * 
+     * @return The available weeks
+     */
     public ArrayList<Week> getWeeksAvailableForRegistration() {
         return WeekList.getWeeksAvailableForRegistration();
     }
 
+    /**
+     * A string array of the weeks that are capable of accepting more campers
+     * 
+     * @return The available weeks
+     */
     public String[] getStringWeeksAvailableForRegistration() {
         ArrayList<Week> weeks = getWeeksAvailableForRegistration();
         String[] rtn = new String[weeks.size()];
@@ -81,6 +143,12 @@ public class Facade {
         return rtn;
     }
 
+    /**
+     * Takes an array list of weeks and returns a string representation of them
+     * 
+     * @param weeks The weeks that will be listed
+     * @return The string representation of the list of weeks
+     */
     public String[] representWeeks(ArrayList<Week> weeks) {
         String[] rtn = new String[weeks.size()];
         for (int i = 0; i < rtn.length; i++) {
@@ -89,6 +157,12 @@ public class Facade {
         return rtn;
     }
 
+    /**
+     * Returns all of the campers registered for a week
+     * 
+     * @param weekOfRegistration The week that is being checked for
+     * @return The string representation of the campers
+     */
     public String[] getCamperStrings(Week weekOfRegistration) {
         ArrayList<Camper> campers = getCampersElligableForRegistration(weekOfRegistration);
         String[] rtn = new String[campers.size()];
@@ -98,10 +172,21 @@ public class Facade {
         return rtn;
     }
 
+    /**
+     * Gets all possible activities
+     * 
+     * @return Gets possible activities
+     */
     public ArrayList<Activity> getActivities() {
         return new ArrayList<Activity>(DataReader.getActivities().values());
     }
 
+    /**
+     * Gets the first chronolgoical group a counselor is assigned to
+     * 
+     * @param user The counselor whose groups are being looked through
+     * @return The first group
+     */
     public Group getFirstGroup(User user) {
         for (Week week : WeekList.getFutureOrCurrentWeeks()) {
             for (Group group : week.getGroups()) {
@@ -113,15 +198,28 @@ public class Facade {
         return null;
     }
 
+    /**
+     * Gets the week that a group is located in
+     * 
+     * @param group The group whose week is being checked for
+     * @return The week that the group is in
+     */
     public Week getWeek(Group group) {
-        for (Week week : WeekList.getFutureOrCurrentWeeks()) {
-            if (week.getGroups().contains(group)) {
-                return week;
+        for (Week week : WeekList.getWeeks()) {
+            for (Group i : week.getGroups()) {
+                if (i.getCounselor().getId().equals(group.getId())) {
+                    return week;
+                }
             }
         }
         return null;
     }
 
+    /**
+     * Exports a formatted schedule to the specified file
+     * 
+     * @param daySchedule The day that is being printed
+     */
     public void exportSchedule(DaySchedule daySchedule) {
         ArrayList<String> output = new ArrayList<>();
 
@@ -140,6 +238,12 @@ public class Facade {
         }
     }
 
+    /**
+     * Gets a list of campers whose name matched the input
+     * 
+     * @param firstName The name that is being searched for
+     * @return The list of campers that match
+     */
     public ArrayList<Camper> getCamper(String firstName) {
         ArrayList<Camper> campers = new ArrayList<Camper>();
         for (Camper camper : UserList.getCampers()) {
@@ -150,6 +254,12 @@ public class Facade {
         return campers;
     }
 
+    /**
+     * Gets a list of users whose name matched the input
+     * 
+     * @param firstName The name that is being searched for
+     * @return The list of users that match
+     */
     public ArrayList<User> getUser(String firstName) {
         ArrayList<User> users = new ArrayList<User>();
         for (User user : UserList.getUsers()) {
@@ -160,14 +270,30 @@ public class Facade {
         return users;
     }
 
+    /**
+     * Gets a list of all users of type customer
+     * 
+     * @return The list of customers
+     */
     public ArrayList<Customer> getCustomers() {
         return new ArrayList<Customer>(DataReader.getCustomers().values());
     }
 
+    /**
+     * Gets a list of all campers
+     * 
+     * @return The list of campers
+     */
     public ArrayList<Camper> getCampers() {
         return new ArrayList<Camper>(DataReader.getCampers().values());
     }
 
+    /**
+     * Gets a list of campers that can register for a week
+     * 
+     * @param weekOfRegistration The week that is being checked
+     * @return The campers that are allowed to register
+     */
     public ArrayList<Camper> getCampersElligableForRegistration(Week weekOfRegistration) {
         ArrayList<Camper> rtn = new ArrayList<Camper>();
         for (Camper i : ((Customer) user).getCampers()) {
@@ -179,10 +305,21 @@ public class Facade {
         return rtn;
     }
 
+    /**
+     * Get the user that is associated with the facade
+     * 
+     * @return The user that is part of the facade
+     */
     public User getUser() {
         return user;
     }
 
+    /**
+     * Checks to see if an activity exists
+     * 
+     * @param name The name of the activity
+     * @return True if it exists False if it does not
+     */
     public boolean activityExists(String name) {
         for (Activity i : ActivitiesList.getActivities()) {
             if (i.getName().equalsIgnoreCase(name)) {
@@ -192,14 +329,30 @@ public class Facade {
         return false;
     }
 
+    /**
+     * Changes the user associated with the facade
+     * 
+     * @param user The user that the facade is now assigned to
+     */
     public void setUser(User user) {
         this.user = user;
     }
 
+    /**
+     * Gets a list of all users of type counselor
+     * 
+     * @return The list of counselors
+     */
     public ArrayList<User> getCounselors() {
         return new ArrayList<User>(DataReader.getCounselors().values());
     }
 
+    /**
+     * Gets an array list of counselors whose names match the input
+     * 
+     * @param firstName The name that is being searched for
+     * @return The list of counselors
+     */
     public ArrayList<User> getCounselor(String firstName) {
         ArrayList<User> users = new ArrayList<User>();
         for (User user : UserList.getUsers()) {
@@ -210,12 +363,30 @@ public class Facade {
         return users;
     }
 
+    /**
+     * Makes an instance of type contact with the supplied parameters
+     * 
+     * @param firstName    The first name of the contact
+     * @param lastName     The last name of the contact
+     * @param email        The email of the contact
+     * @param phoneNum     The phone number of the contact
+     * @param relationship The relationship of the contact to the user
+     * @param address      The contact's address
+     * @return The contact that was created
+     */
     public Contact makeContact(String firstName, String lastName, String email,
             String phoneNum, String relationship, String address) {
         return new Contact(firstName, lastName, email,
                 phoneNum, relationship, address);
     }
 
+    /**
+     * Registers the camper for a week
+     * 
+     * @param id   The id of the camper
+     * @param week The week they are being registered for
+     * @return True if the operation was successful False if it was not
+     */
     public boolean registerCamper(UUID id, Week week) {
         Camper foundCamper = null;
         for (Camper camper : UserList.getCampers()) {
@@ -231,22 +402,43 @@ public class Facade {
         return false;
     }
 
+    /**
+     * Adds the specified camper to a user's camper arraylist
+     * 
+     * @param firstName                 The first name of the camper
+     * @param lastName                  The last name of the camper
+     * @param allergies                 The allergies of the campers
+     * @param birthday                  The camper's birthday
+     * @param relationToCustomer        The camper's relationship to the customer
+     * @param primaryEmergencyContact   The camper's first emergency contact
+     * @param secondaryEmergencyContact The camper's second emergency contact
+     * @param primaryCarePhysician      The camper's primary care physician
+     * @return True if it was successful False if it was not
+     */
     public boolean addCamperToUser(String firstName, String lastName, ArrayList<String> allergies,
             LocalDate birthday, String relationToCustomer, Contact primaryEmergencyContact,
             Contact secondaryEmergencyContact, Contact primaryCarePhysician) {
         Camper camper = new Camper(firstName, lastName, allergies, birthday, primaryEmergencyContact,
-                secondaryEmergencyContact, primaryCarePhysician, 0, "", relationToCustomer);
+                secondaryEmergencyContact, primaryCarePhysician, 0, "Not tested", relationToCustomer);
         DataWriter.createCamper(camper);
         ((Customer) getUser()).addCamper(camper);
         return true;
     }
 
+    /**
+     * Adds an activity to the list of activities
+     * 
+     * @param name        The name of the activity
+     * @param location    The location of the activity
+     * @param description The description of the activity
+     * @return True if it was successful false if it was not
+     */
     public boolean addActivity(String name, String location, String description) {
         return ActivitiesList.addActivity(new Activity(name, location, description));
     }
 
-    public DaySchedule getDaySchedule(int daysFromNow, User counselor) {
-        return WeekList.getDaySchedule(LocalDate.now().plusDays(daysFromNow), counselor);
+    public DaySchedule getDaySchedule(int dayOfWeek, User counselor, Week week) {
+        return WeekList.getDaySchedule(week.getStartOfWeek().plusDays(dayOfWeek), counselor);
     }
 
     /**
@@ -369,8 +561,8 @@ public class Facade {
      *         date, the week containing the provided date otherwise
      */
     public Week getAssociatedWeek(LocalDate dateContainedInWeek) {
-        LocalDate prevSunday = LocalDate.now().with(TemporalAdjusters.previous(DayOfWeek.SUNDAY));
-        for (Week week : WeekList.getFutureOrCurrentWeeks()) {
+        LocalDate prevSunday = dateContainedInWeek.with(TemporalAdjusters.previous(DayOfWeek.SUNDAY));
+        for (Week week : WeekList.getWeeks()) {
             if (week.getStartOfWeek().equals(prevSunday)) {
                 return week;
             }
@@ -394,14 +586,12 @@ public class Facade {
         // DaySchedule arrayList
         // ensures that everything is saved properly
         for (Group group : week.getGroups()) {
-            ArrayList<DaySchedule> updatedSchedule = group.getSchedule();
-            updatedSchedule.set(day, null);
-            group.setSchedule(updatedSchedule); // new ArrayList<DaySchedule>());
+            group.getSchedule().get(day).setActivities(new ArrayList<Activity>());
             DataWriter.updateGroup(group.getId(), group);
         }
     }
 
-    public boolean exportSchedule(Group group, String filename) {
+    public boolean exportSchedule(Group group, String filename, Week week) {
         // filename param has no extension
         // saves the group's week schedule as a well-formatted text file with the
         // specified name
@@ -411,6 +601,7 @@ public class Facade {
         try {
             FileWriter fileWriter = new FileWriter(filename);
             int day = 1;
+            fileWriter.append(week.toString()+"\n");
             for (DaySchedule daySchedule : group.getSchedule()) {
                 fileWriter.append(String.format("Day %d\n", day++));
                 for (Activity activity : daySchedule.getActivities()) {
@@ -422,27 +613,28 @@ public class Facade {
             fileWriter.close();
         } catch (Exception exception) {
             System.out.println(exception);
+            return false;
         }
-        return false;
+        return true;
     }
 
-    public boolean exportRoster(Group group, String filename) {
+    public boolean exportRoster(Group group, String filename, Week week) {
         // filename param has no extension
         // saves the group's week schedule as a well-formatted text file with the
-        // specified name
-        // "showing a grid of what they will be doing at each day and time. For each
-        // activity it also indicates where it is located."
-        // we need to discuss where to save the file
+        // specified name and age of each camper
         try {
             FileWriter fileWriter = new FileWriter(filename);
-            for(Camper camper : group.getCampers()){
-                fileWriter.append("Name: " + camper.getFirstName() + " " + camper.getLastName() + " Age: "+camper.getAge(getWeek(group))+"\n");
+            fileWriter.append(week.toString()+"\n");
+            for (Camper camper : group.getCampers()) {
+                fileWriter.append("Name: " + camper.getFirstName() + " " + camper.getLastName() + " Age: "
+                        + camper.getAge(getWeek(group)) + "\n");
             }
             fileWriter.close();
         } catch (Exception exception) {
             System.out.println(exception);
+            return false;
         }
-        return false;
+        return true;
     }
 
     public boolean exportVitalInfo(Group group, String filename) {
@@ -455,9 +647,9 @@ public class Facade {
         // we need to discuss where to save the file
         try {
             FileWriter fileWriter = new FileWriter(filename);
-            for(Camper camper : group.getCampers()){
+            for (Camper camper : group.getCampers()) {
                 fileWriter.append(camper.toString());
-                fileWriter.append("\n");
+                fileWriter.append("\n*******************************************\n");
             }
             fileWriter.close();
         } catch (Exception exception) {
@@ -484,18 +676,24 @@ public class Facade {
      * @param current  The DaySchedule object that will be assigned to the group and
      *                 day once it is filled with 6 valid activities. THIS IS NOT
      *                 THE SAME as group.getSchedule().get(day).
-     * @param day      The day in question (0-6) from the start of the week
+     * @param day      The day in question (0-5) from the start of the week
      * @param activity The timeslot to get the legal sctivities for (0-5)
+     * @param week     The week that you're editing in
      * @return A list of legal activities for day number day, group group, activity
      *         number activity, and currently scheduled.
      */
-    public ArrayList<Activity> getAvailableActivities(Group group, DaySchedule current, int day, int activity) {
+    public ArrayList<Activity> getAvailableActivities(Group group, DaySchedule current, int day, int activity, Week week) {
         ArrayList<Activity> availableActivities = new ArrayList<Activity>();
         for (Activity potActivity : ActivitiesList.getActivities()) {
             boolean available = true;
-            for (Group othGroup : getWeek(group).getGroups()) {
-                if (othGroup.getSchedule().get(day).getActivities().get(activity).getId().equals(potActivity.getId())) {
+            for (Group othGroup : week.getGroups()) {
+                if (othGroup.getSchedule().get(day).getActivities().size()!=0 && othGroup.getSchedule().get(day).getActivities().get(activity).getId().equals(potActivity.getId())) {
                     available = false;
+                }
+            }
+            for (Activity i : current.getActivities()){
+                if (potActivity.getId().equals(i.getId())){
+                    available=false;
                 }
             }
             if (available) {

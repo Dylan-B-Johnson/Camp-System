@@ -30,7 +30,7 @@ public class Group {
         this.campers = campers;
         this.groupSize = groupSize;
         this.schedule = schedule;
-        this.counselor=counselor;
+        this.counselor = counselor;
     }
 
     /**
@@ -47,7 +47,7 @@ public class Group {
         this.campers = campers;
         this.groupSize = groupSize;
         this.schedule = schedule;
-        this.counselor=counselor;
+        this.counselor = counselor;
     }
 
     /**
@@ -87,11 +87,6 @@ public class Group {
      *         operation failed
      */
     public boolean setCounselor(Counselor counselor, Week week) {
-        for (Group group : week.getGroups()) {
-            if (group.getCounselor().id.equals(counselor.getId())) {
-                return false;
-            }
-        }
         this.counselor = counselor;
         DataWriter.updateGroup(this.id, this);
         return true;

@@ -1,17 +1,1 @@
-[
-    {
-        "startOfWeek": "2022-11-06",
-        "currentCampers": 0,
-        "groups": [
-            "8ca5dbfc-6a51-4da3-91d0-ec17432c9df0",
-            "b0e2dfe9-20ae-4fe4-8931-2b04ca2a6f78",
-            "7560478d-917b-4d15-8ca4-54cd7a7f366e",
-            "26177fda-caf8-47f0-8952-ac12b8b5a305",
-            "7edf84d6-7ee1-430a-b838-cc59f15537a4",
-            "98973450-b900-4b78-b6c1-73434d2695ee"
-        ],
-        "theme": "pirates",
-        "id": "de9c9540-574d-4f56-8781-17ef00afb6c2",
-        "maxCampers": 48
-    }
-]
+[{"startOfWeek":"2022-11-27","currentCampers":0,"groups":["3e946a6e-58d1-4b62-9c7f-3ea99f0d3641","49df8dc2-1803-4cd6-adb8-052eccf4c2a8","4dfa4506-2cb7-4815-9628-d624e456da13","39ab60d0-e4a8-481a-9336-a17323cbc47d","0cabfb8e-ccfd-4c28-8310-426e624470a3","746d4ea6-ed44-47f1-988a-c1fc31e8f07f"],"theme":"asd","id":"f5a2e9af-b6d8-4f17-8614-baeda654e476","maxCampers":48}]

@@ -122,7 +122,7 @@ public class Activity {
      */
     public String toString() {
         return "Activity name: " + this.name +
-                "\nActivity location: " + this.location +
-                "\nActivity description: " + this.description;
+                "\n\tLocation: " + this.location +
+                "\n\tDescription: " + this.description;
     }
 }
