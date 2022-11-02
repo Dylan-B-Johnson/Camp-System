@@ -419,7 +419,7 @@ public class Facade {
             LocalDate birthday, String relationToCustomer, Contact primaryEmergencyContact,
             Contact secondaryEmergencyContact, Contact primaryCarePhysician) {
         Camper camper = new Camper(firstName, lastName, allergies, birthday, primaryEmergencyContact,
-                secondaryEmergencyContact, primaryCarePhysician, 0, "", relationToCustomer);
+                secondaryEmergencyContact, primaryCarePhysician, 0, "Not tested", relationToCustomer);
         DataWriter.createCamper(camper);
         ((Customer) getUser()).addCamper(camper);
         return true;
@@ -591,7 +591,7 @@ public class Facade {
         }
     }
 
-    public boolean exportSchedule(Group group, String filename) {
+    public boolean exportSchedule(Group group, String filename, Week week) {
         // filename param has no extension
         // saves the group's week schedule as a well-formatted text file with the
         // specified name
@@ -601,6 +601,7 @@ public class Facade {
         try {
             FileWriter fileWriter = new FileWriter(filename);
             int day = 1;
+            fileWriter.append(week.toString()+"\n");
             for (DaySchedule daySchedule : group.getSchedule()) {
                 fileWriter.append(String.format("Day %d\n", day++));
                 for (Activity activity : daySchedule.getActivities()) {
@@ -617,12 +618,13 @@ public class Facade {
         return true;
     }
 
-    public boolean exportRoster(Group group, String filename) {
+    public boolean exportRoster(Group group, String filename, Week week) {
         // filename param has no extension
         // saves the group's week schedule as a well-formatted text file with the
         // specified name and age of each camper
         try {
             FileWriter fileWriter = new FileWriter(filename);
+            fileWriter.append(week.toString()+"\n");
             for (Camper camper : group.getCampers()) {
                 fileWriter.append("Name: " + camper.getFirstName() + " " + camper.getLastName() + " Age: "
                         + camper.getAge(getWeek(group)) + "\n");
@@ -630,8 +632,9 @@ public class Facade {
             fileWriter.close();
         } catch (Exception exception) {
             System.out.println(exception);
+            return false;
         }
-        return false;
+        return true;
     }
 
     public boolean exportVitalInfo(Group group, String filename) {

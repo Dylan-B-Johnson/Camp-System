@@ -250,7 +250,7 @@ public class UI {
                 input("Please enter a description for the activity:"))) {
             print("Activity sucessfully added.");
             enterToExit();
-        } else{
+        } else {
             actionFailed();
         }
 
@@ -499,7 +499,7 @@ public class UI {
             title("Export Group Schedule");
             String filename = input(
                     "Please enter the name of the file to export the schedule as (do not include a file extension):");
-            if (f.exportSchedule(week.getGroups().get(answerCounselor - 1), filename)) {
+            if (f.exportSchedule(week.getGroups().get(answerCounselor - 1), filename, week)) {
                 print("Schedule sucessfully exported.");
             } else {
                 title("ERROR");
@@ -577,7 +577,7 @@ public class UI {
         }
         String filename = getCounselorExportFilename(vitalInfo);
         Group group = f.getAssociatedGroup(selectedWeek);
-        if (group == null || !(f.exportSchedule(group, filename))) {
+        if (group == null || !(f.exportSchedule(group, filename, selectedWeek))) {
             actionFailed();
             return;
         }
