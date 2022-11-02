@@ -9,6 +9,12 @@ import org.json.simple.JSONObject;
 
 public class DataWriter {
 
+    /**
+     * saves customers to json
+     * 
+     * @param customers
+     * @return passed
+     */
     public static boolean saveCustomers(HashMap<UUID, Customer> customers) {
         DataReader.setDirtyFlag(DataReader.CUSTOMERSDIRTY);
         try {
@@ -48,12 +54,25 @@ public class DataWriter {
         return true;
     }
 
+    /**
+     * creates new customer
+     * 
+     * @param customer
+     * @return passed
+     */
     public static boolean createCustomer(Customer customer) {
         HashMap<UUID, Customer> modifiedCustomers = DataReader.getCustomers();
         modifiedCustomers.put(customer.getId(), customer);
         return saveCustomers(modifiedCustomers);
     }
 
+    /**
+     * updates customer based on id
+     * 
+     * @param id
+     * @param customer
+     * @return passed
+     */
     public static boolean updateCustomer(UUID id, Customer customer) {
         HashMap<UUID, Customer> modifiedCustomers = DataReader.getCustomers();
         if (!modifiedCustomers.containsKey(id) || !(customer.getId().compareTo(id) == 0))
@@ -62,6 +81,12 @@ public class DataWriter {
         return saveCustomers(modifiedCustomers);
     }
 
+    /**
+     * deletes customer based on id
+     * 
+     * @param id
+     * @return passed
+     */
     public static boolean deleteCustomer(UUID id) {
         HashMap<UUID, Customer> modifiedCustomers = DataReader.getCustomers();
         if (!modifiedCustomers.containsKey(id))
@@ -70,6 +95,12 @@ public class DataWriter {
         return saveCustomers(modifiedCustomers);
     }
 
+    /**
+     * saves all activities to json
+     * 
+     * @param activites
+     * @return passed
+     */
     public static boolean saveActivities(HashMap<UUID, Activity> activites) {
         DataReader.setDirtyFlag(DataReader.ACTIVITIESDIRTY);
         try {
@@ -93,12 +124,25 @@ public class DataWriter {
         return true;
     }
 
+    /**
+     * creates activity
+     * 
+     * @param activity
+     * @return passed
+     */
     public static boolean createActivity(Activity activity) {
         HashMap<UUID, Activity> modifiedActivities = DataReader.getActivities();
         modifiedActivities.put(activity.getId(), activity);
         return saveActivities(modifiedActivities);
     }
 
+    /**
+     * updates activity based on id
+     * 
+     * @param id
+     * @param activity
+     * @return passed
+     */
     public static boolean updateActivity(UUID id, Activity activity) {
         HashMap<UUID, Activity> modifiedActivities = DataReader.getActivities();
         if (!modifiedActivities.containsKey(id) || !(activity.getId().compareTo(id) == 0))
@@ -107,6 +151,12 @@ public class DataWriter {
         return saveActivities(modifiedActivities);
     }
 
+    /**
+     * deletes activity based on id
+     * 
+     * @param id
+     * @return passed
+     */
     public static boolean deleteActivity(UUID id) {
         HashMap<UUID, Activity> modifiedActivities = DataReader.getActivities();
         if (!modifiedActivities.containsKey(id))
@@ -115,6 +165,12 @@ public class DataWriter {
         return saveActivities(modifiedActivities);
     }
 
+    /**
+     * saves all weeks to json
+     * 
+     * @param weeks
+     * @return passed
+     */
     public static boolean saveWeeks(HashMap<UUID, Week> weeks) {
         DataReader.setDirtyFlag(DataReader.WEEKSDIRTY);
         try {
@@ -144,12 +200,24 @@ public class DataWriter {
         return true;
     }
 
+    /**
+     * creates week
+     * 
+     * @param week
+     * @return passed
+     */
     public static boolean createWeek(Week week) {
         HashMap<UUID, Week> weeksHashMap = DataReader.getWeeks();
         weeksHashMap.put(week.getId(), week);
         return saveWeeks(weeksHashMap);
     }
 
+    /**
+     * deletes week based on id
+     * 
+     * @param id
+     * @return passed
+     */
     public static boolean deleteWeek(UUID id) {
         HashMap<UUID, Week> weeksHashMap = DataReader.getWeeks();
         if (!weeksHashMap.containsKey(id))
@@ -158,6 +226,13 @@ public class DataWriter {
         return saveWeeks(weeksHashMap);
     }
 
+    /**
+     * updates week based on id
+     * 
+     * @param id
+     * @param week
+     * @return passed
+     */
     public static boolean updateWeek(UUID id, Week week) {
         HashMap<UUID, Week> weeksHashMap = DataReader.getWeeks();
         if (!weeksHashMap.containsKey(id) || !(week.getId().compareTo(id) == 0))
@@ -166,6 +241,12 @@ public class DataWriter {
         return saveWeeks(weeksHashMap);
     }
 
+    /**
+     * saves camplocation to json
+     * 
+     * @param campLocation
+     * @return passed
+     */
     private static boolean saveCampLocation(CampLocation campLocation) {
         DataReader.setDirtyFlag(DataReader.CAMPLOCATIONDIRTY);
         try {
@@ -185,10 +266,22 @@ public class DataWriter {
         return true;
     }
 
+    /**
+     * updates camplocation
+     * 
+     * @param campLocation
+     * @return passed
+     */
     public static boolean updateCampLocation(CampLocation campLocation) {
         return saveCampLocation(campLocation);
     }
 
+    /**
+     * saves counselors to json
+     * 
+     * @param counselors
+     * @return passed
+     */
     private static boolean saveCounselors(HashMap<UUID, Counselor> counselors) {
         DataReader.setDirtyFlag(DataReader.COUNSELORDIRTY);
         try {
@@ -244,12 +337,25 @@ public class DataWriter {
         return true;
     }
 
+    /**
+     * creates counselor
+     * 
+     * @param counselor
+     * @return passed
+     */
     public static boolean createCounselor(Counselor counselor) {
         HashMap<UUID, Counselor> counselorHashMap = DataReader.getCounselors();
         counselorHashMap.put(counselor.getId(), counselor);
         return saveCounselors(counselorHashMap);
     }
 
+    /**
+     * updates counselor based on id
+     * 
+     * @param id
+     * @param counselor
+     * @return passed
+     */
     public static boolean updateCounselor(UUID id, Counselor counselor) {
         HashMap<UUID, Counselor> counselorHashMap = DataReader.getCounselors();
         if (!counselorHashMap.containsKey(id) || !(counselor.getId().compareTo(id) == 0))
@@ -258,6 +364,12 @@ public class DataWriter {
         return saveCounselors(counselorHashMap);
     }
 
+    /**
+     * deletes counselor based on id
+     * 
+     * @param id
+     * @return passed
+     */
     public static boolean deleteCounselor(UUID id) {
         HashMap<UUID, Counselor> counselorHashMap = DataReader.getCounselors();
         if (!counselorHashMap.containsKey(id))
@@ -266,6 +378,12 @@ public class DataWriter {
         return saveCounselors(counselorHashMap);
     }
 
+    /**
+     * saves director to json
+     * 
+     * @param director
+     * @return passed
+     */
     public static boolean saveDirector(Director director) {
         DataReader.setDirtyFlag(DataReader.DIRECTORDIRTY);
         try {
@@ -286,10 +404,22 @@ public class DataWriter {
         return true;
     }
 
+    /**
+     * updates director
+     * 
+     * @param director
+     * @return passed
+     */
     public static boolean updateDirector(Director director) {
         return saveDirector(director);
     }
 
+    /**
+     * saves all campers to json
+     * 
+     * @param campers
+     * @return passed
+     */
     private static boolean saveCampers(HashMap<UUID, Camper> campers) {
         DataReader.setDirtyFlag(DataReader.CAMPERSDIRTY);
         try {
@@ -345,12 +475,25 @@ public class DataWriter {
         return true;
     }
 
+    /**
+     * creates camper
+     * 
+     * @param camper
+     * @return passed
+     */
     public static boolean createCamper(Camper camper) {
         HashMap<UUID, Camper> campersHashMap = DataReader.getCampers();
         campersHashMap.put(camper.getId(), camper);
         return saveCampers(campersHashMap);
     }
 
+    /**
+     * updates camper based on id
+     * 
+     * @param id
+     * @param camper
+     * @return passed
+     */
     public static boolean updateCamper(UUID id, Camper camper) {
         HashMap<UUID, Camper> camperHashMap = DataReader.getCampers();
         if (!camperHashMap.containsKey(id) || !(camper.getId().compareTo(id) == 0))
@@ -359,6 +502,12 @@ public class DataWriter {
         return saveCampers(camperHashMap);
     }
 
+    /**
+     * deletes camper based on id
+     * 
+     * @param id
+     * @return passed
+     */
     public static boolean deleteCamper(UUID id) {
         HashMap<UUID, Camper> camperHashMap = DataReader.getCampers();
         if (!camperHashMap.containsKey(id))
@@ -367,6 +516,12 @@ public class DataWriter {
         return saveCampers(camperHashMap);
     }
 
+    /**
+     * saves all dayschedules to json
+     * 
+     * @param daySchedules
+     * @return passed
+     */
     private static boolean saveDaySchedules(HashMap<UUID, DaySchedule> daySchedules) {
         DataReader.setDirtyFlag(DataReader.DAYSCHEDULESDIRTY);
         try {
@@ -393,12 +548,25 @@ public class DataWriter {
         return true;
     }
 
+    /**
+     * creates dayschedule
+     * 
+     * @param daySchedule
+     * @return passed
+     */
     public static boolean createDaySchedule(DaySchedule daySchedule) {
         HashMap<UUID, DaySchedule> dayScheduleHashMap = DataReader.getDaySchedules();
         dayScheduleHashMap.put(daySchedule.getId(), daySchedule);
         return saveDaySchedules(dayScheduleHashMap);
     }
 
+    /**
+     * update dayschedule based on id
+     * 
+     * @param id
+     * @param daySchedule
+     * @return passed
+     */
     public static boolean updateDaySchedule(UUID id, DaySchedule daySchedule) {
         HashMap<UUID, DaySchedule> dayScheduleHashMap = DataReader.getDaySchedules();
         if (!dayScheduleHashMap.containsKey(id) || !(daySchedule.getId().compareTo(id) == 0))
@@ -407,6 +575,12 @@ public class DataWriter {
         return saveDaySchedules(dayScheduleHashMap);
     }
 
+    /**
+     * deletes dayschedule based on id
+     * 
+     * @param id
+     * @return passed
+     */
     public static boolean deleteDaySchedule(UUID id) {
         HashMap<UUID, DaySchedule> dayScheduleHashMap = DataReader.getDaySchedules();
         if (!dayScheduleHashMap.containsKey(id))
@@ -415,6 +589,12 @@ public class DataWriter {
         return saveDaySchedules(dayScheduleHashMap);
     }
 
+    /**
+     * saves groups to json
+     * 
+     * @param groups
+     * @return
+     */
     private static boolean saveGroups(HashMap<UUID, Group> groups) {
         DataReader.setDirtyFlag(DataReader.GROUPSDIRTY);
 
@@ -449,12 +629,25 @@ public class DataWriter {
         return true;
     }
 
+    /**
+     * creates group
+     * 
+     * @param group
+     * @return passed
+     */
     public static boolean createGroup(Group group) {
         HashMap<UUID, Group> groupsHashMap = DataReader.getGroups();
         groupsHashMap.put(group.getId(), group);
         return saveGroups(groupsHashMap);
     }
 
+    /**
+     * updates group based on id
+     * 
+     * @param id
+     * @param group
+     * @return passed
+     */
     public static boolean updateGroup(UUID id, Group group) {
         HashMap<UUID, Group> groupsHashMap = DataReader.getGroups();
         if (!groupsHashMap.containsKey(id) || !(group.getId().compareTo(id) == 0))
@@ -463,6 +656,12 @@ public class DataWriter {
         return saveGroups(groupsHashMap);
     }
 
+    /**
+     * deletes group based on id
+     * 
+     * @param id
+     * @return passed
+     */
     public static boolean deleteGroup(UUID id) {
         HashMap<UUID, Group> groupsHashMap = DataReader.getGroups();
         if (!groupsHashMap.containsKey(id))

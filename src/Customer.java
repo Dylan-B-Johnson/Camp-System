@@ -153,13 +153,4 @@ public class Customer extends User {
         }
         return rtn;
     }
-
-    /**
-     * Gets a list of all Customers
-     * 
-     * @return List of customers
-     */
-    public static ArrayList<Customer> getCustomers() {
-        return new ArrayList<Customer>(DataReader.getCustomers().values());
-    }
 }

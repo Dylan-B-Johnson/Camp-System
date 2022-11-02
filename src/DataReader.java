@@ -34,6 +34,11 @@ public class DataReader {
     private static HashMap<UUID, Week> weeksCache = null;
     private static HashMap<UUID, DaySchedule> daySchedulesCache = null;
 
+    /**
+     * sets the dirty flags of caches
+     * 
+     * @param flagToSet
+     */
     public static void setDirtyFlag(int flagToSet) {
         switch (flagToSet) {
             case 0:
@@ -66,6 +71,12 @@ public class DataReader {
         }
     }
 
+    /**
+     * returns customer based on id that is passed
+     * 
+     * @param id
+     * @return returns resulting customer or null if id is not in hashmap
+     */
     public static Customer getCustomer(UUID id) {
         HashMap<UUID, Customer> customerHashMap = getCustomers();
         if (customerHashMap.containsKey(id)) {
@@ -74,6 +85,11 @@ public class DataReader {
         return null;
     }
 
+    /**
+     * returns a hashmap of all customers in customers.json
+     * 
+     * @return hashmap of customers
+     */
     public static HashMap<UUID, Customer> getCustomers() {
         if (customerCache != null && !dirtyFlags.customersDirty) {
             return customerCache;
@@ -117,6 +133,12 @@ public class DataReader {
         return customerList;
     }
 
+    /**
+     * returns activity based on id
+     * 
+     * @param id
+     * @return resulting activity
+     */
     public static Activity getActivity(UUID id) {
         HashMap<UUID, Activity> activityHashMap = getActivities();
         if (activityHashMap.containsKey(id))
@@ -124,6 +146,11 @@ public class DataReader {
         return null;
     }
 
+    /**
+     * returns all activities in activities.json
+     * 
+     * @return all activities
+     */
     public static HashMap<UUID, Activity> getActivities() {
         if (activityCache != null && !dirtyFlags.activitiesDirty) {
             return activityCache;
@@ -150,6 +177,12 @@ public class DataReader {
         return activities;
     }
 
+    /**
+     * returns camper based on id
+     * 
+     * @param id
+     * @return camper
+     */
     public static Camper getCamper(UUID id) {
         HashMap<UUID, Camper> allCampers = getCampers();
         if (allCampers.containsKey(id))
@@ -157,6 +190,11 @@ public class DataReader {
         return null;
     }
 
+    /**
+     * returns all campers in campers.json
+     * 
+     * @return campers
+     */
     public static HashMap<UUID, Camper> getCampers() {
         if (camperCache != null && !dirtyFlags.campersDirty) {
             return camperCache;
@@ -207,6 +245,12 @@ public class DataReader {
         return camperList;
     }
 
+    /**
+     * returns group based on id
+     * 
+     * @param id
+     * @return group
+     */
     public static Group getGroup(UUID id) {
         HashMap<UUID, Group> groups = getGroups();
         if (groups.containsKey(id))
@@ -214,6 +258,11 @@ public class DataReader {
         return null;
     }
 
+    /**
+     * returns hashmap of all groups indexed by id
+     * 
+     * @return groups
+     */
     public static HashMap<UUID, Group> getGroups() {
         if (groupCache != null && !dirtyFlags.groupsDirty) {
             return groupCache;
@@ -248,6 +297,12 @@ public class DataReader {
         return groupList;
     }
 
+    /**
+     * returns counselor based on id
+     * 
+     * @param id
+     * @return counselor
+     */
     public static Counselor getCounselor(UUID id) {
         HashMap<UUID, Counselor> counselors = getCounselors();
         if (counselors.containsKey(id))
@@ -255,6 +310,11 @@ public class DataReader {
         return null;
     }
 
+    /**
+     * returns hashmap of counselors
+     * 
+     * @return counselors
+     */
     public static HashMap<UUID, Counselor> getCounselors() {
         if (counselorCache != null && !dirtyFlags.counselorDirty) {
             return counselorCache;
@@ -307,6 +367,11 @@ public class DataReader {
         return counselorList;
     }
 
+    /**
+     * returns director from director.json
+     * 
+     * @return director
+     */
     public static Director getDirector() {
         if (directorCache != null && !dirtyFlags.directorDirty) {
             return directorCache;
@@ -330,6 +395,11 @@ public class DataReader {
         return null;
     }
 
+    /**
+     * returns campLocation from campLocation.json
+     * 
+     * @return campLocation
+     */
     public static CampLocation getCampLocation() {
         if (campLocationCache != null && !dirtyFlags.campLocationDirty) {
             return campLocationCache;
@@ -351,6 +421,12 @@ public class DataReader {
         return null;
     }
 
+    /**
+     * returns week based on id
+     * 
+     * @param id
+     * @return week
+     */
     public static Week getWeek(UUID id) {
         HashMap<UUID, Week> weeks = getWeeks();
         if (weeks.containsKey(id))
@@ -358,6 +434,11 @@ public class DataReader {
         return null;
     }
 
+    /**
+     * returns weeks from weeks.json as hashmap
+     * 
+     * @return hashmap of weeks
+     */
     public static HashMap<UUID, Week> getWeeks() {
         if (weeksCache != null && !dirtyFlags.weeksDirty) {
             return weeksCache;
@@ -390,6 +471,12 @@ public class DataReader {
         return weeksList;
     }
 
+    /**
+     * returns daySchedule based on id
+     * 
+     * @param id
+     * @return daySchedule
+     */
     public static DaySchedule getDaySchedule(UUID id) {
         HashMap<UUID, DaySchedule> daySchedules = getDaySchedules();
         if (daySchedules.containsKey(id))
@@ -397,6 +484,11 @@ public class DataReader {
         return null;
     }
 
+    /**
+     * returns hashmap of all daySchedules
+     * 
+     * @return dayschedules hashmap
+     */
     public static HashMap<UUID, DaySchedule> getDaySchedules() {
         if (daySchedulesCache != null && !dirtyFlags.daySchedulesDirty) {
             return daySchedulesCache;
@@ -426,6 +518,11 @@ public class DataReader {
         return dayScheduleList;
     }
 
+    /**
+     * returns all users from each json
+     * 
+     * @return users as hashmap
+     */
     public static HashMap<UUID, User> getUsers() {
         HashMap<UUID, User> users = new HashMap<>();
         for (Customer customer : getCustomers().values()) {
