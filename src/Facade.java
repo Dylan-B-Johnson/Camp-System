@@ -390,7 +390,6 @@ public class Facade {
             DataWriter.updateWeek(week.getId(), week);
             return true;
         }
-        System.out.println("bruh");
         return false;
     }
 
