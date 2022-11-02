@@ -18,14 +18,6 @@ public class Facade {
 
     }
 
-    public static void main(String[] args) {
-        Facade f = new Facade();
-        f.addCamperToUser("null", "null", new ArrayList<String>(), LocalDate.of(2011, 1, 1), "null",
-                new Contact("null", "null", "null", "null", "null", "null"),
-                new Contact("null", "null", "null", "null", "null", "null"),
-                new Contact("null", "null", "null", "null", "null", "null"));
-    }
-
     /**
      * Gets the director of the camp
      * 
@@ -158,7 +150,7 @@ public class Facade {
     }
 
     /**
-     * Returns all of the campers registered for a week
+     * Returns a string representation of the a user's campers that can register for a week
      * 
      * @param weekOfRegistration The week that is being checked for
      * @return The string representation of the campers
@@ -598,11 +590,11 @@ public class Facade {
         // "showing a grid of what they will be doing at each day and time. For each
         // activity it also indicates where it is located."
         // we need to discuss where to save the file
-        filename +=".txt";
+        filename += ".txt";
         try {
             FileWriter fileWriter = new FileWriter(filename);
             int day = 1;
-            fileWriter.append(week.toString()+"\n");
+            fileWriter.append(week.toString() + "\n");
             for (DaySchedule daySchedule : group.getSchedule()) {
                 fileWriter.append(String.format("Day %d\n", day++));
                 for (Activity activity : daySchedule.getActivities()) {
@@ -623,10 +615,10 @@ public class Facade {
         // filename param has no extension
         // saves the group's week schedule as a well-formatted text file with the
         // specified name and age of each camper
-        filename +=".txt";
+        filename += ".txt";
         try {
             FileWriter fileWriter = new FileWriter(filename);
-            fileWriter.append(week.toString()+"\n");
+            fileWriter.append(week.toString() + "\n");
             for (Camper camper : group.getCampers()) {
                 fileWriter.append("Name: " + camper.getFirstName() + " " + camper.getLastName() + " Age: "
                         + camper.getAge(getWeek(group)) + "\n");
@@ -647,10 +639,10 @@ public class Facade {
         // formatted report of all his campers allergies, emergency contacts, and
         // medical information. Make sure this is a good sized list."
         // we need to discuss where to save the file
-        filename +=".txt";
+        filename += ".txt";
         try {
             FileWriter fileWriter = new FileWriter(filename);
-            fileWriter.append(week.toString()+"\n");
+            fileWriter.append(week.toString() + "\n");
             for (Camper camper : group.getCampers()) {
                 fileWriter.append(camper.toString());
                 fileWriter.append("\n*******************************************\n");
@@ -687,18 +679,20 @@ public class Facade {
      * @return A list of legal activities for day number day, group group, activity
      *         number activity, and currently scheduled.
      */
-    public ArrayList<Activity> getAvailableActivities(Group group, DaySchedule current, int day, int activity, Week week) {
+    public ArrayList<Activity> getAvailableActivities(Group group, DaySchedule current, int day, int activity,
+            Week week) {
         ArrayList<Activity> availableActivities = new ArrayList<Activity>();
         for (Activity potActivity : ActivitiesList.getActivities()) {
             boolean available = true;
             for (Group othGroup : week.getGroups()) {
-                if (othGroup.getSchedule().get(day).getActivities().size()!=0 && othGroup.getSchedule().get(day).getActivities().get(activity).getId().equals(potActivity.getId())) {
+                if (othGroup.getSchedule().get(day).getActivities().size() != 0 && othGroup.getSchedule().get(day)
+                        .getActivities().get(activity).getId().equals(potActivity.getId())) {
                     available = false;
                 }
             }
-            for (Activity i : current.getActivities()){
-                if (potActivity.getId().equals(i.getId())){
-                    available=false;
+            for (Activity i : current.getActivities()) {
+                if (potActivity.getId().equals(i.getId())) {
+                    available = false;
                 }
             }
             if (available) {

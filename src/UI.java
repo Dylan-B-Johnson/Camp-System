@@ -686,7 +686,7 @@ public class UI {
             enterToExit();
             return -2;
         }
-        while (answerWeek != -1) {
+        while (answerWeek == -1) {
             title("Select the Week to Register For");
             answerWeek = options(weeks);
         }
