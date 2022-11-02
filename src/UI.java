@@ -47,7 +47,6 @@ public class UI {
             }
             if (f.getUser() != null) {
                 title("Welcome " + f.getUser().getFirstName() + "!");
-                String[] options;
                 switch (f.getUser().getTypeOfUser()) {
                     case COUNSELOR:
                         counselor();
