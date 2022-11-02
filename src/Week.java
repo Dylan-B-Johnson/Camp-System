@@ -291,7 +291,7 @@ public class Week {
         ArrayList<Group> groups = new ArrayList<Group>();
         for (int i = 0; i < NUM_GROUPS; i++) {
             groups.add(new Group(new ArrayList<Camper>(), Group.MAX_CAMPERS, new ArrayList<DaySchedule>(), null));
-            setUniqueCounselor(groups.get(i),groups);
+            setUniqueCounselor(groups.get(i), groups);
             groups.get(i).getRandomSchedule(this);
             DataWriter.createGroup(groups.get(i));
         }
@@ -305,7 +305,7 @@ public class Week {
             random = UserList.getCounselors().get(rand.nextInt(UserList.getCounselors().size()));
             boolean unique = true;
             for (Group i : groups) {
-                if (i.getCounselor()!=null && i.getCounselor().getId().equals(random.getId())) {
+                if (i.getCounselor() != null && i.getCounselor().getId().equals(random.getId())) {
                     unique = false;
                 }
             }

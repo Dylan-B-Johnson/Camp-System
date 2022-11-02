@@ -150,7 +150,8 @@ public class Facade {
     }
 
     /**
-     * Returns a string representation of the a user's campers that can register for a week
+     * Returns a string representation of the a user's campers that can register for
+     * a week
      * 
      * @param weekOfRegistration The week that is being checked for
      * @return The string representation of the campers
@@ -381,14 +382,15 @@ public class Facade {
      */
     public boolean registerCamper(UUID id, Week week) {
         Camper foundCamper = DataReader.getCamper(id);
-        if (foundCamper==null){
+        if (foundCamper == null) {
             return false;
-        }        
+        }
         if (week.canRegisterCamper(foundCamper)) {
             week.registerCamper(foundCamper);
             DataWriter.updateWeek(week.getId(), week);
             return true;
         }
+        System.out.println("bruh");
         return false;
     }
 

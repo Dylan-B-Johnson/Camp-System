@@ -159,10 +159,7 @@ public class Group {
      * @return True if you can register a camper False if you cannot
      */
     public boolean canRegisterCamper() {
-        if (groupSize < MAX_CAMPERS) {
-            return true;
-        }
-        return false;
+        return (campers.size() < MAX_CAMPERS);
     }
 
     /**
