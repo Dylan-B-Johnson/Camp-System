@@ -20,6 +20,15 @@ public class WeekList {
     }
 
     /**
+     * Gets all the weeks that exist
+     * 
+     * @return All weeks
+     */
+    public static ArrayList<Week> getWeeks() {
+        return new ArrayList<Week>(DataReader.getWeeks().values());
+    }
+
+    /**
      * Gets the current camp week session if there is one
      * 
      * @return The current week if camp is in, null if it is not
