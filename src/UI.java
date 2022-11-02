@@ -244,13 +244,14 @@ public class UI {
         if (f.activityExists(name)) {
             title("ERROR");
             print("An activity with that name already exists.");
+            enterToExit();
         } else if (f.addActivity(name,
                 input("Please enter the location that the activity is performed:"),
                 input("Please enter a description for the activity:"))) {
             print("Activity sucessfully added.");
             enterToExit();
-        } else {
-            enterToExit();
+        } else{
+            actionFailed();
         }
 
     }
@@ -355,7 +356,7 @@ public class UI {
         int activity = 1;
         while (activity <= DaySchedule.MAX_ACTIVITY) {
             title("Select the " + f.ordinal(activity) + " Activity");
-            ArrayList<Activity> legal = f.getAvailableActivities(group, current, answerDay - 1, activity - 1);
+            ArrayList<Activity> legal = f.getAvailableActivities(group, current, answerDay - 1, activity - 1, week);
             if (legal.size() == 0) {
                 title("ERROR");
                 print("There are no activities that are valid to be added as the " + f.ordinal(activity)
@@ -471,7 +472,7 @@ public class UI {
                 break;
             }
         }
-        return answerDay-1;
+        return answerDay - 1;
     }
 
     /**
@@ -652,7 +653,7 @@ public class UI {
                 } else {
                     title("ERROR");
                     print("We could not register " + camper.getFirstName() + " for the week " + weeks[answerWeek - 1]
-                    + " because their age group is at capacity.\n");
+                            + " because their age group is at capacity.\n");
                     enterToExit();
                     return;
                 }

@@ -46,7 +46,7 @@ public class Facade {
     /**
      * Logs in a user and sets them to the active user
      * 
-     * @param email The email of the user
+     * @param email    The email of the user
      * @param password The password of the user
      * @return The user that logged in
      */
@@ -64,10 +64,10 @@ public class Facade {
      * Creates a new customer and sets them to the active user
      * 
      * @param firstName The first name of the customer
-     * @param lastName The last name of the customer
-     * @param email The email of the customer
-     * @param password The password of the customer
-     * @param self The customer's own contact
+     * @param lastName  The last name of the customer
+     * @param email     The email of the customer
+     * @param password  The password of the customer
+     * @param self      The customer's own contact
      * @return The user that created their account
      */
     public User signUpCustomer(String firstName, String lastName, String email, String password, Contact self) {
@@ -83,15 +83,17 @@ public class Facade {
     /**
      * Creates a new counselor and sets them to the active user
      * 
-     * @param firstName The first name of the counselor
-     * @param lastName The last name of the counselor
-     * @param email The email of the counselor
-     * @param password The password of the counselor
-     * @param allergies The allergies of the counselor
-     * @param birthday The birthday of the counselor
-     * @param primaryEmergencyContact The first emergency contact for the counselor
-     * @param secondaryEmergencyContact The second emergency contact for the counselor
-     * @param primaryCarePhysician The primary care physician of the counselor
+     * @param firstName                 The first name of the counselor
+     * @param lastName                  The last name of the counselor
+     * @param email                     The email of the counselor
+     * @param password                  The password of the counselor
+     * @param allergies                 The allergies of the counselor
+     * @param birthday                  The birthday of the counselor
+     * @param primaryEmergencyContact   The first emergency contact for the
+     *                                  counselor
+     * @param secondaryEmergencyContact The second emergency contact for the
+     *                                  counselor
+     * @param primaryCarePhysician      The primary care physician of the counselor
      * @return The counselor that created their account
      */
     public User signUpCounselor(String firstName, String lastName, String email, String password,
@@ -202,9 +204,11 @@ public class Facade {
      * @return The week that the group is in
      */
     public Week getWeek(Group group) {
-        for (Week week : WeekList.getFutureOrCurrentWeeks()) {
-            if (week.getGroups().contains(group)) {
-                return week;
+        for (Week week : WeekList.getWeeks()) {
+            for (Group i : week.getGroups()) {
+                if (i.getCounselor().getId().equals(group.getId())) {
+                    return week;
+                }
             }
         }
         return null;
@@ -361,12 +365,12 @@ public class Facade {
     /**
      * Makes an instance of type contact with the supplied parameters
      * 
-     * @param firstName The first name of the contact
-     * @param lastName The last name of the contact
-     * @param email The email of the contact
-     * @param phoneNum The phone number of the contact
+     * @param firstName    The first name of the contact
+     * @param lastName     The last name of the contact
+     * @param email        The email of the contact
+     * @param phoneNum     The phone number of the contact
      * @param relationship The relationship of the contact to the user
-     * @param address The contact's address
+     * @param address      The contact's address
      * @return The contact that was created
      */
     public Contact makeContact(String firstName, String lastName, String email,
@@ -378,7 +382,7 @@ public class Facade {
     /**
      * Registers the camper for a week
      * 
-     * @param id The id of the camper
+     * @param id   The id of the camper
      * @param week The week they are being registered for
      * @return True if the operation was successful False if it was not
      */
@@ -399,14 +403,15 @@ public class Facade {
 
     /**
      * Adds the specified camper to a user's camper arraylist
-     * @param firstName The first name of the camper
-     * @param lastName The last name of the camper
-     * @param allergies The allergies of the campers
-     * @param birthday The camper's birthday
-     * @param relationToCustomer The camper's relationship to the customer
-     * @param primaryEmergencyContact The camper's first emergency contact
+     * 
+     * @param firstName                 The first name of the camper
+     * @param lastName                  The last name of the camper
+     * @param allergies                 The allergies of the campers
+     * @param birthday                  The camper's birthday
+     * @param relationToCustomer        The camper's relationship to the customer
+     * @param primaryEmergencyContact   The camper's first emergency contact
      * @param secondaryEmergencyContact The camper's second emergency contact
-     * @param primaryCarePhysician The camper's primary care physician
+     * @param primaryCarePhysician      The camper's primary care physician
      * @return True if it was successful False if it was not
      */
     public boolean addCamperToUser(String firstName, String lastName, ArrayList<String> allergies,
@@ -422,8 +427,8 @@ public class Facade {
     /**
      * Adds an activity to the list of activities
      * 
-     * @param name The name of the activity
-     * @param location The location of the activity
+     * @param name        The name of the activity
+     * @param location    The location of the activity
      * @param description The description of the activity
      * @return True if it was successful false if it was not
      */
@@ -580,9 +585,7 @@ public class Facade {
         // DaySchedule arrayList
         // ensures that everything is saved properly
         for (Group group : week.getGroups()) {
-            ArrayList<DaySchedule> updatedSchedule = group.getSchedule();
-            updatedSchedule.set(day, null);
-            group.setSchedule(updatedSchedule); // new ArrayList<DaySchedule>());
+            group.getSchedule().get(day).setActivities(new ArrayList<Activity>());
             DataWriter.updateGroup(group.getId(), group);
         }
     }
@@ -618,8 +621,9 @@ public class Facade {
         // specified name and age of each camper
         try {
             FileWriter fileWriter = new FileWriter(filename);
-            for(Camper camper : group.getCampers()){
-                fileWriter.append("Name: " + camper.getFirstName() + " " + camper.getLastName() + " Age: "+camper.getAge(getWeek(group))+"\n");
+            for (Camper camper : group.getCampers()) {
+                fileWriter.append("Name: " + camper.getFirstName() + " " + camper.getLastName() + " Age: "
+                        + camper.getAge(getWeek(group)) + "\n");
             }
             fileWriter.close();
         } catch (Exception exception) {
@@ -638,7 +642,7 @@ public class Facade {
         // we need to discuss where to save the file
         try {
             FileWriter fileWriter = new FileWriter(filename);
-            for(Camper camper : group.getCampers()){
+            for (Camper camper : group.getCampers()) {
                 fileWriter.append(camper.toString());
                 fileWriter.append("\n*******************************************\n");
             }
@@ -667,22 +671,23 @@ public class Facade {
      * @param current  The DaySchedule object that will be assigned to the group and
      *                 day once it is filled with 6 valid activities. THIS IS NOT
      *                 THE SAME as group.getSchedule().get(day).
-     * @param day      The day in question (0-6) from the start of the week
+     * @param day      The day in question (0-5) from the start of the week
      * @param activity The timeslot to get the legal sctivities for (0-5)
+     * @param week     The week that you're editing in
      * @return A list of legal activities for day number day, group group, activity
      *         number activity, and currently scheduled.
      */
-    public ArrayList<Activity> getAvailableActivities(Group group, DaySchedule current, int day, int activity) {
+    public ArrayList<Activity> getAvailableActivities(Group group, DaySchedule current, int day, int activity, Week week) {
         ArrayList<Activity> availableActivities = new ArrayList<Activity>();
         for (Activity potActivity : ActivitiesList.getActivities()) {
             boolean available = true;
-            for (Group othGroup : getWeek(group).getGroups()) {
-                if (othGroup.getSchedule().get(day).getActivities().get(activity).getId().equals(potActivity.getId())) {
+            for (Group othGroup : week.getGroups()) {
+                if (othGroup.getSchedule().get(day).getActivities().size()!=0 && othGroup.getSchedule().get(day).getActivities().get(activity).getId().equals(potActivity.getId())) {
                     available = false;
                 }
             }
             for (Activity i : current.getActivities()){
-                if (i.getId().equals(i.getId())){
+                if (potActivity.getId().equals(i.getId())){
                     available=false;
                 }
             }
