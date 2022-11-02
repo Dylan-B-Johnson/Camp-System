@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Scanner;
 import java.util.UUID;
 import java.io.FileWriter;
 import java.time.DayOfWeek;
@@ -611,8 +612,9 @@ public class Facade {
             fileWriter.close();
         } catch (Exception exception) {
             System.out.println(exception);
+            return false;
         }
-        return false;
+        return true;
     }
 
     public boolean exportRoster(Group group, String filename) {

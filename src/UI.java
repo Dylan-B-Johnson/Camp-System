@@ -502,7 +502,8 @@ public class UI {
             if (f.exportSchedule(week.getGroups().get(answerCounselor - 1), filename)) {
                 print("Schedule sucessfully exported.");
             } else {
-                actionFailed();
+                title("ERROR");
+                print("An error occured. You may have used an invalid character in your filename.");
             }
         } else {
             int answerDay = getViewScheduleDayDirector(week);
