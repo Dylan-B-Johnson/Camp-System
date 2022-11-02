@@ -1,0 +1,50 @@
+	Start of Week: Sun, May 28, 2023
+	End of Week: Sat, Jun 3, 2023
+Day 1
+swimming	|	Crystal Lake	|	The campers will go swimming at Crystal Lake
+canoeing	|	Crystal Lake	|	The campers will go canoeing at Crystal Lake
+soccer	|	Actvities Field	|	The campers will go play soccer
+asd	|	2	|	3
+hiking	|	Blueberry trail	|	The campers will hike the Blueberry trail
+test	|	test	|	test
+
+Day 2
+canoeing	|	Crystal Lake	|	The campers will go canoeing at Crystal Lake
+swimming	|	Crystal Lake	|	The campers will go swimming at Crystal Lake
+asdasd	|	asd	|	asd
+hiking	|	Crescent Falls	|	The campers will hike the Crescent Falls trail
+archery	|	Archery Range	|	The campers will go practice archery at the range
+asd	|	2	|	3
+
+Day 3
+asd	|	2	|	3
+hiking	|	Blueberry trail	|	The campers will hike the Blueberry trail
+asd23	|	asd2	|	sad
+archery	|	Archery Range	|	The campers will go practice archery at the range
+asdasd	|	asd	|	asd
+swimming	|	Crystal Lake	|	The campers will go swimming at Crystal Lake
+
+Day 4
+Banana Boat Tour	|	Bana Farm	|	Take out the banana boat
+archery	|	Archery Range	|	The campers will go practice archery at the range
+canoeing	|	Crystal Lake	|	The campers will go canoeing at Crystal Lake
+soccer	|	Actvities Field	|	The campers will go play soccer
+hiking	|	Blueberry trail	|	The campers will hike the Blueberry trail
+asd23	|	asd2	|	sad
+
+Day 5
+asd23	|	asd2	|	sad
+swimming	|	Crystal Lake	|	The campers will go swimming at Crystal Lake
+hiking	|	Crescent Falls	|	The campers will hike the Crescent Falls trail
+canoeing	|	Crystal Lake	|	The campers will go canoeing at Crystal Lake
+asdasd	|	asd	|	asd
+Banana Boat Tour	|	Bana Farm	|	Take out the banana boat
+
+Day 6
+asdasd	|	asd	|	asd
+asd	|	2	|	3
+hiking	|	Blueberry trail	|	The campers will hike the Blueberry trail
+swimming	|	Crystal Lake	|	The campers will go swimming at Crystal Lake
+soccer	|	Actvities Field	|	The campers will go play soccer
+asd23	|	asd2	|	sad
+

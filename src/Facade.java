@@ -620,11 +620,10 @@ public class Facade {
             fileWriter.append(week.toString() + "\n");
             for (Camper camper : group.getCampers()) {
                 fileWriter.append("Name: " + camper.getFirstName() + " " + camper.getLastName() + " Age: "
-                        + camper.getAge(getWeek(group)) + "\n");
+                        + camper.getAge(week) + "\n");
             }
             fileWriter.close();
         } catch (Exception exception) {
-            System.out.println(exception);
             return false;
         }
         return true;

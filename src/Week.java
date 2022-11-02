@@ -324,7 +324,8 @@ public class Week {
     public String toString() {
         return "\tStart of Week: " + this.startOfWeek.format(DateTimeFormatter.ofPattern("E, LLL d, uuuu"))
                 + "\n\tEnd of Week: "
-                + this.startOfWeek.plusDays(6).format(DateTimeFormatter.ofPattern("E, LLL d, uuuu"));
+                + this.startOfWeek.plusDays(6).format(DateTimeFormatter.ofPattern("E, LLL d, uuuu"))
+                + "\n\tTheme of Week: " + this.theme;
     }
 
     /**
