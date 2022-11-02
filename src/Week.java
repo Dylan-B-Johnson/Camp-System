@@ -21,7 +21,7 @@ public class Week {
     private ArrayList<Group> groups;
     private CampLocation campLocation;
     public static final int NUM_GROUPS = 6;
-    public static final int WEEK_LENGTH = 6;
+    public static final int WEEK_LENGTH = 7;
     private String theme;
     private int[] ageRange;
 

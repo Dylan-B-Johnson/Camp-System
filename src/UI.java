@@ -526,7 +526,7 @@ public class UI {
         } else {
             int answerDay = getViewScheduleDayDirector(week);
             title("View Schedule");
-            print(week.getGroups().get(answerCounselor - 1).getSchedule().get(answerDay).toString());
+            print(week.getGroups().get(answerCounselor - 1).getSchedule().get(answerDay-1).toString());
         }
         enterToExit();
     }
