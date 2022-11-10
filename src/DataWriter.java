@@ -247,7 +247,7 @@ public class DataWriter {
      * @param campLocation
      * @return passed
      */
-    private static boolean saveCampLocation(CampLocation campLocation) {
+    public static boolean saveCampLocation(CampLocation campLocation) {
         DataReader.setDirtyFlag(DataReader.CAMPLOCATIONDIRTY);
         try {
             FileWriter file = new FileWriter("data/campLocation.json");
@@ -281,7 +281,7 @@ public class DataWriter {
      * @param counselors
      * @return passed
      */
-    private static boolean saveCounselors(HashMap<UUID, Counselor> counselors) {
+    public static boolean saveCounselors(HashMap<UUID, Counselor> counselors) {
         DataReader.setDirtyFlag(DataReader.COUNSELORDIRTY);
         try {
             FileWriter file = new FileWriter("data/counselors.json");
@@ -418,7 +418,7 @@ public class DataWriter {
      * @param campers
      * @return passed
      */
-    private static boolean saveCampers(HashMap<UUID, Camper> campers) {
+    public static boolean saveCampers(HashMap<UUID, Camper> campers) {
         DataReader.setDirtyFlag(DataReader.CAMPERSDIRTY);
         try {
             FileWriter file = new FileWriter("data/campers.json");
@@ -519,7 +519,7 @@ public class DataWriter {
      * @param daySchedules
      * @return passed
      */
-    private static boolean saveDaySchedules(HashMap<UUID, DaySchedule> daySchedules) {
+    public static boolean saveDaySchedules(HashMap<UUID, DaySchedule> daySchedules) {
         DataReader.setDirtyFlag(DataReader.DAYSCHEDULESDIRTY);
         try {
             FileWriter file = new FileWriter("data/daySchedules.json");
@@ -591,7 +591,7 @@ public class DataWriter {
      * @param groups
      * @return
      */
-    private static boolean saveGroups(HashMap<UUID, Group> groups) {
+    public static boolean saveGroups(HashMap<UUID, Group> groups) {
         DataReader.setDirtyFlag(DataReader.GROUPSDIRTY);
 
         try {
