@@ -823,6 +823,26 @@ public class FacadeTesting {
         return rtn;
     }
 
+
+    private static boolean in(Activity activity, ArrayList<Activity> a){
+        for (Activity i : a){
+            if (activity.getId().equals(i.getId())){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static ArrayList<Activity> union(ArrayList<Activity> a, ArrayList<Activity> b) {
+        ArrayList<Activity> rtn = new ArrayList<Activity>();
+        for (Activity i : ActivitiesList.getActivities()) {
+            if (in(i, a) || in(i,b)){
+                rtn.add(i);
+            }
+        }
+        return rtn;
+    }
+
     @Test
     public void canGetAvailableActivitiesWhenAllClear() {
         Week week = DataReader.getWeek(UUID.fromString("b69d87c8-964b-4606-b0b8-fb94f401eac7"));
@@ -866,6 +886,101 @@ public class FacadeTesting {
 
     @Test
     public void canGetAvailableActivitiesWhenNotAllClear(){
-        
+        Week week = DataReader.getWeek(UUID.fromString("b69d87c8-964b-4606-b0b8-fb94f401eac7"));
+        Group group = DataReader.getGroup(UUID.fromString("85cebb34-df07-499e-979b-d712d5941c58"));
+        for (Group i : week.getGroups()) {
+            i.getSchedule().get(1).setActivities(new ArrayList<Activity>());
+            DataWriter.updateGroup(i.getId(), i);
+        }
+
+        ArrayList<Activity> activities = new ArrayList<Activity>();
+        activities.add(DataReader.getActivity(UUID.fromString("d3b5b646-fc00-4f95-830c-35657c46deaa")));
+        activities.add(DataReader.getActivity(UUID.fromString("f1be7fb3-ec83-4d9d-9590-1854f01e406a")));
+        Group tmp = DataReader.getGroup(UUID.fromString("d5f1a288-0422-49f0-ab5d-5827c8eb793c"));
+        tmp.getSchedule().get(1).setActivities(activities);
+        DataWriter.updateGroup(UUID.fromString("d5f1a288-0422-49f0-ab5d-5827c8eb793c"),tmp);
+
+        activities = new ArrayList<Activity>();
+        activities.add(DataReader.getActivity(UUID.fromString("7332323b-0592-4da7-806c-f3673e49597c")));
+        ArrayList<Activity> availableActivities = compliment(union(activities,tmp.getSchedule().get(1).getActivities()));
+        DaySchedule schedule = new DaySchedule(activities, week, LocalDate.of(2023, 6, 19));
+        boolean worked = equals(f.getAvailableActivities(group, schedule, 1, 0, week), availableActivities);
+
+        activities.add(DataReader.getActivity(UUID.fromString("49fa2e16-dcbb-4094-881e-be536104122b")));
+        availableActivities = compliment(union(activities,tmp.getSchedule().get(1).getActivities()));
+        schedule = new DaySchedule(activities, week, LocalDate.of(2023, 6, 19));
+        worked = worked && equals(f.getAvailableActivities(group, schedule, 1, 1, week), availableActivities);
+
+        activities.add(DataReader.getActivity(UUID.fromString("fb610fc1-b92a-409c-9d1a-0712d7b96733")));
+        availableActivities = compliment(union(activities,tmp.getSchedule().get(1).getActivities()));
+        schedule = new DaySchedule(activities, week, LocalDate.of(2023, 6, 19));
+        worked = worked && equals(f.getAvailableActivities(group, schedule, 1, 2, week), availableActivities);
+
+        activities.add(DataReader.getActivity(UUID.fromString("6f145e7d-e657-4112-ba7c-756b2264da3b")));
+        availableActivities = compliment(union(activities,tmp.getSchedule().get(1).getActivities()));
+        schedule = new DaySchedule(activities, week, LocalDate.of(2023, 6, 19));
+        worked = worked && equals(f.getAvailableActivities(group, schedule, 1, 3, week), availableActivities);
+
+        activities.add(DataReader.getActivity(UUID.fromString("e3c449cc-8f8d-46c5-9cb2-7376b9f92769")));
+        availableActivities = compliment(union(activities,tmp.getSchedule().get(1).getActivities()));
+        schedule = new DaySchedule(activities, week, LocalDate.of(2023, 6, 19));
+        worked = worked && equals(f.getAvailableActivities(group, schedule, 1, 4, week), availableActivities);
+
+        activities.add(DataReader.getActivity(UUID.fromString("d78db184-dcfd-43af-9d20-e0c0f442629a")));
+        availableActivities = compliment(union(activities,tmp.getSchedule().get(1).getActivities()));
+        schedule = new DaySchedule(activities, week, LocalDate.of(2023, 6, 19));
+        worked = worked && equals(f.getAvailableActivities(group, schedule, 1, 4, week), availableActivities);
+    }
+
+    @Test
+    public void getAvailableActivitiesReturnsEmptyArrayWhenNullGroup(){
+        Week week = DataReader.getWeek(UUID.fromString("b69d87c8-964b-4606-b0b8-fb94f401eac7"));
+        for (Group i : week.getGroups()) {
+            i.getSchedule().get(1).setActivities(new ArrayList<Activity>());
+            DataWriter.updateGroup(i.getId(), i);
+        }
+        ArrayList<Activity> activities = new ArrayList<Activity>();
+        activities.add(DataReader.getActivity(UUID.fromString("7332323b-0592-4da7-806c-f3673e49597c")));
+        DaySchedule schedule = new DaySchedule(activities, week, LocalDate.of(2023, 6, 19));
+        assertTrue(f.getAvailableActivities(null, schedule, 1, 0, week).size()==0);
+    }
+
+    @Test
+    public void getAvailableActivitiesReturnsEmptyArrayWhenNullWeekAndSchedule(){
+        Week week = DataReader.getWeek(UUID.fromString("b69d87c8-964b-4606-b0b8-fb94f401eac7"));
+        Group group = DataReader.getGroup(UUID.fromString("85cebb34-df07-499e-979b-d712d5941c58"));
+        for (Group i : week.getGroups()) {
+            i.getSchedule().get(1).setActivities(new ArrayList<Activity>());
+            DataWriter.updateGroup(i.getId(), i);
+        }
+        assertTrue(f.getAvailableActivities(group, null, 1, 0, null).size()==0);
+    }
+
+    @Test
+    public void getAvailableActivitiesOutOfBoundsDay(){
+        Week week = DataReader.getWeek(UUID.fromString("b69d87c8-964b-4606-b0b8-fb94f401eac7"));
+        Group group = DataReader.getGroup(UUID.fromString("85cebb34-df07-499e-979b-d712d5941c58"));
+        for (Group i : week.getGroups()) {
+            i.getSchedule().get(1).setActivities(new ArrayList<Activity>());
+            DataWriter.updateGroup(i.getId(), i);
+        }
+        ArrayList<Activity> activities = new ArrayList<Activity>();
+        activities.add(DataReader.getActivity(UUID.fromString("7332323b-0592-4da7-806c-f3673e49597c")));
+        DaySchedule schedule = new DaySchedule(activities, week, LocalDate.of(2023, 6, 19));
+        assertTrue(f.getAvailableActivities(group, schedule, 7, 0, week).size()==0);
+    }
+
+    @Test
+    public void getAvailableActivitiesNegativeDay(){
+        Week week = DataReader.getWeek(UUID.fromString("b69d87c8-964b-4606-b0b8-fb94f401eac7"));
+        Group group = DataReader.getGroup(UUID.fromString("85cebb34-df07-499e-979b-d712d5941c58"));
+        for (Group i : week.getGroups()) {
+            i.getSchedule().get(1).setActivities(new ArrayList<Activity>());
+            DataWriter.updateGroup(i.getId(), i);
+        }
+        ArrayList<Activity> activities = new ArrayList<Activity>();
+        activities.add(DataReader.getActivity(UUID.fromString("7332323b-0592-4da7-806c-f3673e49597c")));
+        DaySchedule schedule = new DaySchedule(activities, week, LocalDate.of(2023, 6, 19));
+        assertTrue(f.getAvailableActivities(group, schedule, -1, 0, week).size()==0);
     }
 }
