@@ -1,0 +1,34 @@
+	Start of Week: Sun, May 28, 2023
+	End of Week: Sat, Jun 3, 2023
+	Theme of Week: hawiaan
+Camper Name: Tim Chapman
+Allergies: 
+	peanuts
+Birthday: Thu, Jul 1, 2010
+Emergency Contact One:
+	Name: Bob Damien
+	Email: bob@hotmail.com
+	Phone #: 654-234-1262
+	Relationship: father
+	Address: 62 Hoback St, Helena, MT 27909
+Emergency Contact Two:
+	Name: Virla Chapman
+	Email: virla2@utk.edu
+	Phone #: 123-456-5262
+	Relationship: mother
+	Address: 62 Hoback St, Helena, MT 27909
+Primary Care Physician:
+	Name: Ron Rhymer
+	Email: ron@columbiaPediatrics.com
+	Phone #: 865-399-5462
+	Relationship: primary-care physician
+	Address: 823 Lyons View Rd, Columbia, SC 37909
+Swim Test Status: PFD needed
+Future or Current Enrollments:
+	Start of Week: Sun, Jan 1, 2023
+	End of Week: Sat, Jan 7, 2023
+	Theme of Week: theme
+	Start of Week: Sun, May 28, 2023
+	End of Week: Sat, Jun 3, 2023
+	Theme of Week: hawiaan
+*******************************************

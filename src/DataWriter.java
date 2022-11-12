@@ -50,7 +50,6 @@ public class DataWriter {
             file.write(customersJsonArray.toJSONString());
             file.close();
         } catch (Exception exception) {
-
             return false;
         }
         return true;

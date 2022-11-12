@@ -37,7 +37,7 @@ public class UserList {
                 DataWriter.createCounselor((Counselor) user);
                 break;
             case CUSTOMER:
-                DataWriter.createCustomer((Customer) user);
+                System.out.println(DataWriter.createCustomer((Customer) user));
                 break;
         }
     }

@@ -1,0 +1,51 @@
+	Start of Week: Sun, Jan 1, 2023
+	End of Week: Sat, Jan 7, 2023
+	Theme of Week: theme
+Day 1
+asd	|	2	|	3
+hiking	|	Blueberry trail	|	The campers will hike the Blueberry trail
+soccer	|	Actvities Field	|	The campers will go play soccer
+test	|	test	|	test
+swimming	|	Crystal Lake	|	The campers will go swimming at Crystal Lake
+archery	|	Archery Range	|	The campers will go practice archery at the range
+
+Day 2
+asd23	|	asd2	|	sad
+swimming	|	Crystal Lake	|	The campers will go swimming at Crystal Lake
+archery	|	Archery Range	|	The campers will go practice archery at the range
+Banana Boat Tour	|	Bana Farm	|	Take out the banana boat
+soccer	|	Actvities Field	|	The campers will go play soccer
+hiking	|	Crescent Falls	|	The campers will hike the Crescent Falls trail
+
+Day 3
+asd23	|	asd2	|	sad
+archery	|	Archery Range	|	The campers will go practice archery at the range
+asdasd	|	asd	|	asd
+canoeing	|	Crystal Lake	|	The campers will go canoeing at Crystal Lake
+hiking	|	Blueberry trail	|	The campers will hike the Blueberry trail
+soccer	|	Actvities Field	|	The campers will go play soccer
+
+Day 4
+archery	|	Archery Range	|	The campers will go practice archery at the range
+swimming	|	Crystal Lake	|	The campers will go swimming at Crystal Lake
+canoeing	|	Crystal Lake	|	The campers will go canoeing at Crystal Lake
+soccer	|	Actvities Field	|	The campers will go play soccer
+hiking	|	Blueberry trail	|	The campers will hike the Blueberry trail
+asd	|	2	|	3
+
+Day 5
+asd	|	2	|	3
+swimming	|	Crystal Lake	|	The campers will go swimming at Crystal Lake
+hiking	|	Crescent Falls	|	The campers will hike the Crescent Falls trail
+asd23	|	asd2	|	sad
+asdasd	|	asd	|	asd
+canoeing	|	Crystal Lake	|	The campers will go canoeing at Crystal Lake
+
+Day 6
+canoeing	|	Crystal Lake	|	The campers will go canoeing at Crystal Lake
+asdasd	|	asd	|	asd
+test	|	test	|	test
+asd	|	2	|	3
+Banana Boat Tour	|	Bana Farm	|	Take out the banana boat
+hiking	|	Blueberry trail	|	The campers will hike the Blueberry trail
+
