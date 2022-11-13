@@ -211,28 +211,6 @@ public class Facade {
     }
 
     /**
-     * Exports a formatted schedule to the specified file
-     * 
-     * @param daySchedule The day that is being printed
-     */
-    public void exportSchedule(DaySchedule daySchedule) {
-        ArrayList<String> output = new ArrayList<>();
-
-        for (Activity activity : daySchedule.getCurrentAcitivities()) {
-            output.add(activity.toString());
-        }
-
-        try {
-            FileWriter file = new FileWriter(String.format("schedule_of_%s.txt", daySchedule.getDay().toString()));
-            for (String activityString : output) {
-                file.append(activityString);
-            }
-            file.close();
-        } catch (Exception e) {
-        }
-    }
-
-    /**
      * Gets a list of campers whose name matched the input
      * 
      * @param firstName The name that is being searched for

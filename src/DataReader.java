@@ -421,7 +421,7 @@ public class DataReader {
     public static Week getWeek(UUID id) {
         HashMap<UUID, Week> weeks = getWeeks();
         if (weeks.containsKey(id))
-            weeks.get(id);
+            return weeks.get(id);
         return null;
     }
 
@@ -521,5 +521,249 @@ public class DataReader {
         }
         users.put(getDirector().getId(), getDirector());
         return users;
+    }
+
+    /**
+     * A method for testing purposes that reloads all JSONs
+     */
+    public static void reload() {
+        JSONParser parser = new JSONParser();
+        HashMap<UUID, Customer> customerList = new HashMap<>();
+        try {
+            JSONArray customers = (JSONArray) parser.parse(new FileReader("data/customers.json"));
+            for (Object object : customers) {
+                JSONObject user = (JSONObject) object;
+                String id = (String) user.get(DataConstants.ID);
+                String email = (String) user.get(DataConstants.EMAIL);
+                String firstName = (String) user.get(DataConstants.FIRSTNAME);
+                String lastName = (String) user.get(DataConstants.LASTNAME);
+                String password = (String) user.get(DataConstants.PASSWORD);
+                ArrayList<Camper> campers = new ArrayList<Camper>();
+                JSONArray camperJsonArray = (JSONArray) user.get(DataConstants.CAMPERS);
+                for (Object camperObject : camperJsonArray) {
+                    String camperId = (String) camperObject;
+                    Camper camper = getCamper(UUID.fromString(camperId));
+                    campers.add(camper);
+                }
+                JSONObject contactInfo = (JSONObject) user.get(DataConstants.CONTACTINFO);
+                Contact contact = new Contact((String) contactInfo.get(DataConstants.FIRSTNAME),
+                        (String) contactInfo.get(DataConstants.LASTNAME), (String) contactInfo.get(DataConstants.EMAIL),
+                        (String) contactInfo.get(DataConstants.PHONENUMBER),
+                        (String) contactInfo.get(DataConstants.RELATIONSHIP),
+                        (String) contactInfo.get(DataConstants.ADDRESS));
+                customerList
+                        .put(UUID.fromString(id),
+                                new Customer(UUID.fromString(id), email, firstName, lastName, password,
+                                        getCampLocation(),
+                                        campers, contact));
+            }
+        } catch (Exception exception) {
+        }
+        dirtyFlags.customersDirty = false;
+        customerCache = customerList;
+
+        parser = new JSONParser();
+        HashMap<UUID, Activity> activities = new HashMap<>();
+
+        try {
+            JSONArray jActivities = (JSONArray) parser.parse(new FileReader("data/activities.json"));
+            for (Object object : jActivities) {
+                JSONObject activity = (JSONObject) object;
+                String id = (String) activity.get(DataConstants.ID);
+                String name = (String) activity.get(DataConstants.NAME);
+                String location = (String) activity.get(DataConstants.LOCATION);
+                String description = (String) activity.get(DataConstants.DESCRIPTION);
+                activities.put(UUID.fromString(id), new Activity(UUID.fromString(id), name, location, description));
+            }
+        } catch (Exception exception) {
+        }
+        dirtyFlags.activitiesDirty = false;
+        activityCache = activities;
+
+        parser = new JSONParser();
+        HashMap<UUID, Camper> camperList = new HashMap<>();
+        try {
+            JSONArray campers = (JSONArray) parser.parse(new FileReader("data/campers.json"));
+            for (Object object : campers) {
+                JSONObject camper = (JSONObject) object;
+                UUID id = UUID.fromString((String) camper.get(DataConstants.ID));
+                String firstName = (String) camper.get(DataConstants.FIRSTNAME);
+                String lastName = (String) camper.get(DataConstants.LASTNAME);
+                ArrayList<String> allergies = new ArrayList<String>();
+                JSONArray jsonAllergies = (JSONArray) camper.get(DataConstants.ALLERGIES);
+                for (Object o : jsonAllergies) {
+                    allergies.add((String) o);
+                }
+                LocalDate birthday = LocalDate.parse((String) camper.get(DataConstants.BIRTHDAY));
+                JSONObject pec = (JSONObject) camper.get(DataConstants.PRIMARYEMERGENCYCONTACT);
+                Contact primaryEmergencyContact = new Contact((String) pec.get(DataConstants.FIRSTNAME),
+                        (String) pec.get(DataConstants.LASTNAME), (String) pec.get(DataConstants.EMAIL),
+                        (String) pec.get(DataConstants.PHONENUMBER),
+                        (String) pec.get(DataConstants.RELATIONSHIP), (String) pec.get(DataConstants.ADDRESS));
+                JSONObject sec = (JSONObject) camper.get(DataConstants.SECONDARYEMERGENCYCONTACT);
+                Contact secondaryEmergencyContact = new Contact((String) sec.get(DataConstants.FIRSTNAME),
+                        (String) sec.get(DataConstants.LASTNAME), (String) sec.get(DataConstants.EMAIL),
+                        (String) sec.get(DataConstants.PHONENUMBER),
+                        (String) sec.get(DataConstants.RELATIONSHIP), (String) sec.get(DataConstants.ADDRESS));
+                JSONObject pcp = (JSONObject) camper.get(DataConstants.PRIMARYCAREPHYSICIAN);
+                Contact primaryCarePhysician = new Contact((String) pcp.get(DataConstants.FIRSTNAME),
+                        (String) pcp.get(DataConstants.LASTNAME), (String) pcp.get(DataConstants.EMAIL),
+                        (String) pcp.get(DataConstants.PHONENUMBER),
+                        (String) pcp.get(DataConstants.RELATIONSHIP), (String) pcp.get(DataConstants.ADDRESS));
+                int pastEnrollment = ((Long) camper.get(DataConstants.PASTENROLLMENT)).intValue();
+                String swimTestResult = (String) camper.get(DataConstants.SWIMTESTRESULT);
+                String relationToCustomer = (String) camper.get(DataConstants.RELATIONTOCUSTOMER);
+                camperList.put(id, new Camper(id, firstName, lastName, allergies, birthday, primaryEmergencyContact,
+                        secondaryEmergencyContact, primaryCarePhysician, pastEnrollment, swimTestResult,
+                        relationToCustomer));
+            }
+        } catch (Exception e) {
+        }
+        dirtyFlags.campersDirty = false;
+        camperCache = camperList;
+
+        parser = new JSONParser();
+        HashMap<UUID, Group> groupList = new HashMap<>();
+        try {
+            JSONArray groups = (JSONArray) parser.parse(new FileReader("data/groups.json"));
+            for (Object object : groups) {
+                JSONObject group = (JSONObject) object;
+                UUID id = UUID.fromString((String) group.get(DataConstants.ID));
+                int groupSize = ((Long) group.get(DataConstants.GROUPSIZE)).intValue();
+                ArrayList<Camper> campers = new ArrayList<>();
+                JSONArray jCampers = (JSONArray) group.get(DataConstants.CAMPERS);
+                for (Object camper : jCampers) {
+                    campers.add(getCamper(UUID.fromString((String) camper)));
+                }
+                ArrayList<DaySchedule> schedule = new ArrayList<>();
+                JSONArray scheduleJsonArray = (JSONArray) group.get(DataConstants.SCHEDULE);
+                for (Object scheduleObject : scheduleJsonArray) {
+                    schedule.add(getDaySchedule(UUID.fromString((String) scheduleObject)));
+                }
+                Counselor counselor = getCounselor(UUID.fromString((String) group.get(DataConstants.COUNSELOR)));
+                groupList.put(id, new Group(id, campers, groupSize, schedule, counselor));
+            }
+        } catch (Exception exception) {
+        }
+        dirtyFlags.groupsDirty = false;
+        groupCache = groupList;
+
+        parser = new JSONParser();
+        HashMap<UUID, Counselor> counselorList = new HashMap<>();
+
+        try {
+            JSONArray counselors = (JSONArray) parser.parse(new FileReader("data/counselors.json"));
+            for (Object object : counselors) {
+                JSONObject counselor = (JSONObject) object;
+                UUID id = UUID.fromString((String) counselor.get(DataConstants.ID));
+                String email = (String) counselor.get(DataConstants.EMAIL);
+                String firstName = (String) counselor.get(DataConstants.FIRSTNAME);
+                String lastName = (String) counselor.get(DataConstants.LASTNAME);
+                String password = (String) counselor.get(DataConstants.PASSWORD);
+                ArrayList<String> allergies = new ArrayList<>();
+                JSONArray allergiesJsonArray = (JSONArray) counselor.get(DataConstants.ALLERGIES);
+                for (Object allergy : allergiesJsonArray) {
+                    allergies.add((String) allergy);
+                }
+                LocalDate birthday = LocalDate.parse((String) counselor.get(DataConstants.BIRTHDAY));
+                JSONObject pec = (JSONObject) counselor.get(DataConstants.PRIMARYEMERGENCYCONTACT);
+                Contact primaryEmergencyContact = new Contact((String) pec.get(DataConstants.FIRSTNAME),
+                        (String) pec.get(DataConstants.LASTNAME), (String) pec.get(DataConstants.EMAIL),
+                        (String) pec.get(DataConstants.PHONENUMBER),
+                        (String) pec.get(DataConstants.RELATIONSHIP), (String) pec.get(DataConstants.ADDRESS));
+                JSONObject sec = (JSONObject) counselor.get(DataConstants.SECONDARYEMERGENCYCONTACT);
+                Contact secondaryEmergencyContact = new Contact((String) sec.get(DataConstants.FIRSTNAME),
+                        (String) sec.get(DataConstants.LASTNAME), (String) sec.get(DataConstants.EMAIL),
+                        (String) sec.get(DataConstants.PHONENUMBER),
+                        (String) sec.get(DataConstants.RELATIONSHIP), (String) sec.get(DataConstants.ADDRESS));
+                JSONObject pcp = (JSONObject) counselor.get(DataConstants.PRIMARYCAREPHYSICIAN);
+                Contact primaryCarePhysician = new Contact((String) pcp.get(DataConstants.FIRSTNAME),
+                        (String) pcp.get(DataConstants.LASTNAME), (String) pcp.get(DataConstants.EMAIL),
+                        (String) pcp.get(DataConstants.PHONENUMBER),
+                        (String) pcp.get(DataConstants.RELATIONSHIP), (String) pcp.get(DataConstants.ADDRESS));
+                CampLocation campLocation = getCampLocation();
+                counselorList.put(id,
+                        new Counselor(id, allergies, birthday, email, firstName, lastName, password,
+                                campLocation, primaryEmergencyContact, secondaryEmergencyContact,
+                                primaryCarePhysician));
+            }
+        } catch (Exception exception) {
+        }
+        dirtyFlags.counselorDirty = false;
+        counselorCache = counselorList;
+
+        parser = new JSONParser();
+        try {
+            JSONObject director = (JSONObject) parser.parse(new FileReader("data/director.json"));
+            UUID id = UUID.fromString((String) director.get(DataConstants.ID));
+            String email = (String) director.get(DataConstants.EMAIL);
+            String firstName = (String) director.get(DataConstants.FIRSTNAME);
+            String lastName = (String) director.get(DataConstants.LASTNAME);
+            String password = (String) director.get(DataConstants.PASSWORD);
+            CampLocation campLocation = getCampLocation();
+            Director directorObject = new Director(id, email, firstName, lastName, password, campLocation);
+            directorCache = directorObject;
+            dirtyFlags.directorDirty = false;
+        } catch (Exception exception) {
+
+        }
+
+        parser = new JSONParser();
+        try {
+            JSONObject campLocation = (JSONObject) parser.parse(new FileReader("data/campLocation.json"));
+            UUID id = UUID.fromString((String) campLocation.get(DataConstants.ID));
+            String name = (String) campLocation.get(DataConstants.NAME);
+            String location = (String) campLocation.get(DataConstants.LOCATION);
+            double pricePerCamper = (double) campLocation.get(DataConstants.PRICEPERCAMPER);
+            CampLocation campLocationObject = new CampLocation(id, name, location, pricePerCamper);
+            dirtyFlags.campLocationDirty = false;
+        } catch (Exception exception) {
+        }
+
+        parser = new JSONParser();
+        HashMap<UUID, Week> weeksList = new HashMap<>();
+        try {
+            JSONArray weeksArray = (JSONArray) parser.parse(new FileReader("data/weeks.json"));
+            for (Object weekObject : weeksArray) {
+                JSONObject weekJsonObject = (JSONObject) weekObject;
+                UUID id = UUID.fromString((String) weekJsonObject.get(DataConstants.ID));
+                int maxCampers = ((Long) weekJsonObject.get(DataConstants.MAXCAMPERS)).intValue();
+                int currentCampers = ((Long) weekJsonObject.get(DataConstants.CURRENTCAMPERS)).intValue();
+                LocalDate startOfWeek = LocalDate.parse((String) weekJsonObject.get(DataConstants.STARTOFWEEK));
+                ArrayList<Group> groups = new ArrayList<>();
+                JSONArray groupArray = (JSONArray) weekJsonObject.get(DataConstants.GROUPS);
+                String theme = (String) weekJsonObject.get(DataConstants.THEME);
+                for (Object groupObject : groupArray) {
+                    groups.add(getGroup(UUID.fromString((String) groupObject)));
+                }
+                CampLocation campLocation = getCampLocation();
+                weeksList.put(id, new Week(id, maxCampers, currentCampers, startOfWeek, groups, campLocation, theme));
+            }
+        } catch (Exception exception) {
+
+        }
+        dirtyFlags.weeksDirty = false;
+        weeksCache = weeksList;
+
+        parser = new JSONParser();
+        HashMap<UUID, DaySchedule> dayScheduleList = new HashMap<>();
+        try {
+            JSONArray dayScheduleArray = (JSONArray) parser.parse(new FileReader("data/daySchedules.json"));
+            for (Object dayScheduleObject : dayScheduleArray) {
+                JSONObject dayScheduleJsonObject = (JSONObject) dayScheduleObject;
+                UUID id = UUID.fromString((String) dayScheduleJsonObject.get(DataConstants.ID));
+                ArrayList<Activity> currentActivities = new ArrayList<>();
+                JSONArray activities2 = (JSONArray) dayScheduleJsonObject.get(DataConstants.CURRENTACTIVITIES);
+                for (Object aObject : activities2) {
+                    currentActivities.add(getActivity(UUID.fromString((String) aObject)));
+                }
+                Week week = null;
+                LocalDate day = LocalDate.parse((String) dayScheduleJsonObject.get(DataConstants.DAY));
+                dayScheduleList.put(id, new DaySchedule(id, currentActivities, week, day));
+            }
+        } catch (Exception exception) {
+        }
+        dirtyFlags.daySchedulesDirty = false;
+        daySchedulesCache = dayScheduleList;
     }
 }

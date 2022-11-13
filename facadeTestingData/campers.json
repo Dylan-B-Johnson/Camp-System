@@ -1,0 +1,143 @@
+[
+    {
+        "allergies": [
+            "peanuts"
+        ],
+        "birthday": "2010-07-01",
+        "firstName": "Tim",
+        "lastName": "Chapman",
+        "primaryEmergencyContact": {
+            "firstName": "Bob",
+            "lastName": "Damien",
+            "phoneNumber": "654-234-1262",
+            "address": "62 Hoback St, Helena, MT 27909",
+            "relationship": "father",
+            "email": "bob@hotmail.com"
+        },
+        "primaryCarePhysician": {
+            "firstName": "Ron",
+            "lastName": "Rhymer",
+            "phoneNumber": "865-399-5462",
+            "address": "823 Lyons View Rd, Columbia, SC 37909",
+            "relationship": "primary-care physician",
+            "email": "ron@columbiaPediatrics.com"
+        },
+        "relationToCustomer": "child",
+        "secondaryEmergencyContact": {
+            "firstName": "Virla",
+            "lastName": "Chapman",
+            "phoneNumber": "123-456-5262",
+            "address": "62 Hoback St, Helena, MT 27909",
+            "relationship": "mother",
+            "email": "virla2@utk.edu"
+        },
+        "id": "35f810c6-ed26-42ec-a423-1db01478251f",
+        "swimTestResult": "PFD needed",
+        "pastEnrollment": 5
+    },
+    {
+        "allergies": [],
+        "birthday": "2012-06-21",
+        "firstName": "Josh",
+        "lastName": "Chapman",
+        "primaryEmergencyContact": {
+            "firstName": "Bob",
+            "lastName": "Damien",
+            "phoneNumber": "654-234-1262",
+            "address": "62 Hoback St, Helena, MT 27909",
+            "relationship": "father",
+            "email": "bob@hotmail.com"
+        },
+        "primaryCarePhysician": {
+            "firstName": "Ron",
+            "lastName": "Rhymer",
+            "phoneNumber": "865-399-5462",
+            "address": "823 Lyons View Rd, Columbia, SC 37909",
+            "relationship": "primary-care physician",
+            "email": "ron@columbiaPediatrics.com"
+        },
+        "relationToCustomer": "child",
+        "secondaryEmergencyContact": {
+            "firstName": "Virla",
+            "lastName": "Chapman",
+            "phoneNumber": "123-456-5262",
+            "address": "62 Hoback St, Helena, MT 27909",
+            "relationship": "mother",
+            "email": "virla2@utk.edu"
+        },
+        "id": "ec38d029-570d-43d8-9227-a55408674b96",
+        "swimTestResult": "proficient, no PFD needed",
+        "pastEnrollment": 1
+    },
+    {
+        "allergies": [
+            "shellfish",
+            "treenuts"
+        ],
+        "birthday": "2013-12-12",
+        "firstName": "Niels",
+        "lastName": "Mandrus",
+        "primaryEmergencyContact": {
+            "firstName": "Sally",
+            "lastName": "Kaufman",
+            "phoneNumber": "654-299-4462",
+            "address": "212 Fake Ave, Knoxville, TN 29291",
+            "relationship": "mother",
+            "email": "SallyKaufman@hotmail.com"
+        },
+        "primaryCarePhysician": {
+            "firstName": "Ron",
+            "lastName": "Rhymer",
+            "phoneNumber": "865-399-5462",
+            "address": "823 Lyons View Rd, Columbia, SC 37909",
+            "relationship": "primary-care physician",
+            "email": "ron@columbiaPediatrics.com"
+        },
+        "relationToCustomer": "child",
+        "secondaryEmergencyContact": {
+            "firstName": "Todd",
+            "lastName": "Smith",
+            "phoneNumber": "254-222-1112",
+            "address": "212 Fake Ave, Knoxville, TN 29291",
+            "relationship": "father",
+            "email": "todds@art.columbia.org"
+        },
+        "id": "7e7b8f07-e89f-4e26-a0fb-3ba36f8ba1b0",
+        "swimTestResult": "proficient, no PFD needed",
+        "pastEnrollment": 0
+    },
+    {
+        "allergies": [],
+        "birthday": "2016-01-01",
+        "firstName": "andrew",
+        "lastName": "andrew",
+        "primaryEmergencyContact": {
+            "firstName": "asdf",
+            "lastName": "asdf",
+            "phoneNumber": "asdf",
+            "address": "asdf",
+            "relationship": "asdf",
+            "email": "asdf"
+        },
+        "primaryCarePhysician": {
+            "firstName": "asdf",
+            "lastName": "asdf",
+            "phoneNumber": "asdf",
+            "address": "asdf",
+            "relationship": "Primary Care Physician",
+            "email": "asdf"
+        },
+        "relationToCustomer": "asdf",
+        "secondaryEmergencyContact": {
+            "firstName": "asdf",
+            "lastName": "asdf",
+            "phoneNumber": "asdf",
+            "address": "asdf",
+            "relationship": "asdf",
+            "email": "asdf"
+        },
+        "id": "3959a68f-d384-47d9-85f4-c37eca3471b3",
+        "swimTestResult": "Not tested",
+        "pastEnrollment": 1
+    }
+]
