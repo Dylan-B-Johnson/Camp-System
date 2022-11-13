@@ -1,0 +1,51 @@
+	Start of Week: Thu, Jun 1, 2023
+	End of Week: Wed, Jun 7, 2023
+	Theme of Week: ninja warrior
+Day 1
+soccer	|	Actvities Field	|	The campers will go play soccer
+archery	|	Archery Range	|	The campers will go practice archery at the range
+asd	|	2	|	3
+hiking	|	Blueberry trail	|	The campers will hike the Blueberry trail
+hiking	|	Crescent Falls	|	The campers will hike the Crescent Falls trail
+asd23	|	asd2	|	sad
+
+Day 2
+asdasd	|	asd	|	asd
+asd	|	2	|	3
+hiking	|	Blueberry trail	|	The campers will hike the Blueberry trail
+Banana Boat Tour	|	Bana Farm	|	Take out the banana boat
+soccer	|	Actvities Field	|	The campers will go play soccer
+archery	|	Archery Range	|	The campers will go practice archery at the range
+
+Day 3
+asd	|	2	|	3
+archery	|	Archery Range	|	The campers will go practice archery at the range
+canoeing	|	Crystal Lake	|	The campers will go canoeing at Crystal Lake
+hiking	|	Crescent Falls	|	The campers will hike the Crescent Falls trail
+test	|	test	|	test
+asd23	|	asd2	|	sad
+
+Day 4
+archery	|	Archery Range	|	The campers will go practice archery at the range
+hiking	|	Blueberry trail	|	The campers will hike the Blueberry trail
+asd23	|	asd2	|	sad
+soccer	|	Actvities Field	|	The campers will go play soccer
+asdasd	|	asd	|	asd
+Banana Boat Tour	|	Bana Farm	|	Take out the banana boat
+
+Day 5
+archery	|	Archery Range	|	The campers will go practice archery at the range
+soccer	|	Actvities Field	|	The campers will go play soccer
+swimming	|	Crystal Lake	|	The campers will go swimming at Crystal Lake
+asdasd	|	asd	|	asd
+test	|	test	|	test
+hiking	|	Blueberry trail	|	The campers will hike the Blueberry trail
+
+Day 6
+Banana Boat Tour	|	Bana Farm	|	Take out the banana boat
+asd23	|	asd2	|	sad
+swimming	|	Crystal Lake	|	The campers will go swimming at Crystal Lake
+hiking	|	Blueberry trail	|	The campers will hike the Blueberry trail
+soccer	|	Actvities Field	|	The campers will go play soccer
+archery	|	Archery Range	|	The campers will go practice archery at the range
+

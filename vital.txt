@@ -1,0 +1,223 @@
+	Start of Week: Thu, Jun 1, 2023
+	End of Week: Wed, Jun 7, 2023
+	Theme of Week: ninja warrior
+Camper Name: James Thurlow
+Allergies: none
+Birthday: Sun, Jan 1, 2012
+Emergency Contact One:
+	Name: asdf asdf
+	Email: asdf
+	Phone #: asdf
+	Relationship: asdf
+	Address: asdf
+Emergency Contact Two:
+	Name: asdf asdf
+	Email: asdf
+	Phone #: asdf
+	Relationship: asdf
+	Address: asdf
+Primary Care Physician:
+	Name: asdf asdf
+	Email: asdf
+	Phone #: asdf
+	Relationship: Primary Care Physician
+	Address: asdf
+Swim Test Status: Not tested
+Future or Current Enrollments:
+	Start of Week: Thu, Jun 1, 2023
+	End of Week: Wed, Jun 7, 2023
+	Theme of Week: ninja warrior
+*******************************************
+Camper Name: Jimmy Nuetron
+Allergies: none
+Birthday: Sun, Jan 1, 2012
+Emergency Contact One:
+	Name: asdf asdf
+	Email: asdf
+	Phone #: asdf
+	Relationship: asdf
+	Address: asdf
+Emergency Contact Two:
+	Name: asdf asdf
+	Email: asdf
+	Phone #: asdf
+	Relationship: asdf
+	Address: asdf
+Primary Care Physician:
+	Name: asdf asdf
+	Email: asdf
+	Phone #: asdf
+	Relationship: Primary Care Physician
+	Address: asdf
+Swim Test Status: Not tested
+Future or Current Enrollments:
+	Start of Week: Thu, Jun 1, 2023
+	End of Week: Wed, Jun 7, 2023
+	Theme of Week: ninja warrior
+*******************************************
+Camper Name: Neil Page
+Allergies: 
+	peanuts
+Birthday: Sun, Jan 1, 2012
+Emergency Contact One:
+	Name: asdf asdf
+	Email: asdf
+	Phone #: asdf
+	Relationship: asdf
+	Address: asdf
+Emergency Contact Two:
+	Name: asdf asdf
+	Email: asdf
+	Phone #: asdf
+	Relationship: asdf
+	Address: asdf
+Primary Care Physician:
+	Name: asdf asdf
+	Email: asdf
+	Phone #: asdf
+	Relationship: Primary Care Physician
+	Address: asdf
+Swim Test Status: Not tested
+Future or Current Enrollments:
+	Start of Week: Thu, Jun 1, 2023
+	End of Week: Wed, Jun 7, 2023
+	Theme of Week: ninja warrior
+*******************************************
+Camper Name: Josh Thurlow
+Allergies: 
+	shellfish
+Birthday: Sun, Jan 1, 2012
+Emergency Contact One:
+	Name: asdf asdf
+	Email: asdf
+	Phone #: asdf
+	Relationship: asdf
+	Address: asdf
+Emergency Contact Two:
+	Name: asdf asdf
+	Email: asdf
+	Phone #: asdf
+	Relationship: asdf
+	Address: asdf
+Primary Care Physician:
+	Name: asdf asdf
+	Email: asdf
+	Phone #: asdf
+	Relationship: Primary Care Physician
+	Address: asdf
+Swim Test Status: Not tested
+Future or Current Enrollments:
+	Start of Week: Thu, Jun 1, 2023
+	End of Week: Wed, Jun 7, 2023
+	Theme of Week: ninja warrior
+*******************************************
+Camper Name: Edgar Rich
+Allergies: none
+Birthday: Sun, Jan 1, 2012
+Emergency Contact One:
+	Name: asdf asdf
+	Email: asdf
+	Phone #: asdf
+	Relationship: asdf
+	Address: asdf
+Emergency Contact Two:
+	Name: asdf asdf
+	Email: asdf
+	Phone #: asdf
+	Relationship: asdf
+	Address: asdf
+Primary Care Physician:
+	Name: asdf asdf
+	Email: asdf
+	Phone #: asdf
+	Relationship: Primary Care Physician
+	Address: asdf
+Swim Test Status: Not tested
+Future or Current Enrollments:
+	Start of Week: Thu, Jun 1, 2023
+	End of Week: Wed, Jun 7, 2023
+	Theme of Week: ninja warrior
+*******************************************
+Camper Name: Paul Stark
+Allergies: none
+Birthday: Sun, Jan 1, 2012
+Emergency Contact One:
+	Name: asdf asdf
+	Email: asdf
+	Phone #: asdf
+	Relationship: asdf
+	Address: asdf
+Emergency Contact Two:
+	Name: asdf asdf
+	Email: asdf
+	Phone #: asdf
+	Relationship: asdf
+	Address: asdf
+Primary Care Physician:
+	Name: asdf asdf
+	Email: asdf
+	Phone #: asdf
+	Relationship: Primary Care Physician
+	Address: asdf
+Swim Test Status: Not tested
+Future or Current Enrollments:
+	Start of Week: Thu, Jun 1, 2023
+	End of Week: Wed, Jun 7, 2023
+	Theme of Week: ninja warrior
+*******************************************
+Camper Name: Amy Richard
+Allergies: 
+	Sunlight
+Birthday: Sun, Jan 1, 2012
+Emergency Contact One:
+	Name: asdf asdf
+	Email: asdf
+	Phone #: asdf
+	Relationship: asdf
+	Address: asdf
+Emergency Contact Two:
+	Name: asdf asdf
+	Email: asdf
+	Phone #: asdf
+	Relationship: asdf
+	Address: asdf
+Primary Care Physician:
+	Name: asdf asdf
+	Email: asdf
+	Phone #: asdf
+	Relationship: Primary Care Physician
+	Address: asdf
+Swim Test Status: Not tested
+Future or Current Enrollments:
+	Start of Week: Thu, Jun 1, 2023
+	End of Week: Wed, Jun 7, 2023
+	Theme of Week: ninja warrior
+*******************************************
+Camper Name: Nadia Reach
+Allergies: 
+	Happiness
+Birthday: Sun, Jan 1, 2012
+Emergency Contact One:
+	Name: asdf asdf
+	Email: asdf
+	Phone #: asdf
+	Relationship: asdf
+	Address: asdf
+Emergency Contact Two:
+	Name: asdf asdf
+	Email: asdf
+	Phone #: asdf
+	Relationship: asdf
+	Address: asdf
+Primary Care Physician:
+	Name: asdf asdf
+	Email: asdf
+	Phone #: asdf
+	Relationship: Primary Care Physician
+	Address: asdf
+Swim Test Status: Not tested
+Future or Current Enrollments:
+	Start of Week: Thu, Jun 1, 2023
+	End of Week: Wed, Jun 7, 2023
+	Theme of Week: ninja warrior
+*******************************************
