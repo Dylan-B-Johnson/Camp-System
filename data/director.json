@@ -1,9 +1,1 @@
-{
-    "firstName": "firstname",
-    "lastName": "lastname",
-    "typeOfUser": "DIRECTOR",
-    "password": "password",
-    "id": "83a38154-13fb-482b-8b26-c3ed398fcb14",
-    "campLocation": "7042a13b-b5b1-4d7d-b03c-01d598c9a1d9",
-    "email": "test@test.test"
-}
+{  "id": "5fba8dcf-7e4b-427a-b935-80a2b8deac59",  "email": "sergy@hotmail.com",  "firstName": "Sergy",  "lastName": "Ivanovich",  "password": "dinasoursAreKool",  "campLocation": "2abbae6f-07eb-4e30-ba07-ec8fc05a503b",  "typeOfUser": "DIRECTOR"}
