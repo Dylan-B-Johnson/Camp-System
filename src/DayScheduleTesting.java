@@ -75,9 +75,10 @@ public class DayScheduleTesting {
 
     @Test
     public void addInvalidActivity(){
-        DaySchedule schedule = new DaySchedule(new ArrayList<Activity>(), null, LocalDate.now());
-        schedule.addToSchedule(ActivitiesList.getActivities().get(0).getName());
-        assertFalse(schedule.getActivities().contains(ActivitiesList.getActivities().get(0)));
+        Week testWeek = new Week(0, 0, LocalDate.now().plusDays(1), CampLocation.getCampLocation(), "test");
+        DaySchedule schedule = new DaySchedule(new ArrayList<Activity>(), testWeek, LocalDate.now());
+        schedule.addToSchedule("hello there");
+        assertEquals(0, schedule.getActivities().size());
     }
 
     @Test
