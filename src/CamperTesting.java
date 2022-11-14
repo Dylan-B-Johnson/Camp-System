@@ -53,17 +53,32 @@ public class CamperTesting {
         testCustomer.addCamper(testCamper);
         DataWriter.createCamper(testCamper);
         UserList.addUser(testCustomer);
-
         assertEquals(testCustomer, testCamper.getParent());
     }
 
     @Test
-    public void checkUnregisteredCamper() {
-        // TODO
+    public void checkUnregisteredCamper(){
+        Customer testCustomer = new Customer("email", "hey", "there", "null", 
+            CampLocation.getCampLocation(), new ArrayList<Camper>(), primaryEmergencyContact);
+        Camper testCamper = new Camper("caleb", "test", allergies, LocalDate.now().minusYears(12), 
+            primaryEmergencyContact, secondaryEmergencyContact, primaryCarePhysician, 0, " ", " ");  
+        testCustomer.addCamper(testCamper);
+        DataWriter.createCamper(testCamper);
+        UserList.addUser(testCustomer);
+        assertEquals(0, testCamper.getEnrolledWeeks().size());
     }
 
     @Test
-    public void checkRegisteredCamper() {
-
+    public void checkRegisteredCamper(){
+        Week testWeek = new Week(0, 0, LocalDate.now().plusDays(1), CampLocation.getCampLocation(), "test");
+        ArrayList<Camper> campers = new ArrayList<Camper>();
+        Camper testCamper = new Camper("caleb", "test", allergies, LocalDate.now().minusYears(12), 
+            primaryEmergencyContact, secondaryEmergencyContact, primaryCarePhysician, 0, " ", " ");
+        campers.add(testCamper);  
+        Group testGroup = new Group(campers, 6, null, null);
+        ArrayList<Group> groups = new ArrayList<Group>();
+        groups.add(testGroup);
+        testWeek.setGroups(groups);
+        assertEquals(testWeek, testCamper.getEnrolledWeeks().get(0));
     }
 }

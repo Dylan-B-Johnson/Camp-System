@@ -22,7 +22,7 @@ public class ActivitiesListTesting {
 
     @Test
     public void FetchingActivities(){
-        
+        assertNotNull(ActivitiesList.getActivities());
     }
 
 }
