@@ -24,6 +24,7 @@ public class GroupTesting {
         private Contact primaryCarePhysician;
         private int groupSize;
         private Counselor counselor;
+        private ArrayList<Camper> campers = new ArrayList<Camper>();
 
         @BeforeEach
         public void setup() {
@@ -46,68 +47,68 @@ public class GroupTesting {
 
         @AfterEach
         public void tearDown() {
-
+                campers.clear();
         }
 
         @Test
         public void addValidCamper() {
-                Group testGroup = new Group(new ArrayList<Camper>(), groupSize, new ArrayList<DaySchedule>(),
+                Group testGroup = new Group(campers, groupSize, new ArrayList<DaySchedule>(),
                                 counselor);
                 Camper testCamper = new Camper("bob", "jones", allergies, LocalDate.now().minusYears(12),
                                 primaryEmergencyContact, secondaryEmergencyContact, primaryCarePhysician,
                                 0, "good swimmer", "son");
                 testGroup.addCamper(testCamper);
-                assertEquals(testCamper, testGroup.getCampers());
+                assertEquals(1, testGroup.campers.size());
         }
 
         @Test
         public void addInvalidCamper() {
-                Group testGroup = new Group(new ArrayList<Camper>(), groupSize, new ArrayList<DaySchedule>(),
+                Group testGroup = new Group(campers, groupSize, new ArrayList<DaySchedule>(),
                                 counselor);
                 Camper testCamper = new Camper("bob", "jones", allergies, LocalDate.now().minusYears(30),
                                 primaryEmergencyContact,
                                 secondaryEmergencyContact, primaryCarePhysician, 0,
                                 "good swimmer", "son");
                 testGroup.addCamper(testCamper);
-                assertEquals(0, Group.getCampers);
+                assertEquals(0, testGroup.campers.size());
         }
 
         @Test
         public void addNullCamper() {
-                Group testGroup = new Group(new ArrayList<Camper>(), groupSize, new ArrayList<DaySchedule>(),
+                Group testGroup = new Group(campers, groupSize, new ArrayList<DaySchedule>(),
                                 counselor);
                 Camper testCamper = null;
                 testGroup.addCamper(testCamper);
-                assertEquals(0, Group.getCampers);
+                assertEquals(0, testGroup.campers.size());
         }
 
         @Test
         public void removeValidCamper() {
-                Group testGroup = new Group(new ArrayList<Camper>(), groupSize, new ArrayList<DaySchedule>(),
+                Group testGroup = new Group(campers, groupSize, new ArrayList<DaySchedule>(),
                                 counselor);
                 Camper testCamper = new Camper("bob", "jones", allergies, LocalDate.now().minusYears(12),
                                 primaryEmergencyContact, secondaryEmergencyContact, primaryCarePhysician,
                                 0, "good swimmer", "son");
                 testGroup.removeCamper(testCamper);
-                assertEquals(0, testGroup.getCampers());
+                assertEquals(0, testGroup.campers.size());
         }
 
         @Test
         public void removeInvalidCamper() {
-                Group testGroup = new Group(new ArrayList<Camper>(), groupSize, new ArrayList<DaySchedule>(),
+                Group testGroup = new Group(campers, groupSize, new ArrayList<DaySchedule>(),
                                 counselor);
                 Camper testCamper = new Camper("bob", "jones", allergies, LocalDate.now().minusYears(30),
                                 primaryEmergencyContact,
                                 secondaryEmergencyContact, primaryCarePhysician, 0, "good swimmer", "son");
-                assertEquals(1, Group.getCampers);
+                assertEquals(0, testGroup.campers.size());
         }
 
         @Test
         public void removeNullCamper() {
-                Group testGroup = new Group(new ArrayList<Camper>(), groupSize, new ArrayList<DaySchedule>(),
+                Group testGroup = new Group(campers, groupSize, new ArrayList<DaySchedule>(),
                                 counselor);
                 Camper testCamper = null;
                 testGroup.removeCamper(testCamper);
-                assertEquals(2, Group.getCampers);
+                assertEquals(0, testGroup.campers.size());
         }
 }
