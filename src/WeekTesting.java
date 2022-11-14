@@ -11,106 +11,109 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+//@author Collin Remer
+
 public class WeekTesting {
 
-    private ArrayList<String> allergies = new ArrayList<String>();
-    private Contact primaryEmergencyContact;
-    private Contact secondaryEmergencyContact;
-    private Contact primaryCarePhysician;
-    private String firstName;
-    private String lastName;
-    private CampLocation campLocation;
-    private int currentCampers;
+        private ArrayList<String> allergies = new ArrayList<String>();
+        private Contact primaryEmergencyContact;
+        private Contact secondaryEmergencyContact;
+        private Contact primaryCarePhysician;
+        private String firstName;
+        private String lastName;
+        private CampLocation campLocation;
+        private int currentCampers;
 
-    @BeforeEach
-    public void setup() {
+        @BeforeEach
+        public void setup() {
 
-    }
+        }
 
-    @AfterEach
-    public void tearDown() {
-        currentCampers = 0;
-    }
+        @AfterEach
+        public void tearDown() {
+                currentCampers = 0;
+        }
 
-    @Test
-    public void canRegisterValidCamper() {
+        @Test
+        public void canRegisterValidCamper() {
 
-        Camper testCamper = new Camper(firstName, lastName, allergies, LocalDate.now().minusYears(12),
-                primaryEmergencyContact, secondaryEmergencyContact, primaryCarePhysician, 0,
-                "good swimmer", "son");
-        Week testWeek = new Week(10, 5, LocalDate.now(),
-                campLocation, "test");
+                Camper testCamper = new Camper(firstName, lastName, allergies, LocalDate.now().minusYears(12),
+                                primaryEmergencyContact, secondaryEmergencyContact, primaryCarePhysician, 0,
+                                "good swimmer", "son");
+                Week testWeek = new Week(10, 5, LocalDate.now(),
+                                campLocation, "test");
 
-        boolean canRegister = testWeek.canRegisterCamper(testCamper);
+                boolean canRegister = testWeek.canRegisterCamper(testCamper);
 
-        assertTrue(canRegister);
-    }
+                assertTrue(canRegister);
+        }
 
-    @Test
-    public void canRegisterInvalidCamper() {
+        @Test
+        public void canRegisterInvalidCamper() {
 
-        Camper testCamper = new Camper(firstName, lastName, allergies, LocalDate.now().minusYears(30),
-                primaryEmergencyContact, secondaryEmergencyContact, primaryCarePhysician, 0,
-                "good swimmer", "son");
-        Week testWeek = new Week(10, 5, LocalDate.now().plusMonths(1), campLocation, "test");
+                Camper testCamper = new Camper(firstName, lastName, allergies, LocalDate.now().minusYears(30),
+                                primaryEmergencyContact, secondaryEmergencyContact, primaryCarePhysician, 0,
+                                "good swimmer", "son");
+                Week testWeek = new Week(10, 5, LocalDate.now().plusMonths(1), campLocation, "test");
 
-        boolean canRegister = testWeek.canRegisterCamper(testCamper);
+                boolean canRegister = testWeek.canRegisterCamper(testCamper);
 
-        assertFalse(canRegister);
-    }
+                assertFalse(canRegister);
+        }
 
-    @Test
-    public void canRegisterNullCamper() {
+        @Test
+        public void canRegisterNullCamper() {
 
-        Camper testCamper = new Camper(firstName, firstName, allergies, null,
-                primaryCarePhysician, primaryCarePhysician, primaryCarePhysician, 0, firstName, firstName);
+                Camper testCamper = new Camper(firstName, firstName, allergies, null,
+                                primaryCarePhysician, primaryCarePhysician, primaryCarePhysician, 0, firstName,
+                                firstName);
 
-        testCamper = null;
+                testCamper = null;
 
-        Week testWeek = new Week(10, 5, LocalDate.now().plusMonths(1), campLocation, "test");
+                Week testWeek = new Week(10, 5, LocalDate.now().plusMonths(1), campLocation, "test");
 
-        boolean canRegister = testWeek.canRegisterCamper(testCamper);
+                boolean canRegister = testWeek.canRegisterCamper(testCamper);
 
-        assertFalse(canRegister);
-    }
+                assertFalse(canRegister);
+        }
 
-    @Test
-    public void registerValidCamper() {
-        Camper testCamper = new Camper(firstName, lastName, allergies, LocalDate.now().minusYears(12),
-                primaryEmergencyContact, secondaryEmergencyContact, primaryCarePhysician, 0,
-                "good swimmer", "son");
-        Week testWeek = new Week(10, 5, LocalDate.now(),
-                campLocation, "test");
+        @Test
+        public void registerValidCamper() {
+                Camper testCamper = new Camper(firstName, lastName, allergies, LocalDate.now().minusYears(12),
+                                primaryEmergencyContact, secondaryEmergencyContact, primaryCarePhysician, 0,
+                                "good swimmer", "son");
+                Week testWeek = new Week(10, 5, LocalDate.now(),
+                                campLocation, "test");
 
-        testWeek.registerCamper(testCamper);
+                testWeek.registerCamper(testCamper);
 
-        assertEquals(1, testWeek.getCurrentCampers());
-    }
+                assertEquals(1, testWeek.getCurrentCampers());
+        }
 
-    @Test
-    public void registerInvalidCamper() {
-        Camper testCamper = new Camper(firstName, lastName, allergies, LocalDate.now().minusYears(30),
-                primaryEmergencyContact, secondaryEmergencyContact, primaryCarePhysician, 0,
-                "good swimmer", "son");
-        Week testWeek = new Week(10, 5, LocalDate.now(),
-                campLocation, "test");
+        @Test
+        public void registerInvalidCamper() {
+                Camper testCamper = new Camper(firstName, lastName, allergies, LocalDate.now().minusYears(30),
+                                primaryEmergencyContact, secondaryEmergencyContact, primaryCarePhysician, 0,
+                                "good swimmer", "son");
+                Week testWeek = new Week(10, 5, LocalDate.now(),
+                                campLocation, "test");
 
-        testWeek.registerCamper(testCamper);
+                testWeek.registerCamper(testCamper);
 
-        assertEquals(0, testWeek.getCurrentCampers());
-    }
+                assertEquals(0, testWeek.getCurrentCampers());
+        }
 
-    @Test
-    public void registerNullCamper() {
-        Camper testCamper = new Camper(firstName, lastName, allergies, LocalDate.now().minusYears(12),
-                primaryEmergencyContact, secondaryEmergencyContact, primaryCarePhysician, 0,
-                "good swimmer", "son");
-        testCamper = null;
-        Week testWeek = new Week(10, 5, LocalDate.now(),
-                campLocation, "test");
+        @Test
+        public void registerNullCamper() {
+                Camper testCamper = new Camper(firstName, lastName, allergies, LocalDate.now().minusYears(12),
+                                primaryEmergencyContact, secondaryEmergencyContact, primaryCarePhysician, 0,
+                                "good swimmer", "son");
+                testCamper = null;
+                Week testWeek = new Week(10, 5, LocalDate.now(),
+                                campLocation, "test");
 
-        testWeek.registerCamper(testCamper);
+                testWeek.registerCamper(testCamper);
 
-        assertEquals(0, testWeek.getCurrentCampers());
-    }
+                assertEquals(0, testWeek.getCurrentCampers());
+        }
 }
