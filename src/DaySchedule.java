@@ -152,7 +152,7 @@ public class DaySchedule {
      * @param timeSlot       The time that the activity is checked
      * @return True if the activity is available, false if not
      */
-    private boolean verifyActivityAvailablility(String nameOfActivity, int timeSlot) {
+    public boolean verifyActivityAvailablility(String nameOfActivity, int timeSlot) {
         Activity foundActivity = new Activity(null, null, null);
         ArrayList<Activity> activities = ActivitiesList.getActivities();
         for (Activity activity : activities) {
