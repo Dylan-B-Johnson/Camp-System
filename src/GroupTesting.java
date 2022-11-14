@@ -60,7 +60,7 @@ public class GroupTesting {
                                 primaryEmergencyContact, secondaryEmergencyContact, primaryCarePhysician,
                                 0, "good swimmer", "son");
                 testGroup.addCamper(testCamper);
-                assertEquals(1, testGroup.campers.size());
+                assertEquals(1, testGroup.getCampers().size());
         }
 
         @Test
@@ -72,7 +72,7 @@ public class GroupTesting {
                                 secondaryEmergencyContact, primaryCarePhysician, 0,
                                 "good swimmer", "son");
                 testGroup.addCamper(testCamper);
-                assertEquals(0, testGroup.campers.size());
+                assertEquals(0, testGroup.getCampers().size());
         }
 
         @Test
@@ -81,7 +81,7 @@ public class GroupTesting {
                                 counselor);
                 Camper testCamper = null;
                 testGroup.addCamper(testCamper);
-                assertEquals(0, testGroup.campers.size());
+                assertEquals(0, testGroup.getCampers().size());
         }
 
         @Test
@@ -92,7 +92,7 @@ public class GroupTesting {
                                 primaryEmergencyContact, secondaryEmergencyContact, primaryCarePhysician,
                                 0, "good swimmer", "son");
                 testGroup.removeCamper(testCamper);
-                assertEquals(0, testGroup.campers.size());
+                assertEquals(0, testGroup.getCampers().size());
         }
 
         @Test
@@ -102,7 +102,7 @@ public class GroupTesting {
                 Camper testCamper = new Camper("bob", "jones", allergies, LocalDate.now().minusYears(30),
                                 primaryEmergencyContact,
                                 secondaryEmergencyContact, primaryCarePhysician, 0, "good swimmer", "son");
-                assertEquals(0, testGroup.campers.size());
+                assertEquals(0, testGroup.getCampers().size());
         }
 
         @Test
@@ -111,6 +111,6 @@ public class GroupTesting {
                                 counselor);
                 Camper testCamper = null;
                 testGroup.removeCamper(testCamper);
-                assertEquals(0, testGroup.campers.size());
+                assertEquals(0, testGroup.getCampers().size());
         }
 }
